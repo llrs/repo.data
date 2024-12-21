@@ -1,0 +1,62 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# repo.data
+
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/repo.data)](https://CRAN.R-project.org/package=repo.data)
+<!-- badges: end -->
+
+The goal of repo.data is to make repository data accessible. 
+Mainly it consumes existing data but the idea is to also generate it.
+
+## Installation
+
+You can install the development version of repo.data like so:
+
+``` r
+remotes::install_github("llrs/repo.data")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(repo.data)
+ca <- cran_archive()
+head(ca)
+```
+
+We can also check CRAN comments 
+
+```{r cran_comments}
+cc <- cran_comments()
+head(cc)
+```
+
+
+## Related packages
+
+Other packages and related analysis :
+
+- Task views: https://github.com/epiverse-connect/ctv-analysis/
+- static packages: [pkgstats](https://docs.ropensci.org/pkgstats)
+- Bioconductor: biopkgtools
+- R-universe: universe
+
+## History
+
+This package comes from the analysis on CRAN data on https://llrs.dev
