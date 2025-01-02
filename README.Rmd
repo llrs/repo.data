@@ -56,6 +56,7 @@ Other packages and related analysis :
 - static packages: [pkgstats](https://docs.ropensci.org/pkgstats)
 - Bioconductor: biopkgtools
 - R-universe: universe
+- [cranly](https://cran.r-project.org/package=cranly): About package dependencies and authors of packages.
 
 ## History
 
