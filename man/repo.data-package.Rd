@@ -9,6 +9,14 @@
 \description{
 Retrieve CRAN's data and prepare repository data like the one provided by it.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/llrs/repo.data}
+  \item Report bugs at \url{https://github.com/llrs/repo.data/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Lluís Revilla Sancho \email{lluis.revilla@gmail.com} (\href{https://orcid.org/0000-0001-9747-2570}{ORCID})
 

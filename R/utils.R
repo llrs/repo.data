@@ -13,3 +13,8 @@ get_cran_comments <- function() {
 }
 
 funlist <- function(x){unlist(x, FALSE, FALSE)}
+
+
+check_installed <- function(x) {
+    requireNamespace(x, quietly = TRUE)
+}
