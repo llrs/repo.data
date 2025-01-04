@@ -36,3 +36,11 @@ read_CRAN <- function(cran, path) {
     }
 
 }
+
+
+check_r_version <- function() {
+    ver <- paste0(R.Version()[c("major","minor")], collapse = ".")
+    r_ver <- package_version(ver)
+    target <- package_version("4.5.0")
+    r_ver >= target
+}

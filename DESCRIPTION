@@ -8,7 +8,7 @@ Description: Retrieve CRAN's data and prepare repository data like the one
     provided by it.
 License: GPL (>= 3)
 Depends: 
-    R (>= 4.5)
+    R (>= 4.4)
 Imports: 
     methods,
     tools,
