@@ -11,12 +11,19 @@ A data.frame with four columns: package, comment, date and action.
 }
 \description{
 CRAN volunteers document since ~2009 why they archive packages.
-This function retrieves the data and prepares it for its usage.
+This function retrieves the data and prepares it for analysis, classifying
+the actions taken by the team per package and date.
 }
 \details{
-The comments are slightly edited: multiple comments for the same action that
-they took are joined together.
+The comments are slightly edited: multiple comments for the same action are
+joined together so that they can be displayed on a single line.
 Actions are inferred from keywords.
+}
+\note{
+There can be room for improvement: some comments describe two actions, please
+let me know if you think this can be improved.
+Other actions can be described on multiple comments/lines or out of order.
+Compare with the original file in case of doubts.
 }
 \examples{
 \donttest{

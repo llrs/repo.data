@@ -51,11 +51,16 @@ cran_archive <- function() {
 #' CRAN comments
 #'
 #' CRAN volunteers document since ~2009 why they archive packages.
-#' This function retrieves the data and prepares it for its usage.
+#' This function retrieves the data and prepares it for analysis, classifying
+#' the actions taken by the team per package and date.
 #'
-#' The comments are slightly edited: multiple comments for the same action that
-#' they took are joined together.
+#' The comments are slightly edited: multiple comments for the same action are
+#' joined together so that they can be displayed on a single line.
 #' Actions are inferred from keywords.
+#' @note There can be room for improvement: some comments describe two actions, please
+#' let me know if you think this can be improved.
+#' Other actions can be described on multiple comments/lines or out of order.
+#' Compare with the original file in case of doubts.
 #' @returns A data.frame with four columns: package, comment, date and action.
 #' @references Original file: <https://cran.r-project.org/src/contrib/PACKAGES.in>
 #' @export
@@ -65,12 +70,13 @@ cran_archive <- function() {
 #' head(cc)
 #' }
 cran_comments <- function() {
-    url <- "https://cran.r-project.org/src/contrib/PACKAGES.in"
-    file <- as.data.frame(read.dcf(url(url)))
-    comments_df <- extract_field(file, field = "X-CRAN-Comment")
+    file <- as.data.frame(read_CRAN(CRAN_baseurl(), "/src/contrib/PACKAGES.in"))
 
+    comments_df <- extract_field(file, field = "X-CRAN-Comment")
     history_df <- extract_field(file, field = "X-CRAN-History")
     full_history <- rbind(comments_df, history_df)
+
+    # TODO: Merge comments split between history and comment fields
     fh <- sort_by(full_history, ~package + date)
     rownames(fh) <- NULL
 
@@ -114,7 +120,7 @@ merge_comments <- function(df, column) {
 extract_field <- function(file,
                           field,
                           regex_date = "([0-9]{4}-[0-9]{2}-[0-9]{2})",
-                          regex_action = "^([Uu]narchived?|[Aa]rchived?|[Rr]enamed?|[Oo]rphaned?|[Rr]eplaced?|[Rr]emoved?)"
+                          regex_action = "^([Uu]narchived?|[Aa]rchived?|[Rr]enamed?|[Oo]rphaned?|[Rr]eplaced?|[Rr]emoved?|[Uu]norphaned?)"
 ) {
     file[[field]] <- gsub("\\.\n,?\n", ": ", file[[field]])
     # Extract multiline comments
