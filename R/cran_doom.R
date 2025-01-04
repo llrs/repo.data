@@ -42,10 +42,14 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     tp <- tools::package_dependencies(danger$Package, db = db_all, which = which_pkges,
                                 reverse = TRUE, recursive = TRUE)
     rev_dep <- names(tp)[lengths(tp) > 0]
+    # Time given by CRAN on the warnings
+    # 14 for the first warning
+    # 14 for the second (with dependencies added on the email)
+    total_time_given <- 14L + 14L
     l <- lapply(rev_dep, function(pkg) {
         data.frame(
         Package = tp[[pkg]],
-        Deadline = danger$Deadline[danger$Package == pkg] + 28L)
+        Deadline = danger$Deadline[danger$Package == pkg] + total_time_given)
     })
     df2 <- do.call(rbind, l)
     affected <- table(df2$Package)
