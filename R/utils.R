@@ -1,3 +1,12 @@
+save_state <- function(name, fun) {
+    pkg_state[[name]] <- fun
+    pkg_state[[name]]
+}
+
+get_state <- function(name) {
+    pkg_state[[name]]
+}
+
 get_cran_archive <- function() {
     if (is.null(pkg_state[["cran_archive"]])) {
         pkg_state[["cran_archive"]] <- cran_archive()
