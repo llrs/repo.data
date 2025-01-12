@@ -13,7 +13,11 @@ cran_snapshot(date)
 The data.frame with the packages and versions at a given date.
 }
 \description{
-Check CRAN package state
+Given the available information which packages were on CRAN on a given date?
+}
+\note{
+Due to missing of CRAN comments some packages are not annotated when
+were they archived and more packages will be returned for any given date.
 }
 \examples{
 cran_snapshot(Sys.Date() -2 )
