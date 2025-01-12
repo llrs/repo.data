@@ -17,7 +17,8 @@ the actions taken by the team per package and date.
 \details{
 The comments are slightly edited: multiple comments for the same action are
 joined together so that they can be displayed on a single line.
-Actions are inferred from keywords.
+Actions are inferred from 7 keywords: archived, orphaned, removed, renamed,
+replaced, unarchived, unorphaned.
 }
 \note{
 There can be room for improvement: some comments describe two actions, please
