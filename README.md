@@ -22,29 +22,22 @@ remotes::install_github("llrs/repo.data")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+We can get a data.frame of all packages on CRAN archive:
 
 ``` r
 library(repo.data)
 ca <- cran_archive()
 head(ca)
-#>         package               mtime               ctime               atime
-#> 1            A3 2013-02-07 09:00:29 2024-12-04 05:04:36 2024-12-04 08:24:34
-#> 2            A3 2013-03-26 18:58:40 2024-12-04 05:04:36 2024-12-04 08:24:34
-#> 3            A3 2015-08-16 21:05:54 2024-12-21 05:05:35 2024-12-21 06:44:43
-#> 4 AalenJohansen 2023-03-01 10:42:11 2024-12-21 05:05:35 2024-12-21 08:01:13
-#> 5          aaMI 2005-06-24 15:55:17 2024-12-04 05:04:36 2024-12-04 04:24:42
-#> 6          aaMI 2005-10-17 19:24:18 2024-12-04 05:04:36 2024-12-04 04:24:42
-#>   version cran_team   size   status
-#> 1   0.9.1    hornik  45252 archived
-#> 2   0.9.2    ligges  45907 archived
-#> 3   1.0.0    hornik  42810  current
-#> 4     1.0    ligges 165057  current
-#> 5   1.0-0      root   2968 archived
-#> 6   1.0-1      root   3487 archived
+#>         package      published_date version cran_team   size   status
+#> 1            A3 2013-02-07 09:00:29   0.9.1    hornik  45252 archived
+#> 2            A3 2013-03-26 18:58:40   0.9.2    ligges  45907 archived
+#> 3            A3 2015-08-16 21:05:54   1.0.0    hornik  42810  current
+#> 4 AalenJohansen 2023-03-01 10:42:11     1.0    ligges 165057  current
+#> 5          aaMI 2005-06-24 15:55:17   1.0-0      root   2968 archived
+#> 6          aaMI 2005-10-17 19:24:18   1.0-1      root   3487 archived
 ```
 
-We can also check CRAN comments
+We can also check CRAN comments about the packages on its archive:
 
 ``` r
 cc <- cran_comments()
@@ -72,6 +65,17 @@ head(cc)
 #> 6 2015-06-19 archived
 ```
 
+Or estimate the last date of update of our packages, by the information
+on the session info or a data.frame:
+
+``` r
+cran_session(session = sessionInfo())
+#> [1] "2024-11-08"
+ip <- installed.packages()
+cran_date(ip)
+#> [1] "2024-12-08"
+```
+
 ## Related packages
 
 Other packages and related analysis :
@@ -80,6 +84,8 @@ Other packages and related analysis :
 - static packages: [pkgstats](https://docs.ropensci.org/pkgstats)
 - Bioconductor: biopkgtools
 - R-universe: universe
+- [cranly](https://cran.r-project.org/package=cranly): About package
+  dependencies and authors of packages.
 
 ## History
 

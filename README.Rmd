@@ -32,7 +32,7 @@ remotes::install_github("llrs/repo.data")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+We can get a data.frame of all packages on CRAN archive:
 
 ```{r example}
 library(repo.data)
@@ -40,13 +40,20 @@ ca <- cran_archive()
 head(ca)
 ```
 
-We can also check CRAN comments 
+We can also check CRAN comments about the packages on its archive:
 
 ```{r cran_comments}
 cc <- cran_comments()
 head(cc)
 ```
 
+Or estimate the last date of update of our packages, by the information on the session info or a data.frame:
+
+```{r cran_dates}
+cran_session(session = sessionInfo())
+ip <- installed.packages()
+cran_date(ip)
+```
 
 ## Related packages
 
