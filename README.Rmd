@@ -64,6 +64,9 @@ Other packages and related analysis :
 - Bioconductor: biopkgtools
 - R-universe: universe
 - [cranly](https://cran.r-project.org/package=cranly): About package dependencies and authors of packages.
+- [versions](https://github.com/goldingn/versions): A package about installing packages versions.
+ `install.dates()` requires a CRAN date, if you are unsure you can use `cran_date()` to estimate it given a `library()` or a `sessionInfo` report.
+- [checkpoint](https://cran.r-project.org/package=checkpoint) provides tools to ensure the results of R code are repeatable over time.
 
 ## History
 
