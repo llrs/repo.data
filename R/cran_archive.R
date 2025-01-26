@@ -5,9 +5,9 @@
 #' There are some packages with NA in version, those are version names that do
 #' not pass current [package_version()] with `strict = TRUE`.
 #' Other packages might have been on CRAN but could have been removed.
-#' @returns A data.frame with 6 columns: package, archived_date, version,
-#'  cran_team, size and status.
-#'  It is sorted by package name and archived_date.
+#' @returns A data.frame with 6 columns: Package, Date (of publication), Version,
+#'  User, size and status (archived or current).
+#'  It is sorted by package name and date
 #' @export
 #' @seealso [CRAN_archive_db()], [CRAN_current_db()], [cran_comments()].
 #' @examples
@@ -17,33 +17,49 @@
 #' }
 cran_archive <- function() {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    archive <- save_state("archive", tools::CRAN_archive_db())
-    cran_pkges_archive(names(archive))
+    save_state("cran_archive", cran_pkges_archive(NULL))
 }
 
 
 cran_pkges_archive <- function(packages) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
 
+    # Check if package is there
+    if (!is.null(pkg_state[["cran_archive"]])) {
+        out <- get_package_subset("cran_archive", packages)
+        if (check_subset(out, packages)) {
+            return(out)
+        }
+    }
+
+    # Download data
     archive <- save_state("archive", tools::CRAN_archive_db())
     current <- save_state("current", tools::CRAN_current_db())
 
-    pkges <- intersect(packages, names(archive))
-
-    # Return when everything is requested and it was already there.
-    if (!is.null(pkg_state[["cran_archive"]]) && all(pkges %in% names(archive))) {
-        return(get_package_subset("cran_archive", pkges))
+    archive_sb <- if (is.null(packages)) {
+        archive
+    } else {
+        archive[packages[packages %in% names(archive)]]
     }
 
-    archive_sb <- archive[pkges]
     archive_df <- do.call(rbind, archive_sb)
     all_packages <- rbind(archive_df, current)
 
     # Packages names
     archives <- vapply(archive_sb, nrow, numeric(1))
     pkg <- rep(names(archive_sb), times = archives)
-    pkges <- c(pkg, gsub("_.*", "", rownames(current)))
-    all_packages$package <- pkges
+    all_packages$package <- c(pkg, gsub("_.*", "", rownames(current)))
+
+    # Return when everything is requested and it was already there.
+    if (!is.null(packages)) {
+        pkges <- intersect(packages, all_packages$package)
+    } else {
+        pkges <- all_packages$package
+    }
+
+    if (!is.null(pkg_state[["cran_archive"]])) {
+        return(get_package_subset("cran_archive", pkges))
+    }
 
     # Packages versions
     version <- unlist(lapply(archive_sb, rownames), FALSE, FALSE)
@@ -59,18 +75,16 @@ cran_pkges_archive <- function(packages) {
     all_packages <- all_packages[all_packages$package %in% pkges, , drop = FALSE]
 
     # Arrange dates and data
-    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = "UTC")
+    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = "Europe/Vienna")
     keep_columns <- c("package", "mtime", "version", "uname", "size", "status")
-    all_packages <- sort_by(all_packages[, keep_columns, drop = NA], ~package + mtime)
-    colnames(all_packages)[2] <- "published_date"
-    colnames(all_packages)[4] <- "cran_team"
+    all_packages <- sort_by(all_packages[, keep_columns, drop = FALSE], ~package + mtime)
+    colnames(all_packages)[1:4] <- c("Package", "Datetime", "Version", "User")
     rownames(all_packages) <- NULL
 
     # Save it is the complete list
     if (all(names(archive) %in% all_packages$package)) {
-        pkg_state[["cran_archive"]] <- all_packages
+        save_state("cran_archive", all_packages)
     }
-
     all_packages
 
 }
@@ -83,8 +97,8 @@ cran_archive_dates <- function() {
     l <- lapply(dates, function(x) {
         c(x[-length(x)] - 1, NA)
     })
-    ca$archived_date <- .POSIXct(funlist(l), tz = "UTC")
-    ca$archived_date[ca$status == "current"] <- as.POSIXct(Sys.time(), tz = "UTC")
+    ca$archived_date <- as.POSIXlt(funlist(l), tz = "Europe/Vienna")
+    ca$archived_date[ca$status == "current"] <- as.POSIXlt(Sys.time(), tz = "Europe/Vienna")
     ca
 
     # TODO match package version with dates of archival or removal
