@@ -23,8 +23,9 @@
 #' head(cc)
 #' }
 cran_comments <- function() {
-    file <- as.data.frame(read_CRAN(CRAN_baseurl(), "/src/contrib/PACKAGES.in"))
-
+    file <- save_state("comments", read_CRAN(CRAN_baseurl(),
+                                             "/src/contrib/PACKAGES.in"))
+    file <- as.data.frame(file)
     comments_df <- extract_field(file, field = "X-CRAN-Comment")
     history_df <- extract_field(file, field = "X-CRAN-History")
     full_history <- rbind(comments_df, history_df)
@@ -106,7 +107,7 @@ extract_field <- function(file,
 
 
 cran_comments_pkg <- function(package) {
-    cc <- get_cran_comments()
+    cc <- save_state("cran_comments", cran_comments())
     cc_pkg <- cc[cc$package == package, ]
     rownames(cc_pkg) <- NULL
     cc_pkg
