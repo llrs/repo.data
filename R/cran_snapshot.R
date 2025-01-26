@@ -14,23 +14,23 @@ cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),
               "Accepted ranges is from the beginning of CRAN to today" = date <= Sys.Date() || date >= as.Date("1997-10-08"))
-    ac <- get_cran_archive()
+    ca <- save_state("cran_archive", cran_archive())
     if (date == Sys.Date()) {
-        return(ac[ac$status == "current", ])
+        return(ca[ca$status == "current", ])
     }
 
-    ac <- sort_by(ac, ~package + mtime)
-    ac_before <- ac[as.Date(ac$mtime) <= date, , drop = TRUE]
+    ca <- sort_by(ca, ~package + published_date)
+    ca_before <- ca[as.Date(ca$published_date) <= date, , drop = TRUE]
 
     # Remove duplicated packages from the last to keep the latest version
-    dups <- duplicated(ac_before$package, fromLast = TRUE)
-    ac_before_date <- ac_before[!dups, c("package", "version", "mtime", "status")]
+    dups <- duplicated(ca_before$package, fromLast = TRUE)
+    ca_before_date <- ca_before[!dups, c("package", "version", "published_date", "status")]
 
-    cc <- get_cran_comments()
+    cc <- save_state("cran_comments", cran_comments())
 
     # If date is earlier than any comments return what it was.
     if (date < min(cc$date, na.rm = TRUE)) {
-        return(ac_before_date)
+        return(ca_before_date)
     }
 
     cc_archive <- cc[cc$action %in% c("archived", "removed") & cc$date <= date, ]
@@ -38,15 +38,15 @@ cran_snapshot <- function(date) {
     dups <- duplicated(cc_archive$package, fromLast = TRUE)
     last_archival <- cc_archive[!dups & !is.na(cc_archive$package), ]
 
-    missing <- setdiff(last_archival$package, ac_before_date$package)
-    archived <- match(last_archival$package, ac_before_date$package, incomparables = missing)
-    missing2 <- setdiff(ac_before_date$package, last_archival$package)
-    archived2 <- match(ac_before_date$package, last_archival$package, incomparables = missing2)
+    missing <- setdiff(last_archival$package, ca_before_date$package)
+    archived <- match(last_archival$package, ca_before_date$package, incomparables = missing)
+    missing2 <- setdiff(ca_before_date$package, last_archival$package)
+    archived2 <- match(ca_before_date$package, last_archival$package, incomparables = missing2)
 
-    on_cran <- rep(TRUE, length.out = nrow(ac_before_date))
-    names(on_cran) <- ac_before_date$package
-    on_cran[na.omit(archived)] <- as.Date(ac_before_date$mtime[na.omit(archived)]) > last_archival$date[!is.na(archived)]
-    cran_status <- ac_before_date[on_cran, ]
+    on_cran <- rep(TRUE, length.out = nrow(ca_before_date))
+    names(on_cran) <- ca_before_date$package
+    on_cran[na.omit(archived)] <- as.Date(ca_before_date$published_date[na.omit(archived)]) > last_archival$date[!is.na(archived)]
+    cran_status <- ca_before_date[on_cran, ]
 
 }
 
@@ -68,15 +68,17 @@ cran_date <- function(versions) {
         stop("Versions should be a data.frame with 'Package' and 'Version' columns.")
     }
 
-    ac <- get_cran_archive()
+
+    ca_packages <- cran_pkges_archive(versions[, "Package"])
+    ca <- save_state("cran_archive", cran_archive())
     # match packages names and versions
-    ac_packages <- ac[ac$package %in% versions[, "Package"], ]
-    ac_v <- apply(ac_packages[, c("package", "version")], 1, paste, collapse = "_")
+    ca_packages <- ca[ca$package %in% versions[, "Package"], ]
+    ca_v <- apply(ca_packages[, c("package", "version")], 1, paste, collapse = "_")
     v_v <- apply(versions[, c("Package", "Version")], 1, paste, collapse = "_")
-    m <- match(v_v, ac_v)
+    m <- match(v_v, ca_v)
 
     # Find range of dates where was last updated.
-    as.Date(max(ac_packages$published_date[na.omit(m)], na.rm = TRUE))
+    as.Date(max(ca_packages$published_date[na.omit(m)], na.rm = TRUE))
 }
 
 #' @rdname cran_date
@@ -97,4 +99,5 @@ cran_session <- function(session = sessionInfo()) {
 
 
 desc2version <- function(x){list2DF(x)[, c("Package", "Version")]}
+
 
