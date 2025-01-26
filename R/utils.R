@@ -5,6 +5,10 @@ save_state <- function(name, fun) {
     pkg_state[[name]]
 }
 
+ls_state <- function() {
+    sapply(pkg_state, is)
+}
+
 funlist <- function(x){unlist(x, FALSE, FALSE)}
 
 get_package_subset <- function(name, pkges) {
@@ -17,6 +21,14 @@ get_package_subset <- function(name, pkges) {
         }
     } else {
         NULL
+    }
+}
+
+check_subset <- function(obj, pkges) {
+    if ("package" %in% colnames(obj)) {
+        all(pkges %in% obj$package)
+    } else {
+        all(pkges %in% obj$Package)
     }
 }
 
@@ -48,9 +60,16 @@ check_r_version <- function() {
 }
 
 
-cran_archive <- function() {
+.cran_archive <- function() {
     if (check_r_version()) {
         return(tools::CRAN_archive_db())
     }
     read_CRAN(CRAN_baseurl(), "src/contrib/Meta/archive.rds")
+}
+
+datetime2POSIXct <- function(date, time, tz = "Europe/Vienna") {
+    moment <- paste(date, time)
+    moment[is.na(date)] <- NA
+    moment <- as.POSIXct(moment, tz = tz)
+    moment
 }
