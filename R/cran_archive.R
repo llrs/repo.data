@@ -17,7 +17,9 @@
 #' }
 cran_archive <- function() {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    save_state("cran_archive", cran_pkges_archive(NULL))
+    out <- save_state("cran_archive", cran_pkges_archive(NULL))
+    warnings_archive(out)
+    out
 }
 
 
@@ -28,10 +30,10 @@ cran_pkges_archive <- function(packages) {
     if (!is.null(pkg_state[["cran_archive"]])) {
         out <- get_package_subset("cran_archive", packages)
         if (check_subset(out, packages)) {
+            warnings_archive(out)
             return(out)
         }
     }
-
     # Download data
     archive <- save_state("archive", tools::CRAN_archive_db())
     current <- save_state("current", tools::CRAN_current_db())
@@ -85,8 +87,8 @@ cran_pkges_archive <- function(packages) {
     if (all(names(archive) %in% all_packages$package)) {
         save_state("cran_archive", all_packages)
     }
+    warnings_archive(all_packages)
     all_packages
-
 }
 
 
@@ -107,4 +109,13 @@ cran_archive_dates <- function() {
     cc_packages <- cc[w, ]
 
     #
+}
+
+warnings_archive <- function(all_packages) {
+    dup_arch <- duplicated(all_packages[, c("Package", "Version")])
+    if (any(dup_arch)) {
+        warning("There are ", sum(dup_arch), " packages both archived and published\n",
+                "This indicate manual CRAN intervention."
+                call. = FALSE)
+    }
 }

@@ -8,7 +8,7 @@
 #' @return A data.frame with Date, Time, User, Action, Package and Version columns.
 #' @examples
 #' actions <- cran_actions()
-cran_actions <- function() {
+cran_actions <- function(silent = FALSE) {
 
     if (!is.null(pkg_state[["cran_actions"]])) {
         return(pkg_state[["cran_actions"]])
@@ -25,12 +25,30 @@ cran_actions <- function() {
     }
     actions$Action <- factor(actions$Action, levels = lev)
     actions$Package <- as.factor(actions$Package)
-    actions <- sort_by(actions, ~Package + datetime2POSIXct(Date, Time))
+    actions <- sort_by(actions, ~Package + datetime2POSIXct(Date, Time) + Action)
     rownames(actions) <- NULL
     pkg_state[["cran_actions"]] <- actions
+    warnings_actions(actions)
     actions
 }
 
 cran_pkges_actions <- function(pkges) {
-    get_package_subset("cran_actions", pkges)
+    actions <- get_package_subset("cran_actions", pkges)
+    first_package <- !duplicated(actions$Package)
+    warnings_actions(actions)
+    actions
+}
+
+
+warnings_actions <- function(actions) {
+    first_package <- !duplicated(actions$Package)
+    w <- sum(first_package & (actions$Action == "archive" | is.na(actions$Action)))
+    if (w) {
+        warning("There are ", w, " packages starting with an archive action!", call. = FALSE)
+    }
+    dup <- duplicated(actions[, c("Package", "Version", "Action")])
+    if (any(dup)) {
+        warning("There are ", sum(dup), " packages with duplicated actions for the same version.\n",
+                "Explanation: This indicate a manual intervetion of the CRAN team.", call. = FALSE)
+    }
 }
