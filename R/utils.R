@@ -15,9 +15,9 @@ get_package_subset <- function(name, pkges) {
     if (!is.null(pkg_state[[name]])) {
         df <- pkg_state[[name]]
         if ("package" %in% colnames(df)) {
-            df[df$package == pkges, , drop = FALSE]
+            df[df$package %in% pkges, , drop = FALSE]
         } else {
-            df[df$Package == pkges, , drop = FALSE]
+            df[df$Package %in% pkges, , drop = FALSE]
         }
     } else {
         NULL
