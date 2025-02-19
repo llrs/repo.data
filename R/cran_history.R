@@ -49,9 +49,7 @@ cran_history <- function() {
     k2 <- m0$Action[wo_version] == "archive" & m0$Action[(wo_version - 1)] == "publish"
     m0$Version[wo_version[diff_pkg & k2]] <- m0$Version[(wo_version[diff_pkg & k2] - 1)]
 
-    first_package <- !duplicated(m0$Package)
-    w <- sum(first_package & (m0$Action == "archive" | is.na(m0$Action)))
-    warning("There are ", w, " packages starting with an archive action!")
+
 
     # Some packages have an extra archive that adds a year: I assume this was a problem with the script
     wov <- wo_version[!k2]
@@ -102,4 +100,11 @@ cran_history <- function() {
 
 cran_pkges_history <- function(package) {
 
+}
+
+warnings_history <- function(x){
+    first_package <- !duplicated(x$Package)
+    w <- sum(first_package & (x$Action == "archive" | is.na(x$Action)))
+    warning("There are ", w, " packages starting with an archive action!",
+            call. = FALSE)
 }

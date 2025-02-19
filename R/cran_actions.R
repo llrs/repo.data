@@ -28,14 +28,19 @@ cran_actions <- function(silent = FALSE) {
     actions <- sort_by(actions, ~Package + datetime2POSIXct(Date, Time) + Action)
     rownames(actions) <- NULL
     pkg_state[["cran_actions"]] <- actions
-    warnings_actions(actions)
+    if (isTRUE(silent)) {
+        warnings_actions(actions)
+    }
     actions
 }
 
-cran_pkges_actions <- function(pkges) {
+cran_pkges_actions <- function(pkges, silent) {
     actions <- get_package_subset("cran_actions", pkges)
     first_package <- !duplicated(actions$Package)
-    warnings_actions(actions)
+
+    if (isTRUE(silent)) {
+        warnings_actions(actions)
+    }
     actions
 }
 
