@@ -43,7 +43,6 @@ package_dependencies <- function(ap) {
     )
     big_df <- do.call(rbind, l)
     mbd <- cbind(big_df, package = rep(names(l), vapply(l, NROW, numeric(1L))))
-    rownames(mbd) <- NULL
     df <- as.data.frame(mbd)
     # Conversion to package_version class because currently we can do it.
     df$version <- package_version(df$version)
@@ -71,7 +70,7 @@ split_op_version <- function(x) {
     package <- sub(pat, "\\1", x)
     w <- which(thereis_op)
     x2 <- sub(pat, "\\2", x[w])
-    pat <- "[[:space:]]*([[<>=!]+)[[:space:]]+"
+    pat <- "[[:space:]]*([[<>=!]+)[[:space:]]+(.*)"
     version[w] <- sub(pat, "\\2", x2)
     op[w] <- sub(pat, "\\1", x2)
     cbind(name = package, op = op, version = version)
