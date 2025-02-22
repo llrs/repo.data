@@ -47,8 +47,7 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     }
     all_deps <- tools::package_dependencies(deps_df$name, recursive = TRUE, which = which,
                                             db = ap[, c(fields, "Package"), drop = FALSE])
-    all_deps <- funlist(all_deps)
-    rd <- packages_dependencies(ap[intersect(all_deps, rownames(ap)), fields, drop = FALSE])
+    rd <- packages_dependencies(ap[intersect(funlist(all_deps), rownames(ap)), fields, drop = FALSE])
 
     rd2 <- sort_by(unique(rd[, c(1, 3)]), ~name + version)
     s <- split(rd2$version, rd2$name)
@@ -79,17 +78,15 @@ packages_dependencies <- function(ap) {
     l <- lapply(deps, function(x){
         l <- lapply(x, function(y){
             if (length(y) == 1 && anyNA(y)) return(NULL)
-            out <- split_op_version(y)
-        }
-        )
+            split_op_version(y)
+        })
 
         df <- do.call(rbind, l)
         if (!is.null(df)) {
             df <- cbind(df, type = rep(names(l), vapply(l, NROW, numeric(1L))))
         }
         df
-    }
-    )
+    })
     big_df <- do.call(rbind, l)
     mbd <- cbind(big_df, package = rep(names(l), vapply(l, NROW, numeric(1L))))
     df <- as.data.frame(mbd)
