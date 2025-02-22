@@ -44,8 +44,14 @@ cran_pkges_archive <- function(packages) {
         archive[packages[packages %in% names(archive)]]
     }
 
-    archive_df <- do.call(rbind, archive_sb)
-    all_packages <- rbind(archive_df, current)
+    # Convert to matrix for faster cbind
+    keep_cols <- c("mtime", "size", "uname")
+    archive_sbm <- lapply(archive_sb, function(pack) {
+        as.matrix(pack[, keep_cols])
+        })
+
+    archive_m <- do.call(rbind, archive_sbm)
+    all_packages <- rbind(archive_m, as.matrix(current[, keep_cols]))
 
     # Packages names
     archives <- vapply(archive_sb, nrow, numeric(1))
@@ -55,44 +61,45 @@ cran_pkges_archive <- function(packages) {
 
     # Return when everything is requested and it was already there.
     if (!is.null(packages)) {
-        pkges <- intersect(packages, all_packages[["package"]])
+        pkges <- intersect(packages, all_packages[, "package"])
     } else {
-        pkges <- all_packages[["package"]]
+        pkges <- all_packages[, "package"]
     }
 
     if (!is.null(pkg_state[["cran_archive"]])) {
         return(get_package_subset("cran_archive", pkges))
     }
 
-    # Convert to matrix for faster cbind
-
-    # Convert back to data.frame
-
     # Packages versions
     version <- funlist(lapply(archive_sb, rownames))
     versions <- c(version, rownames(current))
     versions <- gsub(".+_(.*)\\.tar\\.gz$", "\\1", versions)
 
-    # Packages status
-    all_packages <- cbind(all_packages, version = versions, statuss = "archived")
-    all_packages[["status"]][match(rownames(current), rownames(all_packages))] <- "current"
-
     # Subset to only the requested ones
-    all_packages <- all_packages[all_packages$package %in% pkges, , drop = FALSE]
+    all_packages <- all_packages[all_packages[, "package"] %in% pkges, , drop = FALSE]
+    # Convert back to data.frame
+    all_packages <- as.data.frame(all_packages)
+    all_packages$size <- as.numeric(all_packages$size)
+    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = "Europe/Vienna")
+
+    # Packages status
+    all_packages <- cbind(all_packages, version = versions, status = "archived")
+    all_packages$status[match(rownames(current), rownames(all_packages))] <- "current"
+
 
     # Arrange dates and data
-    all_packages <- as.data.frame(all_packages)
-    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = "Europe/Vienna")
     keep_columns <- c("package", "mtime", "version", "uname", "size", "status")
     all_packages <- sort_by(all_packages[, keep_columns, drop = FALSE], ~package + mtime)
-    colnames(all_packages)[1:4] <- c("Package", "Datetime", "Version", "User")
+    colnames(all_packages) <- c("Package", "Datetime", "Version", "User", "Size", "Status")
     rownames(all_packages) <- NULL
 
     # Save it is the complete list
     if (all(names(archive) %in% all_packages$package)) {
         save_state("cran_archive", all_packages)
     }
-    warnings_archive(all_packages)
+    if (!is.null(packages)) {
+        warnings_archive(all_packages)
+    }
     all_packages
 }
 
