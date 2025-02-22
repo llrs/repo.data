@@ -7,9 +7,9 @@
 cran_archive()
 }
 \value{
-A data.frame with 6 columns: package, archived_date, version,
-cran_team, size and status.
-It is sorted by package name and archived_date.
+A data.frame with 6 columns: Package, Date (of publication), Version,
+User, size and status (archived or current).
+It is sorted by package name and date
 }
 \description{
 Retrieve the archive and the current database.

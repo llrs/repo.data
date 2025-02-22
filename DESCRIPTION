@@ -14,11 +14,13 @@ Imports:
     tools,
     utils
 Suggests: 
-    knitr,
-    markdown
+    knitr (>= 1.49),
+    markdown,
+    rversions (>= 2.1.2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 URL: https://github.com/llrs/repo.data
 BugReports: https://github.com/llrs/repo.data/issues
+LazyData: true
