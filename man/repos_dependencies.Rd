@@ -6,6 +6,17 @@
 \usage{
 repos_dependencies(which = "all")
 }
+\arguments{
+\item{which}{a character vector listing the types of
+    dependencies, a subset of
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+    Character string \code{"all"} is shorthand for that vector,
+    character string \code{"most"} for the same vector without
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
+  }
+}
 \value{
 A data.frame with 5 columns: the name of the dependency,
 the operator (op), the version it depends the type of dependency and the package.

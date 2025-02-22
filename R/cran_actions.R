@@ -9,8 +9,6 @@
 #' @importFrom stats na.omit
 #' @importFrom utils head
 #' @keywords internal
-#' @examples
-#' actions <- cran_actions()
 cran_actions <- function(silent = FALSE) {
 
     if (!is.null(pkg_state[["cran_actions"]])) {

@@ -3,7 +3,7 @@
 #'
 #' Extract the packages dependencies, name of the dependency, operator and version
 #'  for each type and package of current repositories (`getOptions("repos")`).
-#' @inheritParams utils::available.packages
+#' @inheritParams tools::package_dependencies
 #'
 #' @returns A data.frame with 5 columns: the name of the dependency,
 #' the operator (op), the version it depends the type of dependency and the package.
