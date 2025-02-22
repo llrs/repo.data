@@ -60,6 +60,7 @@ cran_snapshot <- function(date) {
 #' @returns Last installation date from CRAN.
 #' @export
 #' @rdname cran_date
+#' @importFrom utils installed.packages
 #' @examples
 #' ip <- installed.packages()
 #' cran_date(ip)
@@ -83,6 +84,7 @@ cran_date <- function(versions) {
 
 #' @rdname cran_date
 #' @export
+#' @importFrom utils sessionInfo
 #' @examples
 #' cran_session()
 cran_session <- function(session = sessionInfo()) {

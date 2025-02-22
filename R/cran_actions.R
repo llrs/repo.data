@@ -6,6 +6,9 @@
 #' the number of manual actions taken by the volunteers).
 #'
 #' @return A data.frame with Date, Time, User, Action, Package and Version columns.
+#' @importFrom stats na.omit
+#' @importFrom utils head
+#' @keywords internal
 #' @examples
 #' actions <- cran_actions()
 cran_actions <- function(silent = FALSE) {

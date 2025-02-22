@@ -16,3 +16,4 @@ the number of manual actions taken by the volunteers).
 \examples{
 actions <- cran_actions()
 }
+\keyword{internal}
