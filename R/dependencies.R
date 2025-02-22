@@ -14,10 +14,59 @@
 repos_dependencies <- function(which = "all") {
     fields_selected <- check_which(which)
     ap <- available.packages(filters = c("CRAN", "duplicates"))
-    package_dependencies(ap[, fields_selected])
+    packages_dependencies(ap[, fields_selected])
 }
 
-package_dependencies <- function(ap) {
+
+#' Find current installations
+#'
+#' Despite the description minimal requirements find which versions are
+#' required due to dependencies.
+#' @param pkg Path to a file with
+#' @inheritParams repos_dependencies
+#'
+#' @returns A data.frame with the name, version required and version used.
+#' @export
+#'
+#' @examples
+#' pd <- package_dependencies("ggeasy")
+package_dependencies <- function(pkg = ".", which = "strong") {
+    fields <- check_which(which)
+    desc_pack <- file.path(pkg, "DESCRIPTION")
+    local_pkg <- file.exists(desc_pack)
+
+    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    # Get package dependencies recursively
+    if (local_pkg) {
+        desc <- read.dcf(desc_pack, fields = c(package_fields, "Package"))
+        deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
+        rownames(deps) <- desc[, "Package"]
+        deps_df <- packages_dependencies(deps)
+    } else {
+        deps_df <- packages_dependencies(ap[pkg, fields, drop = FALSE])
+    }
+    all_deps <- tools::package_dependencies(deps_df$name, recursive = TRUE, which = which,
+                                            db = ap[, c(fields, "Package"), drop = FALSE])
+    all_deps <- funlist(all_deps)
+    rd <- packages_dependencies(ap[intersect(all_deps, rownames(ap)), fields, drop = FALSE])
+
+    rd2 <- sort_by(unique(rd[, c(1, 3)]), ~name + version)
+    s <- split(rd2$version, rd2$name)
+    v <- lapply(s, function(x){
+        y <- x[!is.na(x)]
+        if (length(y) == 0L) {
+            return(NA)
+        }
+        as.character(y[length(y)])
+    })
+    df <- data.frame(name = names(v), required = package_version(funlist(v)))
+    m <- merge(deps_df, df, all = TRUE, sort = FALSE)
+    m <- sort_by(m, ~package+name+!is.na(version))
+    rownames(m) <- NULL
+    m
+}
+
+packages_dependencies <- function(ap) {
     # Split by Ops and version
     deps <- apply(ap, 1, strsplit, split = ",[[:space:]]*")
     names(deps) <- rownames(ap)

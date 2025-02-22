@@ -4,10 +4,10 @@
 \alias{package_date}
 \title{Find earliest date of compatibility}
 \usage{
-package_date(dir = ".", which = "all")
+package_date(pkg = ".", which = "all")
 }
 \arguments{
-\item{dir}{Path to the package folder or name of the package published.}
+\item{pkg}{Path to the package folder or name of the package published.}
 
 \item{which}{a character vector listing the types of
     dependencies, a subset of

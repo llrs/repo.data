@@ -5,7 +5,7 @@
 #'
 #' Currently this function assumes that packages only use ">=" and not other operators.
 #' This might change on the future if other operators are more used.
-#' @param dir Path to the package folder or name of the package published.
+#' @param pkg Path to the package folder or name of the package published.
 #' @inheritParams tools::package_dependencies
 #'
 #' @returns A vector with the datetimes of the published package (or current
@@ -13,9 +13,9 @@
 #' @export
 #' @examples
 #' package_date("ABACUS")
-package_date <- function(dir = ".", which = "all") {
+package_date <- function(pkg = ".", which = "all") {
     fields <- check_which(which)
-    desc_pack <- file.path(dir, "DESCRIPTION")
+    desc_pack <- file.path(pkg, "DESCRIPTION")
     local_pkg <- file.exists(desc_pack)
 
     # Get package dependencies.
@@ -24,10 +24,10 @@ package_date <- function(dir = ".", which = "all") {
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
-        deps_df <- package_dependencies(deps)
+        deps_df <- packages_dependencies(deps)
     } else {
         rd <- repos_dependencies()
-        deps_df <- rd[rd$package == dir, ]
+        deps_df <- rd[rd$package == pkg, ]
     }
 
     if (!local_pkg && NROW(deps_df) == 0) {
@@ -35,13 +35,12 @@ package_date <- function(dir = ".", which = "all") {
     }
 
     if (!local_pkg) {
-        p <- cran_pkges_archive(dir)
+        p <- cran_pkges_archive(pkg)
         date_package <- p$Datetime[nrow(p)]
     }
 
     # We don't need base packages
-    base <- rownames(installed.packages(priority = "base"))
-    deps_df <- deps_df[!deps_df$name %in% base, , drop = FALSE]
+    deps_df <- deps_df[!deps_df$name %in% BASE, , drop = FALSE]
     which_r <- deps_df$name == "R"
 
     # Use cran_archive, to get the release dates of packages.
