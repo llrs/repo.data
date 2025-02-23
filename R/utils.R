@@ -1,6 +1,8 @@
-save_state <- function(name, fun) {
+save_state <- function(name, out) {
     if (is.null(pkg_state[[name]])) {
-        pkg_state[[name]] <- fun
+        message("Calculating ", name, ", this might take a bit.\n",
+                "Next call will be faster.")
+        pkg_state[[name]] <- out
     }
     pkg_state[[name]]
 }
