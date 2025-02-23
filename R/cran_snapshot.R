@@ -68,18 +68,46 @@ cran_date <- function(versions) {
     if ((!is.data.frame(versions) | !is.matrix(versions)) & !all(c("Package", "Version") %in% colnames(versions))) {
         stop("Versions should be a data.frame with 'Package' and 'Version' columns.")
     }
-
+    if (any(versions$Package %in% BASE)) {
+        versions <- versions[!versions$Package %in% c(BASE, "R"), , drop = FALSE]
+    }
+    if (!nrow(versions)) {
+        warning("No packages to find a date on CRAN.")
+        return(NA)
+    }
 
     ca_packages <- cran_pkges_archive(versions[, "Package"])
-    ca <- save_state("cran_archive", cran_archive())
+    if (!nrow(ca_packages)) {
+        warning("No packages on CRAN to find a date.")
+        return(NA)
+    }
+    ca_packages <- get_package_subset("cran_archive", versions$Package)
+    if (is.null(ca_packages)) {
+        ca <- save_state("cran_archive", cran_archive())
+        ca_packages <- ca[ca$Package %in% versions$Package, , drop = FALSE]
+    }
+    versions$Version <- as.character(versions$Version)
     # match packages names and versions
-    ca_packages <- ca[ca$package %in% versions[, "Package"], ]
-    ca_v <- apply(ca_packages[, c("package", "version")], 1, paste, collapse = "_")
+    ca_v <- apply(ca_packages[, c("Package", "Version")], 1, paste, collapse = "_")
+    # if version is NA match to whatever
     v_v <- apply(versions[, c("Package", "Version")], 1, paste, collapse = "_")
+    missing_v <- anyNA(versions[, "Version"])
+    if (missing_v) {
+        any_v <- is.na(versions[, "Version"])
+        ca_p <- ca_packages[ca_packages$Package %in% versions[any_v, "Package"],
+                            c("Package", "Datetime")]
+        d <- ca_p$Datetime[!duplicated(ca_p$Package)]
+    }
+
     m <- match(v_v, ca_v)
 
+    if (missing_v) {
+        d <- c(ca_packages$Datetime[na.omit(m)], d)
+    } else {
+        d <- ca_packages$Datetime[na.omit(m)]
+    }
     # Find range of dates where was last updated.
-    as.Date(max(ca_packages$published_date[na.omit(m)], na.rm = TRUE))
+    as.Date(max(d, na.rm = TRUE))
 }
 
 #' @rdname cran_date
