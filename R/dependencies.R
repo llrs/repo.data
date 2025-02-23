@@ -14,7 +14,13 @@
 repos_dependencies <- function(which = "all") {
     fields_selected <- check_which(which)
     ap <- available.packages(filters = c("CRAN", "duplicates"))
-    packages_dependencies(ap[, fields_selected])
+    pd <- save_state("repos_dependencies", packages_dependencies(ap[, fields_selected]))
+    if (all(fields_selected %in% pd$type)) {
+        return(pd[fields_selected %in% pd$type, , drop = FALSE])
+    }
+    # Remove and calculate it again when new fields are required.
+    pkg_state[["repos_dependencies"]] <- NULL
+    save_state("repos_dependencies", packages_dependencies(ap[, fields_selected]))
 }
 
 
@@ -36,6 +42,8 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     local_pkg <- file.exists(desc_pack)
 
     ap <- available.packages(filters = c("CRAN", "duplicates"))
+
+    all_deps_df <- repos_dependencies(which = fields)
     # Get package dependencies recursively
     if (local_pkg) {
         desc <- read.dcf(desc_pack, fields = c(package_fields, "Package"))
@@ -43,11 +51,22 @@ package_dependencies <- function(pkg = ".", which = "strong") {
         rownames(deps) <- desc[, "Package"]
         deps_df <- packages_dependencies(deps)
     } else {
-        deps_df <- packages_dependencies(ap[pkg, fields, drop = FALSE])
+        pkgs_n_fields <- all_deps_df$type %in% fields & all_deps_df$package %in% pkg
+        deps_df <- all_deps_df[pkgs_n_fields, , drop = FALSE]
     }
     all_deps <- tools::package_dependencies(deps_df$name, recursive = TRUE, which = which,
                                             db = ap[, c(fields, "Package"), drop = FALSE])
-    rd <- packages_dependencies(ap[intersect(funlist(all_deps), rownames(ap)), fields, drop = FALSE])
+
+    # Some package depend on Additional_repositories or Bioconductor
+    unique_deps <- unique(funlist(all_deps))
+    deps_available <- intersect(unique_deps, c(rownames(ap), BASE))
+    if (length(deps_available) < length(unique_deps)) {
+        warning(paste0("Some dependencies are not on available repositories: ", paste(setdiff(unique_deps, deps_available), collapse = ", ")," .\n",
+                "Check for Additional_repositories or other repositories (Bioconductor.org?)."),
+                immediate. = TRUE)
+    }
+    pkgs_n_fields <- all_deps_df$type %in% fields & all_deps_df$package %in% deps_available
+    rd <- all_deps_df[pkgs_n_fields, , drop = FALSE]
 
     rd2 <- sort_by(unique(rd[, c(1, 3)]), ~name + version)
     s <- split(rd2$version, rd2$name)
@@ -66,30 +85,34 @@ package_dependencies <- function(pkg = ".", which = "strong") {
 }
 
 packages_dependencies <- function(ap) {
-    # Split by Ops and version
+    stopifnot(is.matrix(ap))
+
+    # Split by dependency, requires a matrix
     deps <- apply(ap, 1, strsplit, split = ",[[:space:]]*")
     names(deps) <- rownames(ap)
 
-    with_deps <- lengths(deps) > 0
-    pkg_with_deps <- names(deps)[with_deps]
-    deps <- deps[with_deps]
+    deps <- deps[lengths(deps) > 0]
     packages <- rep(names(deps), lengths(deps))
 
-    l <- lapply(deps, function(x){
-        l <- lapply(x, function(y){
-            if (length(y) == 1 && anyNA(y)) return(NULL)
-            split_op_version(y)
+    l <- lapply(deps, function(pkg){
+        l_pkg <- lapply(pkg, function(dependency_f){
+            if (length(dependency_f) == 1 && anyNA(dependency_f)) return(NULL)
+            split_op_version(dependency_f)
         })
 
-        df <- do.call(rbind, l)
-        if (!is.null(df)) {
-            df <- cbind(df, type = rep(names(l), vapply(l, NROW, numeric(1L))))
+        df_pkg <- do.call(rbind, l_pkg)
+        if (!is.null(df_pkg)) {
+            df_pkg <- cbind(df_pkg,
+                            type = rep(names(l_pkg),
+                                       vapply(l_pkg, NROW, numeric(1L))))
         }
-        df
+        df_pkg
     })
-    big_df <- do.call(rbind, l)
-    mbd <- cbind(big_df, package = rep(names(l), vapply(l, NROW, numeric(1L))))
-    df <- as.data.frame(mbd)
+
+    m_all <- cbind(do.call(rbind, l),
+                   package = rep(names(l),
+                                 vapply(l, NROW, numeric(1L))))
+    df <- as.data.frame(m_all)
     # Conversion to package_version class because currently we can do it.
     df$version <- package_version(df$version)
     df <- sort_by(df, ~package + type + name)
@@ -125,7 +148,7 @@ split_op_version <- function(x) {
 
 
 check_which <- function(x){
-    if (x %in% c("all", "strong", "most")) {
+    if (all(x %in% c("all", "strong", "most"))) {
         fields_selected <- switch(x,
                                   all = package_fields,
                                   most = head(package_fields, -1),
@@ -133,5 +156,20 @@ check_which <- function(x){
     } else {
         fields_selected <- intersect(package_fields, x)
     }
+
+    if (!length(fields_selected)) {
+        stop(sQuote("which"), " should be one of all, strong, most.\n",
+             "Or several valid fields should be passed: ", paste(package_fields, collapse = ", "), ".")
+    }
     fields_selected
+}
+
+#' Transform the output of package_dependencies to
+helper <- function(x) {
+
+    deps_higher_v <- (!is.na(x$version) & x$version != x$required)
+    deps_req_v <- !is.na(x$required)
+    version <- x$version
+    version[deps_higher_v | deps_req_v] <- x$required
+    data.frame(Package = x$name, Version = version)
 }
