@@ -76,14 +76,13 @@ cran_pkges_archive <- function(packages) {
     versions <- gsub(".+_(.*)\\.tar\\.gz$", "\\1", versions)
 
     # Subset to only the requested ones
+    all_packages <- cbind(all_packages, version = versions, status = "archived")
     all_packages <- all_packages[all_packages[, "package"] %in% pkges, , drop = FALSE]
     # Convert back to data.frame
     all_packages <- as.data.frame(all_packages)
     all_packages$size <- as.numeric(all_packages$size)
     all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = "Europe/Vienna")
-
     # Packages status
-    all_packages <- cbind(all_packages, version = versions, status = "archived")
     all_packages$status[match(rownames(current), rownames(all_packages))] <- "current"
 
 
@@ -126,8 +125,17 @@ cran_archive_dates <- function() {
 warnings_archive <- function(all_packages) {
     dup_arch <- duplicated(all_packages[, c("Package", "Version")])
     if (any(dup_arch)) {
-        warning("There are ", sum(dup_arch), " packages both archived and published\n",
-                "This indicate manual CRAN intervention.",
-                call. = FALSE)
+        w <- which(dup_arch)
+        dups <- all_packages[c(w - 1, w), c("Package", "Status"), drop = FALSE]
+        double_status <- vapply(unique(dups$Package), function(pkg) {
+            length(unique(dups$Status[dups$Package == pkg])) == 2L
+        }, logical(1L))
+
+        if (double_status) {
+            warning("There are ", sum(double_status), " packages both archived and published\n",
+                    "This indicate manual CRAN intervention.",
+                    call. = FALSE, immediate. = TRUE)
+
+        }
     }
 }
