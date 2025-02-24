@@ -1,7 +1,9 @@
-save_state <- function(name, out) {
+save_state <- function(name, out, verbose = TRUE) {
     if (is.null(pkg_state[[name]])) {
-        message("Calculating ", name, ", this might take a bit.\n",
+        if (verbose) {
+        message("Retrieving ", name, ", this might take a bit.\n",
                 "Next call will be faster.")
+        }
         pkg_state[[name]] <- out
     }
     pkg_state[[name]]

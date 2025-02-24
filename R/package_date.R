@@ -13,7 +13,9 @@
 #' @export
 #' @examples
 #' package_date("ABACUS")
-package_date <- function(pkg = ".", which = "all") {
+#' package_date("paramtest")
+#' package_date("afmToolkit") # Dependency was removed from CRAN
+package_date <- function(pkg = ".", which = "strong") {
     fields <- check_which(which)
     desc_pack <- file.path(pkg, "DESCRIPTION")
     local_pkg <- file.exists(desc_pack)
@@ -26,15 +28,8 @@ package_date <- function(pkg = ".", which = "all") {
         date_package <- Sys.Date()
         deps_df <- packages_dependencies(deps)
     } else {
-        rd <- repos_dependencies()
-        deps_df <- rd[rd$package == pkg, ]
-    }
-
-    if (!local_pkg && NROW(deps_df) == 0) {
-        stop("Package couldn't be found on the current repositories or locally.")
-    }
-
-    if (!local_pkg) {
+        rd <- repos_dependencies(which = fields)
+        deps_df <- rd[rd$package == pkg, , drop = FALSE]
         p <- cran_pkges_archive(pkg)
         date_package <- p$Datetime[nrow(p)]
     }
@@ -43,37 +38,64 @@ package_date <- function(pkg = ".", which = "all") {
     deps_df <- deps_df[!deps_df$name %in% BASE, , drop = FALSE]
     which_r <- deps_df$name == "R"
 
+    if (sum(which_r) && !requireNamespace("rversions", quietly = TRUE)) {
+        warning("To take into consideration R versions too please install package rversions.")
+    }
+    r_versions <- sum(which_r) && requireNamespace("rversions", quietly = TRUE)
+
+    if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
+        return(c(Published = date_package, deps_available = NA))
+    } else if (!local_pkg & nrow(p) == 0L) {
+        stop("Package ", sQuote(pkg), " wasn't found on past or current CRAN archive or locally.")
+    }
+
     # Use cran_archive, to get the release dates of packages.
     archive <- cran_pkges_archive(deps_df$name[!which_r])
     missing_packages <- setdiff(deps_df$name[!which_r], archive$Package)
 
     # abn depends on INLA that is an Additional_repositories
     if (length(missing_packages)) {
-        warning("Some package publication date could not be obtained.\n",
-                "This might indicate packages outside CRAN.", call. = FALSE)
+        warning("Package publication date could not be obtained for: ",
+                paste(missing_packages, collapse = ", "), ".\n",
+                "This indicate packages outside CRAN repository.", call. = FALSE,
+                immediate. = TRUE)
     }
-    archive$Version <- package_version(archive$Version)
+
+    # Filter to those that were available at the time
+    pkg_available <- archive[archive$Package %in% deps_df$name & archive$Datetime < date_package, , drop = FALSE]
+    removed_from_archive <- setdiff(deps_df$name, c(pkg_available$Package, "R"))
+
+    if (length(removed_from_archive)) {
+        warning("Package's dependencies archive were removed from CRAN after package publication: ",
+                paste(removed_from_archive, collapse = ", "),
+                call. = FALSE, immediate. = FALSE)
+    }
 
     # Get versions required or initial package release date
-    ver_match <- merge(archive, deps_df[!which_r, , drop = FALSE], sort = FALSE,
+    ver_match <- merge(pkg_available, deps_df[!which_r, , drop = FALSE], sort = FALSE,
           by.x = c("Package", "Version"), by.y = c("name", "version"))
     m_vm <- match(ver_match$Package, deps_df$name)
-    deps_df$Datetime <- as.POSIXct(Sys.time(), tz = "Europe/Vienna")
-    deps_df$Datetime[m_vm] <- ver_match$Datetime
+    deps_df$Datetime <- as.POSIXct(NA, tz = "Europe/Vienna")
+    if (length(m_vm)) {
+        deps_df$Datetime[m_vm] <- ver_match$Datetime
+    }
 
-    pkg_no_ver_match <- setdiff(deps_df$name[!which_r], ver_match$Package)
-    ver_no_match <- archive[archive$Package %in% pkg_no_ver_match, , drop = FALSE]
-    ver_no_match <- ver_no_match[!duplicated(ver_no_match$Package), , drop = FALSE]
-    m_vnm <- match(ver_no_match$Package, deps_df$name)
-    deps_df$Datetime[m_vnm] <- ver_no_match$Datetime
+    # Add date to those not version specified
+    pkg_no_ver_match <- deps_df$name[setdiff(seq_len(nrow(deps_df)), m_vm)]
+    pkg_no_ver_match <- setdiff(pkg_no_ver_match, c(removed_from_archive, "R"))
+    if (length(pkg_no_ver_match)) {
+        ver_no_match <- pkg_available[pkg_available$Package %in% pkg_no_ver_match, , drop = FALSE]
+        ver_no_match <- ver_no_match[!duplicated(ver_no_match$Package, fromLast = TRUE), ,
+                                     drop = FALSE]
+        m_vnm <- match(ver_no_match$Package, deps_df$name)
+        deps_df$Datetime[m_vnm] <- ver_no_match$Datetime
+    }
 
-    if (requireNamespace("rversions", quietly = TRUE)) {
+    # Find release date of R version
+    if (r_versions) {
         rver <- rversions::r_versions()
         ver_position <- match(deps_df$version[which_r], package_version(rver$version))
         deps_df$Datetime[which_r] <- rver$date[ver_position]
-    } else {
-        deps_df <- deps_df[-which(which_r), , drop = FALSE]
-        warning("To take into consideration R versions too please install package rversions")
     }
 
     # Get the latest date.

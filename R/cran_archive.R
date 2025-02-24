@@ -35,8 +35,8 @@ cran_pkges_archive <- function(packages) {
         }
     }
     # Download data
-    archive <- save_state("archive", tools::CRAN_archive_db())
-    current <- save_state("current", tools::CRAN_current_db())
+    archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
+    current <- save_state("current", tools::CRAN_current_db(), FALSE)
 
     archive_sb <- if (is.null(packages)) {
         archive
