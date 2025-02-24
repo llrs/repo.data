@@ -123,19 +123,12 @@ cran_archive_dates <- function() {
 }
 
 warnings_archive <- function(all_packages) {
+    # Rely on order of all_packages by date
     dup_arch <- duplicated(all_packages[, c("Package", "Version")])
-    if (any(dup_arch)) {
-        w <- which(dup_arch)
-        dups <- all_packages[c(w - 1, w), c("Package", "Status"), drop = FALSE]
-        double_status <- vapply(unique(dups$Package), function(pkg) {
-            length(unique(dups$Status[dups$Package == pkg])) == 2L
-        }, logical(1L))
-
-        if (double_status) {
-            warning("There are ", sum(double_status), " packages both archived and published\n",
-                    "This indicate manual CRAN intervention.",
-                    call. = FALSE, immediate. = TRUE)
-
-        }
+    dups_arch <- sum(all_packages[, "Status"][dup_arch] == "current")
+    if (dups_arch) {
+        warning("There are ", dups_arch, " packages both archived and published\n",
+                "This indicate manual CRAN intervention.",
+                call. = FALSE, immediate. = TRUE)
     }
 }
