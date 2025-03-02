@@ -13,14 +13,15 @@
 #' head(rd)
 repos_dependencies <- function(which = "all") {
     fields_selected <- check_which(which)
-    ap <- available.packages(filters = c("CRAN", "duplicates"))
-    pd <- save_state("repos_dependencies", packages_dependencies(ap[, fields_selected]))
+    pd <- save_state("repos_dependencies", packages_dependencies(
+        available.packages(filters = c("CRAN", "duplicates"))[, fields_selected]))
     if (all(fields_selected %in% pd$type)) {
         return(pd[fields_selected %in% pd$type, , drop = FALSE])
     }
     # Remove and calculate it again when new fields are required.
     pkg_state[["repos_dependencies"]] <- NULL
-    save_state("repos_dependencies", packages_dependencies(ap[, fields_selected]))
+    save_state("repos_dependencies", packages_dependencies(
+        available.packages(filters = c("CRAN", "duplicates"))[, fields_selected]))
 }
 
 
@@ -41,8 +42,6 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     desc_pack <- file.path(pkg, "DESCRIPTION")
     local_pkg <- file.exists(desc_pack)
 
-    ap <- available.packages(filters = c("CRAN", "duplicates"))
-
     all_deps_df <- repos_dependencies(which = fields)
     # Get package dependencies recursively
     if (local_pkg) {
@@ -54,6 +53,7 @@ package_dependencies <- function(pkg = ".", which = "strong") {
         pkgs_n_fields <- all_deps_df$type %in% fields & all_deps_df$package %in% pkg
         deps_df <- all_deps_df[pkgs_n_fields, , drop = FALSE]
     }
+    ap <- available.packages(filters = c("CRAN", "duplicates"))
     all_deps <- tools::package_dependencies(deps_df$name, recursive = TRUE, which = which,
                                             db = ap[, c(fields, "Package"), drop = FALSE])
 
@@ -82,6 +82,28 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     m <- sort_by(m, ~package+name+!is.na(version))
     rownames(m) <- NULL
     m
+}
+
+
+#' Check versions
+#'
+#' Helper function to detect which package have a required version on the
+#' dependencies that could be upgraded.
+#'
+#' @param deps The output of [package_dependencies()] or any data.frame with a
+#' version and required column.
+#' @seealso [package_dependencies()]
+#' @returns The data.frame filtered with some relevant rows
+#' @export
+#' @examples
+#' pd <- package_dependencies("arrow")
+#' update_dependencies(pd)
+update_dependencies <- function(deps) {
+    deps_higher_v <- (!is.na(deps$version) & package_version(deps$version) < package_version(deps$required))
+    deps_req_v <- is.na(deps$version) & !is.na(deps$required)
+    deps <- deps[which(deps_higher_v | deps_req_v), , drop = FALSE]
+    rownames(deps) <- NULL
+
 }
 
 packages_dependencies <- function(ap) {

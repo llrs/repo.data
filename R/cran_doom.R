@@ -21,16 +21,12 @@
 #' cd <- cran_doom()
 #' head(cd$details)
 cran_doom <- function(which = "strong", bioc = FALSE) {
-    which_pkges <- match.arg(which, c("strong", "all", "most"))
+    fields_selected <- check_which(which)
 
-    db <- tools::CRAN_package_db()
+    db <- save_state("CRAN_db", tools::CRAN_package_db())
     db$repo <- "CRAN"
     if (isTRUE(bioc)) {
-        bioc_repo <- paste0("https://bioconductor.org/packages/", bioc_version(),
-                            "/bioc")
-        bioc <- available.packages(repos = bioc_repo)
-        bioc <- as.data.frame(bioc)
-        bioc$repo <- "Bioconductor"
+        bioc <- bioc_available(repos = "/bioc")
         columns <- intersect(colnames(bioc), colnames(db))
         db_all <- rbind(db[, columns], bioc[, columns])
     } else {
@@ -39,7 +35,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
 
     danger <- db[!is.na(db$Deadline), c("Package", "Deadline")]
     danger$Deadline <- as.Date(danger$Deadline)
-    tp <- tools::package_dependencies(danger$Package, db = db_all, which = which_pkges,
+    tp <- tools::package_dependencies(danger$Package, db = db_all, which = fields_selected,
                                 reverse = TRUE, recursive = TRUE)
     rev_dep <- names(tp)[lengths(tp) > 0]
     # Time given by CRAN on the warnings

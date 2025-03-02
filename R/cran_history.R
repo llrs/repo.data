@@ -12,9 +12,10 @@
 #' @examples
 #' cran_history
 cran_history <- function() {
-    archive <- cran_archive()
-    actions <- cran_actions()
-    comments <- cran_comments()
+
+    archive <- save_state("cran_archive", cran_archive())
+    actions <- save_state("cran_actions", cran_actions())
+    comments <- save_state("cran_comments", cran_comments())
 
     archive$Date <- strftime(archive$Datetime, "%F")
     archive$Time <- strftime(archive$Datetime, "%T")
