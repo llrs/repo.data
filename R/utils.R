@@ -73,7 +73,7 @@ check_r_version <- function() {
 
 datetime2POSIXct <- function(date, time, tz = "Europe/Vienna") {
     moment <- paste(date, time)
-    moment[is.na(date)] <- NA
+    moment[is.na(date) & is.na(time)] <- NA
     moment <- as.POSIXct(moment, tz = tz)
     moment
 }
