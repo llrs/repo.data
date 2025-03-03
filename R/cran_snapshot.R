@@ -105,6 +105,7 @@ cran_date <- function(versions) {
         d <- c(ca_packages$Datetime[na.omit(m)], d)
     } else {
         d <- ca_packages$Datetime[na.omit(m)]
+
     }
     # Find range of dates where was last updated.
     as.Date(max(d, na.rm = TRUE))

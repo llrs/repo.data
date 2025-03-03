@@ -1,0 +1,64 @@
+---
+title: "repo.data"
+output: markdown::html_format
+vignette: >
+  %\VignetteIndexEntry{repo.data}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(repo.data)
+```
+
+Let's think a package that has some required dependencies, but its dependencies have some requirements too.
+The maintainer might consider if he can raise the version requirements. 
+
+```{r package_dependencies}
+pd <- package_dependencies("ggeasy")
+head(pd)
+# Discover the requirements that can be upgraded
+update_dependencies(pd)
+```
+
+We can also be interested on since when did a package can be installed we can use:
+
+```{r}
+package_date("ggeasy")
+```
+
+Which will show when it was published and when the R dependencies required become available. 
+
+
+##  Other utils
+
+When were packages last updated?
+
+```{r cran_sessions}
+cran_session()
+```
+
+
+This uses the `sessionInfo()` output to find the date of last installation.
+There is a sister function for an arbitrary data:
+
+```{r cran_date}
+versions <- data.frame(Package = c("dplyr", "Rcpp"),
+                       Version = c("1.1.4", "0.8.9"))
+versions
+cran_date(versions)
+```
+
+This date doesn't mean that all packages are up to date to this given date (this can be easily checked with `old.packages()`)
+
+```{r sessions}
+sessionInfo()
+```
+

@@ -23,7 +23,7 @@ package_date <- function(pkg = ".", which = "strong") {
 
     # Get package dependencies.
     if (local_pkg) {
-        desc <- read.dcf(desc_pack, fields = c(package_fields, "Package"))
+        desc <- read.dcf(desc_pack, fields = c(PACKAGE_FIELDS, "Package"))
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
@@ -104,6 +104,13 @@ package_date <- function(pkg = ".", which = "strong") {
 }
 
 
+#' Package dates
+#'
+#' Same as package_date but using CRAN's actions instead of public archive.
+#'
+#' This provides information about when a package was removed or archived for a
+#' more accurate estimation.
+#' @keywords internal
 #' @examples
 #' package_date_actions("afmToolkit")
 package_date_actions <- function(pkg = ".", which = "strong") {
@@ -113,7 +120,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
 
     # Get package dependencies.
     if (local_pkg) {
-        desc <- read.dcf(desc_pack, fields = c(package_fields, "Package"))
+        desc <- read.dcf(desc_pack, fields = c(PACKAGE_FIELDS, "Package"))
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()

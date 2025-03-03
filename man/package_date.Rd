@@ -4,7 +4,7 @@
 \alias{package_date}
 \title{Find earliest date of compatibility}
 \usage{
-package_date(pkg = ".", which = "all")
+package_date(pkg = ".", which = "strong")
 }
 \arguments{
 \item{pkg}{Path to the package folder or name of the package published.}
@@ -21,10 +21,10 @@ package_date(pkg = ".", which = "all")
 }
 \value{
 A vector with the datetimes of the published package (or current
-time if not published) and the date the required restrictions are met.
+date if not published) and the datetime the required restrictions were met.
 }
 \description{
-Search the DESCRIPTION file for the release dates of dependencies and return the earliest date.
+Search the DESCRIPTION file for the release dates of dependencies and return the earliest date according to CRAN's archive.
 This is the date at which the package could be installed.
 }
 \details{
@@ -33,4 +33,7 @@ This might change on the future if other operators are more used.
 }
 \examples{
 package_date("ABACUS")
+package_date("paramtest")
+package_date("Seurat") # Dependencies on packages not on CRAN
+package_date("afmToolkit") # Dependency was removed from CRAN
 }

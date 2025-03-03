@@ -4,7 +4,7 @@
 \alias{bioc_cran_archived}
 \title{Bioconductor packages using CRAN archived packages}
 \usage{
-bioc_cran_archived()
+bioc_cran_archived(which = "strong")
 }
 \value{
 A character vector with the name of the Bioconductor packages

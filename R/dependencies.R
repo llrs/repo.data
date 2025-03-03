@@ -38,24 +38,25 @@ repos_dependencies <- function(which = "all") {
 #' @examples
 #' pd <- package_dependencies("ggeasy")
 package_dependencies <- function(pkg = ".", which = "strong") {
-    fields <- check_which(which)
+    fields_selected <- check_which(which)
     desc_pack <- file.path(pkg, "DESCRIPTION")
     local_pkg <- file.exists(desc_pack)
 
-    all_deps_df <- repos_dependencies(which = fields)
+    all_deps_df <- repos_dependencies(which = fields_selected)
     # Get package dependencies recursively
     if (local_pkg) {
-        desc <- read.dcf(desc_pack, fields = c(package_fields, "Package"))
-        deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
+        desc <- read.dcf(desc_pack, fields = c(PACKAGE_FIELDS, "Package"))
+        deps <- desc[, intersect(fields_selected, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         deps_df <- packages_dependencies(deps)
     } else {
-        pkgs_n_fields <- all_deps_df$type %in% fields & all_deps_df$package %in% pkg
+        pkgs_n_fields <- all_deps_df$type %in% fields_selected & all_deps_df$package %in% pkg
         deps_df <- all_deps_df[pkgs_n_fields, , drop = FALSE]
     }
-    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    ap <- save_state("repos_dependencies", packages_dependencies(
+        available.packages(filters = c("CRAN", "duplicates"))[, fields_selected]))
     all_deps <- tools::package_dependencies(deps_df$name, recursive = TRUE, which = which,
-                                            db = ap[, c(fields, "Package"), drop = FALSE])
+                                            db = ap[, c(fields_selected, "Package"), drop = FALSE])
 
     # Some package depend on Additional_repositories or Bioconductor
     unique_deps <- unique(funlist(all_deps))
@@ -172,26 +173,16 @@ split_op_version <- function(x) {
 check_which <- function(x){
     if (all(x %in% c("all", "strong", "most"))) {
         fields_selected <- switch(x,
-                                  all = package_fields,
-                                  most = head(package_fields, -1),
-                                  strong = head(package_fields, 3))
+                                  all = PACKAGE_FIELDS,
+                                  most = head(PACKAGE_FIELDS, -1),
+                                  strong = head(PACKAGE_FIELDS, 3))
     } else {
-        fields_selected <- intersect(package_fields, x)
+        fields_selected <- intersect(PACKAGE_FIELDS, x)
     }
 
     if (!length(fields_selected)) {
         stop(sQuote("which"), " should be one of all, strong, most.\n",
-             "Or several valid fields should be passed: ", paste(package_fields, collapse = ", "), ".")
+             "Or several valid fields should be passed: ", paste(PACKAGE_FIELDS, collapse = ", "), ".")
     }
     fields_selected
-}
-
-#' Transform the output of package_dependencies to
-helper <- function(x) {
-
-    deps_higher_v <- (!is.na(x$version) & x$version != x$required)
-    deps_req_v <- !is.na(x$required)
-    version <- x$version
-    version[deps_higher_v | deps_req_v] <- x$required
-    data.frame(Package = x$name, Version = version)
 }

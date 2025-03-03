@@ -26,7 +26,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     db <- save_state("CRAN_db", tools::CRAN_package_db())
     db$repo <- "CRAN"
     if (isTRUE(bioc)) {
-        bioc <- bioc_available(repos = "/bioc")
+        bioc <- bioc_available()
         columns <- intersect(colnames(bioc), colnames(db))
         db_all <- rbind(db[, columns], bioc[, columns])
     } else {
