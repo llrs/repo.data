@@ -37,6 +37,7 @@ repos_dependencies <- function(which = "all") {
 #'
 #' @examples
 #' pd <- package_dependencies("ggeasy")
+#' head(pd)
 package_dependencies <- function(pkg = ".", which = "strong") {
     fields_selected <- check_which(which)
     desc_pack <- file.path(pkg, "DESCRIPTION")
@@ -53,20 +54,20 @@ package_dependencies <- function(pkg = ".", which = "strong") {
         pkgs_n_fields <- all_deps_df$type %in% fields_selected & all_deps_df$package %in% pkg
         deps_df <- all_deps_df[pkgs_n_fields, , drop = FALSE]
     }
-    ap <- save_state("repos_dependencies", packages_dependencies(
-        available.packages(filters = c("CRAN", "duplicates"))[, fields_selected]))
+    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    rd <- save_state("repos_dependencies", packages_dependencies(ap[, fields_selected, drop = FALSE]))
     all_deps <- tools::package_dependencies(deps_df$name, recursive = TRUE, which = which,
                                             db = ap[, c(fields_selected, "Package"), drop = FALSE])
 
     # Some package depend on Additional_repositories or Bioconductor
     unique_deps <- unique(funlist(all_deps))
-    deps_available <- intersect(unique_deps, c(rownames(ap), BASE))
+    deps_available <- intersect(unique_deps, c(rownames(rd), BASE))
     if (length(deps_available) < length(unique_deps)) {
         warning(paste0("Some dependencies are not on available repositories: ", paste(setdiff(unique_deps, deps_available), collapse = ", ")," .\n",
                 "Check for Additional_repositories or other repositories (Bioconductor.org?)."),
                 immediate. = TRUE)
     }
-    pkgs_n_fields <- all_deps_df$type %in% fields & all_deps_df$package %in% deps_available
+    pkgs_n_fields <- all_deps_df$type %in% fields_selected & all_deps_df$package %in% deps_available
     rd <- all_deps_df[pkgs_n_fields, , drop = FALSE]
 
     rd2 <- sort_by(unique(rd[, c(1, 3)]), ~name + version)

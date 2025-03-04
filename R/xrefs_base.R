@@ -1,3 +1,12 @@
+#' R's links
+#'
+#' Retrieve links on R documentation files.
+#' @returns A data.frame with the links on R's files.
+#' It has 7 columns
+#' @export
+#' @examples
+#' bl <- base_links()
+#' head(bl)
 base_links <- function() {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     br <- save_state("base_rdxrefs", xrefs2df(tools::base_rdxrefs_db()))
