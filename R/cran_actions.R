@@ -8,9 +8,6 @@
 #' @return A data.frame with Date, Time, User, Action, Package and Version columns.
 #' @importFrom stats na.omit
 #' @importFrom utils head
-#' @examples
-#' cran_actions()
-#'
 #' @keywords internal
 cran_actions <- function(silent = FALSE) {
 

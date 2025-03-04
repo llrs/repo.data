@@ -17,16 +17,17 @@ base_links <- function() {
                                   to_target = character()))
 
     br2 <- cbind(br, as.matrix(s))
-    ab <- alias_base()
-    dab <- dup_base_alias()
-    br3 <- fill_xref(br2, ab, dab$Alias)
-
-    br4 <- merge(br3, ab,
-                 by.x = c("to_pkg", "to_target"),
-                 by.y = c("Package", "Target"),
-                 all.x = TRUE, sort = FALSE)
-    colnames(br4)[c(5, 6, 7)] <- c("Rd_origin", "from_pkg", "Rd_destiny")
-    br4 <- br4[, c("Rd_origin", "from_pkg", "Anchor", "Target", "to_pkg", "to_target", "Rd_destiny")]
+    # ab <- alias_base()
+    # dab <- dup_base_alias()
+    # br3 <- fill_xref(br2, ab, dab$Alias)
+    #
+    # br4 <- merge(br3, ab,
+    #              by.x = c("to_pkg", "to_target"),
+    #              by.y = c("Package", "Target"),
+    #              all.x = TRUE, sort = FALSE)
+    # colnames(br4)[c(5, 6, 7)] <- c("Rd_origin", "from_pkg", "Rd_destiny")
+    # br4 <- br4[, c("Rd_origin", "from_pkg", "Anchor", "Target", "to_pkg", "to_target", "Rd_destiny")]
+    br2
 
 }
 

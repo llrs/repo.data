@@ -6,7 +6,7 @@
 #' depending on CRAN packages that were archived.
 #' @export
 #' @examples
-#' bioc_cran_archived()
+#' # bca <- bioc_cran_archived()
 bioc_cran_archived <- function(which = "strong") {
     fields_selected <- check_which(which)
     bioc <- bioc_available()
@@ -57,13 +57,13 @@ bioc_archive <- function() {
     v <- paste0(3, ".", 1:21)
     bv <- lapply(v, bioc_views)
     versions <- rep(v, vapply(bv, NROW, numeric(1L)))
-    m1 <- do.call(merge, bv, all = TRUE)
+    # m1 <- do.call(merge, bv, all = TRUE)
 
     v2 <- paste0(2, ".", 1:14)
     bv2 <- lapply(v2, bioc_views)
     versions2 <- rep(v2, vapply(bv2, NROW, numeric(1L)))
-    m2 <- do.call(merge, bv2, all = TRUE)
-    m <- merge(m1, m2, all = TRUE)
+    # m2 <- do.call(merge, bv2, all = TRUE)
+    # m <- merge(m1, m2, all = TRUE)
 }
 
 

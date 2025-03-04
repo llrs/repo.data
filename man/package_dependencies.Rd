@@ -28,4 +28,5 @@ required due to dependencies.
 }
 \examples{
 pd <- package_dependencies("ggeasy")
+head(pd)
 }

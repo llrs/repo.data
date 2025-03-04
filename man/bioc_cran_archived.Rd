@@ -15,5 +15,5 @@ Checks on the 4 Bioconductor repositories which packages depend on a CRAN
 archived package.
 }
 \examples{
-bioc_cran_archived()
+# bca <- bioc_cran_archived()
 }
