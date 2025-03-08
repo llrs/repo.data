@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">repo.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>CRAN's links</h1>
-      <small class="dont-index">Source: <a href="https://github.com/llrs/repo.data/blob/default/R/xrefs_cran.R" class="external-link"><code>R/xrefs_cran.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/llrs/repo.data/blob/default/R/cran_xrefs.R" class="external-link"><code>R/cran_xrefs.R</code></a></small>
       <div class="d-none name"><code>cran_links.Rd</code></div>
     </div>
 
@@ -47,7 +47,14 @@
 
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data.frame with the links on CRAN's packages</p>
+    <p>A data.frame with the links on CRAN's packages.
+It has 4 columns: Package, Anchor, Target and Source.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_rdxrefs_db()</a></code></p>
+<p>Other links:
+<code><a href="base_links.html">base_links</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -56,13 +63,13 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving cran_rdxrefs, this might take a bit.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Next call will be faster.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Target Anchor        Source Package</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       a3        a3-package.Rd      A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    a3.lm        a3-package.Rd      A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 print.A3        a3-package.Rd      A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  plot.A3        a3-package.Rd      A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    a3.lm                a3.Rd      A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  a3.base                a3.Rd      A3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Package        Source   Target Anchor</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      A3 a3-package.Rd       a3       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      A3 a3-package.Rd    a3.lm       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      A3 a3-package.Rd print.A3       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      A3 a3-package.Rd  plot.A3       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      A3         a3.Rd    a3.lm       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      A3         a3.Rd  a3.base       </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
