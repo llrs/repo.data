@@ -15,29 +15,31 @@ base_links <- function() {
     as.data.frame(br)
 }
 
+base_cross_links <- function() {
+    links <- base_links()
+}
 
-resolve_base_links <- function(links){
+resolve_base_links <- function(links, alias){
 
-    s <- strcapture("([[:alnum:].]*{2,})?[:=]?(.*)",
+    links_targets <- strcapture("([[:alnum:].]*{2,})?[:=]?(.*)",
                x = links[, "Anchor"],
                proto = data.frame(to_pkg = character(),
                                   to_target = character()))
 
-    br2 <- cbind(links, as.matrix(s))
-    ab <- base_alias()
-    dab <- base_dup_alias(ab)
-    br3 <- fill_xref_base(br2, ab, dab$Alias)
+    br2 <- cbind(links, as.matrix(links_targets))
+    bal <- alias
+    dab <- base_dup_alias(bal)
+    br3 <- fill_xref_base(br2, bal, dab$Alias)
 
-    br4 <- merge(br3, ab,
+    br4 <- merge(br3, bal,
                  by.x = c("to_pkg", "to_target"),
                  by.y = c("Package", "Target"),
                  all.x = TRUE, sort = FALSE)
 
-    # colnames(br4)[c(5, 6, 7)] <- c("Rd_origin", "from_pkg", "Rd_destiny")
-    br4 <- br4[, c("Rd_origin", "from_pkg", "Anchor", "Target", "to_pkg", "to_target", "Rd_destiny")]
-    # Double check
-    br5 <- rbind(br4[!is.na(br4$Rd_destiny), ], br3) |>
-        sort_by(~Package + Rd_origin)
+    colnames(br4)[c(5, 6, 7)] <- c("Rd_origin", "from_pkg", "Rd_linked")
+    br4 <- br4[, c("from_pkg", "Rd_origin", "to_pkg",  "Rd_linked")]
+    br5 <- sort_by(br4, ~from_pkg + Rd_origin)
+    unique(br5)
 }
 
 xrefs2df <- function(x) {

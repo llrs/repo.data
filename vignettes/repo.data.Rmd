@@ -30,7 +30,7 @@ update_dependencies(pd)
 
 We can also be interested on since when did a package can be installed we can use:
 
-```{r}
+```{r package_date}
 package_date("ggeasy")
 ```
 
@@ -57,6 +57,19 @@ cran_date(versions)
 ```
 
 This date doesn't mean that all packages are up to date to this given date (this can be easily checked with `old.packages()`)
+
+## Risk of being archived
+
+If you ever wonder which packages are at risk you can use `cran_doom()`:
+
+```{r}
+cd <- cran_doom(bioc = TRUE)
+cd[c("time_till_last", "last_archived", "npackages")]
+knitr::kable(cd$details)
+```
+
+
+For reproducibility here is the session info:  
 
 ```{r sessions}
 sessionInfo()
