@@ -15,20 +15,19 @@ base_links <- function() {
     as.data.frame(br)
 }
 
-base_cross_links <- function() {
-    links <- base_links()
-}
-
-resolve_base_links <- function(links, alias){
-
+links_to <- function(links) {
     links_targets <- strcapture("([[:alnum:].]*{2,})?[:=]?(.*)",
-               x = links[, "Anchor"],
-               proto = data.frame(to_pkg = character(),
-                                  to_target = character()))
+                                x = links[, "Anchor"],
+                                proto = data.frame(to_pkg = character(),
+                                                   to_target = character()))
 
     br2 <- cbind(links, as.matrix(links_targets))
+}
+
+resolve_base_links <- function(links = base_links(), alias = base_alias()){
+    br2 <- links_to(links)
     bal <- alias
-    dab <- base_dup_alias(bal)
+    dab <- dup_alias(bal)
     br3 <- fill_xref_base(br2, bal, dab$Alias)
 
     br4 <- merge(br3, bal,

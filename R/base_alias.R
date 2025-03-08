@@ -14,18 +14,6 @@ base_alias <- function() {
     as.data.frame(base_aliases[, c("Package", "Source", "Target")])
 }
 
-# Do not use with CRAN as it would cause incorrect values
-base_dup_alias <- function(ab = alias_base()) {
-    df <- duplicated(ab[, "Target"])
-    dup_targets <- ab[df, "Target"]
-    pkg <- ab[ab[, "Target"] %in% dup_targets, "Package"]
-    v <- vapply(split(pkg, dup_targets), paste, collapse = ", ", FUN.VALUE = character(1L))
-    df <- data.frame(Alias = dup_targets, Packages = v)
-    rownames(df) <- NULL
-    df
-}
-
-
 alias2df <- function(x){
     l <- lapply(x, function(x) {
         cbind(Source = rep(names(x), lengths(x)),
