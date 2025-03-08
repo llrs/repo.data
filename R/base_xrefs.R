@@ -1,8 +1,10 @@
-#' R's links
+#' Base R's links
 #'
 #' Retrieve links on R documentation files.
 #' @returns A data.frame with the links on R's files.
-#' It has 7 columns
+#' It has 4 columns: Package, Anchor, Target and Source.
+#' @family links
+#' @seealso [tools::base_rdxrefs_db()]
 #' @export
 #' @examples
 #' bl <- base_links()
@@ -10,37 +12,43 @@
 base_links <- function() {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     br <- save_state("base_rdxrefs", xrefs2df(tools::base_rdxrefs_db()))
+    as.data.frame(br)
+}
+
+
+resolve_base_links <- function(links){
 
     s <- strcapture("([[:alnum:].]*{2,})?[:=]?(.*)",
-               x = br[, "Anchor"],
+               x = links[, "Anchor"],
                proto = data.frame(to_pkg = character(),
                                   to_target = character()))
 
-    br2 <- cbind(br, as.matrix(s))
-    # ab <- alias_base()
-    # dab <- dup_base_alias()
-    # br3 <- fill_xref(br2, ab, dab$Alias)
-    #
-    # br4 <- merge(br3, ab,
-    #              by.x = c("to_pkg", "to_target"),
-    #              by.y = c("Package", "Target"),
-    #              all.x = TRUE, sort = FALSE)
-    # colnames(br4)[c(5, 6, 7)] <- c("Rd_origin", "from_pkg", "Rd_destiny")
-    # br4 <- br4[, c("Rd_origin", "from_pkg", "Anchor", "Target", "to_pkg", "to_target", "Rd_destiny")]
-    br2
+    br2 <- cbind(links, as.matrix(s))
+    ab <- base_alias()
+    dab <- base_dup_alias(ab)
+    br3 <- fill_xref_base(br2, ab, dab$Alias)
 
+    br4 <- merge(br3, ab,
+                 by.x = c("to_pkg", "to_target"),
+                 by.y = c("Package", "Target"),
+                 all.x = TRUE, sort = FALSE)
+
+    # colnames(br4)[c(5, 6, 7)] <- c("Rd_origin", "from_pkg", "Rd_destiny")
+    br4 <- br4[, c("Rd_origin", "from_pkg", "Anchor", "Target", "to_pkg", "to_target", "Rd_destiny")]
+    # Double check
+    br5 <- rbind(br4[!is.na(br4$Rd_destiny), ], br3) |>
+        sort_by(~Package + Rd_origin)
 }
 
 xrefs2df <- function(x) {
     rdxrefsDF <- do.call(rbind, x)
-    rdxrefsDF <- cbind(rdxrefsDF, Package =rep(names(x), vapply(x, NROW, numeric(1L))))
+    rdxrefsDF <- cbind(rdxrefsDF, Package = rep(names(x), vapply(x, NROW, numeric(1L))))
     rownames(rdxrefsDF) <- NULL
-    rdxrefsDF[, c("Source", "Target", "Anchor", "Package"), drop = FALSE]
+    rdxrefsDF[, c("Package", "Source", "Anchor", "Target"), drop = FALSE]
     rdxrefsDF
 }
 
-
-fill_xref <- function(refs, alias, duplicate_alias) {
+fill_xref_base <- function(refs, alias, duplicate_alias) {
 
     # Anchors with packages
     anchor <- refs[, "Anchor"]

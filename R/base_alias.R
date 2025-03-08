@@ -1,11 +1,21 @@
-alias_base <- function() {
+#' Base R's alias
+#'
+#' Retrieve alias available on R.
+#' @returns A data.frame with three columns: Package, Source and Target.
+#' @export
+#' @family alias
+#' @seealso [tools::base_aliases_db()]
+#' @examples
+#' ba <- base_alias()
+#' head(ba)
+base_alias <- function() {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     base_aliases <- save_state("base_aliases", alias2df(tools::base_aliases_db()))
-    as.data.frame(base_aliases)
+    as.data.frame(base_aliases[, c("Package", "Source", "Target")])
 }
 
-dup_base_alias <- function() {
-    ab <- alias_base()
+# Do not use with CRAN as it would cause incorrect values
+base_dup_alias <- function(ab = alias_base()) {
     df <- duplicated(ab[, "Target"])
     dup_targets <- ab[df, "Target"]
     pkg <- ab[ab[, "Target"] %in% dup_targets, "Package"]

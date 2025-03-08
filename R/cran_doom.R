@@ -16,6 +16,7 @@
 #'  Name, date affected, affected directly, repository, times it is affected
 #'  (by archival causing issues.)
 #' @importFrom utils available.packages
+#' @seealso [tools::CRAN_package_db()]
 #' @export
 #' @examples
 #' cd <- cran_doom()

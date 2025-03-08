@@ -17,3 +17,6 @@ archived package.
 \examples{
 # bca <- bioc_cran_archived()
 }
+\seealso{
+\code{\link[tools:CRANtools]{tools::CRAN_package_db()}}
+}

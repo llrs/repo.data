@@ -5,6 +5,7 @@
 #' @returns A character vector with the name of the Bioconductor packages
 #' depending on CRAN packages that were archived.
 #' @export
+#' @seealso [tools::CRAN_package_db()]
 #' @examples
 #' # bca <- bioc_cran_archived()
 bioc_cran_archived <- function(which = "strong") {
@@ -54,6 +55,9 @@ bioc_views <- function(version = bioc_version()) {
 }
 
 bioc_archive <- function() {
+    # TODO convert this to extract the dates of the latest publication of the package.
+    # As no new packages are added until the next release we can assume they were
+    # on the date most packages were updated
     v <- paste0(3, ".", 1:21)
     bv <- lapply(v, bioc_views)
     versions <- rep(v, vapply(bv, NROW, numeric(1L)))
