@@ -12,12 +12,15 @@
 base_help_pages_not_linked <- function() {
     bal <- base_alias()
     bl <- base_links()
-    rbl <- resolve_base_links(bl, bal)
+    bl2 <- split_anchor(bl)
+    rbl <- targets2files(bl2, bal)
+
+    browser()
     alias_cols <- c("Package", "Source")
-    links_cols <- c("from_pkg", "Rd_origin")
+    links_cols <- c("from_pkg", "from_Rd")
     ubal <- unique(bal[, alias_cols])
 
-    links_cols2 <- c("to_pkg", "Rd_linked")
+    links_cols2 <- c("to_pkg", "to_Rd")
     pages <- merge(ubal, unique(rbl[, c(links_cols2, links_cols)]),
                    by.x = alias_cols, by.y = links_cols2,
                    all.x = TRUE, all.y = FALSE, sort = FALSE)
@@ -40,12 +43,15 @@ base_help_pages_wo_links <- function() {
 
     bal <- base_alias()
     bl <- base_links()
-    rbl <- resolve_base_links(bl, bal)
+    bl2 <- split_anchor(bl)
+    # rbl <- resolve_base_links(bl, bal)
+    rbl <- targets2files(bl2, bal)
     alias_cols <- c("Package", "Source")
-    links_cols <- c("from_pkg", "Rd_origin")
+    links_cols <- c("from_pkg", "from_Rd")
     ubal <- unique(bal[, alias_cols])
 
-    pages2 <- merge(ubal, unique(rbl[, c(links_cols, "to_pkg", "Rd_linked")]),
+    links_cols2 <- c("to_pkg", "to_Rd")
+    pages2 <- merge(ubal, unique(rbl[, c(links_cols, links_cols2)]),
                    by.x = alias_cols, by.y = links_cols,
                    all.x = TRUE, all.y = FALSE, sort = FALSE)
     p <- sort_by(pages2[is.na(pages2$to_pkg), alias_cols, drop = FALSE], ~Package + Source )
@@ -69,9 +75,11 @@ base_help_cliques <- function() {
     }
     bal <- base_alias()
     bl <- base_links()
-    rbl <- resolve_base_links(bl, bal)
-    df_links <- data.frame(from = paste0(rbl$from_pkg, ":", rbl$Rd_origin),
-               to = paste0(rbl$to_pkg, ":", rbl$Rd_linked))
+    bl2 <- split_anchor(bl)
+    # rbl <- resolve_base_links(bl, bal)
+    rbl <- targets2files(bl2, bal)
+    df_links <- data.frame(from = paste0(rbl$from_pkg, ":", rbl$from_Rd),
+               to = paste0(rbl$to_pkg, ":", rbl$to_Rd))
     df_links <- unique(df_links)
 
     graph <- igraph::graph_from_edgelist(as.matrix(df_links))
@@ -82,11 +90,11 @@ base_help_cliques <- function() {
 
     l <- strsplit(unlist(isolated_help, FALSE, FALSE), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
-    colnames(df) <- c("from_pkg", "Rd_origin")
+    colnames(df) <- c("from_pkg", "from_Rd")
     lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]
     df$clique <- rep(seq_len(length(lengths_graph2)), times = lengths_graph2)
-    m <- merge(df, unique(rbl), all.x = TRUE, by = c("from_pkg", "Rd_origin"))
-    msorted <- sort_by(m, ~clique + from_pkg + Rd_origin)
+    m <- merge(df, unique(rbl[, -4]), all.x = TRUE, by = c("from_pkg", "from_Rd"))
+    msorted <- sort_by(m, ~clique + from_pkg + from_Rd)
     rownames(msorted) <- NULL
     msorted
 }
