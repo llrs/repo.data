@@ -6,6 +6,9 @@
 \usage{
 cran_actions(packages = NULL, silent = FALSE)
 }
+\arguments{
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
+}
 \value{
 A data.frame with Date, Time, User, Action, Package and Version columns.
 }

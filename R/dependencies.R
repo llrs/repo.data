@@ -29,7 +29,7 @@ repos_dependencies <- function(which = "all") {
 #'
 #' Despite the description minimal requirements find which versions are
 #' required due to dependencies.
-#' @param pkg Path to a file with
+#' @param pkg Path to a file with a DESCRIPTION file or a the name of a package.
 #' @inheritParams repos_dependencies
 #'
 #' @returns A data.frame with the name, version required and version used.

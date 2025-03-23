@@ -6,16 +6,29 @@
 \usage{
 bioc_cran_archived(which = "strong")
 }
+\arguments{
+\item{which}{a character vector listing the types of
+    dependencies, a subset of
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+    Character string \code{"all"} is shorthand for that vector,
+    character string \code{"most"} for the same vector without
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
+  }
+}
 \value{
-A character vector with the name of the Bioconductor packages
-depending on CRAN packages that were archived.
+A data.frame with the name of the Bioconductor packages
+depending on CRAN packages that were archived (on Missing column) and the
+number of missing packages (n).
 }
 \description{
 Checks on the 4 Bioconductor repositories which packages depend on a CRAN
 archived package.
 }
 \examples{
-# bca <- bioc_cran_archived()
+bca <- bioc_cran_archived()
+head(bca)
 }
 \seealso{
 \code{\link[tools:CRANtools]{tools::CRAN_package_db()}}

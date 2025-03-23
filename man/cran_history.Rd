@@ -7,6 +7,9 @@ CRAN at any given time.}
 \usage{
 cran_history(packages = NULL)
 }
+\arguments{
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
+}
 \value{
 A data.frame with the information to recreate CRAN at any point before today.
 }

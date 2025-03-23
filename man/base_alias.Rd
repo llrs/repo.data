@@ -4,10 +4,10 @@
 \alias{base_alias}
 \title{Base R's alias}
 \usage{
-base_alias(package = NULL)
+base_alias(packages = NULL)
 }
 \arguments{
-\item{package}{A vector with packages or \code{NULL} for all packages.}
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
 }
 \value{
 A data.frame with three columns: Package, Source and Target.
@@ -20,7 +20,7 @@ ba <- base_alias()
 head(ba)
 }
 \seealso{
-The raw source of the data is: \code{\link[tools:basetools]{tools::base_aliases_db()}}
+The raw source of the data is: \code{tools::base_aliases_db()}
 
 Other alias: 
 \code{\link{cran_alias}()}

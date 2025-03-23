@@ -1,13 +1,16 @@
 #' Bioconductor packages using CRAN archived packages
 #'
-#' Checks on the 4 Bioconductor repositories which packages depend on a CRAN
+#' Checks on the 4 Bioconductor repositories which packages depend on a
 #' archived package.
-#' @returns A character vector with the name of the Bioconductor packages
-#' depending on CRAN packages that were archived.
+#' @inheritParams repos_dependencies
+#' @returns A data.frame with the name of the Bioconductor packages
+#' depending on archived packages (on Archived column) and the
+#' number of missing packages (n).
 #' @export
 #' @seealso [tools::CRAN_package_db()]
 #' @examples
-#' # bca <- bioc_cran_archived()
+#' bca <- bioc_cran_archived()
+#' head(bca)
 bioc_cran_archived <- function(which = "strong") {
     fields_selected <- check_which(which)
     bioc <- bioc_available()
@@ -15,11 +18,18 @@ bioc_cran_archived <- function(which = "strong") {
     columns <- intersect(colnames(bioc), colnames(db))
     db_all <- rbind(db[, columns], bioc[, columns])
 
-    pkg_dep <- tools::package_dependencies(bioc[, "Package"], db = db_all, which = fields_selected)
-    pkges <- c(db$Package, rownames(bioc))
+    pkg_dep <- tools::package_dependencies(bioc[, "Package"], db = db_all,
+                                           which = fields_selected)
+    # Add base R packages
+    base_r <- tools::standard_package_names()$base
+    pkges <- c(db$Package, rownames(bioc), base_r)
     missing_dep <- lapply(pkg_dep, setdiff, y = pkges)
     lmissing_dep <- lengths(missing_dep)
-    names(lmissing_dep)[lmissing_dep >= 1L]
+    p <- names(lmissing_dep)[lmissing_dep >= 1L]
+    p_missing <- vapply(missing_dep[lmissing_dep >= 1L], paste0, character(1L), collapse = ", ")
+    df <- data.frame(Package = p, Archived = p_missing, n = lmissing_dep[lmissing_dep >= 1L])
+    rownames(df) <- NULL
+    df
 }
 
 #' @importFrom utils read.csv

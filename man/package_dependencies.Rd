@@ -7,7 +7,7 @@
 package_dependencies(pkg = ".", which = "strong")
 }
 \arguments{
-\item{pkg}{Path to a file with}
+\item{pkg}{Path to a file with a DESCRIPTION file or a the name of a package.}
 
 \item{which}{a character vector listing the types of
     dependencies, a subset of

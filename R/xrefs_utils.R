@@ -71,7 +71,7 @@ targets2files <- function(links, alias) {
     targets_nodup <- !w_pkg & !to_target %in% dalias
     match_target <- match(to_target[targets_nodup], alias[, "Target"])
     links[targets_nodup, "to_pkg"] <- alias[match_target, "Package"]
-    links[, "to_pkg"][is.na(links[, "to_pkg"])] <- ""
+    links[is.na(links[, "to_pkg"]), "to_pkg"] <- ""
 
     # Duplicated alias
     targets_dup <- !w_pkg & to_target %in% dalias
@@ -94,7 +94,6 @@ targets2files <- function(links, alias) {
                            by.x = c("to_pkg", "to_target"),
                            by.y = c("Package", "Target"),
                            all.x = TRUE, sort = FALSE)
-
     # Dealing with links that are different per OS.
     path_x <- grep("/", links_w_files$Source.x, fixed = TRUE)
     path_y <- grep("/", links_w_files$Source.y, fixed = TRUE)
@@ -115,7 +114,7 @@ targets2files <- function(links, alias) {
         removing_idx <- diff_paths_x[dup_sources][dup_x]
     }
     if (any(lengths(table_x) < 2L)) {
-        warning("Some pages point to different places according to the OS",
+        warning("Some pages point to different places according to the OS.",
                 call. = FALSE)
     }
 
@@ -129,7 +128,7 @@ targets2files <- function(links, alias) {
         removing_idy <- which(dups)[which(dup_y)]
     }
     if (length(diff_paths_y) && !all(dup_y))  {
-        warning("Some links are distinct depending on the OS",
+        warning("Some links are distinct depending on the OS.",
                 call. = FALSE)
     }
 
@@ -148,6 +147,7 @@ targets2files <- function(links, alias) {
 
     # Prepare for the output
     colnames(links_w_files) <- c("to_pkg", "to_target", "from_pkg", "from_Rd", "n", "to_Rd")
+    links_w_files[is.na(links_w_files[, "to_Rd"]), "to_Rd"] <- ""
     links_w_files <- links_w_files[, c(3, 4, 1, 2, 6, 5)]
     links_w_files <- sort_by(links_w_files, ~from_pkg+from_Rd+to_target+to_Rd)
 }

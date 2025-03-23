@@ -22,9 +22,9 @@
 #' cc <- cran_comments()
 #' head(cc)
 #' }
-cran_comments <- function(package = NULL) {
+cran_comments <- function(packages = NULL) {
     save_state("cran_comments", cran_all_comments(), verbose = FALSE)
-    get_package_subset("cran_comments", package)
+    get_package_subset("cran_comments", packages)
 }
 
 

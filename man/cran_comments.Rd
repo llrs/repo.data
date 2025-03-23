@@ -4,10 +4,10 @@
 \alias{cran_comments}
 \title{CRAN comments}
 \usage{
-cran_comments(package = NULL)
+cran_comments(packages = NULL)
 }
 \arguments{
-\item{package}{A vector with packages or \code{NULL} for all packages.}
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
 }
 \value{
 A data.frame with four columns: package, comment, date and action.

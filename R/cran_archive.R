@@ -5,9 +5,10 @@
 #' There are some packages with NA in version, those are version names that do
 #' not pass current [package_version()] with `strict = TRUE`.
 #' Other packages might have been on CRAN but could have been removed.
+#' @inheritParams base_alias
 #' @returns A data.frame with 6 columns: Package, Date (of publication), Version,
 #'  User, size and status (archived or current).
-#'  It is sorted by package name and date
+#'  It is sorted by package name and date.
 #' @export
 #' @seealso [CRAN_archive_db()], [CRAN_current_db()], [cran_comments()].
 #' @examples
@@ -18,7 +19,7 @@
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     save_state("cran_archive", cran_pkges_archive())
-    get_package_subset("cran_archive", packages)
+    out <- get_package_subset("cran_archive", packages)
     warnings_archive(out)
 }
 

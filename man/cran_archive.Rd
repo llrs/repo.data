@@ -6,10 +6,13 @@
 \usage{
 cran_archive(packages = NULL)
 }
+\arguments{
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
+}
 \value{
 A data.frame with 6 columns: Package, Date (of publication), Version,
 User, size and status (archived or current).
-It is sorted by package name and date
+It is sorted by package name and date.
 }
 \description{
 Retrieve the archive and the current database.

@@ -88,24 +88,27 @@ uniq_count <- function(x, name = "n") {
     names(ids) <- NULL
     uid <- unique(x)
     rownames(uid) <- NULL
-    uid[, name] <- ids
+    uid[, name] <- as.numeric(ids)
     uid
 }
 
 add_uniq_count <- function(x, name = "n", old_name = "n") {
     w <- which(colnames(x) %in% old_name)
-    id <- apply(x[, -w], 1, paste0, collapse = ";")
+    id <- apply(x[, -w, drop = FALSE], 1, paste0, collapse = ";")
     dup_f <- duplicated(id)
     dup_r <- duplicated(id, fromLast = TRUE)
     dup <- dup_f | dup_r
 
     y <- x[!dup, ]
-    x_dup <- split()
-    df <- tapply(x[dup, ], id[dup], function(xy, column_to_add) {
-        y <- unique(xy[, -column_to_add])
+    df <- tapply(x[dup, , drop = FALSE], id[dup], function(xy, column_to_add) {
+        y <- unique(xy[, -column_to_add, drop = FALSE])
         y[, old_name] <- sum(xy[, column_to_add])
-        y
+        as.matrix(y)
     }, column_to_add = w)
     dff <- do.call(rbind, df)
     out <- rbind(y, dff)
+    out <- as.data.frame(out)
+    out$n <- as.numeric(out$n)
+    rownames(out) <- NULL
+    out
 }

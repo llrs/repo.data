@@ -12,7 +12,7 @@
 cran_help_pages_not_linked <- function() {
     cal <- cran_alias()
     cl <- cran_links()
-    rbl <- save_state("cran_all_links", cran_all_links(), verbose = FALSE)
+    rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
     ubal <- unique(cal[, alias_cols])
@@ -40,7 +40,7 @@ cran_help_pages_wo_links <- function() {
 
     cal <- cran_alias()
     cl <- cran_links()
-    rbl <- save_state("cran_all_links", cran_all_links(), verbose = FALSE)
+    rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
     ubal <- unique(cal[, alias_cols])
@@ -67,7 +67,7 @@ cran_help_cliques <- function() {
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find closed networks.")
     }
-    cal <- save_state("cran_all_links", cran_all_links(), verbose = FALSE)
+    cal <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     df_links <- data.frame(from = paste0(cal$from_pkg, ":", cal$from_Rd),
                            to = paste0(cal$to_pkg, ":", cal$to_Rd))
     df_links <- unique(df_links)
@@ -76,13 +76,12 @@ cran_help_cliques <- function() {
 
     graph_decomposed <- igraph::decompose(graph)
     lengths_graph <- lengths(graph_decomposed)
-    isolated_help <- sapply(graph_decomposed[-which.max(lengths_graph)], igraph::vertex_attr)
+    isolated_help <- sapply(graph_decomposed, igraph::vertex_attr)
 
     l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
-    lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]
-    df$clique <- rep(seq_len(length(lengths_graph2)), times = lengths_graph2)
+    df$clique <- rep(seq_len(length(lengths_graph)), times = lengths_graph)
     m <- merge(df, unique(cal), all.x = TRUE, by = c("from_pkg", "from_Rd"))
     msorted <- sort_by(m, ~clique + from_pkg + from_Rd)
     rownames(msorted) <- NULL
