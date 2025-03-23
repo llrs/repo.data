@@ -4,7 +4,7 @@
 \alias{base_links}
 \title{Base R's links}
 \usage{
-base_links()
+base_links(packages = NULL)
 }
 \value{
 A data.frame with the links on R's files.
@@ -18,7 +18,7 @@ bl <- base_links()
 head(bl)
 }
 \seealso{
-\code{\link[tools:basetools]{tools::base_rdxrefs_db()}}
+The raw source of the data is: \code{\link[tools:basetools]{tools::base_rdxrefs_db()}}
 
 Other links: 
 \code{\link{cran_links}()}

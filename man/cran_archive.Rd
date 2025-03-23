@@ -4,7 +4,7 @@
 \alias{cran_archive}
 \title{Retrieve CRAN archive}
 \usage{
-cran_archive()
+cran_archive(packages = NULL)
 }
 \value{
 A data.frame with 6 columns: Package, Date (of publication), Version,

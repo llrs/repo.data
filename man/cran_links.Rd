@@ -4,7 +4,10 @@
 \alias{cran_links}
 \title{CRAN's links}
 \usage{
-cran_links()
+cran_links(package = NULL)
+}
+\arguments{
+\item{package}{A vector with packages or \code{NULL} for all packages.}
 }
 \value{
 A data.frame with the links on CRAN's packages.
@@ -18,7 +21,7 @@ cl <- cran_links()
 head(cl)
 }
 \seealso{
-\code{\link[tools:CRANtools]{tools::CRAN_rdxrefs_db()}}
+The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_rdxrefs_db()}}
 
 Other links: 
 \code{\link{base_links}()}

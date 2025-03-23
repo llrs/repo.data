@@ -1,5 +1,4 @@
 
-
 #' CRAN comments
 #'
 #' CRAN volunteers document since ~2009 why they archive packages.
@@ -14,6 +13,7 @@
 #' let me know if you think this can be improved.
 #' Other actions can be described on multiple comments/lines or out of order.
 #' Compare with the original file in case of doubts.
+#' @inheritParams base_alias
 #' @returns A data.frame with four columns: package, comment, date and action.
 #' @references Original file: <https://cran.r-project.org/src/contrib/PACKAGES.in>
 #' @export
@@ -22,9 +22,14 @@
 #' cc <- cran_comments()
 #' head(cc)
 #' }
-cran_comments <- function() {
-    file <- save_state("comments", read_CRAN(CRAN_baseurl(),
-                                             "/src/contrib/PACKAGES.in"))
+cran_comments <- function(package = NULL) {
+    save_state("cran_comments", cran_all_comments(), verbose = FALSE)
+    get_package_subset("cran_comments", package)
+}
+
+
+cran_all_comments <- function() {
+    file <- save_state("comments", read_CRAN("/src/contrib/PACKAGES.in"))
     file <- as.data.frame(file)
     comments_df <- extract_field(file, field = "X-CRAN-Comment")
     history_df <- extract_field(file, field = "X-CRAN-History")
@@ -36,8 +41,7 @@ cran_comments <- function() {
     fh$action[edit & !is.na(edit)] <- paste0(fh$action[edit & !is.na(edit)], "d")
     rownames(fh) <- NULL
 
-    pkg_state[["cran_comments"]] <- fh
-    fh
+    save_state("cran_comments", fh, verbose = FALSE)
 }
 
 
@@ -67,7 +71,7 @@ merge_comments <- function(df, column) {
     # Do not remove those rows that weren't merged
     rows_diff_pkg <- mapply(seq, from = starts[diff_pkg],
                             to = ends[diff_pkg])
-    df <- df[-setdiff(rows_no_column, unlist(rows_diff_pkg, FALSE, FALSE)), ]
+    df <- df[-setdiff(rows_no_column, funlist(rows_diff_pkg)), ]
     rownames(df) <- NULL
     df
 }
@@ -82,8 +86,8 @@ extract_field <- function(file,
     # Extract multiline comments
 
     comments_l <- lapply(strsplit(file[[field]], "[\n]+"),
-                         function(x) {trimws(unlist(x, FALSE, FALSE))})
-    comments_c <- unlist(comments_l, FALSE, FALSE)
+                         function(x) {trimws(funlist(x))})
+    comments_c <- funlist(comments_l)
     df <- data.frame(package = rep(file$Package, lengths(comments_l)),
                      comment = comments_c)
     comments_df <- cbind(df,
@@ -106,9 +110,4 @@ extract_field <- function(file,
 }
 
 
-cran_comments_pkg <- function(package) {
-    cc <- save_state("cran_comments", cran_comments())
-    cc_pkg <- cc[cc$package == package, ]
-    rownames(cc_pkg) <- NULL
-    cc_pkg
-}
+

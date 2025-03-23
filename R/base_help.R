@@ -15,7 +15,6 @@ base_help_pages_not_linked <- function() {
     bl2 <- split_anchor(bl)
     rbl <- targets2files(bl2, bal)
 
-    browser()
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
     ubal <- unique(bal[, alias_cols])
@@ -44,7 +43,6 @@ base_help_pages_wo_links <- function() {
     bal <- base_alias()
     bl <- base_links()
     bl2 <- split_anchor(bl)
-    # rbl <- resolve_base_links(bl, bal)
     rbl <- targets2files(bl2, bal)
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
@@ -70,13 +68,12 @@ base_help_pages_wo_links <- function() {
 #' @examples
 #' base_help_cliques()
 base_help_cliques <- function() {
-    if (!requireNamespace("igraph", quietly = TRUE)) {
+    if (!check_installed("igraph")) {
         stop("This function requires igraph to find closed networks.")
     }
     bal <- base_alias()
     bl <- base_links()
     bl2 <- split_anchor(bl)
-    # rbl <- resolve_base_links(bl, bal)
     rbl <- targets2files(bl2, bal)
     df_links <- data.frame(from = paste0(rbl$from_pkg, ":", rbl$from_Rd),
                to = paste0(rbl$to_pkg, ":", rbl$to_Rd))
@@ -88,7 +85,7 @@ base_help_cliques <- function() {
     lengths_graph <- lengths(graph_decomposed)
     isolated_help <- sapply(graph_decomposed[-which.max(lengths_graph)], igraph::vertex_attr)
 
-    l <- strsplit(unlist(isolated_help, FALSE, FALSE), ":", fixed = TRUE)
+    l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
     lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]

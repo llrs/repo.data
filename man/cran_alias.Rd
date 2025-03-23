@@ -4,7 +4,10 @@
 \alias{cran_alias}
 \title{CRAN's alias}
 \usage{
-cran_alias()
+cran_alias(package = NULL)
+}
+\arguments{
+\item{package}{A vector with packages or \code{NULL} for all packages.}
 }
 \value{
 A data.frame with three columns: Package, Source and Target.
@@ -17,7 +20,7 @@ ca <- cran_alias()
 head(ca)
 }
 \seealso{
-\code{\link[tools:CRANtools]{tools::CRAN_aliases_db()}}
+The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_aliases_db()}}
 
 Other alias: 
 \code{\link{base_alias}()}

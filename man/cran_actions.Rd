@@ -4,7 +4,7 @@
 \alias{cran_actions}
 \title{Look at the CRAN actions db}
 \usage{
-cran_actions(silent = FALSE)
+cran_actions(packages = NULL, silent = FALSE)
 }
 \value{
 A data.frame with Date, Time, User, Action, Package and Version columns.

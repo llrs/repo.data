@@ -4,13 +4,23 @@
 #'
 #' CRAN tracks movements of packages and the actions used (for example to report
 #' the number of manual actions taken by the volunteers).
-#'
+#' @inheritParams base_alias
 #' @return A data.frame with Date, Time, User, Action, Package and Version columns.
 #' @importFrom stats na.omit
 #' @importFrom utils head
 #' @keywords internal
-cran_actions <- function(silent = FALSE) {
+cran_actions <- function(packages = NULL, silent = FALSE) {
+    save_state("cran_action", cran_all_actions())
+    actions <- get_package_subset("cran_actions", packages)
+    first_package <- !duplicated(actions$Package)
 
+    if (isTRUE(silent)) {
+        warnings_actions(actions)
+    }
+    actions
+}
+
+cran_all_actions <- function() {
     if (!is.null(pkg_state[["cran_actions"]])) {
         return(pkg_state[["cran_actions"]])
     }
@@ -29,22 +39,8 @@ cran_actions <- function(silent = FALSE) {
     actions <- sort_by(actions, ~Package + datetime2POSIXct(Date, Time) + Action)
     rownames(actions) <- NULL
     pkg_state[["cran_actions"]] <- actions
-    if (isTRUE(silent)) {
-        warnings_actions(actions)
-    }
     actions
 }
-
-cran_pkges_actions <- function(pkges, silent) {
-    actions <- get_package_subset("cran_actions", pkges)
-    first_package <- !duplicated(actions$Package)
-
-    if (isTRUE(silent)) {
-        warnings_actions(actions)
-    }
-    actions
-}
-
 
 warnings_actions <- function(actions) {
     first_package <- !duplicated(actions$Package)

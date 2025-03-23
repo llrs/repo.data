@@ -5,7 +5,7 @@
 \title{It uses available information to provide the most accurate information of
 CRAN at any given time.}
 \usage{
-cran_history()
+cran_history(packages = NULL)
 }
 \value{
 A data.frame with the information to recreate CRAN at any point before today.

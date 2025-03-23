@@ -1,25 +1,19 @@
 #' Base R's alias
 #'
 #' Retrieve alias available on R.
+#' @param package A vector with packages or `NULL` for all packages.
 #' @returns A data.frame with three columns: Package, Source and Target.
 #' @export
 #' @family alias
-#' @seealso [tools::base_aliases_db()]
+#' @seealso The raw source of the data is: [tools::base_aliases_db()]
 #' @examples
 #' ba <- base_alias()
 #' head(ba)
-base_alias <- function() {
+base_alias <- function(package = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    base_aliases <- save_state("base_aliases", alias2df(tools::base_aliases_db()))
-    as.data.frame(base_aliases[, c("Package", "Source", "Target")])
-}
-
-alias2df <- function(x){
-    l <- lapply(x, function(x) {
-        cbind(Source = rep(names(x), lengths(x)),
-              Target = unlist(x, FALSE, FALSE))
-    })
-    aliasesDF <- do.call(rbind, l)
-    aliasesDF <- cbind(aliasesDF, Package = rep(names(l), vapply(l, NROW, numeric(1L))))
-    aliasesDF
+    alias <- save_state("base_aliases",
+                               r_os_alias(alias2df(tools::base_aliases_db())))
+    alias <- get_package_subset("base_aliases", package)
+    check_alias(alias)
+    as.data.frame(alias[, c("Package", "Source", "Target")])
 }

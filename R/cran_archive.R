@@ -15,15 +15,14 @@
 #' ca <- cran_archive()
 #' head(ca)
 #' }
-cran_archive <- function() {
+cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    out <- save_state("cran_archive", cran_pkges_archive(NULL))
+    save_state("cran_archive", cran_pkges_archive())
+    get_package_subset("cran_archive", packages)
     warnings_archive(out)
-    out
 }
 
-
-cran_pkges_archive <- function(packages) {
+cran_pkges_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
 
     # Check if package is there
@@ -131,4 +130,5 @@ warnings_archive <- function(all_packages) {
                 "This indicate manual CRAN intervention.",
                 call. = FALSE, immediate. = TRUE)
     }
+    all_packages
 }

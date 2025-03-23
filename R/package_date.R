@@ -31,7 +31,7 @@ package_date <- function(pkg = ".", which = "strong") {
     } else {
         rd <- repos_dependencies(which = fields)
         deps_df <- rd[rd$package == pkg, , drop = FALSE]
-        p <- cran_pkges_archive(pkg)
+        p <- cran_archive(pkg)
         date_package <- p$Datetime[nrow(p)]
     }
 
@@ -39,10 +39,10 @@ package_date <- function(pkg = ".", which = "strong") {
     deps_df <- deps_df[!deps_df$name %in% BASE, , drop = FALSE]
     which_r <- deps_df$name == "R"
 
-    if (sum(which_r) && !requireNamespace("rversions", quietly = TRUE)) {
+    if (sum(which_r) && !check_installed("rversions")) {
         warning("To take into consideration R versions too please install package rversions.")
     }
-    r_versions <- sum(which_r) && requireNamespace("rversions", quietly = TRUE)
+    r_versions <- sum(which_r) && check_installed("rversions")
 
     if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
@@ -51,7 +51,7 @@ package_date <- function(pkg = ".", which = "strong") {
     }
 
     # Use cran_archive, to get the release dates of packages.
-    archive <- cran_pkges_archive(deps_df$name[!which_r])
+    archive <- cran_archive(deps_df$name[!which_r])
     missing_packages <- setdiff(deps_df$name[!which_r], archive$Package)
 
     # abn depends on INLA that is an Additional_repositories
@@ -128,7 +128,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     } else {
         rd <- repos_dependencies(which = fields)
         deps_df <- rd[rd$package == pkg, , drop = FALSE]
-        p <- cran_pkges_archive(pkg)
+        p <- cran_archive(pkg)
         date_package <- p$Datetime[nrow(p)]
     }
 
@@ -136,10 +136,10 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     deps_df <- deps_df[!deps_df$name %in% BASE, , drop = FALSE]
     which_r <- deps_df$name == "R"
 
-    if (sum(which_r) && !requireNamespace("rversions", quietly = TRUE)) {
+    if (sum(which_r) && !check_installed("rversions")) {
         warning("To take into consideration R versions too please install package rversions.")
     }
-    r_versions <- sum(which_r) && requireNamespace("rversions", quietly = TRUE)
+    r_versions <- sum(which_r) && check_installed("rversions")
 
     if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))

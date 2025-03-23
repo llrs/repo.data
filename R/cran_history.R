@@ -6,13 +6,18 @@
 #' Several sources are used: CRAN's database to check packages files and versions,
 #' CRAN's volunteers actions for when packages are archived or removed and
 #' CRAN's comments to fill in the gaps.
+#' @inheritParams base_alias
 #' @returns A data.frame with the information to recreate CRAN at any point before today.
 #' @export
 #' @seealso [cran_archive()], [cran_actions()], [cran_comments()].
 #' @examples
 #' cran_history
-cran_history <- function() {
+cran_history <- function(packages = NULL) {
+    save_state("cran_history", cran_all_history())
+    get_package_subset("cran_history", packages)
+}
 
+cran_all_history <- function() {
     archive <- save_state("cran_archive", cran_archive())
     actions <- save_state("cran_actions", cran_actions())
     comments <- save_state("cran_comments", cran_comments())
@@ -95,12 +100,8 @@ cran_history <- function() {
     m2$rm.Date <- datetime2POSIXct(m2$Date.rm, m2$Time.rm)
 
     # TODO: Apply the remove date to all archives
-
+    pkg_state[["cran_history"]] <- m2
     m2
-}
-
-cran_pkges_history <- function(package) {
-
 }
 
 warnings_history <- function(x){

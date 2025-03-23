@@ -76,7 +76,7 @@ cran_date <- function(versions) {
         return(NA)
     }
 
-    ca_packages <- cran_pkges_archive(versions[, "Package"])
+    ca_packages <- cran_archive(versions[, "Package"])
     if (!nrow(ca_packages)) {
         warning("No packages on CRAN to find a date.")
         return(NA)
