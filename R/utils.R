@@ -101,9 +101,8 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 
     y <- x[!dup, ]
     df <- tapply(x[dup, , drop = FALSE], id[dup], function(xy, column_to_add) {
-        y <- unique(xy[, -column_to_add, drop = FALSE])
-        y[, old_name] <- sum(xy[, column_to_add])
-        as.matrix(y)
+        y <- unique(as.matrix(xy)[, -column_to_add, drop = FALSE])
+        y[, old_name] <- sum(xy[, column_to_add, drop = TRUE])
     }, column_to_add = w)
     dff <- do.call(rbind, df)
     out <- rbind(y, dff)

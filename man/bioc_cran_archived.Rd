@@ -19,11 +19,11 @@ bioc_cran_archived(which = "strong")
 }
 \value{
 A data.frame with the name of the Bioconductor packages
-depending on CRAN packages that were archived (on Missing column) and the
+depending on archived packages (on Archived column) and the
 number of missing packages (n).
 }
 \description{
-Checks on the 4 Bioconductor repositories which packages depend on a CRAN
+Checks on the 4 Bioconductor repositories which packages depend on a
 archived package.
 }
 \examples{

@@ -39,20 +39,6 @@ split_anchor <- function(links) {
     uniq_count(l2t)
 }
 
-resolve_links <- function(links, alias, dup_alias = dup_alias(alias)) {
-    br3 <- anchors2targets(links, alias, dup_alias$Alias)
-
-    br4 <- merge(br3, alias,
-                 by.x = c("to_pkg", "to_target"),
-                 by.y = c("Package", "Target"),
-                 all.x = TRUE, sort = FALSE)
-
-    colnames(br4)[c(5, 6, 7)] <- c("Rd_origin", "from_pkg", "Rd_linked")
-    br4 <- br4[, c("from_pkg", "Rd_origin", "to_pkg",  "Rd_linked")]
-    br5 <- sort_by(br4, ~from_pkg + Rd_origin)
-    unique(br5)
-}
-
 self_refs <- function(refs) {
     same <- refs$Rd_origin == refs$Rd_destiny & refs$from_pkg == refs$to_pkg
     unique(refs[same, c("Rd_origin", "from_pkg", "Target")])

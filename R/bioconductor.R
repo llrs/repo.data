@@ -23,6 +23,7 @@ bioc_cran_archived <- function(which = "strong") {
     # Add base R packages
     base_r <- tools::standard_package_names()$base
     pkges <- c(db$Package, rownames(bioc), base_r)
+    browser()
     missing_dep <- lapply(pkg_dep, setdiff, y = pkges)
     lmissing_dep <- lengths(missing_dep)
     p <- names(lmissing_dep)[lmissing_dep >= 1L]
