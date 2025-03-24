@@ -10,6 +10,9 @@
 <url><loc>https://llrs.github.io/repo.data/reference/base_help_pages_not_linked.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/base_help_pages_wo_links.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/base_links.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/base_pages_links.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/base_pkges_links.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/base_targets_links.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/bioc_cran_archived.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/cran_actions.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/cran_alias.html</loc></url>
@@ -17,10 +20,17 @@
 <url><loc>https://llrs.github.io/repo.data/reference/cran_comments.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/cran_date.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/cran_doom.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/cran_help_cliques.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/cran_help_pages_not_linked.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/cran_help_pages_wo_links.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/cran_history.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/cran_links.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/cran_pages_links.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/cran_pkges_links.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/cran_snapshot.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/cran_targets_links.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/index.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/os_alias.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/package_date.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/package_date_actions.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/package_dependencies.html</loc></url>

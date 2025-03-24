@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">repo.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,16 +42,24 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">base_alias</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">base_alias</span><span class="op">(</span>packages <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+
+
+<dl><dt id="arg-packages">packages<a class="anchor" aria-label="anchor" href="#arg-packages"></a></dt>
+<dd><p>A vector with packages or <code>NULL</code> for all packages.</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data.frame with three columns: Package, Source and Target.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/r/tools/basetools.html" class="external-link">tools::base_aliases_db()</a></code></p>
+    <div class="dont-index"><p>The raw source of the data is: <code><a href="https://rdrr.io/r/tools/basetools.html" class="external-link">tools::base_aliases_db()</a></code></p>
 <p>Other alias:
 <code><a href="cran_alias.html">cran_alias</a>()</code></p></div>
     </div>
@@ -59,8 +67,8 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ba</span> <span class="op">&lt;-</span> <span class="fu">base_alias</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving base_aliases, this might take a bit.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Next call will be faster.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving base_aliases, this might take a bit. Next call will be faster.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Packages ‘base’, ‘parallel’ have targets not present in some OS.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ba</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Package        Source Target</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    base Arithmetic.Rd      +</span>

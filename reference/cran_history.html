@@ -11,7 +11,7 @@ CRAN's comments to fill in the gaps."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">repo.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,9 +48,17 @@ CRAN's comments to fill in the gaps.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cran_history</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cran_history</span><span class="op">(</span>packages <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+
+
+<dl><dt id="arg-packages">packages<a class="anchor" aria-label="anchor" href="#arg-packages"></a></dt>
+<dd><p>A vector with packages or <code>NULL</code> for all packages.</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data.frame with the information to recreate CRAN at any point before today.</p>
@@ -63,69 +71,12 @@ CRAN's comments to fill in the gaps.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cran_history</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function () </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (packages = NULL) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     archive &lt;- save_state("cran_archive", cran_archive())</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     actions &lt;- save_state("cran_actions", cran_actions())</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     comments &lt;- save_state("cran_comments", cran_comments())</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     archive$Date &lt;- strftime(archive$Datetime, "%F")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     archive$Time &lt;- strftime(archive$Datetime, "%T")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     dup_arch &lt;- duplicated(archive[, c("Package", "Version")])</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     arch &lt;- archive[!dup_arch, ]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0 &lt;- merge(actions, arch, all = TRUE, by = c("Version", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "Package"), sort = FALSE, suffixes = c("", ".archive"))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0$moment &lt;- datetime2POSIXct(m0$Date, m0$Time)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0 &lt;- sort_by(m0, ~Package + moment + Action)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     k4 &lt;- m0$Action == "publish" &amp; m0$Date &gt; m0$Date.archive &amp; </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         !is.na(m0$Date) &amp; !is.na(m0$Date.archive)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     dup_a &lt;- duplicated(m0[, c("Package", "Version", "Action")])</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     k4[dup_a] &lt;- FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0$Date[k4] &lt;- m0$Date.archive[k4]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0$Time[k4] &lt;- m0$Time.archive[k4]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0$moment &lt;- datetime2POSIXct(m0$Date, m0$Time)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0 &lt;- sort_by(m0, ~Package + moment + Action)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wo_version &lt;- which(is.na(m0$Version))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     diff_pkg &lt;- m0$Package[wo_version] == m0$Package[(wo_version - </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1)]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     k2 &lt;- m0$Action[wo_version] == "archive" &amp; m0$Action[(wo_version - </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1)] == "publish"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0$Version[wo_version[diff_pkg &amp; k2]] &lt;- m0$Version[(wo_version[diff_pkg &amp; </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         k2] - 1)]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     wov &lt;- wo_version[!k2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     p &lt;- m0$Package[wov]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     off_by_year &lt;- abs(m0$Date[wov] - m0$Date[wov - 1]) == 365L</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m0 &lt;- m0[-na.omit(wov[off_by_year]), ]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     published &lt;- actions[actions$Action == "publish", , drop = FALSE]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     published$Action &lt;- NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     colnames(published)[1:3] &lt;- paste0(colnames(published)[1:3], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ".Pub")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     archived &lt;- m0[m0$Action == "archive", c("Date", "Time", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "User", "Version", "Package"), drop = FALSE]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     colnames(archived)[1:3] &lt;- paste0(colnames(archived)[1:3], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ".Arch")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m &lt;- merge(published, archived, all = TRUE, sort = FALSE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m$Pub.Date &lt;- datetime2POSIXct(m$Date.Pub, m$Time.Pub)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m$Arch.Date &lt;- datetime2POSIXct(m$Date.Arch, m$Time.Arch)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m &lt;- sort_by(m, ~Package + Pub.Date + Arch.Date)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     lapply(unique(m$package), function(i, data) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         p &lt;- data[data$Package == i, , drop = FALSE]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         if (nrow(p) &lt;= 1) {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             return(p)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         arch_i &lt;- which(!is.na(p$Date.Arch))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         p$Date.Arch[-nrow(p)] &lt;- p$Date.Pub[-1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     }, data = m)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m$Date.Arch</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m$Date.Pub[-1]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     removed &lt;- actions[actions$Action == "remove", , drop = FALSE]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     removed$Action &lt;- NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     colnames(removed)[1:3] &lt;- paste0(colnames(removed)[1:3], </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         ".rm")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m2 &lt;- merge(m, removed, all = TRUE, sort = FALSE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m2$rm.Date &lt;- datetime2POSIXct(m2$Date.rm, m2$Time.rm)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     m2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     save_state("cran_history", cran_all_history())</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     get_package_subset("cran_history", packages)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55becfd8ca00&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55fba2abb198&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:repo.data&gt;</span>
 </code></pre></div>
     </div>
