@@ -41,13 +41,12 @@ cran_snapshot <- function(date) {
     missing <- setdiff(last_archival$package, ca_before_date$package)
     archived <- match(last_archival$package, ca_before_date$package, incomparables = missing)
     missing2 <- setdiff(ca_before_date$package, last_archival$package)
-    archived2 <- match(ca_before_date$package, last_archival$package, incomparables = missing2)
+    # archived2 <- match(ca_before_date$package, last_archival$package, incomparables = missing2)
 
-    on_cran <- rep(TRUE, length.out = nrow(ca_before_date))
+    on_cran <- rep_len(TRUE, nrow(ca_before_date))
     names(on_cran) <- ca_before_date$package
     on_cran[na.omit(archived)] <- as.Date(ca_before_date$published_date[na.omit(archived)]) > last_archival$date[!is.na(archived)]
-    cran_status <- ca_before_date[on_cran, ]
-
+    ca_before_date[on_cran, ]
 }
 
 
@@ -65,7 +64,7 @@ cran_snapshot <- function(date) {
 #' ip <- installed.packages()
 #' cran_date(ip)
 cran_date <- function(versions) {
-    if ((!is.data.frame(versions) | !is.matrix(versions)) & !all(c("Package", "Version") %in% colnames(versions))) {
+    if ((!is.data.frame(versions) || !is.matrix(versions)) && !all(c("Package", "Version") %in% colnames(versions))) {
         stop("Versions should be a data.frame with 'Package' and 'Version' columns.")
     }
     if (any(versions$Package %in% BASE)) {
@@ -88,9 +87,9 @@ cran_date <- function(versions) {
     }
     versions$Version <- as.character(versions$Version)
     # match packages names and versions
-    ca_v <- apply(ca_packages[, c("Package", "Version")], 1, paste, collapse = "_")
+    ca_v <- apply(ca_packages[, c("Package", "Version")], 1L, paste, collapse = "_")
     # if version is NA match to whatever
-    v_v <- apply(versions[, c("Package", "Version")], 1, paste, collapse = "_")
+    v_v <- apply(versions[, c("Package", "Version")], 1L, paste, collapse = "_")
     missing_v <- anyNA(versions[, "Version"])
     if (missing_v) {
         any_v <- is.na(versions[, "Version"])

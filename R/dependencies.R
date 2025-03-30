@@ -63,8 +63,9 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     unique_deps <- unique(funlist(all_deps))
     deps_available <- intersect(unique_deps, c(rownames(rd), BASE))
     if (length(deps_available) < length(unique_deps)) {
-        warning(paste0("Some dependencies are not on available repositories: ", paste(setdiff(unique_deps, deps_available), collapse = ", ")," .\n",
-                "Check for Additional_repositories or other repositories (Bioconductor.org?)."),
+        warning(paste0("Some dependencies are not on available repositories: ",
+                       toString(setdiff(unique_deps, deps_available))," .\n",
+                       "Check for Additional_repositories or other repositories (Bioconductor.org?)."),
                 immediate. = TRUE)
     }
     pkgs_n_fields <- all_deps_df$type %in% fields_selected & all_deps_df$package %in% deps_available
@@ -81,7 +82,7 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     })
     df <- data.frame(name = names(v), required = package_version(funlist(v)))
     m <- merge(deps_df, df, all = TRUE, sort = FALSE)
-    m <- sort_by(m, ~package+name+!is.na(version))
+    m <- sort_by(m, ~ package + name + !is.na(version))
     rownames(m) <- NULL
     m
 }
@@ -112,15 +113,14 @@ packages_dependencies <- function(ap) {
     stopifnot(is.matrix(ap))
 
     # Split by dependency, requires a matrix
-    deps <- apply(ap, 1, strsplit, split = ",[[:space:]]*")
+    deps <- apply(ap, 1L, strsplit, split = ",[[:space:]]*")
     names(deps) <- rownames(ap)
 
-    deps <- deps[lengths(deps) > 0]
-    packages <- rep(names(deps), lengths(deps))
-
+    deps <- deps[lengths(deps) > 0L]
+    # equivalent to .split_dependencies
     l <- lapply(deps, function(pkg){
         l_pkg <- lapply(pkg, function(dependency_f){
-            if (length(dependency_f) == 1 && anyNA(dependency_f)) return(NULL)
+            if (length(dependency_f) == 1L && anyNA(dependency_f)) return(NULL)
             split_op_version(dependency_f)
         })
 
@@ -175,15 +175,15 @@ check_which <- function(x){
     if (all(x %in% c("all", "strong", "most"))) {
         fields_selected <- switch(x,
                                   all = PACKAGE_FIELDS,
-                                  most = head(PACKAGE_FIELDS, -1),
-                                  strong = head(PACKAGE_FIELDS, 3))
+                                  most = head(PACKAGE_FIELDS, -1L),
+                                  strong = head(PACKAGE_FIELDS, 3L))
     } else {
         fields_selected <- intersect(PACKAGE_FIELDS, x)
     }
 
     if (!length(fields_selected)) {
         stop(sQuote("which"), " should be one of all, strong, most.\n",
-             "Or several valid fields should be passed: ", paste(PACKAGE_FIELDS, collapse = ", "), ".")
+             "Or several valid fields should be passed: ", toString(PACKAGE_FIELDS), ".")
     }
     fields_selected
 }

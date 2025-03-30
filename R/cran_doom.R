@@ -37,8 +37,8 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     danger <- db[!is.na(db$Deadline), c("Package", "Deadline")]
     danger$Deadline <- as.Date(danger$Deadline)
     tp <- tools::package_dependencies(danger$Package, db = db_all, which = fields_selected,
-                                reverse = TRUE, recursive = TRUE)
-    rev_dep <- names(tp)[lengths(tp) > 0]
+                                      reverse = TRUE, recursive = TRUE)
+    rev_dep <- names(tp)[lengths(tp) > 0L]
     # Time given by CRAN on the warnings
     # 14 for the first warning
     # 14 for the second (with dependencies added on the email)
@@ -50,7 +50,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     })
     df2 <- do.call(rbind, l)
     affected <- table(df2$Package)
-    multiple_affected <- names(affected)[affected > 1]
+    multiple_affected <- names(affected)[affected > 1L]
 
     df3 <- df2[!df2$Package %in% multiple_affected, ]
     l2 <- lapply(multiple_affected, function(pkg) {
@@ -65,10 +65,10 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     out$repo <- db_all$repo[match(out$Package, db_all$Package)]
 
     # Count times a packages is affected by a Deadline
-    out$n_affected <- 0
-    out$n_affected[out$type == "direct"] <- 1
+    out$n_affected <- 0L
+    out$n_affected[out$type == "direct"] <- 1L
     n_affected <- affected[match(out$Package, names(affected))]
-    n_affected[is.na(n_affected)] <- 0
+    n_affected[is.na(n_affected)] <- 0L
     out$n_affected <- out$n_affected + n_affected
     out <- sort_by(out, ~list(Deadline, type, -n_affected, Package))
     rownames(out) <- NULL
@@ -78,4 +78,38 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
          npackages = c(CRAN = nrow(db), all = nrow(db_all)),
          details = out)
 
+}
+
+cran_maintainer_doom <- function() {
+    db <- save_state("CRAN_db", tools::CRAN_package_db())
+    deadline <- db[, "Deadline"]
+    # https://mastodon.social/@eddelbuettel/114217492195207107
+    m <- db[, "Maintainer"]
+    sm <- strcapture(pattern = "(.+)<((.+)@(.+))>",
+               x = m,
+               proto = data.frame(Name = character(), email = character(),
+                                  direction = character(),
+                                  domain = character()))
+    sm2 <- cbind(Package = db$Package, maintainer = m, sm)
+    sm2$direction <- gsub("\\+.+$", "", sm2$direction)
+    sm2$Name <- trimws(sm2$Name)
+
+
+    with_deadline <- !is.na(deadline) & nzchar(deadline)
+    authors <- db[with_deadline, "Authors@R"]
+    l <- lapply(authors, function(a){eval(parse(text = a))})
+    authors2 <- db[with_deadline, "Author"][which(is.na(authors))]
+    l[is.na(authors)] <- lapply(authors2, as.personList)
+    lapply(l, function(package_authors) {
+        lapply(package_authors, function(author) {
+            if (length(package_authors)) {
+                return(as.character(package_authors))
+            }
+            role <- package_authors[, "role"]
+            maintainer <- vapply(role, function(x) { "cre" %in% x}, logical(1L))
+            email <- package_authors[, "email"]
+            unlist(email[maintainer])
+            })
+
+    })
 }

@@ -1,8 +1,7 @@
 
 alias2df <- function(x){
     l <- lapply(x, function(x) {
-        out <- cbind(Source = rep(names(x), lengths(x)),
-                     Target = funlist(x))
+        cbind(Source = rep(names(x), lengths(x)), Target = funlist(x))
     })
     aliasesDF <- do.call(rbind, l)
     aliasesDF <- cbind(aliasesDF, Package = rep(names(l), vapply(l, NROW, numeric(1L))))
@@ -13,19 +12,19 @@ alias2df <- function(x){
 
 check_alias <- function(alias) {
 
-    if (length(unique(alias[, "Package"])) > 1) {
-        s <- split(as.data.frame(alias), alias[, "Package"])
-        more_alias <- vapply(s, check_alias, logical(1L))
-        names(more_alias) <- names(s)
-    } else {
+    if (length(unique(alias[, "Package"])) <= 1L) {
         paths <- grepl("/", alias[, "Source"], fixed = TRUE)
         dup_targets <- duplicated(alias[, "Target"])
         more_alias <- sum(paths) > sum(dup_targets) * 2L
         return(more_alias)
     }
+
+    s <- split(as.data.frame(alias), alias[, "Package"])
+    more_alias <- vapply(s, check_alias, logical(1L))
+    names(more_alias) <- names(s)
     # Recursive call
     if (sum(more_alias) > 1L) {
-        warning("Packages ", paste0(sQuote(names(more_alias)[more_alias]), collapse = ", "),
+        warning("Packages ", toString(sQuote(names(more_alias)[more_alias])),
                 " have targets not present in some OS.", call. = FALSE)
         return(FALSE)
     } else if (sum(more_alias) == 1L) {

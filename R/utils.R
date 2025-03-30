@@ -12,8 +12,8 @@ save_state <- function(name, out, verbose = TRUE) {
 funlist <- function(x){unlist(x, FALSE, FALSE)}
 
 get_package_subset <- function(name, pkges) {
-    stopifnot(is.character(name) && length(name) == 1L)
-    stopifnot(is.null(pkges) || (is.character(pkges) && length(pkges)))
+    stopifnot(is.character(name) && length(name) == 1L,
+              is.null(pkges) || (is.character(pkges) && length(pkges)))
 
     if (!is.null(pkg_state[[name]])) {
         df <- pkg_state[[name]]
@@ -60,7 +60,7 @@ read_CRAN <- function(path, cran = CRAN_baseurl()) {
 }
 
 check_r_version <- function() {
-    ver <- paste0(R.Version()[c("major","minor")], collapse = ".")
+    ver <- paste(R.Version()[c("major","minor")], collapse = ".")
     r_ver <- package_version(ver)
     target <- package_version("4.5.0")
     r_ver >= target
@@ -74,7 +74,7 @@ check_r_version <- function() {
     read_CRAN(CRAN_baseurl(), "src/contrib/Meta/archive.rds")
 }
 
-datetime2POSIXct <- function(date, time, tz = "Europe/Vienna") {
+datetime2POSIXct <- function(date, time, tz = tz) {
     moment <- paste(date, time)
     moment[is.na(date) & is.na(time)] <- NA
     moment <- as.POSIXct(moment, tz = tz)

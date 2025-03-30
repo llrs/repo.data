@@ -20,7 +20,7 @@ cran_history <- function(packages = NULL) {
 cran_all_history <- function() {
     archive <- save_state("cran_archive", cran_archive())
     actions <- save_state("cran_actions", cran_actions())
-    comments <- save_state("cran_comments", cran_comments())
+    # comments <- save_state("cran_comments", cran_comments())
 
     archive$Date <- strftime(archive$Datetime, "%F")
     archive$Time <- strftime(archive$Datetime, "%T")
@@ -59,22 +59,22 @@ cran_all_history <- function() {
 
     # Some packages have an extra archive that adds a year: I assume this was a problem with the script
     wov <- wo_version[!k2]
-    p <- m0$Package[wov]
+    # p <- m0$Package[wov]
     # table(m0$Action[m0$Package %in% p] == "publish",
     #       is.na(m0$Version[m0$Package %in% p]))
-    off_by_year <- abs(m0$Date[wov] - m0$Date[wov-1]) == 365L
+    off_by_year <- abs(m0$Date[wov] - m0$Date[wov - 1]) == 365L
     m0 <- m0[-na.omit(wov[off_by_year]), ]
 
 
     published <- actions[actions$Action == "publish",  , drop = FALSE]
     published$Action <- NULL
-    colnames(published)[1:3] <- paste0(colnames(published)[1:3], ".Pub")
+    colnames(published)[1L:3L] <- paste0(colnames(published)[1L:3L], ".Pub")
 
     # TODO: Add packages with archived history but no publish entry
     # m0[!is.na(m0$Date.archive), ]
 
     archived <- m0[m0$Action == "archive", c("Date", "Time", "User", "Version", "Package") , drop = FALSE]
-    colnames(archived)[1:3] <- paste0(colnames(archived)[1:3], ".Arch")
+    colnames(archived)[1L:3L] <- paste0(colnames(archived)[1L:3L], ".Arch")
 
     m <- merge(published, archived, all = TRUE, sort = FALSE)
     m$Pub.Date <- datetime2POSIXct(m$Date.Pub, m$Time.Pub)
@@ -84,14 +84,14 @@ cran_all_history <- function() {
     # TODO: Find the dates of previous publish actions to use as archive date
     lapply(unique(m$package), function(i, data) {
         p <- data[data$Package == i, , drop = FALSE]
-        if (nrow(p) <= 1) {
+        if (nrow(p) <= 1L) {
             return(p)
         }
         arch_i <- which(!is.na(p$Date.Arch))
-        p$Date.Arch[-nrow(p)] <- p$Date.Pub[-1]
+        p$Date.Arch[-nrow(p)] <- p$Date.Pub[-1L]
     }, data = m)
     m$Date.Arch
-    m$Date.Pub[-1]
+    m$Date.Pub[-1L]
 
     removed <- actions[actions$Action == "remove",  , drop = FALSE]
     removed$Action <- NULL

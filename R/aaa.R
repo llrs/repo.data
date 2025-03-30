@@ -1,3 +1,5 @@
+tz <- "Europe/Vienna"
+
 pkg_state <- new.env(parent = emptyenv())
 
 PACKAGE_FIELDS <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")

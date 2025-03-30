@@ -49,12 +49,12 @@ cran_all_comments <- function() {
 merge_comments <- function(df, column) {
     # Find which are empty
     rows_no_column <- which(is.na(df[[column]]))
-    rows_affected <- sort(unique(c(rows_no_column - 1, rows_no_column)),
+    rows_affected <- sort(unique(c(rows_no_column - 1L, rows_no_column)),
                           decreasing = FALSE)
 
     # Find extension of the comment
     starts <- setdiff(rows_affected, rows_no_column)
-    ends <- rows_no_column[(rows_no_column - 1)[-1] != rows_no_column[-length(rows_no_column)]]
+    ends <- rows_no_column[(rows_no_column - 1L)[-1L] != rows_no_column[-length(rows_no_column)]]
     stopifnot(length(starts) == length(ends))
 
     # Do not merge comments that involve different packages

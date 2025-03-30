@@ -11,7 +11,7 @@
 #' head(chnl)
 cran_help_pages_not_linked <- function() {
     cal <- cran_alias()
-    cl <- cran_links()
+    # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
@@ -39,7 +39,7 @@ cran_help_pages_not_linked <- function() {
 cran_help_pages_wo_links <- function() {
 
     cal <- cran_alias()
-    cl <- cran_links()
+    # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
@@ -76,7 +76,7 @@ cran_help_cliques <- function() {
 
     graph_decomposed <- igraph::decompose(graph)
     lengths_graph <- lengths(graph_decomposed)
-    isolated_help <- sapply(graph_decomposed, igraph::vertex_attr)
+    isolated_help <- lapply(graph_decomposed, igraph::vertex_attr)
 
     l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))

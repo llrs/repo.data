@@ -46,7 +46,7 @@ package_date <- function(pkg = ".", which = "strong") {
 
     if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
-    } else if (!local_pkg & nrow(p) == 0L) {
+    } else if (!local_pkg && nrow(p) == 0L) {
         stop("Package ", sQuote(pkg), " wasn't found on past or current CRAN archive or locally.")
     }
 
@@ -57,7 +57,7 @@ package_date <- function(pkg = ".", which = "strong") {
     # abn depends on INLA that is an Additional_repositories
     if (length(missing_packages)) {
         warning("Package publication date could not be obtained for: ",
-                paste0(missing_packages, collapse = ", "), ".\n",
+                toString(missing_packages), ".\n",
                 "This indicate packages outside CRAN repository.", call. = FALSE,
                 immediate. = TRUE)
     }
@@ -68,7 +68,7 @@ package_date <- function(pkg = ".", which = "strong") {
 
     if (length(removed_from_archive)) {
         warning("Package's dependencies archive were removed from CRAN after package publication: ",
-                paste(removed_from_archive, collapse = ", "),
+                toString(removed_from_archive),
                 call. = FALSE, immediate. = FALSE)
     }
 
@@ -76,7 +76,7 @@ package_date <- function(pkg = ".", which = "strong") {
     ver_match <- merge(pkg_available, deps_df[!which_r, , drop = FALSE], sort = FALSE,
           by.x = c("Package", "Version"), by.y = c("name", "version"))
     m_vm <- match(ver_match$Package, deps_df$name)
-    deps_df$Datetime <- as.POSIXct(NA, tz = "Europe/Vienna")
+    deps_df$Datetime <- as.POSIXct(NA, tz = tz)
     if (length(m_vm)) {
         deps_df$Datetime[m_vm] <- ver_match$Datetime
     }
@@ -137,14 +137,16 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     which_r <- deps_df$name == "R"
 
     if (sum(which_r) && !check_installed("rversions")) {
-        warning("To take into consideration R versions too please install package rversions.")
+        warning("To take into consideration R versions too please install package rversions.",
+                call. = FALSE)
     }
     r_versions <- sum(which_r) && check_installed("rversions")
 
     if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
-    } else if (!local_pkg & nrow(p) == 0L) {
-        stop("Package ", sQuote(pkg), " wasn't found on past or current CRAN archive or locally.")
+    } else if (!local_pkg && nrow(p) == 0L) {
+        stop("Package ", sQuote(pkg), " wasn't found on past or current CRAN archive or locally.",
+             call.  = FALSE)
     }
 
     # Use cran_arctions, to get the release dates of packages.
@@ -157,7 +159,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     # abn depends on INLA that is an Additional_repositories
     if (length(missing_packages)) {
         warning("Package publication date could not be obtained for: ",
-                paste0(missing_packages, collapse = ", "), ".\n",
+                toString(missing_packages), ".\n",
                 "This indicate packages outside CRAN repository.", call. = FALSE,
                 immediate. = TRUE)
     }
@@ -168,7 +170,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
 
     if (length(not_on_actions)) {
         warning("Package's not available on the version of actions used",
-                paste(not_on_actions, collapse = ", "),
+                toString(not_on_actions),
                 call. = FALSE, immediate. = FALSE)
     }
 
@@ -177,7 +179,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     ver_match <- merge(pkg_available, deps_df[!which_r, , drop = FALSE], sort = FALSE,
                        by.x = c("Package", "Version"), by.y = c("name", "version"))
     m_vm <- match(ver_match$Package, deps_df$name)
-    deps_df$Datetime <- as.POSIXct(NA, tz = "Europe/Vienna")
+    deps_df$Datetime <- as.POSIXct(NA, tz = tz)
     if (length(m_vm)) {
         deps_df$Datetime[m_vm] <- ver_match$Datetime
     }

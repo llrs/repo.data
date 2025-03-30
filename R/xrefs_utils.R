@@ -27,8 +27,8 @@ split_anchor <- function(links) {
     link_w_targets$to_target[pkg_anchor] <- link_w_targets$Target[pkg_anchor]
 
     # To [package:target]{name}: [stats:optim]{stats}
-    known_res <- w_anchor & full_anchor
-    # Nothing to be done, links_targets have this covered
+    # known_res <- w_anchor & full_anchor
+    # Nothing to be done, xrefs2df have this covered
 
     # To unknown packages/alias
     missing_target <- !nzchar(link_w_targets$to_target)
@@ -83,7 +83,6 @@ targets2files <- function(links, alias) {
     # Dealing with links that are different per OS.
     path_x <- grep("/", links_w_files$Source.x, fixed = TRUE)
     path_y <- grep("/", links_w_files$Source.y, fixed = TRUE)
-    paths <- c(path_x, path_y)
 
     # From one file to different OS paths
     diff_paths_y <- setdiff(path_y, path_x)

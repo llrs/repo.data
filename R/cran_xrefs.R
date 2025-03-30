@@ -67,7 +67,7 @@ cran_pages_links <- function(packages = NULL) {
     if (!is.null(packages)) {
         keep_rows <- keep_rows & target_links %in% packages
     }
-    pages_links <- add_uniq_count(target_links[keep_rows, -w])
+    add_uniq_count(target_links[keep_rows, -w])
 }
 
 #' Links between help pages by package

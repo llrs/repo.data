@@ -81,7 +81,7 @@ cran_pkges_archive <- function(packages = NULL) {
     # Convert back to data.frame
     all_packages <- as.data.frame(all_packages)
     all_packages$size <- as.numeric(all_packages$size)
-    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = "Europe/Vienna")
+    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = tz)
     # Packages status
     all_packages$status[match(rownames(current), rownames(all_packages))] <- "current"
 
@@ -108,18 +108,16 @@ cran_archive_dates <- function() {
     ca <- save_state("cran_archive", cran_archive())
     dates <- split(ca$published_date, ca$package)
     l <- lapply(dates, function(x) {
-        c(x[-length(x)] - 1, NA)
+        c(x[-length(x)] - 1L, NA)
     })
-    ca$archived_date <- as.POSIXlt(funlist(l), tz = "Europe/Vienna")
-    ca$archived_date[ca$status == "current"] <- as.POSIXlt(Sys.time(), tz = "Europe/Vienna")
+    ca$archived_date <- as.POSIXlt(funlist(l), tz = tz)
+    ca$archived_date[ca$status == "current"] <- as.POSIXlt(Sys.time(), tz = tz)
     ca
 
     # TODO match package version with dates of archival or removal
     cc <- save_state("cran_comments", cran_comments())
     w <- which(cc$action %in% c("archived", "removed", "replaced", "renamed"))
-    cc_packages <- cc[w, ]
-
-    #
+    cc[w, ]
 }
 
 warnings_archive <- function(all_packages) {
