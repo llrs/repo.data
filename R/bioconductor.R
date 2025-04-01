@@ -17,42 +17,51 @@ bioc_cran_archived <- function(which = "strong") {
     db <- save_state("CRAN_db", tools::CRAN_package_db())
     columns <- intersect(colnames(bioc), colnames(db))
     db_all <- rbind(db[, columns], bioc[, columns])
-
-    pkg_dep <- tools::package_dependencies(bioc[, "Package"], db = db_all,
-                                           which = fields_selected)
-    # Add base R packages
+    bioc_deps <- packages_dependencies(as.matrix(bioc[, fields_selected]))
     base_r <- tools::standard_package_names()$base
-    pkges <- c(db$Package, rownames(bioc), base_r)
-    missing_dep <- lapply(pkg_dep, setdiff, y = pkges)
-    lmissing_dep <- lengths(missing_dep)
-    p <- names(lmissing_dep)[lmissing_dep >= 1L]
-    p_missing <- vapply(missing_dep[lmissing_dep >= 1L], paste0, character(1L), collapse = ", ")
-    df <- data.frame(Package = p, Archived = p_missing, n = lmissing_dep[lmissing_dep >= 1L])
+
+    present <- !bioc_deps$name %in% c(db_all$Package, base_r, "R")
+    missing_deps <- bioc_deps[present, ]
+    miss_p_pkg <- split(missing_deps$name, missing_deps$package)
+    lmissing_dep <- lengths(miss_p_pkg)
+    p_missing <- vapply(miss_p_pkg, toString, character(1L))
+    df <- data.frame(Package = names(miss_p_pkg), Archived = p_missing, n = lmissing_dep)
     rownames(df) <- NULL
     df
 }
 
 #' @importFrom utils read.csv
-bioc_version <- function() {
+bioc_version <- function(type = "release") {
     bioc_config <- "https://bioconductor.org/config.yaml"
     rl <- readLines(con = url(bioc_config))
-    version <- which(startsWith(rl, "release_version"))
+    type <- match.arg(type, c("release", "devel"))
+    if (identical(type, "release")) {
+        version <- which(startsWith(rl, "release_version"))
+    } else {
+        version <- which(startsWith(rl, "devel_version"))
+    }
+    # Quick and dirty way to read and split the data
     rv <- read.csv(text = rl[version], sep = ":", header = FALSE, colClasses = c("character", "character"))
     trimws(rv$V2)
 }
 
 
-
-bioc_available <- function(repos = c("/bioc", "/data/annotation", "/data/experiment", "/workflows", "/books")) {
+bioc_repos <- function(version = "release",
+                       repos = c("/bioc", "/data/annotation", "/data/experiment", "/workflows", "/books")) {
     name_repos <- basename(repos)
     name_repos[1] <- "software"
 
-    urls <- paste0("https://bioconductor.org/packages/", bioc_version(), repos)
+    urls <- paste0("https://bioconductor.org/packages/", bioc_version(version), repos)
 
     url_repos <- urls
     names(url_repos) <- name_repos
+    url_repos
+}
 
-    bioc <- save_state("bioc_available",
+bioc_available <- function(version = "release",
+                           repos = c("/bioc", "/data/annotation", "/data/experiment", "/workflows", "/books")) {
+    url_repos <- bioc_repos(version, repos)
+    bioc <- save_state(paste0("bioc_available_", version),
                        available.packages(filters = c("CRAN", "duplicates"),
                                           repos = url_repos))
     bioc <- as.data.frame(bioc)

@@ -110,11 +110,12 @@ update_dependencies <- function(deps) {
 }
 
 packages_dependencies <- function(ap) {
-    stopifnot(is.matrix(ap))
+    stopifnot(is.matrix(ap) || is.data.frame(ap))
+    stopifnot(rownames(ap) != seq_len(nrow(ap)))
 
     # Split by dependency, requires a matrix
-    deps <- apply(ap, 1L, strsplit, split = ",[[:space:]]*")
-    names(deps) <- rownames(ap)
+    deps <- apply(ap, 1L, strsplit, split = "[[:space:]]*,[[:space:]]*")
+    names(deps) <- trimws(rownames(ap))
 
     deps <- deps[lengths(deps) > 0L]
     # equivalent to .split_dependencies
