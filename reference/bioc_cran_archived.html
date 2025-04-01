@@ -77,18 +77,8 @@ number of missing packages (n).</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bca</span> <span class="op">&lt;-</span> <span class="fu">bioc_cran_archived</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving bioc_available, this might take a bit. Next call will be faster.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving bioc_available_release, this might take a bit. Next call will be faster.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving CRAN_db, this might take a bit. Next call will be faster.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Called from: bioc_cran_archived()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> debug: missing_dep &lt;- lapply(pkg_dep, setdiff, y = pkges)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> debug: lmissing_dep &lt;- lengths(missing_dep)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> debug: p &lt;- names(lmissing_dep)[lmissing_dep &gt;= 1L]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> debug: p_missing &lt;- vapply(missing_dep[lmissing_dep &gt;= 1L], paste0, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     character(1L), collapse = ", ")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> debug: df &lt;- data.frame(Package = p, Archived = p_missing, n = lmissing_dep[lmissing_dep &gt;= </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1L])</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> debug: rownames(df) &lt;- NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> debug: df</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bca</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Package    Archived n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        CytoGLMM       mbest 1</span>

@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   repo.data: repo.data.html
-last_built: 2025-03-24T00:11Z
+last_built: 2025-04-01T23:50Z
 urls:
   reference: https://llrs.github.io/repo.data/reference
   article: https://llrs.github.io/repo.data/articles
