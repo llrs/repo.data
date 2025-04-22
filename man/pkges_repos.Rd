@@ -2,19 +2,33 @@
 % Please edit documentation in R/repos.R
 \name{pkges_repos}
 \alias{pkges_repos}
-\title{Title}
+\title{Package dependencies to repositories}
 \usage{
-pkges_repos(repos = getOption("repos"))
+pkges_repos(repos = getOption("repos"), which = "all")
 }
 \arguments{
-\item{repos}{}
+\item{repos}{Repositories and their names are taken from \code{getOptions("repos")}.}
+
+\item{which}{a character vector listing the types of
+    dependencies, a subset of
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+    Character string \code{"all"} is shorthand for that vector,
+    character string \code{"most"} for the same vector without
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
+  }
 }
 \value{
-A data.frame with one line per package and at least one column per repository.
+A data.frame with one line per package and at least one column per
+repository. It also has a column for Other repositories (Additional_repositories,
+or missing repositories), and the total number of dependencies and total
+number of repositories used.
 }
 \description{
-Title
+Explore the relationships between packages and repositories.
 }
 \examples{
-repos()
+pr <- pkges_repos()
+head(pr)
 }

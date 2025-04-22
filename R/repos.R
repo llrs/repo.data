@@ -1,14 +1,21 @@
 
-#' Title
+#' Package dependencies to repositories
 #'
-#' @param repos
+#' Explore the relationships between packages and repositories.
+#' @inheritParams tools::package_dependencies
+#' @param repos Repositories and their names are taken from `getOptions("repos")`.
 #'
-#' @returns A data.frame with one line per package and at least one column per repository.
+#' @returns A data.frame with one line per package and at least one column per
+#' repository. It also has a column for Other repositories (Additional_repositories,
+#' or missing repositories), and the total number of dependencies and total
+#' number of repositories used.
 #' @export
 #'
 #' @examples
-#' repos()
+#' pr <- pkges_repos()
+#' head(pr)
 pkges_repos <- function(repos = getOption("repos"), which = "all") {
+    stopifnot(is.character(repos) && length(repos))
     which <- check_which(which)
     ap <- available.packages(repos = repos, filters = "duplicates")
     repositories <- gsub("/src/contrib", "", ap[, "Repository"], fixed = TRUE)
