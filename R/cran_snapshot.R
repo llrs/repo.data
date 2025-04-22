@@ -20,7 +20,7 @@ cran_snapshot <- function(date) {
     }
 
     ca <- sort_by(ca, ~package + published_date)
-    ca_before <- ca[as.Date(ca$published_date) <= date, , drop = TRUE]
+    ca_before <- ca[charToDate(ca$published_date, "%F") <= date, , drop = TRUE]
 
     # Remove duplicated packages from the last to keep the latest version
     dups <- duplicated(ca_before$package, fromLast = TRUE)
@@ -45,7 +45,7 @@ cran_snapshot <- function(date) {
 
     on_cran <- rep_len(TRUE, nrow(ca_before_date))
     names(on_cran) <- ca_before_date$package
-    on_cran[na.omit(archived)] <- as.Date(ca_before_date$published_date[na.omit(archived)]) > last_archival$date[!is.na(archived)]
+    on_cran[na.omit(archived)] <- charToDate(ca_before_date$published_date[na.omit(archived)], "%F") > last_archival$date[!is.na(archived)]
     ca_before_date[on_cran, ]
 }
 
@@ -107,7 +107,7 @@ cran_date <- function(versions) {
 
     }
     # Find range of dates where was last updated.
-    as.Date(max(d, na.rm = TRUE))
+    charToDate(max(d, na.rm = TRUE), "%F")
 }
 
 #' @rdname cran_date

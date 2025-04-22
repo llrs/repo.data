@@ -8,12 +8,13 @@
 #'
 #' @examples
 #' repos()
-pkges_repos <- function(repos = getOption("repos")) {
+pkges_repos <- function(repos = getOption("repos"), which = "all") {
+    which <- check_which(which)
     ap <- available.packages(repos = repos, filters = "duplicates")
     repositories <- gsub("/src/contrib", "", ap[, "Repository"], fixed = TRUE)
     repositories_names <- names(repos)[match(repositories, repos)]
     packages <- ap[, "Package"]
-    pd <- packages_dependencies(ap = ap[, PACKAGE_FIELDS])
+    pd <- packages_dependencies(ap = ap[, which])
     pd2 <- pd[!pd$name %in% c(tools::standard_package_names()$base, "R"), c("name", "package")]
     position <- match(pd2$name, packages)
     repos_packages <- repositories_names[position]
@@ -37,7 +38,9 @@ pkges_repos <- function(repos = getOption("repos")) {
     M2 <- cbind(M, Packages_deps = deps_n, Repos = repos_n)
     df2 <- as.data.frame(M2)
     # bioc_deps <- rowSums(M2[, 2:6])
-    cbind(Package = rownames(df2), Repository = repositories_names, df2)
+    df3 <- cbind(Package = rownames(df2), Repository = repositories_names, df2)
+    rownames(df3) <- NULL
+    df3
 }
 
 repos <- c(getOption("repos"), bioc_repos())

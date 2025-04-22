@@ -28,7 +28,7 @@ cran_all_actions <- function() {
     actions_f <- system.file(package = "repo.data", "data", "actions.rds")
     actions <- readRDS(actions_f)
     actions <- unique(actions)
-    actions$Date <- as.Date(actions$Date)
+    actions$Date <- charToDate(actions$Date, "%F")
     actions$User <- as.factor(actions$User)
     lev <- c("publish", "archive", "remove")
     if (any(!na.omit(actions$Action) %in% lev)) {
