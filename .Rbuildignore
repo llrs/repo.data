@@ -9,3 +9,4 @@
 ^\.github$
 ^data-raw$
 ^data/no_load/
+.lintr
