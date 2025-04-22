@@ -35,7 +35,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     }
 
     danger <- db[!is.na(db$Deadline), c("Package", "Deadline")]
-    danger$Deadline <- as.Date(danger$Deadline)
+    danger$Deadline <- charToDate(danger$Deadline, "%F")
     tp <- tools::package_dependencies(danger$Package, db = db_all, which = fields_selected,
                                       reverse = TRUE, recursive = TRUE)
     rev_dep <- names(tp)[lengths(tp) > 0L]
@@ -78,38 +78,4 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
          npackages = c(CRAN = nrow(db), all = nrow(db_all)),
          details = out)
 
-}
-
-cran_maintainer_doom <- function() {
-    db <- save_state("CRAN_db", tools::CRAN_package_db())
-    deadline <- db[, "Deadline"]
-    # https://mastodon.social/@eddelbuettel/114217492195207107
-    m <- db[, "Maintainer"]
-    sm <- strcapture(pattern = "(.+)<((.+)@(.+))>",
-               x = m,
-               proto = data.frame(Name = character(), email = character(),
-                                  direction = character(),
-                                  domain = character()))
-    sm2 <- cbind(Package = db$Package, maintainer = m, sm)
-    sm2$direction <- gsub("\\+.+$", "", sm2$direction)
-    sm2$Name <- trimws(sm2$Name)
-
-
-    with_deadline <- !is.na(deadline) & nzchar(deadline)
-    authors <- db[with_deadline, "Authors@R"]
-    l <- lapply(authors, function(a){eval(parse(text = a))})
-    authors2 <- db[with_deadline, "Author"][which(is.na(authors))]
-    l[is.na(authors)] <- lapply(authors2, as.personList)
-    lapply(l, function(package_authors) {
-        lapply(package_authors, function(author) {
-            if (length(package_authors)) {
-                return(as.character(package_authors))
-            }
-            role <- package_authors[, "role"]
-            maintainer <- vapply(role, function(x) { "cre" %in% x}, logical(1L))
-            email <- package_authors[, "email"]
-            unlist(email[maintainer])
-            })
-
-    })
 }

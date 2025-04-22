@@ -38,21 +38,22 @@ cran_maintainers <- function() {
 
     sm$email <- paste0(sm$direction, "@", sm$domain)
     s <- strsplit(db$Packaged, "; ")
-    # To convert units correctly
-    lc_time <- Sys.getlocale("LC_TIME")
-    on.exit(Sys.setlocale("LC_TIME", lc_time), add = TRUE)
-    Sys.setlocale("LC_TIME", "C")
 
     cbind(db[, c("Package", "Maintainer")],
           user = sapply(s, `[`, 2),
           maintainer_date = charToDate(db$Date, c("%F", "%D", "%m.%d.%y", "%Y-%m-%d")),
           packaged_date = charToDate(sapply(s, `[`, 1), c("%F %T", "%c", "%F", "%a %b %e %T %Y")),
-          published_date = as.Date(db$Published),
+          published_date = charToDate(db$Published, "%F"),
           sm)
 }
 
 # Like as.Date.character but tryFormat until they don't work or there are no format to try.
 charToDate <- function(x, tryFormat) {
+    # To convert units correctly
+    lc_time <- Sys.getlocale("LC_TIME")
+    on.exit(Sys.setlocale("LC_TIME", lc_time), add = TRUE)
+    Sys.setlocale("LC_TIME", "C")
+
     stopifnot(is.character(x))
     stopifnot(as.logical(length(tryFormat)))
     # Preallocate while preserving Date class
