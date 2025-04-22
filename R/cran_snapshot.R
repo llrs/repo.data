@@ -19,12 +19,12 @@ cran_snapshot <- function(date) {
         return(ca[ca$status == "current", ])
     }
 
-    ca <- sort_by(ca, ~package + published_date)
-    ca_before <- ca[charToDate(ca$published_date, "%F") <= date, , drop = TRUE]
+    ca <- sort_by(ca, ~Package + Datetime)
+    ca_before <- ca[as.Date(ca$Datetime) <= date, , drop = TRUE]
 
     # Remove duplicated packages from the last to keep the latest version
-    dups <- duplicated(ca_before$package, fromLast = TRUE)
-    ca_before_date <- ca_before[!dups, c("package", "version", "published_date", "status")]
+    dups <- duplicated(ca_before$Package, fromLast = TRUE)
+    ca_before_date <- ca_before[!dups, c("Package", "Version", "Datetime", "Status")]
 
     cc <- save_state("cran_comments", cran_comments())
 
@@ -45,7 +45,7 @@ cran_snapshot <- function(date) {
 
     on_cran <- rep_len(TRUE, nrow(ca_before_date))
     names(on_cran) <- ca_before_date$package
-    on_cran[na.omit(archived)] <- charToDate(ca_before_date$published_date[na.omit(archived)], "%F") > last_archival$date[!is.na(archived)]
+    on_cran[na.omit(archived)] <- as.Date(ca_before_date$Datetime[na.omit(archived)]) > last_archival$date[!is.na(archived)]
     ca_before_date[on_cran, ]
 }
 
@@ -67,8 +67,8 @@ cran_date <- function(versions) {
     if ((!is.data.frame(versions) || !is.matrix(versions)) && !all(c("Package", "Version") %in% colnames(versions))) {
         stop("Versions should be a data.frame with 'Package' and 'Version' columns.")
     }
-    if (any(versions$Package %in% BASE)) {
-        versions <- versions[!versions$Package %in% c(BASE, "R"), , drop = FALSE]
+    if (any(versions[, "Package"] %in% BASE)) {
+        versions <- versions[!versions[, "Package"] %in% c(BASE, "R"), , drop = FALSE]
     }
     if (!nrow(versions)) {
         warning("No packages to find a date on CRAN.")
@@ -80,12 +80,12 @@ cran_date <- function(versions) {
         warning("No packages on CRAN to find a date.")
         return(NA)
     }
-    ca_packages <- get_package_subset("cran_archive", versions$Package)
+    ca_packages <- get_package_subset("cran_archive", versions[, "Package"])
     if (is.null(ca_packages)) {
         ca <- save_state("cran_archive", cran_archive())
-        ca_packages <- ca[ca$Package %in% versions$Package, , drop = FALSE]
+        ca_packages <- ca[ca$Package %in% versions[, "Package"], , drop = FALSE]
     }
-    versions$Version <- as.character(versions$Version)
+    versions[, "Version"] <- as.character(versions[, "Version"])
     # match packages names and versions
     ca_v <- apply(ca_packages[, c("Package", "Version")], 1L, paste, collapse = "_")
     # if version is NA match to whatever
@@ -107,7 +107,7 @@ cran_date <- function(versions) {
 
     }
     # Find range of dates where was last updated.
-    charToDate(max(d, na.rm = TRUE), "%F")
+    as.Date(max(d, na.rm = TRUE))
 }
 
 #' @rdname cran_date
