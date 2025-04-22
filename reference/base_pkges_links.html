@@ -75,9 +75,14 @@ If the target package is ambiguous it is omitted.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bpkl</span> <span class="op">&lt;-</span> <span class="fu">base_pkges_links</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in `[&lt;-`(`*tmp*`, , old_name, value = sum(xy[, column_to_add, drop = TRUE])):</span> subscript out of bounds</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bpkl</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'bpkl' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from_pkg   to_pkg n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     base    round 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     base     date 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     base    chron 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     base    tcltk 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     base parallel 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     base     nnet 1</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

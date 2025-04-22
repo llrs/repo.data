@@ -75,9 +75,14 @@ If the target help page is ambiguous it is omitted.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">cpl</span> <span class="op">&lt;-</span> <span class="fu">cran_pages_links</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in `[&lt;-`(`*tmp*`, , old_name, value = sum(xy[, column_to_add, drop = TRUE])):</span> subscript out of bounds</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cpl</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'cpl' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from_pkg       from_Rd to_pkg       to_Rd n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       A3 a3-package.Rd     A3       a3.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       A3 a3-package.Rd     A3    a3.lm.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       A3 a3-package.Rd     A3  plot.A3.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       A3 a3-package.Rd     A3 print.A3.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       A3         a3.Rd     A3  a3.base.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       A3         a3.Rd     A3    a3.lm.Rd 1</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
