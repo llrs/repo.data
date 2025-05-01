@@ -8,5 +8,5 @@
 ^pkgdown$
 ^\.github$
 ^data-raw$
-^data/no_load/
+^data/no_load
 .lintr
