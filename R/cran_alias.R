@@ -11,8 +11,11 @@
 #' head(ca)
 cran_alias <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
+    first <- check_env("cran_aliases") && is.null(packages)
     save_state("cran_aliases", alias2df(tools::CRAN_aliases_db()))
     alias <- get_package_subset("cran_aliases", packages)
-    check_alias(alias)
+    if (first) {
+        check_alias(alias)
+    }
     as.data.frame(alias[, c("Package", "Source", "Target")])
 }
