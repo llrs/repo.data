@@ -36,7 +36,6 @@ cran_maintainers <- function() {
     modify <- endsWith(sm$Name, '"') & !is.na(sm$Name)
     sm$Name[modify] <- gsub(',.*"', "", sm$Name[modify])
 
-    sm$email <- paste0(sm$direction, "@", sm$domain)
     s <- strsplit(db$Packaged, "; ")
 
     cbind(db[, c("Package", "Maintainer")],
