@@ -90,7 +90,8 @@ base_help_cliques <- function() {
     colnames(df) <- c("from_pkg", "from_Rd")
     lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]
     df$clique <- rep(seq_len(length(lengths_graph2)), times = lengths_graph2)
-    m <- merge(df, unique(rbl[, -4]), all.x = TRUE, by = c("from_pkg", "from_Rd"))
+    m <- merge(df, unique(rbl[, -4]), all.x = TRUE,
+               by = c("from_pkg", "from_Rd"), sort = FALSE)
     msorted <- sort_by(m, ~clique + from_pkg + from_Rd)
     rownames(msorted) <- NULL
     msorted
