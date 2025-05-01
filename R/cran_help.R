@@ -63,11 +63,14 @@ cran_help_pages_wo_links <- function() {
 #' @export
 #' @examples
 #' chc <- cran_help_cliques()
+#' head(chc)
 cran_help_cliques <- function() {
     if (!check_installed("igraph")) {
-        stop("This function requires igraph to find closed networks.")
+        stop("This function requires igraph to find help pages not linked to the network.")
     }
     cal <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    # Filter out those links not resolved
+    cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
     df_links <- data.frame(from = paste0(cal$from_pkg, ":", cal$from_Rd),
                            to = paste0(cal$to_pkg, ":", cal$to_Rd))
     df_links <- unique(df_links)
@@ -76,13 +79,14 @@ cran_help_cliques <- function() {
 
     graph_decomposed <- igraph::decompose(graph)
     lengths_graph <- lengths(graph_decomposed)
-    isolated_help <- lapply(graph_decomposed, igraph::vertex_attr)
+    isolated_help <- lapply(graph_decomposed, function(x){igraph::vertex_attr(x)$name})
 
     l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
     df$clique <- rep(seq_len(length(lengths_graph)), times = lengths_graph)
-    m <- merge(df, unique(cal), all.x = TRUE, by = c("from_pkg", "from_Rd"))
+    m <- merge(df, unique(cal), all.x = TRUE, by = c("from_pkg", "from_Rd"),
+               sort = FALSE)
     msorted <- sort_by(m, ~clique + from_pkg + from_Rd)
     rownames(msorted) <- NULL
     msorted
