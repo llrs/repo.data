@@ -1,4 +1,4 @@
-tz <- "Europe/Vienna"
+cran_tz <- "Europe/Vienna"
 
 pkg_state <- new.env(parent = emptyenv())
 

@@ -81,7 +81,7 @@ cran_pkges_archive <- function(packages = NULL) {
     # Convert back to data.frame
     all_packages <- as.data.frame(all_packages)
     all_packages$size <- as.numeric(all_packages$size)
-    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = tz)
+    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = cran_tz)
     # Packages status
     all_packages$status[match(rownames(current), rownames(all_packages))] <- "current"
 
@@ -110,8 +110,8 @@ cran_archive_dates <- function() {
     l <- lapply(dates, function(x) {
         c(x[-length(x)] - 1L, NA)
     })
-    ca$archived_date <- as.POSIXlt(funlist(l), tz = tz)
-    ca$archived_date[ca$status == "current"] <- as.POSIXlt(Sys.time(), tz = tz)
+    ca$archived_date <- as.POSIXlt(funlist(l), tz = cran_tz)
+    ca$archived_date[ca$status == "current"] <- as.POSIXlt(Sys.time(), tz = cran_tz)
     ca
 
     # TODO match package version with dates of archival or removal

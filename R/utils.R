@@ -74,10 +74,10 @@ check_r_version <- function() {
     read_CRAN(CRAN_baseurl(), "src/contrib/Meta/archive.rds")
 }
 
-datetime2POSIXct <- function(date, time, tz = tz) {
+datetime2POSIXct <- function(date, time, tz = cran_tz) {
     moment <- paste(date, time)
     moment[is.na(date) & is.na(time)] <- NA
-    moment <- as.POSIXct(moment, tz = tz)
+    moment <- as.POSIXct(moment, tz = cran_tz)
     moment
 }
 

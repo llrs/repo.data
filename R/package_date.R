@@ -76,7 +76,7 @@ package_date <- function(pkg = ".", which = "strong") {
     ver_match <- merge(pkg_available, deps_df[!which_r, , drop = FALSE], sort = FALSE,
           by.x = c("Package", "Version"), by.y = c("name", "version"))
     m_vm <- match(ver_match$Package, deps_df$name)
-    deps_df$Datetime <- as.POSIXct(NA, tz = tz)
+    deps_df$Datetime <- as.POSIXct(NA, tz = cran_tz)
     if (length(m_vm)) {
         deps_df$Datetime[m_vm] <- ver_match$Datetime
     }
@@ -179,7 +179,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     ver_match <- merge(pkg_available, deps_df[!which_r, , drop = FALSE], sort = FALSE,
                        by.x = c("Package", "Version"), by.y = c("name", "version"))
     m_vm <- match(ver_match$Package, deps_df$name)
-    deps_df$Datetime <- as.POSIXct(NA, tz = tz)
+    deps_df$Datetime <- as.POSIXct(NA, tz = cran_tz)
     if (length(m_vm)) {
         deps_df$Datetime[m_vm] <- ver_match$Datetime
     }
