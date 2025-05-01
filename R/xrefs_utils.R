@@ -128,11 +128,16 @@ targets2files <- function(links, alias) {
     # Removing links due to different OS Targets or manual pages
     # This allows to keep duplicated links on the original help pages
     removing_all_issues <- unique(c(removing_idx, removing_idy, removing_ids))
-    links_w_files <- links_w_files[-removing_all_issues, ]
+    # In case there are no issues it would remove all data!
+    if (length(removing_all_issues)) {
+        links_w_files <- links_w_files[-removing_all_issues, ]
+    }
 
     # Prepare for the output
     colnames(links_w_files) <- c("to_pkg", "to_target", "from_pkg", "from_Rd", "n", "to_Rd")
     links_w_files[is.na(links_w_files[, "to_Rd"]), "to_Rd"] <- ""
     links_w_files <- links_w_files[, c(3, 4, 1, 2, 6, 5)]
     links_w_files <- sort_by(links_w_files, ~from_pkg+from_Rd+to_target+to_Rd)
+    rownames(links_w_files) <- NULL
+    links_w_files
 }
