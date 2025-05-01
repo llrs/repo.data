@@ -41,7 +41,8 @@ cran_targets_links <- function(packages = NULL) {
         cl2 <- split_anchor(cl)
 
         t2b2 <- targets2files(cl2, rbind(bal, cal))
-        out <- uniq_count(t2b2)
+        # browser() # FIXME: Verify output is not just 1 or fails.
+        out <- add_uniq_count(t2b2)
         out <- save_state("cran_targets_links", out, verbose = FALSE)
     }
     if (!is.null(packages)) {

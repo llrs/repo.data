@@ -17,6 +17,7 @@ Requires igraph
 }
 \examples{
 chc <- cran_help_cliques()
+head(chc)
 }
 \seealso{
 Other cran_help_pages: 

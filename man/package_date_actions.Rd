@@ -6,6 +6,21 @@
 \usage{
 package_date_actions(pkg = ".", which = "strong")
 }
+\arguments{
+\item{pkg}{Name of the package on CRAN.
+It accepts also local path to packages source directories but then the
+function works as if the package is not released yet.}
+
+\item{which}{a character vector listing the types of
+    dependencies, a subset of
+    \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
+    Character string \code{"all"} is shorthand for that vector,
+    character string \code{"most"} for the same vector without
+    \code{"Enhances"},
+    character string \code{"strong"} (default) for the first three
+    elements of that vector.
+  }
+}
 \description{
 Same as package_date but using CRAN's actions instead of public archive.
 }
@@ -14,6 +29,6 @@ This provides information about when a package was removed or archived for a
 more accurate estimation.
 }
 \examples{
-package_date_actions("afmToolkit")
+# package_date_actions("afmToolkit")
 }
 \keyword{internal}

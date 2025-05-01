@@ -110,9 +110,13 @@ package_date <- function(pkg = ".", which = "strong") {
 #'
 #' This provides information about when a package was removed or archived for a
 #' more accurate estimation.
+#' @param pkg Name of the package on CRAN.
+#' It accepts also local path to packages source directories but then the
+#' function works as if the package is not released yet.
+#' @inheritParams tools::package_dependencies
 #' @keywords internal
 #' @examples
-#' package_date_actions("afmToolkit")
+#' # package_date_actions("afmToolkit")
 package_date_actions <- function(pkg = ".", which = "strong") {
     fields <- check_which(which)
     desc_pack <- file.path(pkg, "DESCRIPTION")
@@ -149,7 +153,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
              call.  = FALSE)
     }
 
-    # Use cran_arctions, to get the release dates of packages.
+    # Use cran_actions, to get the release dates of packages.
     actions <- cran_actions()
     actions$Package <- as.character(actions$Package)
     actions <- actions[actions$Package %in% deps_df$name[!which_r], , drop = FALSE]
@@ -165,12 +169,14 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     }
 
     # Filter to those that were available at the time
-    pkg_available <- actions[actions$Datetime < date_package, , drop = FALSE]
+    # browser()
+    diff_time <- difftime(actions$Datetime, date_package)
+    pkg_available <- actions[sign(diff_time) < 0, , drop = FALSE]
     not_on_actions <- setdiff(deps_df$name, c(pkg_available$Package, "R"))
 
     if (length(not_on_actions)) {
-        warning("Package's not available on the version of actions used",
-                toString(not_on_actions),
+        warning("Package's not available on the version of actions used ",
+                toString(sQuote(not_on_actions)),
                 call. = FALSE, immediate. = FALSE)
     }
 
