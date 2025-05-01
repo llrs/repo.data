@@ -1,5 +1,9 @@
+check_env <- function(name) {
+    is.null(pkg_state[[name]])
+}
+
 save_state <- function(name, out, verbose = TRUE) {
-    if (is.null(pkg_state[[name]])) {
+    if (check_env(name)) {
         if (verbose) {
         message("Retrieving ", name, ", this might take a bit. ",
                 "Next call will be faster.")
@@ -11,20 +15,21 @@ save_state <- function(name, out, verbose = TRUE) {
 
 funlist <- function(x){unlist(x, FALSE, FALSE)}
 
+
 get_package_subset <- function(name, pkges) {
     stopifnot(is.character(name) && length(name) == 1L,
               is.null(pkges) || (is.character(pkges) && length(pkges)))
 
-    if (!is.null(pkg_state[[name]])) {
+    if (!check_env(name)) {
         df <- pkg_state[[name]]
 
         if (is.null(pkges)) {
             return(df)
         }
         if ("package" %in% colnames(df)) {
-            df[df$package %in% pkges, , drop = FALSE]
+            df[df[, "package"] %in% pkges, , drop = FALSE]
         } else {
-            df[df$Package %in% pkges, , drop = FALSE]
+            df[df[, "Package"] %in% pkges, , drop = FALSE]
         }
     } else {
         NULL
@@ -33,9 +38,9 @@ get_package_subset <- function(name, pkges) {
 
 check_subset <- function(obj, pkges) {
     if ("package" %in% colnames(obj)) {
-        all(pkges %in% obj$package)
+        all(pkges %in% obj[, "package"])
     } else {
-        all(pkges %in% obj$Package)
+        all(pkges %in% obj[, "Package"])
     }
 }
 
@@ -106,7 +111,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     y <- x[!dup, ]
     df <- tapply(x[dup, , drop = FALSE], id[dup], function(xy, column_to_add) {
         y <- unique(as.matrix(xy)[, -column_to_add, drop = FALSE])
-        y <- cbind(y, name = sum(xy[, column_to_add, drop = TRUE]))
+        y <- cbind(y, name = sum(xy[, column_to_add, drop = TRUE], na.rm = TRUE))
         colnames(y)[ncol(y)] <- name
         y
     }, column_to_add = w)

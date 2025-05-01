@@ -21,11 +21,14 @@ cran_actions <- function(packages = NULL, silent = FALSE) {
 }
 
 cran_all_actions <- function() {
-    if (!is.null(pkg_state[["cran_actions"]])) {
+    if (!check_env("cran_actions")) {
         return(pkg_state[["cran_actions"]])
     }
 
     actions_f <- system.file(package = "repo.data", "data", "actions.rds")
+    if (!nzchar(actions_f)) {
+        stop("Data not released open, sorry can't share it (yet?)")
+    }
     actions <- readRDS(actions_f)
     actions <- unique(actions)
     actions$Date <- charToDate(actions$Date, "%F")

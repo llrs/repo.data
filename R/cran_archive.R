@@ -25,9 +25,8 @@ cran_archive <- function(packages = NULL) {
 
 cran_pkges_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-
     # Check if package is there
-    if (!is.null(pkg_state[["cran_archive"]])) {
+    if (!check_env("cran_archive")) {
         out <- get_package_subset("cran_archive", packages)
         if (check_subset(out, packages)) {
             warnings_archive(out)
