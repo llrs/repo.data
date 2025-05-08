@@ -6,7 +6,7 @@ save_state <- function(name, out, verbose = TRUE) {
     if (check_env(name)) {
         if (verbose) {
         message("Retrieving ", name, ", this might take a bit. ",
-                "Next call will be faster.")
+                "Caching results to be faster next call in this session.")
         }
         pkg_state[[name]] <- out
     }
@@ -18,7 +18,7 @@ funlist <- function(x){unlist(x, FALSE, FALSE)}
 
 get_package_subset <- function(name, pkges) {
     stopifnot(is.character(name) && length(name) == 1L,
-              is.null(pkges) || (is.character(pkges) && length(pkges)))
+              "NULL or character vector" = is.null(pkges) || (is.character(pkges) && length(pkges)))
 
     if (!check_env(name)) {
         df <- pkg_state[[name]]

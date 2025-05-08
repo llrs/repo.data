@@ -11,6 +11,7 @@
 #' head(ca)
 cran_alias <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
+    stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
     first <- check_env("cran_aliases") && is.null(packages)
     save_state("cran_aliases", alias2df(tools::CRAN_aliases_db()))
     alias <- get_package_subset("cran_aliases", packages)

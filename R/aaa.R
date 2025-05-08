@@ -4,4 +4,4 @@ pkg_state <- new.env(parent = emptyenv())
 
 PACKAGE_FIELDS <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
 
-BASE <- rownames(installed.packages(priority = "base"))
+BASE <- tools::standard_package_names()$base

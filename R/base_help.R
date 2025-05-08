@@ -50,8 +50,8 @@ base_help_pages_wo_links <- function() {
 
     links_cols2 <- c("to_pkg", "to_Rd")
     pages2 <- merge(ubal, unique(rbl[, c(links_cols, links_cols2)]),
-                   by.x = alias_cols, by.y = links_cols,
-                   all.x = TRUE, all.y = FALSE, sort = FALSE)
+                    by.x = alias_cols, by.y = links_cols,
+                    all.x = TRUE, all.y = FALSE, sort = FALSE)
     p <- sort_by(pages2[is.na(pages2$to_pkg), alias_cols, drop = FALSE], ~Package + Source )
     rownames(p) <- NULL
     p

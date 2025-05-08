@@ -25,11 +25,11 @@ check_alias <- function(alias) {
     # Recursive call
     if (sum(more_alias) > 1L) {
         warning("Packages ", toString(sQuote(names(more_alias)[more_alias])),
-                " have targets not present in some OS.", call. = FALSE)
+                " have targets not present in a OS.", call. = FALSE)
         return(FALSE)
     } else if (sum(more_alias) == 1L) {
         warning("Package ", unique(alias[, "Package"]),
-                " has targets not present in some OS.", call. = FALSE)
+                " has targets not present in a OS.", call. = FALSE)
         return(FALSE)
     }
     TRUE

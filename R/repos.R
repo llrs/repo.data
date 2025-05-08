@@ -50,4 +50,3 @@ pkges_repos <- function(repos = getOption("repos"), which = "all") {
     df3
 }
 
-repos <- c(getOption("repos"), bioc_repos())

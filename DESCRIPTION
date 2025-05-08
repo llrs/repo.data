@@ -1,11 +1,11 @@
 Package: repo.data
-Title: Get repository data
+Title: R Repository Data
 Version: 0.0.0.9003
 Authors@R: 
     person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9747-2570"))
-Description: Retrieve CRAN's data and prepare repository data like the one
-    provided by it.
+Description: Retrieve repositories package data to explore the package dependencies, help links, alias, dates...
+    Extra data from each repository is also downloaded and processed, specifically CRAN and Bioconductor specific data.
 License: GPL (>= 3)
 Depends: 
     R (>= 4.4)
