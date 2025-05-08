@@ -31,5 +31,5 @@ bca <- bioc_cran_archived()
 head(bca)
 }
 \seealso{
-\code{\link[tools:CRANtools]{tools::CRAN_package_db()}}
+\code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 }

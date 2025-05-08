@@ -4,7 +4,10 @@
 \alias{cran_help_pages_wo_links}
 \title{Help pages not linked from base R.}
 \usage{
-cran_help_pages_wo_links()
+cran_help_pages_wo_links(packages = NULL)
+}
+\arguments{
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
 }
 \value{
 A data.frame with two columns: Package and Source
@@ -14,7 +17,7 @@ Help pages without links from other help pages.
 This makes harder to find them.
 }
 \examples{
-chwl <- cran_help_pages_wo_links()
+chwl <- cran_help_pages_wo_links("A3")
 head(chwl)
 }
 \seealso{

@@ -24,18 +24,19 @@ split_anchor <- function(links) {
 
     # To [package]{Target}: [rmarkdown]{render}
     pkg_anchor <- w_anchor & !full_anchor & !eq_anchor
-    link_w_targets$to_target[pkg_anchor] <- link_w_targets$Target[pkg_anchor]
+    link_w_targets[pkg_anchor, "to_target"] <- link_w_targets[pkg_anchor, "Target"]
 
     # To [package:target]{name}: [stats:optim]{stats}
     # known_res <- w_anchor & full_anchor
     # Nothing to be done, xrefs2df have this covered
 
-    # To unknown packages/alias
+    # name is target.
     missing_target <- !nzchar(link_w_targets$to_target)
-    link_w_targets$to_target[missing_target] <- link_w_targets$Target[missing_target]
+    link_w_targets[missing_target, "to_target"] <- link_w_targets[missing_target, "Target"]
 
-    l2t <- link_w_targets[, c("Package", "Source", "to_pkg", "to_target")]
-    l2t <- sort_by(l2t, ~ Package + Source + to_pkg + to_target)
+    sort_order <- intersect(c("Package", "Source", "to_pkg", "to_target"), colnames(link_w_targets))
+    l2t <- link_w_targets[, sort_order]
+    l2t <- sort_by(l2t, l2t[sort_order])
     uniq_count(l2t)
 }
 
@@ -141,3 +142,40 @@ targets2files <- function(links, alias) {
     rownames(links_w_files) <- NULL
     links_w_files
 }
+
+# pkg:topic but pkg is not on the dependencies.
+xrefs_wo_deps <- function(links, ap) {
+    anchor <- links$Anchor
+    eq_anchor <- startsWith(anchor, "=")
+    full_anchor <- grepl(":", anchor, fixed = TRUE)
+
+    links2 <- links[full_anchor & !eq_anchor, ]
+    links3 <- split_anchor(links2)
+    s <- split(links3$to_pkg, links3$Package)
+
+    pkg_dep <- packages_dependencies(ap[, check_which("strong")])
+    pkg_dep2 <- pkg_dep[pkg_dep[, "name"] != "R", c("package", "name")]
+    s2 <- split(pkg_dep2$name, pkg_dep2$package)
+
+    for (pkg in names(s)) {
+        s[[pkg]] <- setdiff(s[[pkg]], c(s2[[pkg]], pkg, BASE))
+    }
+    s <- s[lengths(s) != 0]
+    links4 <- links2[links3$Package %in% names(s), ]
+    rownames(links4) <- NULL
+    links4
+}
+
+# Targets linked.
+pkgs_linked_missing <- function(links, alias) {
+    anchor <- links$Anchor
+    eq_anchor <- startsWith(anchor, "=")
+
+    links2 <- links[eq_anchor, ]
+    topics <- substring(links2$Anchor, 2)
+    missing_topics <- setdiff(unique(topics), alias$Target)
+    links2 <- links2[topics %in% missing_topics, ]
+    rownames(links2) <- NULL
+    links2
+}
+

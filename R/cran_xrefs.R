@@ -29,7 +29,7 @@ cran_links <- function(packages = NULL) {
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Number of links).
 #' @export
 #' @examples
-#' ctl <- cran_targets_links()
+#' ctl <- cran_targets_links("BaseSet")
 #' head(ctl)
 cran_targets_links <- function(packages = NULL) {
     out <- NULL
@@ -41,7 +41,6 @@ cran_targets_links <- function(packages = NULL) {
         cl2 <- split_anchor(cl)
 
         t2b2 <- targets2files(cl2, rbind(bal, cal))
-        # browser() # FIXME: Verify output is not just 1 or fails.
         out <- add_uniq_count(t2b2)
         out <- save_state("cran_targets_links", out, verbose = FALSE)
     }

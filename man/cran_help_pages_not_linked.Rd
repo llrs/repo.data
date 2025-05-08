@@ -4,7 +4,10 @@
 \alias{cran_help_pages_not_linked}
 \title{Help pages without links}
 \usage{
-cran_help_pages_not_linked()
+cran_help_pages_not_linked(packages = NULL)
+}
+\arguments{
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
 }
 \value{
 A data.frame with two columns: Package and Source
@@ -14,7 +17,7 @@ Help pages without links to other help pages.
 This makes harder to navigate to related help pages.
 }
 \examples{
-chnl <- cran_help_pages_not_linked()
+chnl <- cran_help_pages_not_linked("A3")
 head(chnl)
 }
 \seealso{

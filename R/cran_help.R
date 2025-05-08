@@ -3,16 +3,20 @@
 #'
 #' Help pages without links to other help pages.
 #' This makes harder to navigate to related help pages.
+#' @inheritParams cran_links
 #' @returns A data.frame with two columns: Package and Source
 #' @export
 #' @family cran_help_pages
 #' @examples
-#' chnl <- cran_help_pages_not_linked()
+#' chnl <- cran_help_pages_not_linked("A3")
 #' head(chnl)
-cran_help_pages_not_linked <- function() {
-    cal <- cran_alias()
+cran_help_pages_not_linked <- function(packages = NULL) {
+    cal <- cran_alias(packages)
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    if (!is.null(packages)) {
+        rbl <- rbl[rbl$from_pkg %in% packages | rbl$to_pkg %in% packages, ]
+    }
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
     ubal <- unique(cal[, alias_cols])
@@ -21,7 +25,12 @@ cran_help_pages_not_linked <- function() {
     pages <- merge(ubal, unique(rbl[, c(links_cols2, links_cols)]),
                    by.x = alias_cols, by.y = links_cols2,
                    all.x = TRUE, all.y = FALSE, sort = FALSE)
-    p <- sort_by(pages[is.na(pages$from_pkg), alias_cols, drop = FALSE], ~Package + Source )
+    keep <- is.na(pages$from_pkg)
+    if (!is.null(keep)) {
+        keep <-  keep & pages$to_pkg %in% packages
+    }
+    pages2 <- pages[, alias_cols, drop = FALSE]
+    p <- sort_by(pages2, ~Package + Source )
     rownames(p) <- NULL
     p
 }
@@ -30,17 +39,21 @@ cran_help_pages_not_linked <- function() {
 #'
 #' Help pages without links from other help pages.
 #' This makes harder to find them.
+#' @inheritParams base_alias
 #' @returns A data.frame with two columns: Package and Source
 #' @export
 #' @family cran_help_pages
 #' @examples
-#' chwl <- cran_help_pages_wo_links()
+#' chwl <- cran_help_pages_wo_links("A3")
 #' head(chwl)
-cran_help_pages_wo_links <- function() {
+cran_help_pages_wo_links <- function(packages = NULL) {
 
-    cal <- cran_alias()
+    cal <- cran_alias(packages)
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    if (!is.null(packages)) {
+        rbl <- rbl[rbl$from_pkg %in% packages | rbl$to_pkg %in% packages, ]
+    }
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
     ubal <- unique(cal[, alias_cols])
@@ -58,17 +71,24 @@ cran_help_pages_wo_links <- function() {
 #' Some help pages have links to and from but they are closed networks.
 #'
 #' Requires igraph
+#' @inheritParams base_alias
 #' @returns Return a data.frame of help pages not connected to the network of help pages.
 #' @family cran_help_pages
 #' @export
 #' @examples
 #' chc <- cran_help_cliques()
 #' head(chc)
-cran_help_cliques <- function() {
+cran_help_cliques <- function(packages = NULL) {
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.")
     }
     cal <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    # FIXME: we need the reverse dependencies packages as links to a package should be on depend/suggest
+    if (!is.null(packages)) {
+        pkges <- tools::package_dependencies(packages, which = "all",
+                                             reverse = TRUE, recursive = TRUE)
+        cal <- cal[cal$from_pkg %in% funlist(pkges), ]
+    }
     # Filter out those links not resolved
     cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
     df_links <- data.frame(from = paste0(cal$from_pkg, ":", cal$from_Rd),
@@ -85,9 +105,16 @@ cran_help_cliques <- function() {
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
     df$clique <- rep(seq_len(length(lengths_graph)), times = lengths_graph)
-    m <- merge(df, unique(cal), all.x = TRUE, by = c("from_pkg", "from_Rd"),
+    m <- merge(df, unique(cal), all.x = TRUE,
+               by = c("from_pkg", "from_Rd"),
                sort = FALSE)
-    msorted <- sort_by(m, ~clique + from_pkg + from_Rd)
+    msorted <- sort_by(m, m[, c("clique", "from_pkg", "from_Rd")])
     rownames(msorted) <- NULL
     msorted
+}
+
+# Identify packages with cross-references to pages of packages they do not depend to.
+cran_help_pages_links_wo_deps <- function() {
+    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    xrefs_wo_deps(cran_links(), ap[, check_which("strong")])
 }

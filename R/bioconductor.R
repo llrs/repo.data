@@ -7,7 +7,7 @@
 #' depending on archived packages (on Archived column) and the
 #' number of missing packages (n).
 #' @export
-#' @seealso [tools::CRAN_package_db()]
+#' @seealso \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 #' @examples
 #' bca <- bioc_cran_archived()
 #' head(bca)

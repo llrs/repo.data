@@ -5,9 +5,9 @@
 \name{repo.data-package}
 \alias{repo.data}
 \alias{repo.data-package}
-\title{repo.data: Get repository data}
+\title{repo.data: R Repository Data}
 \description{
-Retrieve CRAN's data and prepare repository data like the one provided by it.
+Retrieve repositories package data to explore the package dependencies, help links, alias, dates... Extra data from each repository is also downloaded and processed, specifically CRAN and Bioconductor specific data.
 }
 \seealso{
 Useful links:

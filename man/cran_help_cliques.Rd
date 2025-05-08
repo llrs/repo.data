@@ -4,7 +4,10 @@
 \alias{cran_help_cliques}
 \title{Help pages with cliques}
 \usage{
-cran_help_cliques()
+cran_help_cliques(packages = NULL)
+}
+\arguments{
+\item{packages}{A vector with packages or \code{NULL} for all packages.}
 }
 \value{
 Return a data.frame of help pages not connected to the network of help pages.
