@@ -28,21 +28,22 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     db$repo <- "CRAN"
     if (isTRUE(bioc)) {
         bioc <- bioc_available()
+        bioc$repo <- "Bioconductor"
         columns <- intersect(colnames(bioc), colnames(db))
         db_all <- rbind(db[, columns], bioc[, columns])
     } else {
         db_all <- db
     }
-
     danger <- db[!is.na(db$Deadline), c("Package", "Deadline")]
     danger$Deadline <- charToDate(danger$Deadline, "%F")
-    tp <- tools::package_dependencies(danger$Package, db = db_all, which = fields_selected,
+    tp <- tools::package_dependencies(danger$Package, db = db_all,
+                                      which = fields_selected,
                                       reverse = TRUE, recursive = TRUE)
     rev_dep <- names(tp)[lengths(tp) > 0L]
     # Time given by CRAN on the warnings
     # 14 for the first warning
     # 14 for the second (with dependencies added on the email)
-    total_time_given <- 14L + 14L
+    total_time_given <- 14L + 21L
     l <- lapply(rev_dep, function(pkg) {
         data.frame(
         Package = tp[[pkg]],
@@ -58,10 +59,11 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
                    Deadline = min(df2$Deadline[df2$Package == pkg]))
     })
     df4 <- do.call(rbind, l2)
-    df5 <- rbind(df3, df4)
+    # There are packages in direct and indirect danger!!
+    indirect <- rbind(df3, df4)
     danger$type <- "direct"
-    df5$type <- "indirect"
-    out <- rbind(danger, df5)
+    indirect$type <- "indirect"
+    out <- rbind(danger, indirect)
     out$repo <- db_all$repo[match(out$Package, db_all$Package)]
 
     # Count times a packages is affected by a Deadline
@@ -69,7 +71,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     out$n_affected[out$type == "direct"] <- 1L
     n_affected <- affected[match(out$Package, names(affected))]
     n_affected[is.na(n_affected)] <- 0L
-    out$n_affected <- out$n_affected + n_affected
+    out$n_affected <- out$n_affected + as.numeric(n_affected)
     out <- sort_by(out, ~list(Deadline, type, -n_affected, Package))
     rownames(out) <- NULL
 
