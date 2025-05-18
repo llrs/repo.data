@@ -82,13 +82,17 @@ cran_help_cliques <- function(packages = NULL) {
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.")
     }
-    cal <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
-    # FIXME: we need the reverse dependencies packages as links to a package should be on depend/suggest
     if (!is.null(packages)) {
         pkges <- tools::package_dependencies(packages, which = "all",
-                                             reverse = TRUE, recursive = TRUE)
-        cal <- cal[cal$from_pkg %in% funlist(pkges), ]
+                                             reverse = TRUE, recursive = FALSE)
+    } else {
+        pkges <- NULL
     }
+
+    pkges <- c(packages, funlist(pkges))
+    cal <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    # FIXME: we need the reverse dependencies packages as links to a package should be on depend/suggest
+    cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), ]
     # Filter out those links not resolved
     cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
     df_links <- data.frame(from = paste0(cal$from_pkg, ":", cal$from_Rd),
