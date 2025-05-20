@@ -35,11 +35,13 @@ cran_all_comments <- function() {
     history_df <- extract_field(file, field = "X-CRAN-History")
     full_history <- rbind(comments_df, history_df)
 
-    # TODO: Merge comments split between history and comment fields
     fh <- sort_by(full_history, ~package + date)
     edit <- !endsWith(fh$action, "ed")
     fh$action[edit & !is.na(edit)] <- paste0(fh$action[edit & !is.na(edit)], "d")
     rownames(fh) <- NULL
+    # TODO: Merge comments split between history and comment fields
+    # browser()
+    # fh2 <- merge_comments(fh, "action")
 
     save_state("cran_comments", fh, verbose = FALSE)
 }
@@ -49,29 +51,57 @@ cran_all_comments <- function() {
 merge_comments <- function(df, column) {
     # Find which are empty
     rows_no_column <- which(is.na(df[[column]]))
+    # Add the previous row to the index
     rows_affected <- sort(unique(c(rows_no_column - 1L, rows_no_column)),
                           decreasing = FALSE)
 
     # Find extension of the comment
+    # The ones not affected are from the first filled row
     starts <- setdiff(rows_affected, rows_no_column)
-    ends <- rows_no_column[(rows_no_column - 1L)[-1L] != rows_no_column[-length(rows_no_column)]]
-    stopifnot(length(starts) == length(ends))
+    same_package <- df$package[starts] == df$package[starts + 1L]
+    starts <- starts[same_package]
+    if (!length(starts)) {
+        return(df)
+    }
+    # The ends are those that are non consecutive
+    # setdiff(rows_affected, starts)
+    non_consecutive <- (rows_no_column - 1L)[-1L] != rows_no_column[-length(rows_no_column)]
+    ends <- rows_no_column[non_consecutive]
+    same_package <- df$package[ends - 1L] == df$package[ends]
+    ends <- ends[same_package]
+    if (!length(starts)) {
+        return(df)
+    }
+    o <- outer(ends, starts, "-")
+    d <- abs(diag(o))
+    wd <- which(d > 5)
+    while (length(wd) > 1) {
+        if (length(ends) > length(starts)) {
+            ends <- ends[-wd[1]]
+        } else if (length(starts) > length(ends)) {
+            starts <- starts[-wd[1]]
+        }
+        o <- outer(ends, starts, "-")
+        d <- abs(diag(o))
+        wd <- which(d > 5)
+    }
+    stopifnot("Merging comments that don't match" = length(starts) == length(ends))
 
     # Do not merge comments that involve different packages
     diff_pkg <- which(df$package[starts] != df$package[ends])
-
-    rows_same_pkg <- mapply(seq, from = starts[-diff_pkg],
-                            to = ends[-diff_pkg])
+    stopifnot("Would merge comments for different packages" = !length(diff_pkg))
+    rows_same_pkg <- mapply(seq, from = starts, to = ends)
+    if (all(lengths(rows_same_pkg) <= 1L)) {
+        return(df)
+    }
     comments_same_pkg <- vapply(rows_same_pkg,
                                 function(seq, text) {
                                     paste(text[seq], collapse = "; ")},
                                 text = df$comment, FUN.VALUE = character(1L))
-    df[starts[-diff_pkg], "comment"] <- comments_same_pkg
+    df[starts, "comment"] <- comments_same_pkg
 
     # Do not remove those rows that weren't merged
-    rows_diff_pkg <- mapply(seq, from = starts[diff_pkg],
-                            to = ends[diff_pkg])
-    df <- df[-setdiff(rows_no_column, funlist(rows_diff_pkg)), ]
+    df <- df[-setdiff(funlist(rows_same_pkg), starts), ]
     rownames(df) <- NULL
     df
 }
