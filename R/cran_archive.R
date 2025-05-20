@@ -12,7 +12,8 @@
 #'  User, size and status (archived or current).
 #'  It is sorted by package name and date.
 #' @export
-#' @seealso The raw source of the data is: [tools::CRAN_archive_db()], [tools::CRAN_current_db()].
+#' @seealso The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_db()}},
+#' \code{\link[tools:CRAN_current_db]{CRAN_current_db()}}.
 #'  For some dates and comments about archiving packages: [cran_comments()].
 #' @examples
 #' \donttest{
@@ -21,7 +22,7 @@
 #' }
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    save_state("cran_archive", cran_pkges_archive())
+    save_state("cran_archive", cran_pkges_archive(packages))
     out <- get_package_subset("cran_archive", packages)
     warnings_archive(out)
 }

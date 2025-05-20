@@ -5,7 +5,7 @@
 #' @returns A data.frame with three columns: Package, Source and Target.
 #' @export
 #' @family alias
-#' @seealso The raw source of the data is: [tools::base_aliases_db()].
+#' @seealso The raw source of the data is: \code{\link[tools:base_aliases_db]{base_aliases_db()}}.
 #' @examples
 #' ba <- base_alias()
 #' head(ba)

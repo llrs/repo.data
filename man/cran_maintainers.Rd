@@ -26,5 +26,5 @@ maintainers <- cran_maintainers()
 head(maintainers)
 }
 \seealso{
-The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_authors_db()}}
+The raw source of the data is: \code{\link[tools:CRAN_authors_db]{CRAN_authors_db()}}
 }

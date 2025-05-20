@@ -5,7 +5,7 @@
 #' @returns A data.frame with the links on CRAN's packages.
 #' It has 4 columns: Package, Anchor, Target and Source.
 #' @family links
-#' @seealso The raw source of the data is: [tools::CRAN_rdxrefs_db()].
+#' @seealso The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_db()}}.
 #' @export
 #' @examples
 #' cl <- cran_links()

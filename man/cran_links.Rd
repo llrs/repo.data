@@ -21,7 +21,7 @@ cl <- cran_links()
 head(cl)
 }
 \seealso{
-The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_rdxrefs_db()}}.
+The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_db()}}.
 
 Other links: 
 \code{\link{base_links}()},

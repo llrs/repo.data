@@ -31,6 +31,7 @@ head(ca)
 }
 }
 \seealso{
-The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_archive_db()}}, \code{\link[tools:CRANtools]{tools::CRAN_current_db()}}.
+The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_db()}},
+\code{\link[tools:CRAN_current_db]{CRAN_current_db()}}.
 For some dates and comments about archiving packages: \code{\link[=cran_comments]{cran_comments()}}.
 }

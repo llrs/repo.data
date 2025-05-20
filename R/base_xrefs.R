@@ -5,7 +5,7 @@
 #' @returns A data.frame with the links on R's files.
 #' It has 4 columns: Package, Anchor, Target and Source.
 #' @family links
-#' @seealso The raw source of the data is: [tools::base_rdxrefs_db()].
+#' @seealso The raw source of the data is: \code{\link[tools:base_rdxrefs_db]{base_rdxrefs_db()}}.
 #' @export
 #' @examples
 #' bl <- base_links()
