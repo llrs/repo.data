@@ -5,7 +5,7 @@
 #' @returns A data.frame with three columns: Package, Source and Target.
 #' @export
 #' @family alias
-#' @seealso The raw source of the data is: `tools::CRAN_aliases_db()`
+#' @seealso The raw source of the data is: [tools::CRAN_aliases_db()].
 #' @examples
 #' ca <- cran_alias()
 #' head(ca)

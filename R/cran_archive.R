@@ -2,15 +2,18 @@
 #'
 #' Retrieve the archive and the current database.
 #'
-#' There are some packages with NA in version, those are version names that do
-#' not pass current [package_version()] with `strict = TRUE`.
-#' Other packages might have been on CRAN but could have been removed.
+#' Some packages would get an NA in Version, if [package_version()] were to be
+#' used with `strict = FALSE`.
+#' Packages might have been on CRAN but could have been removed and won't show up.
+#' Depending on the data requested and packages currently on CRAN, you might get
+#' a warning regarding a package being both archived and current.
 #' @inheritParams base_alias
 #' @returns A data.frame with 6 columns: Package, Date (of publication), Version,
 #'  User, size and status (archived or current).
 #'  It is sorted by package name and date.
 #' @export
-#' @seealso [CRAN_archive_db()], [CRAN_current_db()], [cran_comments()].
+#' @seealso The raw source of the data is: [tools::CRAN_archive_db()], [tools::CRAN_current_db()].
+#'  For some dates and comments about archiving packages: [cran_comments()].
 #' @examples
 #' \donttest{
 #' ca <- cran_archive()

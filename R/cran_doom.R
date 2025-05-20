@@ -16,7 +16,7 @@
 #'  Name, date affected, affected directly, repository, times it is affected
 #'  (by archival causing issues.)
 #' @importFrom utils available.packages
-#' @seealso \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
+#' @seealso The raw source of the data is: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 #' @export
 #' @examples
 #' cd <- cran_doom()

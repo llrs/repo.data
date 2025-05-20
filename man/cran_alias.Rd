@@ -20,7 +20,7 @@ ca <- cran_alias()
 head(ca)
 }
 \seealso{
-The raw source of the data is: \code{tools::CRAN_aliases_db()}
+The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_aliases_db()}}.
 
 Other alias: 
 \code{\link{base_alias}()}

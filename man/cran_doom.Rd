@@ -46,5 +46,5 @@ head(cd$details)
 Original code from: \url{https://github.com/schochastics/cran-doomsday/blob/main/index.qmd}
 }
 \seealso{
-\code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
+The raw source of the data is: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 }

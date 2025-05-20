@@ -20,7 +20,7 @@ ba <- base_alias()
 head(ba)
 }
 \seealso{
-The raw source of the data is: \code{tools::base_aliases_db()}
+The raw source of the data is: \code{\link[tools:basetools]{tools::base_aliases_db()}}.
 
 Other alias: 
 \code{\link{cran_alias}()}

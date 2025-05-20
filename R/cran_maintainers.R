@@ -13,6 +13,7 @@
 #' The package name, Maintainer field, user maintainer manual date, packaged
 #' date, published date, name of maintainer used, email used, direction and domain.
 #' @export
+#' @seealso The raw source of the data is: [tools::CRAN_authors_db()]
 #' @examples
 #' maintainers <- cran_maintainers()
 #' head(maintainers)

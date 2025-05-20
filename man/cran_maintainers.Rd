@@ -25,3 +25,6 @@ The name, email and user might help identify similar named people (or confuse be
 maintainers <- cran_maintainers()
 head(maintainers)
 }
+\seealso{
+The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_authors_db()}}
+}

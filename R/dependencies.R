@@ -109,6 +109,11 @@ update_dependencies <- function(deps) {
 
 }
 
+cache_pkg_dep <- function(package, which, keepR = TRUE) {
+    which <- check_which(which)
+
+}
+
 packages_dependencies <- function(ap) {
     stopifnot(is.matrix(ap) || is.data.frame(ap))
     stopifnot(rownames(ap) != seq_len(nrow(ap)))

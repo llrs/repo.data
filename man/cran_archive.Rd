@@ -18,9 +18,11 @@ It is sorted by package name and date.
 Retrieve the archive and the current database.
 }
 \details{
-There are some packages with NA in version, those are version names that do
-not pass current \code{\link[=package_version]{package_version()}} with \code{strict = TRUE}.
-Other packages might have been on CRAN but could have been removed.
+Some packages would get an NA in Version, if \code{\link[=package_version]{package_version()}} were to be
+used with \code{strict = FALSE}.
+Packages might have been on CRAN but could have been removed and won't show up.
+Depending on the data requested and packages currently on CRAN, you might get
+a warning regarding a package being both archived and current.
 }
 \examples{
 \donttest{
@@ -29,5 +31,6 @@ head(ca)
 }
 }
 \seealso{
-\code{\link[=CRAN_archive_db]{CRAN_archive_db()}}, \code{\link[=CRAN_current_db]{CRAN_current_db()}}, \code{\link[=cran_comments]{cran_comments()}}.
+The raw source of the data is: \code{\link[tools:CRANtools]{tools::CRAN_archive_db()}}, \code{\link[tools:CRANtools]{tools::CRAN_current_db()}}.
+For some dates and comments about archiving packages: \code{\link[=cran_comments]{cran_comments()}}.
 }
