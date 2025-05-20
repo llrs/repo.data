@@ -87,28 +87,9 @@ Compare with the original file in case of doubts.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu">cran_comments</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving comments, this might take a bit. Caching results to be faster next call in this session.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in merge_comments(comments_df, "action"):</span> length(starts) == length(ends) is not TRUE</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       package</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 ABCExtremes</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       ABCp2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       ABCp2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      ACCLMA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5         ACD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        ACDC</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                            comment</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Archived on 2015-06-19 as incomplete maintainer address was not corrected despite reminders.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                     Archived on 2015-07-01 as maintainer address &lt;duryea@dartmouth.edu&gt; bounced.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                           Archived on 2025-01-26 as issues were not corrected despite reminders.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Archived on 2021-02-05 as issues were not corrected despite reminders: 'xtfrm()' on data frames.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5                   Archived on 2022-06-08 as check problems were not corrected despite reminders.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6                                         Archived on 2023-05-09 at the request of the maintainer.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         date   action</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2015-06-19 archived</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2015-07-01 archived</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2025-01-26 archived</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2021-02-05 archived</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2022-06-08 archived</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2023-05-09 archived</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'cc' not found</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

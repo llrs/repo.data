@@ -61,13 +61,16 @@ It is sorted by package name and date.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>There are some packages with NA in version, those are version names that do
-not pass current <code><a href="https://rdrr.io/r/base/numeric_version.html" class="external-link">package_version()</a></code> with <code>strict = TRUE</code>.
-Other packages might have been on CRAN but could have been removed.</p>
+    <p>Some packages would get an NA in Version, if <code><a href="https://rdrr.io/r/base/numeric_version.html" class="external-link">package_version()</a></code> were to be
+used with <code>strict = FALSE</code>.
+Packages might have been on CRAN but could have been removed and won't show up.
+Depending on the data requested and packages currently on CRAN, you might get
+a warning regarding a package being both archived and current.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code>CRAN_archive_db()</code>, <code>CRAN_current_db()</code>, <code><a href="cran_comments.html">cran_comments()</a></code>.</p></div>
+    <div class="dont-index"><p>The raw source of the data is: <code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_archive_db()</a></code>, <code><a href="https://rdrr.io/r/tools/CRANtools.html" class="external-link">tools::CRAN_current_db()</a></code>.
+For some dates and comments about archiving packages: <code><a href="cran_comments.html">cran_comments()</a></code>.</p></div>
     </div>
 
     <div class="section level2">
