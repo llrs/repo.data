@@ -86,8 +86,12 @@ installed we can use:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/package_date.html">package_date</a></span><span class="op">(</span><span class="st">"ggeasy"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Retrieving cran_archive, this might take a bit. Caching results to be faster next call in this session.</span></span>
+<span><span class="co">#&gt; Warning: Package publication date could not be obtained for: ggplot2, rlang.</span></span>
+<span><span class="co">#&gt; This indicate packages outside CRAN repository.</span></span>
+<span><span class="co">#&gt; Warning: Package's dependencies archive were removed from CRAN after package</span></span>
+<span><span class="co">#&gt; publication: ggplot2, rlang</span></span>
 <span><span class="co">#&gt;                  Published             deps_available </span></span>
-<span><span class="co">#&gt;  "2024-11-03 05:50:04 CET" "2024-06-04 09:45:11 CEST"</span></span></code></pre></div>
+<span><span class="co">#&gt;  "2024-11-03 05:50:04 CET" "2018-04-23 09:04:38 CEST"</span></span></code></pre></div>
 <p>Which will show when it was published and when the R dependencies
 required become available.</p>
 <div class="section level2">
@@ -96,7 +100,8 @@ required become available.</p>
 <p>When were packages last updated?</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cran_date.html">cran_session</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2025-05-01"</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in cran_date(versions): No packages on CRAN to find a date.</span></span>
+<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <p>This uses the <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> output to find the date of
 last installation. There is a sister function for an arbitrary data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -107,7 +112,8 @@ last installation. There is a sister function for an arbitrary data:</p>
 <span><span class="co">#&gt; 1   dplyr   1.1.4</span></span>
 <span><span class="co">#&gt; 2    Rcpp   0.8.9</span></span>
 <span><span class="fu"><a href="../reference/cran_date.html">cran_date</a></span><span class="op">(</span><span class="va">versions</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2023-11-17"</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in cran_date(versions): No packages on CRAN to find a date.</span></span>
+<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 <p>This date doesn’t mean that all packages are up to date to this given
 date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/update.packages.html" class="external-link">old.packages()</a></code>)</p>
 </div>
@@ -129,7 +135,7 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $npackages</span></span>
 <span><span class="co">#&gt;  CRAN   all </span></span>
-<span><span class="co">#&gt; 22434 26136</span></span>
+<span><span class="co">#&gt; 22437 26140</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">cd</span><span class="op">$</span><span class="va">details</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -358,2723 +364,2709 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 <td align="right">4</td>
 </tr>
 <tr class="odd">
-<td align="left">finetune</td>
-<td align="left">2025-05-29</td>
-<td align="left">direct</td>
-<td align="left">CRAN</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
 <td align="left">stacks</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">workflowsets</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">neotoma2</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">viraldomain</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">gtExtras</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mefdind</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mlr3pipelines</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">parsnip</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">qvirus</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">synthpop</td>
 <td align="left">2025-05-29</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">birp</td>
 <td align="left">2025-05-30</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FAVA</td>
 <td align="left">2025-05-30</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">I14Y</td>
 <td align="left">2025-05-30</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">loon</td>
 <td align="left">2025-05-30</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">nmarank</td>
 <td align="left">2025-05-30</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">segMGarch</td>
 <td align="left">2025-05-30</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">LIM</td>
 <td align="left">2025-05-31</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">fastei</td>
 <td align="left">2025-05-31</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">haven</td>
 <td align="left">2025-05-31</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">humanize</td>
 <td align="left">2025-05-31</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">limSolve</td>
 <td align="left">2025-05-31</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RobustGaSP</td>
 <td align="left">2025-05-31</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">bazar</td>
 <td align="left">2025-06-01</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">gkwreg</td>
 <td align="left">2025-06-01</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">kofdata</td>
 <td align="left">2025-06-01</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">c3dr</td>
 <td align="left">2025-06-02</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">GDILM.SEIRS</td>
 <td align="left">2025-06-02</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">spatialwarnings</td>
 <td align="left">2025-06-03</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">pdfsearch</td>
 <td align="left">2025-06-04</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SFDesign</td>
 <td align="left">2025-06-04</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">colorhcplot</td>
 <td align="left">2025-06-06</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">bonn</td>
 <td align="left">2025-06-08</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">checked</td>
 <td align="left">2025-06-08</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">AcrossTic</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">crossword.r</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">dpmr</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">idem</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">lar</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">LavaCvxr</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mosaicModel</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">NetMix</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ODEsensitivity</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">omics</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RcmdrPlugin.GWRM</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">A3</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">aphylo</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">archivist.github</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">artfima</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">banditpam</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">BayesComm</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">bssn</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">CircStats</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">cloudml</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ClusteredMutations</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ClusVis</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">colorpatch</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">crsra</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">CVR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">datastepr</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DeRezende.Ferreira</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DetR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">dfmeta</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DMwR2</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">effectR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">EncDNA</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ExplainPrediction</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">flexmixNL</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FluMoDL</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">foodingraph</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ForecastComb</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">fpcb</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FunCC</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">gamlss.countKinf</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GeomComb</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ggalt</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GGMncv</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ggparty</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ggQC</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ggseas</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">githubinstall</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">glpkAPI</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">googleComputeEngineR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">HeritSeq</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">HSDiC</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">imguR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">IsoCheck</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">languageR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">latte</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Lavash</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">LCAvarsel</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">leaflet.esri</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">lifelogr</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">LifeTables</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">LightningR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">LongMemoryTS</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">lsbclust</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">m2b</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">marg</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mcmcplots</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MDplot</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mediation</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">miscset</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">msaFACE</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">musica</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">NORMA</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">oglmx</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">overture</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pampe</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">panelaggregation</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pcdpca</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">pdmod</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">performanceEstimation</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">permGS</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pheatmap</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PHENIX</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">phylotools</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">pltesim</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">poisbinom</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PortRisk</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">posterdown</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PowerNormal</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pqantimalarials</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">QRegVCM</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">r6extended</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ramify</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rasclass</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RcppDist</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Rcsdp</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rdd</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rdfp</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RDML</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Rdsdp</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rebus.numbers</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">repmis</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">reutils</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RJcluster</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rjmcmc</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RmarineHeatWaves</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">robreg3S</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RSauceLabs</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RsimMosaic</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rucm</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ruin</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RZabbix</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">s4vd</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">secure</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">seleniumPipes</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SensusR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">shopifyr</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">simMP</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">simplexreg</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SmCCNet</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">smoothROCtime</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SubpathwayLNCE</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">subspace</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tagcloud</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">teamr</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">treeClust</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TrendSLR</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ttScreening</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">urltools</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">vesselr</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">visit</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">waterData</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">waterfall</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">x.ent</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">xlink</td>
 <td align="left">2025-06-09</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SSLR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">statVisual</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">AFM</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">coxed</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ctpm</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">deepdive</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">glmglrt</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">microclass</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mlergm</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">papci</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PCPS</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">robustsur</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SC.MEB</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">vsd</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">weights</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">apc</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">AssocTests</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">bayesforecast</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">BMTAR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">bootSVD</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">BTYDplus</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ch</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">colocr</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">corrarray</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">corrgrapher</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">cumSeg</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">cyclomort</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">denoiseR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">difR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DirichletReg</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">discfrail</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">dmri.tracking</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">endoSwitch</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">EpiEstim</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">EpiILM</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">EpiILMCT</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">evolvability</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">fanovaGraph</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">forecastHybrid</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">forImage</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">fuzzyjoin</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">GLMMRR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">googleLanguageR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">HaDeX</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ICAOD</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">insect</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">jlctree</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">JSM</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">labourR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">likert</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">liminal</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">linkcomm</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">LPS</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">luca</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">m2r</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">manhattanly</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MAVE</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MBmca</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MDBED</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">medicalrisk</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MetGen</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MGDrivE</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">microcontax</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MNLpred</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MSCsimtester</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MtreeRing</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mvnormalTest</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">NADA</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">neverhpfilter</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">NonNorMvtDist</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ODB</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ODEnetwork</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">OEFPIL</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">opera</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pafr</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">parameters</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PAsso</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PhenotypeR</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">pooling</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PredCRG</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PrevMap</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ProfoundData</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PupilPre</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">R.temis</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rare</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">regclass</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rfishdraw</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rgoogleslides</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RMBC</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">scaffolder</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sclr</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">seeds</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">shinysurveys</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sidier</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">soc.ca</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SparseBiplots</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sse</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SYNCSA</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tfestimators</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tfplot</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">TSPred</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">utiml</td>
 <td align="left">2025-06-10</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">INSPIRE</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">leastcostpath</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">LTAR</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rNOMADS</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Ake</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">clv</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">CombinS</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Conake</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">conjoint</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">EcoVirtual</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">FinancialInstrument</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">gaussDiff</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">handyFunctions</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">hapsim</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">hrqglas</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ionr</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MatrixLDA</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">modelfree</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">penAFT</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">petitr</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PGM2</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ramlegacy</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rentrez</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RevEcoR</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RInno</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">rTensor2</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">scalpel</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">TensorTools</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">textgRid</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">yarrr</td>
 <td align="left">2025-06-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">csampling</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">habCluster</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">itsdm</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SCRIP</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ADMUR</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ALEPlot</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">bisectr</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">blender</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">breakpoint</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">bsplinePsd</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">cfma</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">clikcorr</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">collUtils</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">cond</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">ConfZIC</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">cooccur</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">countTransformers</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">CovCombR</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">cumstats</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">DBEST</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DCODE</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">dfped</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">diverse</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">doex</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">DPBBM</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">dtt</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">earlywarnings</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">efflog</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">epimdr2</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">ExplodeLayout</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GameTheoryAllocation</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">gma</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GOCompare</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">GrimR</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">GRS.test</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">hmeasure</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">IGCities</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">inventorize</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">JUMP</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">jvnVaR</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">KMsurv</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">kzs</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">lactcurves</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">LIStest</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">lmreg</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">macc</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">makeProject</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MarZIC</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mazeGen</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MCMC.OTU</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">mfx</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">MG1StationaryProbability</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MRQoL</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">multiocc</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">MultiVarSel</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">NFCP</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">nlreg</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Nozzle.R1</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">nparACT</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">OOS</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">outqrf</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">pgnorm</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">phenesse</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">picR</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PLFD</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">PLMIX</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">PolyTrend</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">progenyClust</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">rle</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">RNCBIEUtilsLibs</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">robust2sls</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Rtwalk</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">RUnit</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Rwclust</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">saturnin</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">scaleboot</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">SCBmeanfd</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SCEM</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">seas</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SeedCalc</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">Select</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">simexaft</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">slickR</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">snpReady</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sparseBC</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">SPmlficmcm</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">STAREG</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
-<tr class="even">
-<td align="left">stmCorrViz</td>
-<td align="left">2025-06-17</td>
-<td align="left">direct</td>
-<td align="left">CRAN</td>
-<td align="right">1</td>
-</tr>
 <tr class="odd">
-<td align="left">STV</td>
+<td align="left">stmCorrViz</td>
 <td align="left">2025-06-17</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
@@ -3151,35 +3143,35 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">fastml</td>
-<td align="left">2025-06-23</td>
-<td align="left">indirect</td>
-<td align="left">CRAN</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
 <td align="left">rUM</td>
 <td align="left">2025-06-23</td>
 <td align="left">indirect</td>
 <td align="left">CRAN</td>
 <td align="right">4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tidysdm</td>
 <td align="left">2025-06-23</td>
 <td align="left">indirect</td>
 <td align="left">CRAN</td>
 <td align="right">4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">autostats</td>
 <td align="left">2025-06-23</td>
 <td align="left">indirect</td>
 <td align="left">CRAN</td>
 <td align="right">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">envi</td>
+<td align="left">2025-06-23</td>
+<td align="left">indirect</td>
+<td align="left">CRAN</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">fastml</td>
 <td align="left">2025-06-23</td>
 <td align="left">indirect</td>
 <td align="left">CRAN</td>
