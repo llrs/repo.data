@@ -54,6 +54,9 @@ cran_alias <- function(packages = NULL) {
         alias <- rbind(alias, new_alias)
         pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
     }
-
-    as.data.frame(alias[alias[, "Package"] %in% packages, ])
+    if (is.null(packages)) {
+        as.data.frame(alias)
+    } else {
+        as.data.frame(alias[alias[, "Package"] %in% packages, , drop = FALSE])
+    }
 }
