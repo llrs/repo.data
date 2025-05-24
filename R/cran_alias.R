@@ -12,11 +12,48 @@
 cran_alias <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
-    first <- check_env("cran_aliases") && is.null(packages)
-    save_state("cran_aliases", alias2df(tools::CRAN_aliases_db()))
-    alias <- get_package_subset("cran_aliases", packages)
-    if (first) {
-        check_alias(alias)
+    raw_alias <- save_state("cran_aliases", tools::CRAN_aliases_db())
+    # Place to store modified data
+    env <- "full_cran_aliases"
+    # Check for random packages
+    current_packages <- names(raw_alias)
+    omit_pkg <- setdiff(packages, current_packages)
+    if (length(omit_pkg)) {
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE)
     }
-    as.data.frame(alias[, c("Package", "Source", "Target")])
+    # Keep only packages that can be processed
+    packages <- setdiff(packages, omit_pkg)
+    if (!is.null(packages) && !length(packages)) {
+        return(NULL)
+    }
+
+    # Check if there is already data
+    first_alias <- empty_env(env)
+    if (first_alias) {
+        alias <- NULL
+    } else {
+        alias <- pkg_state[[env]]
+    }
+
+    # Decide which packages are to be added to the data
+    if (!is.null(packages) & !first_alias) {
+        new_packages <- setdiff(packages, alias[, "Package"])
+    } else if (!is.null(packages) & first_alias) {
+        new_packages <- intersect(packages, current_packages)
+    } else if (is.null(packages) & first_alias) {
+        new_packages <- current_packages
+    } else if (is.null(packages) & !first_alias) {
+        new_packages <- setdiff(current_packages, alias[, "Package"])
+    }
+
+    # Add new package's data
+    if (length(new_packages)) {
+        new_alias <- alias2df(raw_alias[new_packages])
+        check_alias(new_alias)
+        alias <- rbind(alias, new_alias)
+        pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
+    }
+
+    as.data.frame(alias[alias[, "Package"] %in% packages, ])
 }
