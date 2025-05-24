@@ -13,9 +13,8 @@
 cran_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     first <- empty_env("cran_rdxrefs") && is.null(packages)
-    save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
-    env <- "full_cran_rdxrefs"
     raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
+    env <- "full_cran_rdxrefs"
     # Check for random packages
     current_packages <- names(raw_xrefs)
     omit_pkg <- setdiff(packages, current_packages)
