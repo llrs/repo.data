@@ -1,12 +1,15 @@
 
-alias2df <- function(x){
+alias2df <- function(x) {
+    if (!length(x)) {
+        return(NULL)
+    }
+
     l <- lapply(x, function(x) {
         cbind(Source = rep(names(x), lengths(x)), Target = funlist(x))
     })
     aliasesDF <- do.call(rbind, l)
     aliasesDF <- cbind(aliasesDF, Package = rep(names(l), vapply(l, NROW, numeric(1L))))
-
-    aliasesDF
+    aliasesDF[, c("Package", "Source", "Target")]
 }
 
 
