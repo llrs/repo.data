@@ -1,10 +1,13 @@
 
 xrefs2df <- function(x) {
+    if (!length(x)) {
+        return(NULL)
+    }
+
     rdxrefsDF <- do.call(rbind, x)
     rdxrefsDF <- cbind(rdxrefsDF, Package = rep(names(x), vapply(x, NROW, numeric(1L))))
     rownames(rdxrefsDF) <- NULL
     rdxrefsDF[, c("Package", "Source", "Anchor", "Target"), drop = FALSE]
-    rdxrefsDF
 }
 
 split_anchor <- function(links) {
