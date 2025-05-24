@@ -12,7 +12,7 @@
 #' head(cl)
 cran_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    first <- check_env("cran_rdxrefs") && is.null(packages)
+    first <- empty_env("cran_rdxrefs") && is.null(packages)
     save_state("cran_rdxrefs", xrefs2df(tools::CRAN_rdxrefs_db()))
     cr <- get_package_subset("cran_rdxrefs", packages)
     if (first) {

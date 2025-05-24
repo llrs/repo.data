@@ -21,7 +21,7 @@ cran_actions <- function(packages = NULL, silent = FALSE) {
 }
 
 cran_all_actions <- function() {
-    if (!check_env("cran_actions")) {
+    if (!empty_env("cran_actions")) {
         return(pkg_state[["cran_actions"]])
     }
 
