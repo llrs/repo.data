@@ -9,7 +9,7 @@ alias2df <- function(x) {
     })
     aliasesDF <- do.call(rbind, l)
     aliasesDF <- cbind(aliasesDF, Package = rep(names(l), vapply(l, NROW, numeric(1L))))
-    aliasesDF[, c("Package", "Source", "Target")]
+    aliasesDF[, c("Package", "Source", "Target"), drop = FALSE]
 }
 
 
