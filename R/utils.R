@@ -3,9 +3,11 @@ empty_env <- function(name) {
 }
 
 save_state <- function(name, out, verbose = TRUE) {
+    # Use CRAN mirror if not set a default
+    CRAN_baseurl()
     if (empty_env(name)) {
         if (verbose) {
-        message("Retrieving ", name, ", this might take a bit. ",
+        message("Retrieving ", name, ", this might take a bit.\n",
                 "Caching results to be faster next call in this session.")
         }
         pkg_state[[name]] <- out
@@ -26,16 +28,19 @@ get_package_subset <- function(name, pkges) {
         if (is.null(pkges)) {
             return(df)
         }
-        if ("package" %in% colnames(df)) {
-            df[df[, "package"] %in% pkges, , drop = FALSE]
-        } else {
-            df[df[, "Package"] %in% pkges, , drop = FALSE]
-        }
+        df[pkg_in_x(df, pkges), , drop = FALSE]
     } else {
         NULL
     }
 }
 
+pkg_in_x <- function(x, packages) {
+    if ("package" %in% colnames(x)) {
+        x[, "package"] %in% packages
+    } else {
+        x[, "Package"] %in% packages
+    }
+}
 check_subset <- function(obj, pkges) {
     if ("package" %in% colnames(obj)) {
         all(pkges %in% obj[, "package"])
@@ -50,7 +55,7 @@ check_installed <- function(x) {
 
 # tools:::CRAN_baseurl_for_src_area but with fixed mirror
 CRAN_baseurl <- function() {
-    Sys.getenv("R_CRAN_SRC", "https://CRAN.R-project.org")
+    Sys.setenv(R_CRAN_SRC = Sys.getenv("R_CRAN_SRC", "https://CRAN.R-project.org"))
 }
 
 # tools:::read_CRAN_object but for several types
