@@ -13,12 +13,53 @@
 cran_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     first <- empty_env("cran_rdxrefs") && is.null(packages)
-    save_state("cran_rdxrefs", xrefs2df(tools::CRAN_rdxrefs_db()))
-    cr <- get_package_subset("cran_rdxrefs", packages)
-    if (first) {
-        # check_links(cr)
+    save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
+    env <- "full_cran_rdxrefs"
+    raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
+    # Check for random packages
+    current_packages <- names(raw_xrefs)
+    omit_pkg <- setdiff(packages, current_packages)
+    if (length(omit_pkg)) {
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE)
     }
-    as.data.frame(cr[, c("Package", "Source", "Target", "Anchor")])
+    # Keep only packages that can be processed
+    packages <- setdiff(packages, omit_pkg)
+    if (!is.null(packages) && !length(packages)) {
+        return(NULL)
+    }
+
+    # Check if there is already data
+    first_xrefs <- empty_env(env)
+    if (first_xrefs) {
+        xrefs <- NULL
+    } else {
+        xrefs <- pkg_state[[env]]
+    }
+
+    # Decide which packages are to be added to the data
+    if (!is.null(packages) & !first_xrefs) {
+        new_packages <- setdiff(packages, xrefs[, "Package"])
+    } else if (!is.null(packages) & first_xrefs) {
+        new_packages <- intersect(packages, current_packages)
+    } else if (is.null(packages) & first_xrefs) {
+        new_packages <- current_packages
+    } else if (is.null(packages) & !first_xrefs) {
+        new_packages <- setdiff(current_packages, xrefs[, "Package"])
+    }
+
+    # Add new package's data
+    if (length(new_packages)) {
+        new_xrefs <- xrefs2df(raw_xrefs[new_packages])
+        # check_links(new_xrefs)
+        xrefs <- rbind(xrefs, new_xrefs)
+        pkg_state[[env]] <- xrefs[, c("Package", "Source", "Anchor", "Target")]
+    }
+    if (is.null(packages)) {
+        as.data.frame(xrefs)
+    } else {
+        as.data.frame(xrefs[xrefs[, "Package"] %in% packages, , drop = FALSE])
+    }
 }
 
 #' Links between help pages by target
