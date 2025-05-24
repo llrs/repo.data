@@ -1,9 +1,9 @@
-check_env <- function(name) {
+empty_env <- function(name) {
     is.null(pkg_state[[name]])
 }
 
 save_state <- function(name, out, verbose = TRUE) {
-    if (check_env(name)) {
+    if (empty_env(name)) {
         if (verbose) {
         message("Retrieving ", name, ", this might take a bit. ",
                 "Caching results to be faster next call in this session.")
@@ -20,7 +20,7 @@ get_package_subset <- function(name, pkges) {
     stopifnot(is.character(name) && length(name) == 1L,
               "NULL or character vector" = is.null(pkges) || (is.character(pkges) && length(pkges)))
 
-    if (!check_env(name)) {
+    if (!empty_env(name)) {
         df <- pkg_state[[name]]
 
         if (is.null(pkges)) {
