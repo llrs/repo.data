@@ -7,7 +7,7 @@
 #' @family alias
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_aliases_db]{CRAN_aliases_db()}}.
 #' @examples
-#' ca <- cran_alias()
+#' ca <- cran_alias("BWStest")
 #' head(ca)
 cran_alias <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())

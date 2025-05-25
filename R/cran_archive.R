@@ -17,7 +17,7 @@
 #'  For some dates and comments about archiving packages: [cran_comments()].
 #' @examples
 #' \donttest{
-#' ca <- cran_archive()
+#' ca <- cran_archive("A3")
 #' head(ca)
 #' }
 cran_archive <- function(packages = NULL) {
