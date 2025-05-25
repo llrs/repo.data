@@ -22,93 +22,64 @@
 #' }
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    save_state("cran_archive", cran_pkges_archive(packages))
-    out <- get_package_subset("cran_archive", packages)
-    warnings_archive(out)
-}
-
-cran_pkges_archive <- function(packages = NULL) {
-    stopifnot("Requires at least R 4.5.0" = check_r_version())
-    # Check if package is there
-    if (!empty_env("cran_archive")) {
-        out <- get_package_subset("cran_archive", packages)
-        if (check_subset(out, packages)) {
-            warnings_archive(out)
-            return(out)
-        }
-    }
-    # Download data
-    archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
     current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
 
-    archive_sb <- if (is.null(packages)) {
-        archive
+    env <- "full_cran_archive"
+    arch_names <- names(archive)
+    curr_names <- gsub("_.+", "", rownames(current)) # Rownames without version
+    # Check for random packages
+    all_names <- unique(c(arch_names, curr_names))
+    omit_pkg <- setdiff(packages, all_names)
+    if (length(omit_pkg)) {
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\nMaybe they were not on CRAN?", immediate. = TRUE)
+    }
+    # Keep only packages that can be processed
+    packages <- setdiff(packages, omit_pkg)
+    if (!is.null(packages) && !length(packages)) {
+        return(NULL)
+    }
+
+    # Check if there is already data
+    first_arch <- empty_env(env)
+    if (first_arch) {
+        arch <- curr2m(current)
     } else {
-        archive[packages[packages %in% names(archive)]]
+        arch <- pkg_state[[env]]
     }
 
-    # Convert to matrix for faster cbind
-    keep_cols <- c("mtime", "size", "uname")
-    archive_sbm <- lapply(archive_sb, function(pack) {
-        as.matrix(pack[, keep_cols])
-        })
+    # Decide which packages are to be added to the data
+    if (!is.null(packages) & !first_arch) {
+        new_packages <- setdiff(packages, arch[, "package"])
+    } else if (!is.null(packages) & first_arch) {
+        new_packages <- intersect(packages, all_names)
+    } else if (is.null(packages) & first_arch) {
+        new_packages <- all_names
+    } else if (is.null(packages) & !first_arch) {
+        new_packages <- setdiff(all_names, arch[, "package"])
+    }
 
-    archive_m <- do.call(rbind, archive_sbm)
-    all_packages <- rbind(archive_m, as.matrix(current[, keep_cols]))
+    # Add new package's data
+    if (length(new_packages)) {
+        new_arch <- arch2m(archive[intersect(new_packages, arch_names)])
+        arch <- rbind(arch, new_arch)
+        # To be able to detect current and archived versions
+        warnings_archive(arch)
+        pkg_state[[env]] <- arch
+    }
 
-    # Packages names
-    archives <- vapply(archive_sb, nrow, numeric(1))
-    pkg <- rep(names(archive_sb), times = archives)
-    all_packages <- cbind(all_packages,
-                          package = c(pkg, gsub("_.*", "", rownames(current))))
-
-    # Return when everything is requested and it was already there.
-    if (!is.null(packages)) {
-        pkges <- intersect(packages, all_packages[, "package"])
+    if (is.null(packages)) {
+        arch2df(arch)
     } else {
-        pkges <- all_packages[, "package"]
+        arch2df(arch[arch[, "package"] %in% packages, , drop = FALSE])
     }
-
-    if (!is.null(pkg_state[["cran_archive"]])) {
-        return(get_package_subset("cran_archive", pkges))
-    }
-
-    # Packages versions
-    version <- funlist(lapply(archive_sb, rownames))
-    versions <- c(version, rownames(current))
-    versions <- gsub(".+_(.*)\\.tar\\.gz$", "\\1", versions)
-
-    # Subset to only the requested ones
-    all_packages <- cbind(all_packages, version = versions, status = "archived")
-    all_packages <- all_packages[all_packages[, "package"] %in% pkges, , drop = FALSE]
-    # Convert back to data.frame
-    all_packages <- as.data.frame(all_packages)
-    all_packages$size <- as.numeric(all_packages$size)
-    all_packages$mtime <- as.POSIXct(all_packages$mtime, tz = cran_tz)
-    # Packages status
-    all_packages$status[match(rownames(current), rownames(all_packages))] <- "current"
-
-
-    # Arrange dates and data
-    keep_columns <- c("package", "mtime", "version", "uname", "size", "status")
-    all_packages <- sort_by(all_packages[, keep_columns, drop = FALSE], ~package + mtime)
-    colnames(all_packages) <- c("Package", "Datetime", "Version", "User", "Size", "Status")
-    rownames(all_packages) <- NULL
-
-    # Save it is the complete list
-    if (all(names(archive) %in% all_packages$package)) {
-        save_state("cran_archive", all_packages)
-    }
-    if (!is.null(packages)) {
-        warnings_archive(all_packages)
-    }
-    all_packages
 }
 
 
 # Like CRAN archive but provides the published date and the date of archival if known
 cran_archive_dates <- function() {
-    ca <- save_state("cran_archive", cran_archive())
+    ca <- save_state("full_cran_archive", cran_archive())
     dates <- split(ca$published_date, ca$package)
     l <- lapply(dates, function(x) {
         c(x[-length(x)] - 1L, NA)
@@ -123,14 +94,4 @@ cran_archive_dates <- function() {
     cc[w, ]
 }
 
-warnings_archive <- function(all_packages) {
-    # Rely on order of all_packages by date
-    dup_arch <- duplicated(all_packages[, c("Package", "Version")])
-    dups_arch <- sum(all_packages[, "Status"][dup_arch] == "current")
-    if (dups_arch) {
-        warning("There are ", dups_arch, " packages both archived and published\n",
-                "This indicate manual CRAN intervention.",
-                call. = FALSE, immediate. = TRUE)
-    }
-    all_packages
-}
+
