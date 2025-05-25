@@ -1,6 +1,7 @@
 # Raw testing without using any package (testthat or tinytest) as described on WRE
 
 library("repo.data")
+options(repos = "https://CRAN.R-project.org")
 # cran archive ####
 pkges <- c("BaseSet", "dplyr")
 cpk <- cran_archive(pkges)
