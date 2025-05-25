@@ -26,7 +26,7 @@ a warning regarding a package being both archived and current.
 }
 \examples{
 \donttest{
-ca <- cran_archive()
+ca <- cran_archive("A3")
 head(ca)
 }
 }

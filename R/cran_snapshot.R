@@ -9,7 +9,8 @@
 #' @export
 #'
 #' @examples
-#' cran_snapshot(Sys.Date() -2 )
+#' cs <- cran_snapshot(Sys.Date() -2 )
+#' head(cs)
 cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),

@@ -11,6 +11,7 @@ cran_help_cliques(packages = NULL)
 }
 \value{
 Return a data.frame of help pages not connected to the network of help pages.
+Or NULL if nothing are found.
 }
 \description{
 Some help pages have links to and from but they are closed networks.
@@ -19,7 +20,7 @@ Some help pages have links to and from but they are closed networks.
 Requires igraph
 }
 \examples{
-chc <- cran_help_cliques()
+chc <- cran_help_cliques("DZEXPM")
 head(chc)
 }
 \seealso{

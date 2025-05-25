@@ -16,7 +16,7 @@ A data.frame with three columns: Package, Source and Target.
 Retrieve alias available on CRAN.
 }
 \examples{
-ca <- cran_alias()
+ca <- cran_alias("BWStest")
 head(ca)
 }
 \seealso{
