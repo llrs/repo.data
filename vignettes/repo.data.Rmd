@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+setRepositories(ind = 1, graphics = FALSE)
 library(repo.data)
 ```
 
