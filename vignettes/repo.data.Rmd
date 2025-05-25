@@ -65,7 +65,7 @@ If you ever wonder which packages are at risk you can use `cran_doom()`:
 ```{r doom}
 cd <- cran_doom(bioc = TRUE)
 cd[c("time_till_last", "last_archived", "npackages")]
-knitr::kable(cd$details)
+knitr::kable(head(cd$details))
 ```
 
 
