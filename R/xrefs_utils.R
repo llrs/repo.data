@@ -140,7 +140,8 @@ targets2files <- function(links, alias) {
     colnames(links_w_files) <- c("to_pkg", "to_target", "from_pkg", "from_Rd", "n", "to_Rd")
     links_w_files[is.na(links_w_files[, "to_Rd"]), "to_Rd"] <- ""
     links_w_files <- links_w_files[, c(3, 4, 1, 2, 6, 5)]
-    links_w_files <- sort_by(links_w_files, ~from_pkg+from_Rd+to_target+to_Rd)
+    links_w_files <- sort_by(links_w_files,
+                             links_w_files[, c("from_pkg", "from_Rd", "to_target", "to_Rd")])
     rownames(links_w_files) <- NULL
     links_w_files
 }

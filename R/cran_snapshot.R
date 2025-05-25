@@ -15,12 +15,12 @@ cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),
               "Accepted ranges is from the beginning of CRAN to today" = date <= Sys.Date() || date >= as.Date("1997-10-08"))
-    ca <- save_state("full_cran_archive", cran_archive())
+    ca <- save_state("full_cran_archive", cran_archive(), verbose = FALSE)
     if (date == Sys.Date()) {
         return(ca[ca$status == "current", ])
     }
 
-    ca <- sort_by(ca, ~Package + Datetime)
+    ca <- sort_by(ca, ca[, c("Package", "Datetime")])
     ca_before <- ca[as.Date(ca$Datetime) <= date, , drop = TRUE]
 
     # Remove duplicated packages from the last to keep the latest version
@@ -35,7 +35,7 @@ cran_snapshot <- function(date) {
     }
 
     cc_archive <- cc[cc$action %in% c("archived", "removed") & cc$date <= date, ]
-    cc_archive <- sort_by(cc_archive, ~package + date)
+    cc_archive <- sort_by(cc_archive, cc_archive[, c("package", "date")])
     dups <- duplicated(cc_archive$package, fromLast = TRUE)
     last_archival <- cc_archive[!dups & !is.na(cc_archive$package), ]
 
@@ -80,11 +80,6 @@ cran_date <- function(versions) {
     if (!nrow(ca_packages)) {
         warning("No packages on CRAN to find a date.")
         return(NA)
-    }
-    ca_packages <- get_package_subset("cran_archive", versions[, "Package"])
-    if (is.null(ca_packages)) {
-        ca <- save_state("full_cran_archive", cran_archive())
-        ca_packages <- ca[ca$Package %in% versions[, "Package"], , drop = FALSE]
     }
     versions[, "Version"] <- as.character(versions[, "Version"])
     # match packages names and versions

@@ -89,5 +89,5 @@ base_pkges_links <- function(packages = NULL) {
         keep_rows <- keep_rows & target_links %in% packages
     }
     pkges_links <- add_uniq_count(target_links[keep_rows, -w])
-    sort_by(pkges_links, ~from_pkg + n)
+    sort_by(pkges_links, pkges_links[, c("from_pkg", "n")])
 }

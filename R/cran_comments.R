@@ -35,7 +35,7 @@ cran_all_comments <- function() {
     history_df <- extract_field(file, field = "X-CRAN-History")
     full_history <- rbind(comments_df, history_df)
 
-    fh <- sort_by(full_history, ~package + date)
+    fh <- sort_by(full_history, full_history[, c("package", "date")])
     edit <- !endsWith(fh$action, "ed")
     fh$action[edit & !is.na(edit)] <- paste0(fh$action[edit & !is.na(edit)], "d")
     rownames(fh) <- NULL

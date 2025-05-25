@@ -30,7 +30,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
         keep <-  keep & pages$to_pkg %in% packages
     }
     pages2 <- pages[, alias_cols, drop = FALSE]
-    p <- sort_by(pages2, ~Package + Source )
+    p <- sort_by(pages2, pages2[, c("Package", "Source")] )
     rownames(p) <- NULL
     p
 }
@@ -61,7 +61,8 @@ cran_help_pages_wo_links <- function(packages = NULL) {
     pages2 <- merge(ubal, unique(rbl[, c(links_cols, "to_pkg", "to_Rd")]),
                     by.x = alias_cols, by.y = links_cols,
                     all.x = TRUE, all.y = FALSE, sort = FALSE)
-    p <- sort_by(pages2[is.na(pages2$to_pkg), alias_cols, drop = FALSE], ~Package + Source )
+    p <- pages2[is.na(pages2$to_pkg), alias_cols, drop = FALSE]
+    p <- sort_by(p, p[, c("Package", "Source")])
     rownames(p) <- NULL
     p
 }
@@ -73,10 +74,11 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' Requires igraph
 #' @inheritParams base_alias
 #' @returns Return a data.frame of help pages not connected to the network of help pages.
+#' Or NULL if nothing are found.
 #' @family cran_help_pages
 #' @export
 #' @examples
-#' chc <- cran_help_cliques()
+#' chc <- cran_help_cliques("DZEXPM")
 #' head(chc)
 cran_help_cliques <- function(packages = NULL) {
     if (!check_installed("igraph")) {
@@ -95,6 +97,9 @@ cran_help_cliques <- function(packages = NULL) {
     cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), ]
     # Filter out those links not resolved
     cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
+    if (!nrow(cal)) {
+        return(NULL)
+    }
     df_links <- data.frame(from = paste0(cal$from_pkg, ":", cal$from_Rd),
                            to = paste0(cal$to_pkg, ":", cal$to_Rd))
     df_links <- unique(df_links)
