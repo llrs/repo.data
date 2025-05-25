@@ -50,7 +50,7 @@ cran_alias <- function(packages = NULL) {
     # Add new package's data
     if (length(new_packages)) {
         new_alias <- alias2df(raw_alias[new_packages])
-        check_alias(new_alias)
+        warnings_alias(new_alias)
         alias <- rbind(alias, new_alias)
         pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
     }

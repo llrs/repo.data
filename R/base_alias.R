@@ -16,7 +16,7 @@ base_alias <- function(packages = NULL) {
                                r_os_alias(alias2df(tools::base_aliases_db())))
     alias <- get_package_subset("base_aliases", packages)
     if (first) {
-        check_alias(alias)
+        warnings_alias(alias)
     }
     as.data.frame(alias[, c("Package", "Source", "Target")])
 }

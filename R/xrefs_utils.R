@@ -1,4 +1,3 @@
-
 xrefs2df <- function(x) {
     if (!length(x)) {
         return(NULL)
@@ -181,4 +180,3 @@ pkgs_linked_missing <- function(links, alias) {
     rownames(links2) <- NULL
     links2
 }
-
