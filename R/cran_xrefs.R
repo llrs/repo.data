@@ -8,7 +8,7 @@
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_db()}}.
 #' @export
 #' @examples
-#' cl <- cran_links()
+#' cl <- cran_links("CytoSimplex")
 #' head(cl)
 cran_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
@@ -49,7 +49,7 @@ cran_links <- function(packages = NULL) {
     # Add new package's data
     if (length(new_packages)) {
         new_xrefs <- xrefs2df(raw_xrefs[new_packages])
-        # check_links(new_xrefs)
+        # warnings_links(new_xrefs)
         xrefs <- rbind(xrefs, new_xrefs)
         pkg_state[[env]] <- xrefs[, c("Package", "Source", "Anchor", "Target")]
     }
