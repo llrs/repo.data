@@ -24,3 +24,12 @@ pkgs_out <- setdiff(pkges, cpk$package)
 length(pkgs_out) == 0
 cpk2 <- cran_links(pkges)
 identical(cpk, cpk2)
+
+
+# dependencies ####
+pkges <- c("BaseSet")
+cpk <- package_dependencies(pkges)
+pkgs_out <- setdiff(pkges, cpk$package)
+length(pkgs_out) == 0
+cpk2 <- package_dependencies(pkges)
+identical(cpk, cpk2)
