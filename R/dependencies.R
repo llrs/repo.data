@@ -70,8 +70,8 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     }
     pkgs_n_fields <- all_deps_df$type %in% fields_selected & all_deps_df$package %in% deps_available
     rd <- all_deps_df[pkgs_n_fields, , drop = FALSE]
-
-    rd2 <- sort_by(unique(rd[, c(1, 3)]), ~name + version)
+    rd2 <- unique(rd[, c(1, 3)])
+    rd2 <- sort_by(rd2, rd2[, c("name", "version")])
     s <- split(rd2$version, rd2$name)
     v <- lapply(s, function(x){
         y <- x[!is.na(x)]
@@ -145,7 +145,7 @@ packages_dependencies <- function(ap) {
     df <- as.data.frame(m_all)
     # Conversion to package_version class because currently we can do it.
     df$version <- package_version(df$version)
-    df <- sort_by(df, ~package + type + name)
+    df <- sort_by(df, df[, c("package", "type", "name")])
     rownames(df) <- NULL
     df
 }

@@ -32,7 +32,7 @@ cran_all_history <- function() {
                 all = TRUE, by = c("Version", "Package"),
                 sort = FALSE, suffixes = c("", ".archive"))
     m0$moment <- datetime2POSIXct(m0$Date, m0$Time)
-    m0 <- sort_by(m0, ~Package + moment + Action)
+    m0 <- sort_by(m0, m0[, c("Package", "moment", "Action")])
 
     # Published date is later than what the archive says
     k4 <- m0$Action == "publish" & m0$Date > m0$Date.archive & !is.na(m0$Date) & !is.na(m0$Date.archive)
@@ -47,7 +47,7 @@ cran_all_history <- function() {
 
     # Fill the gaps from previous action if possible
     m0$moment <- datetime2POSIXct(m0$Date, m0$Time)
-    m0 <- sort_by(m0, ~Package + moment + Action)
+    m0 <- sort_by(m0, m0[, c("Package", "moment", "Action")])
 
     # Use version of the previously published package
     wo_version <- which(is.na(m0$Version))
@@ -79,7 +79,7 @@ cran_all_history <- function() {
     m <- merge(published, archived, all = TRUE, sort = FALSE)
     m$Pub.Date <- datetime2POSIXct(m$Date.Pub, m$Time.Pub)
     m$Arch.Date <- datetime2POSIXct(m$Date.Arch, m$Time.Arch)
-    m <- sort_by(m, ~Package + Pub.Date + Arch.Date)
+    m <- sort_by(m, m[, c("Package", "Pub.Date", "Arch.Date")])
 
     # TODO: Find the dates of previous publish actions to use as archive date
     lapply(unique(m$package), function(i, data) {

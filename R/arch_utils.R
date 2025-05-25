@@ -57,7 +57,7 @@ arch2df <- function(x) {
 
     # Arrange dates and data
     keep_columns <- c("package", "mtime", "version", "uname", "size", "status")
-    x <- sort_by(x[, keep_columns, drop = FALSE], ~package + mtime)
+    x <- sort_by(x[, keep_columns, drop = FALSE], x[, c("package", "status", "mtime")])
     colnames(x) <- c("Package", "Datetime", "Version", "User", "Size", "Status")
     rownames(x) <- NULL
     x

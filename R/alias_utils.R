@@ -48,7 +48,7 @@ dup_alias <- function(alias) {
     df <- duplicated(alias[, "Target"])
     dup_targets <- unique(alias[df, "Target"])
     pkg_df <- alias[alias[, "Target"] %in% dup_targets, ]
-    pkg_df <- sort_by(pkg_df, ~Target+Package+Source)
+    pkg_df <- sort_by(pkg_df, pkg_df[, c("Target", "Package", "Source")])
     rownames(pkg_df) <- NULL
     pkg_df
 }
