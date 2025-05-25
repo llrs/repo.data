@@ -55,7 +55,13 @@ check_installed <- function(x) {
 
 # tools:::CRAN_baseurl_for_src_area but with fixed mirror
 CRAN_baseurl <- function() {
-    Sys.setenv(R_CRAN_SRC = Sys.getenv("R_CRAN_SRC", "https://CRAN.R-project.org"))
+    url <- "https://CRAN.R-project.org"
+    out <- Sys.setenv(R_CRAN_SRC = Sys.getenv("R_CRAN_SRC", url))
+    if (isTRUE(out)) {
+        url
+    } else {
+        NULL
+    }
 }
 
 # tools:::read_CRAN_object but for several types
