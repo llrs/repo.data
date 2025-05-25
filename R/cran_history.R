@@ -18,8 +18,8 @@ cran_history <- function(packages = NULL) {
 }
 
 cran_all_history <- function() {
-    archive <- save_state("cran_archive", cran_archive())
-    actions <- save_state("cran_actions", cran_actions())
+    archive <- save_state("full_cran_archive", cran_archive())
+    actions <- save_state("full_cran_actions", cran_actions())
     # comments <- save_state("cran_comments", cran_comments())
 
     archive$Date <- strftime(archive$Datetime, "%F")

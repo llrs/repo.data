@@ -10,8 +10,8 @@
 #' @importFrom utils head
 #' @keywords internal
 cran_actions <- function(packages = NULL, silent = FALSE) {
-    save_state("cran_action", cran_all_actions())
-    actions <- get_package_subset("cran_actions", packages)
+    save_state("full_cran_actions", cran_all_actions())
+    actions <- get_package_subset("full_cran_actions", packages)
     first_package <- !duplicated(actions$Package)
 
     if (isTRUE(silent)) {
@@ -21,8 +21,8 @@ cran_actions <- function(packages = NULL, silent = FALSE) {
 }
 
 cran_all_actions <- function() {
-    if (!empty_env("cran_actions")) {
-        return(pkg_state[["cran_actions"]])
+    if (!empty_env("full_cran_actions")) {
+        return(pkg_state[["full_cran_actions"]])
     }
 
     actions_f <- system.file(package = "repo.data", "data", "actions.rds")
@@ -41,7 +41,7 @@ cran_all_actions <- function() {
     actions$Package <- as.factor(actions$Package)
     actions <- sort_by(actions, ~Package + datetime2POSIXct(Date, Time) + Action)
     rownames(actions) <- NULL
-    pkg_state[["cran_actions"]] <- actions
+    pkg_state[["full_cran_actions"]] <- actions
     actions
 }
 

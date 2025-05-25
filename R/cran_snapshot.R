@@ -14,7 +14,7 @@ cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),
               "Accepted ranges is from the beginning of CRAN to today" = date <= Sys.Date() || date >= as.Date("1997-10-08"))
-    ca <- save_state("cran_archive", cran_archive())
+    ca <- save_state("full_cran_archive", cran_archive())
     if (date == Sys.Date()) {
         return(ca[ca$status == "current", ])
     }
@@ -82,7 +82,7 @@ cran_date <- function(versions) {
     }
     ca_packages <- get_package_subset("cran_archive", versions[, "Package"])
     if (is.null(ca_packages)) {
-        ca <- save_state("cran_archive", cran_archive())
+        ca <- save_state("full_cran_archive", cran_archive())
         ca_packages <- ca[ca$Package %in% versions[, "Package"], , drop = FALSE]
     }
     versions[, "Version"] <- as.character(versions[, "Version"])
