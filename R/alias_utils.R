@@ -1,4 +1,3 @@
-
 alias2df <- function(x) {
     if (!length(x)) {
         return(NULL)
@@ -12,8 +11,7 @@ alias2df <- function(x) {
     aliasesDF[, c("Package", "Source", "Target"), drop = FALSE]
 }
 
-
-check_alias <- function(alias) {
+warnings_alias <- function(alias) {
 
     if (length(unique(alias[, "Package"])) <= 1L) {
         paths <- grepl("/", alias[, "Source"], fixed = TRUE)
@@ -23,7 +21,7 @@ check_alias <- function(alias) {
     }
 
     s <- split(as.data.frame(alias), alias[, "Package"])
-    more_alias <- vapply(s, check_alias, logical(1L))
+    more_alias <- vapply(s, warnings_alias, logical(1L))
     names(more_alias) <- names(s)
     # Recursive call
     if (sum(more_alias) > 1L) {
