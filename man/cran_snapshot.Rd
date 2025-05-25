@@ -20,5 +20,6 @@ Due to missing of CRAN comments some packages are not annotated when
 were they archived and more packages will be returned for any given date.
 }
 \examples{
-cran_snapshot(Sys.Date() -2 )
+cs <- cran_snapshot(Sys.Date() -2 )
+head(cs)
 }

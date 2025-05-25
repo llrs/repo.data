@@ -17,7 +17,7 @@ It has 4 columns: Package, Anchor, Target and Source.
 Retrieve links on CRAN packages' R documentation files.
 }
 \examples{
-cl <- cran_links()
+cl <- cran_links("CytoSimplex")
 head(cl)
 }
 \seealso{
