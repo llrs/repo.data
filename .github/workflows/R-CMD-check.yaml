@@ -41,6 +41,7 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
           cran: https://CRAN.R-project.org
+          extra-repositories: https://CRAN.R-project.org
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
