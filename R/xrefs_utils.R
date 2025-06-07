@@ -153,7 +153,7 @@ xrefs_wo_deps <- function(links, ap) {
     links3 <- split_anchor(links2)
     s <- split(links3$to_pkg, links3$Package)
 
-    pkg_dep <- packages_dependencies(ap[, check_which("strong")])
+    pkg_dep <- packages_dependencies(ap)
     pkg_dep2 <- pkg_dep[pkg_dep[, "name"] != "R", c("package", "name")]
     s2 <- split(pkg_dep2$name, pkg_dep2$package)
 
@@ -179,3 +179,20 @@ pkgs_linked_missing <- function(links, alias) {
     links2
 }
 
+
+check_anchor <- function(targets) {
+    target <- targets$Target
+    anchor <- targets$Anchor
+    using_anchor <- nzchar(anchor)
+    whitespaces_target <- (grepl("^\\s+", target) | grepl("\\s+$", target))
+    whitespaces_anchor <- (grepl("^\\s+", anchor) | grepl("\\s+$", anchor))
+    error_anchor <- (whitespaces_target & !using_anchor) | (whitespaces_anchor & using_anchor)
+    if (any(error_anchor)) {
+        pkges <- unique(targets$Package[error_anchor])
+        warning("Packages ", toString(sQuote(pkges)),
+                " have a trailing whitespace on 'Anchors' that can create problems.\n",
+                "Check section 2.5 section of Writing R Extensions. ")
+        return(FALSE)
+    }
+    TRUE
+}

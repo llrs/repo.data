@@ -116,7 +116,7 @@ cache_pkg_dep <- function(package, which, keepR = TRUE) {
 
 packages_dependencies <- function(ap) {
     stopifnot(is.matrix(ap) || is.data.frame(ap))
-    stopifnot(rownames(ap) != seq_len(nrow(ap)))
+    stopifnot(all(rownames(ap) == seq_len(nrow(ap))))
 
     # Split by dependency, requires a matrix
     deps <- apply(ap, 1L, strsplit, split = "[[:space:]]*,[[:space:]]*")

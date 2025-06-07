@@ -122,3 +122,8 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     rownames(out) <- NULL
     out
 }
+
+
+check_packages <- function(pkges) {
+    !is.null(pkges) && is.character(pkges) && length(pkges) > 0L
+}

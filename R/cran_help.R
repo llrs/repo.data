@@ -118,7 +118,25 @@ cran_help_cliques <- function(packages = NULL) {
 }
 
 # Identify packages with cross-references to pages of packages they do not depend to.
-cran_help_pages_links_wo_deps <- function() {
+#' Links without dependencies
+#'
+#' On WRE section "2.5 Cross-references" explains that packages shouldn't link to help pages outside the dependency
+#'
+#' @inheritParams cran_links
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+#' evmix <- cran_help_pages_links_wo_deps("evmix")
+cran_help_pages_links_wo_deps <- function(packages = NULL) {
     ap <- available.packages(filters = c("CRAN", "duplicates"))
-    xrefs_wo_deps(cran_links(), ap[, check_which("strong")])
+    if (check_packages(packages)) {
+        pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
+        ap <- ap[funlist(pkg), c("Package", check_which("strong"))]
+    } else {
+        ap <- ap[, c("Package", check_which("strong"))]
+    }
+
+    xrefs_wo_deps(cran_links(packages), ap)
 }
