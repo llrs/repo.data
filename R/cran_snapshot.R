@@ -2,7 +2,8 @@
 #'
 #' Given the available information which packages were on CRAN on a given date?
 #' @note Due to missing of CRAN comments some packages are not annotated when
-#' were they archived and more packages will be returned for any given date.
+#' were they archived and more packages than present might be returned for any
+#' given date.
 #' @param date The date you want to check.
 #'
 #' @returns The data.frame with the packages and versions at a given date.
@@ -50,7 +51,9 @@ cran_snapshot <- function(date) {
     on_cran <- rep_len(TRUE, nrow(ca_before_date))
     names(on_cran) <- ca_before_date$package
     on_cran[na.omit(archived)] <- as.Date(ca_before_date$Datetime[na.omit(archived)]) > last_archival$date[!is.na(archived)]
-    ca_before_date[on_cran, ]
+    out <- ca_before_date[on_cran, ]
+    rownames(out) <- NULL
+    out
 }
 
 
