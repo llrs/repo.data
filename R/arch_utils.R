@@ -51,6 +51,9 @@ arch2m <- function(arch){
 }
 
 arch2df <- function(x) {
+    if (is.null(x)) {
+        return(NULL)
+    }
     x <- as.data.frame(x)
     x$size <- as.numeric(x$size)
     x$mtime <- as.POSIXct(x$mtime, tz = cran_tz)
