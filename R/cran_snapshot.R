@@ -19,8 +19,11 @@ cran_snapshot <- function(date) {
     if (date == Sys.Date()) {
         return(ca[ca$status == "current", ])
     }
+    if (is.null(ca)) {
+        return(NULL)
+    }
 
-    ca <- sort_by(ca, ca[, c("Package", "Datetime")])
+    ca <- sort_by(ca, ca[, c("Package", "Datetime"), drop = FALSE])
     ca_before <- ca[as.Date(ca$Datetime) <= date, , drop = TRUE]
 
     # Remove duplicated packages from the last to keep the latest version
