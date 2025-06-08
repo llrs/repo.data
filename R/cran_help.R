@@ -86,7 +86,8 @@ cran_help_cliques <- function(packages = NULL) {
     }
     if (!is.null(packages)) {
         pkges <- tools::package_dependencies(packages, which = "all",
-                                             reverse = TRUE, recursive = FALSE)
+                                             reverse = TRUE, recursive = FALSE,
+                                             db = available.packages())
     } else {
         pkges <- NULL
     }
