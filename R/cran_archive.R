@@ -51,13 +51,13 @@ cran_archive <- function(packages = NULL) {
 
     # Decide which packages are to be added to the data
     if (!is.null(packages) & !first_arch) {
-        new_packages <- setdiff(packages, arch[, "package"])
+        new_packages <- setdiff(packages, arch[, "Package"])
     } else if (!is.null(packages) & first_arch) {
         new_packages <- intersect(packages, all_names)
     } else if (is.null(packages) & first_arch) {
         new_packages <- all_names
     } else if (is.null(packages) & !first_arch) {
-        new_packages <- setdiff(all_names, arch[, "package"])
+        new_packages <- setdiff(all_names, arch[, "Package"])
     }
 
     # Add new package's data
@@ -72,7 +72,7 @@ cran_archive <- function(packages = NULL) {
     if (is.null(packages)) {
         arch2df(arch)
     } else {
-        arch2df(arch[arch[, "package"] %in% packages, , drop = FALSE])
+        arch2df(arch[arch[, "Package"] %in% packages, , drop = FALSE])
     }
 }
 

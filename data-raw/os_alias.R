@@ -36,6 +36,7 @@ al_s <- read.table(text = "./base/man/unix/Signals.Rd:\alias{Signals}
 ./parallel/man/windows/mcdummies.Rd:\alias{mcmapply}
 ./parallel/man/windows/mcdummies.Rd:\alias{pvec}
 ", sep = ":")
+
 os_alias <- cbind(
     Package = basename(dirname(dirname(dirname(al_s$V1)))),
     os = basename(dirname(al_s$V1)),
