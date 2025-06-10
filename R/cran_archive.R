@@ -69,7 +69,7 @@ cran_archive <- function(packages = NULL) {
         pkg_state[[env]] <- arch
     }
 
-    if (is.null(packages)) {
+    if (length(new_packages)) {
         arch2df(arch)
     } else {
         arch2df(arch[arch[, "Package"] %in% packages, , drop = FALSE])
