@@ -17,11 +17,14 @@
 #'  For some dates and comments about archiving packages: [cran_comments()].
 #' @examples
 #' \donttest{
-#' ca <- cran_archive("A3")
+#' ap <- available.packages()
+#' a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
+#' ca <- cran_archive(a_package)
 #' head(ca)
 #' }
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
+    check_packages(packages, NA)
     current <- save_state("current", tools::CRAN_current_db(), FALSE)
     archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
 
@@ -49,30 +52,30 @@ cran_archive <- function(packages = NULL) {
         arch <- pkg_state[[env]]
     }
 
+    # Packages with archive data to add
+    pkgs2add <- setdiff(arch_names, arch[arch[, "status"] != "current", "package"])
+
     # Decide which packages are to be added to the data
-    if (!is.null(packages) & !first_arch) {
-        new_packages <- setdiff(packages, arch[, "Package"])
-    } else if (!is.null(packages) & first_arch) {
-        new_packages <- intersect(packages, all_names)
-    } else if (is.null(packages) & first_arch) {
-        new_packages <- all_names
-    } else if (is.null(packages) & !first_arch) {
-        new_packages <- setdiff(all_names, arch[, "Package"])
+    new_packages <- if (!is.null(packages)) {
+        packages
+    } else {
+        all_names
     }
+    new_packages <- intersect(new_packages, pkgs2add)
 
     # Add new package's data
     if (length(new_packages)) {
-        new_arch <- arch2m(archive[intersect(new_packages, arch_names)])
+        new_arch <- arch2m(archive[new_packages])
         arch <- rbind(arch, new_arch)
         # To be able to detect current and archived versions
         warnings_archive(arch)
         pkg_state[[env]] <- arch
     }
 
-    if (length(new_packages)) {
+    if (is.null(packages)) {
         arch2df(arch)
     } else {
-        arch2df(arch[arch[, "Package"] %in% packages, , drop = FALSE])
+        arch2df(arch[arch[, "package"] %in% packages, , drop = FALSE])
     }
 }
 

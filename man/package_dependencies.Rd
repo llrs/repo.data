@@ -7,7 +7,7 @@
 package_dependencies(pkg = ".", which = "strong")
 }
 \arguments{
-\item{pkg}{Path to a file with a DESCRIPTION file or a the name of a package.}
+\item{pkg}{Path to a file with a DESCRIPTION file or a package's names.}
 
 \item{which}{a character vector listing the types of
     dependencies, a subset of
@@ -20,7 +20,7 @@ package_dependencies(pkg = ".", which = "strong")
   }
 }
 \value{
-A data.frame with the name, version required and version used.
+A data.frame with the name, version required, if only one package is provided it also show the version used.
 }
 \description{
 Despite the description minimal requirements find which versions are
