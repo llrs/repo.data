@@ -51,3 +51,6 @@ stopifnot(ncol(pd) == 2L)
 # Snapshot ####
 cs <- cran_snapshot(Sys.Date() -2 )
 stopifnot(NROW(cs) > 1000)
+
+# check_packages
+stopifnot(isTRUE((tryCatch(suppressWarnings(package_dependencies(character())), error = function(e){TRUE}))))
