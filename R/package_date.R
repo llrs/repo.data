@@ -18,19 +18,20 @@
 #' package_date("afmToolkit") # Dependency was removed from CRAN
 package_date <- function(pkg = ".", which = "strong") {
     fields <- check_which(which)
-    desc_pack <- file.path(pkg, "DESCRIPTION")
-    local_pkg <- file.exists(desc_pack)
+    local_pkg <- check_local(pkg)
 
     # Get package dependencies.
-    if (local_pkg) {
-        desc <- read.dcf(desc_pack, fields = c(PACKAGE_FIELDS, "Package"))
+    deps_df <- NULL
+    if (any(file.exists(local_pkg))) {
+        desc <- read.dcf(local_pkg[file.exists(local_pkg)], fields = c(PACKAGE_FIELDS, "Package"))
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
         deps_df <- packages_dependencies(deps)
-    } else {
+    } 
+    if (any(!file.exists(local_pkg))) {
         rd <- repos_dependencies(which = fields)
-        deps_df <- rd[rd$package == pkg, , drop = FALSE]
+        deps_df <- rbind(deps_df, rd[rd$package %in% pkg, , drop = FALSE])
         p <- cran_archive(pkg)
         date_package <- p$Datetime[nrow(p)]
     }
@@ -44,9 +45,9 @@ package_date <- function(pkg = ".", which = "strong") {
     }
     r_versions <- sum(which_r) && check_installed("rversions")
 
-    if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
+    if (!file.exists(local_pkg) && length(local_pkg) == 1L && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
-    } else if (!local_pkg && nrow(p) == 0L) {
+    } else if (!file.exists(local_pkg) && nrow(p) == 0L) {
         stop("Package ", sQuote(pkg), " wasn't found on past or current CRAN archive or locally.")
     }
 
@@ -67,7 +68,7 @@ package_date <- function(pkg = ".", which = "strong") {
     removed_from_archive <- setdiff(deps_df$name, c(pkg_available$Package, "R"))
 
     if (length(removed_from_archive)) {
-        warning("Package's dependencies archive were removed from CRAN after package publication: ",
+        warning("Package's dependencies were archived from CRAN after package publication: ",
                 toString(removed_from_archive),
                 call. = FALSE, immediate. = FALSE)
     }
@@ -119,22 +120,24 @@ package_date <- function(pkg = ".", which = "strong") {
 #' # package_date_actions("afmToolkit")
 package_date_actions <- function(pkg = ".", which = "strong") {
     fields <- check_which(which)
-    desc_pack <- file.path(pkg, "DESCRIPTION")
-    local_pkg <- file.exists(desc_pack)
+    local_pkg <- check_local(pkg)
 
     # Get package dependencies.
-    if (local_pkg) {
-        desc <- read.dcf(desc_pack, fields = c(PACKAGE_FIELDS, "Package"))
+    deps_df <- NULL
+    if (any(file.exists(local_pkg))) {
+        desc <- read.dcf(local_pkg[file.exists(local_pkg)], fields = c(PACKAGE_FIELDS, "Package"))
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
-        deps_df <- packages_dependencies(deps)
-    } else {
+        deps_df <- rbind(deps_df, packages_dependencies(deps))
+    } 
+    if (any(!file.exists(local_pkg))) {
         rd <- repos_dependencies(which = fields)
-        deps_df <- rd[rd$package == pkg, , drop = FALSE]
+        deps_df <- rbind(deps_df, rd[rd$package == pkg, , drop = FALSE])
         p <- cran_archive(pkg)
         date_package <- p$Datetime[nrow(p)]
     }
+    
 
     # We don't need base packages
     deps_df <- deps_df[!deps_df$name %in% BASE, , drop = FALSE]

@@ -11,6 +11,7 @@
 #' @keywords internal
 cran_actions <- function(packages = NULL, silent = FALSE) {
     save_state("full_cran_actions", cran_all_actions())
+    check_packages(packages, NA)
     actions <- get_package_subset("full_cran_actions", packages)
     first_package <- !duplicated(actions$Package)
 

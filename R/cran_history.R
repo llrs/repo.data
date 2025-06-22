@@ -14,6 +14,7 @@
 #' cran_history
 cran_history <- function(packages = NULL) {
     save_state("cran_history", cran_all_history())
+    check_packages(packages, NA)
     get_package_subset("cran_history", packages)
 }
 

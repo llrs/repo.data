@@ -17,7 +17,9 @@ Help pages without links to other help pages.
 This makes harder to navigate to related help pages.
 }
 \examples{
-chnl <- cran_help_pages_not_linked("A3")
+ap <- available.packages()
+a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
+chnl <- cran_help_pages_not_linked(a_package)
 head(chnl)
 }
 \seealso{

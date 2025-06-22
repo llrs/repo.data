@@ -62,9 +62,10 @@ bioc_repos <- function(version = "release",
 bioc_available <- function(version = "release",
                            repos = c("/bioc", "/data/annotation", "/data/experiment", "/workflows", "/books")) {
     url_repos <- bioc_repos(version, repos)
+    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+    on.exit(options(opts), add = TRUE)
     bioc <- save_state(paste0("bioc_available_", version),
-                       available.packages(filters = c("CRAN", "duplicates"),
-                                          repos = url_repos))
+        available.packages(repos = url_repos))
     bioc <- as.data.frame(bioc)
     bioc
 }

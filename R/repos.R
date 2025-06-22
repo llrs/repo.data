@@ -17,7 +17,9 @@
 pkges_repos <- function(repos = getOption("repos"), which = "all") {
     stopifnot(is.character(repos) && length(repos))
     which <- check_which(which)
-    ap <- available.packages(repos = repos, filters = "duplicates")
+    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+    on.exit(options(opts), add = TRUE)
+    ap <- available.packages(repos = repos)
     repositories <- gsub("/src/contrib", "", ap[, "Repository"], fixed = TRUE)
     repositories_names <- names(repos)[match(repositories, repos)]
     packages <- ap[, "Package"]

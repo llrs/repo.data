@@ -13,6 +13,7 @@
 base_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     save_state("base_rdxrefs", xrefs2df(tools::base_rdxrefs_db()))
+    check_packages(packages, NA)
     links <- get_package_subset("base_rdxrefs", packages)
     as.data.frame(links)[, c("Package", "Source", "Target", "Anchor")]
 }
@@ -29,6 +30,7 @@ base_links <- function(packages = NULL) {
 #' head(btl)
 base_targets_links <- function(packages = NULL) {
     out <- NULL
+    check_packages(packages, NA)
     out <- save_state("base_targets_links", out, verbose = FALSE)
     if (is.null(out)) {
         bl <- base_links()
@@ -62,6 +64,7 @@ base_targets_links <- function(packages = NULL) {
 #' head(bpl)
 base_pages_links <- function(packages = NULL) {
     target_links <- save_state("base_targets_links", base_targets_links())
+    check_packages(packages, NA)
     w <- which(colnames(target_links) %in% "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {
@@ -83,6 +86,7 @@ base_pages_links <- function(packages = NULL) {
 #' head(bpkl)
 base_pkges_links <- function(packages = NULL) {
     target_links <- save_state("base_targets_links", base_targets_links())
+    check_packages(packages, NA)
     w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg", "n"))
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {

@@ -8,10 +8,16 @@
 #' @export
 #' @family cran_help_pages
 #' @examples
-#' chnl <- cran_help_pages_not_linked("A3")
+#' ap <- available.packages()
+#' a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
+#' chnl <- cran_help_pages_not_linked(a_package)
 #' head(chnl)
 cran_help_pages_not_linked <- function(packages = NULL) {
-    cal <- cran_alias(packages)
+    check_packages(packages)
+    cal <-  cran_alias(packages)
+    if (!NROW(cal)) {
+        stop("Package not found")
+    }
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     if (!is.null(packages)) {
@@ -44,10 +50,12 @@ cran_help_pages_not_linked <- function(packages = NULL) {
 #' @export
 #' @family cran_help_pages
 #' @examples
-#' chwl <- cran_help_pages_wo_links("A3")
+#' ap <- available.packages()
+#' a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
+#' chwl <- cran_help_pages_wo_links(a_package)
 #' head(chwl)
 cran_help_pages_wo_links <- function(packages = NULL) {
-
+    check_packages(packages)
     cal <- cran_alias(packages)
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
@@ -81,9 +89,12 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' chc <- cran_help_cliques("DZEXPM")
 #' head(chc)
 cran_help_cliques <- function(packages = NULL) {
+    check_packages(packages)
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.")
     }
+    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+    on.exit(options(opts), add = TRUE)
     if (!is.null(packages)) {
         pkges <- tools::package_dependencies(packages, which = "all",
                                              reverse = TRUE, recursive = FALSE,
@@ -125,6 +136,6 @@ cran_help_cliques <- function(packages = NULL) {
 
 # Identify packages with cross-references to pages of packages they do not depend to.
 cran_help_pages_links_wo_deps <- function() {
-    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    ap <- available.packages()
     xrefs_wo_deps(cran_links(), ap[, check_which("strong")])
 }

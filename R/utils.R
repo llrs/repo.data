@@ -53,6 +53,19 @@ check_installed <- function(x) {
     requireNamespace(x, quietly = TRUE)
 }
 
+check_local <- function(x) {
+    desc_pkg <- file.path(x, "DESCRIPTION")
+    local_pkg <- file.exists(desc_pkg)
+    if (any(local_pkg) && sum(local_pkg) > 1L) {
+        stop(
+            "This function only allows to use one local package",
+            .call = FALSE
+        )
+    } else {
+        desc_pkg
+    }
+}
+
 # tools:::CRAN_baseurl_for_src_area but with fixed mirror
 CRAN_baseurl <- function() {
     url <- "https://CRAN.R-project.org"
@@ -132,4 +145,23 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     out$n <- as.numeric(out$n)
     rownames(out) <- NULL
     out
+}
+
+check_packages <- function(packages, length = 1L) {
+    check <- if (is.null(packages)) {
+        TRUE
+    }  else {
+        is.character(packages) && length(na.omit(packages)) <= length
+    }
+
+    if (isFALSE(check)) {
+        arbitrary_length <- is.na(length) || length == 0L
+        msg <- if (arbitrary_length) {
+            "Use NULL or a character vector."
+        } else {
+            sprintf("Use NULL or a character vector (without NA) of length %d.", length)
+        }
+        stop(msg, call. = FALSE)
+    }
+    check
 }

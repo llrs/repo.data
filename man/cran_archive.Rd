@@ -26,7 +26,9 @@ a warning regarding a package being both archived and current.
 }
 \examples{
 \donttest{
-ca <- cran_archive("A3")
+ap <- available.packages()
+a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
+ca <- cran_archive(a_package)
 head(ca)
 }
 }

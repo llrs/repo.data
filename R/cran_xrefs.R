@@ -13,6 +13,7 @@
 cran_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
+    check_packages(packages, NA)
     env <- "full_cran_rdxrefs"
     # Check for random packages
     current_packages <- names(raw_xrefs)
@@ -73,6 +74,7 @@ cran_links <- function(packages = NULL) {
 cran_targets_links <- function(packages = NULL) {
     out <- NULL
     out <- save_state("cran_targets_links", out, verbose = FALSE)
+    check_packages(packages, NA)
     if (is.null(out)) {
         bal <- base_alias()
         cal <- cran_alias()
@@ -104,6 +106,7 @@ cran_targets_links <- function(packages = NULL) {
 #' cpl <- cran_pages_links()
 #' head(cpl)
 cran_pages_links <- function(packages = NULL) {
+    check_packages(packages, NA)
     target_links <- save_state("cran_targets_links", cran_targets_links(packages))
     w <- which(colnames(target_links) %in% "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
@@ -126,6 +129,7 @@ cran_pages_links <- function(packages = NULL) {
 #' head(cpkl)
 cran_pkges_links <- function(packages = NULL) {
     target_links <- save_state("cran_pages_links", base_targets_links())
+    check_packages(packages, NA)
     w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg"))
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {

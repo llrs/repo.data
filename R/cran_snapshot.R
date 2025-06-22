@@ -16,14 +16,14 @@ cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),
               "Accepted ranges is from the beginning of CRAN to today" = date <= Sys.Date() || date >= as.Date("1997-10-08"))
-    ca <- save_state("full_cran_archive", cran_archive(), verbose = FALSE)
+    
+    ca <- cran_archive()
     if (date == Sys.Date()) {
         return(ca[ca$status == "current", ])
     }
     if (is.null(ca)) {
         return(NULL)
     }
-
     ca <- sort_by(ca, ca[, c("Package", "Datetime"), drop = FALSE])
     ca_before <- ca[as.Date(ca$Datetime) <= date, , drop = TRUE]
 
@@ -31,7 +31,7 @@ cran_snapshot <- function(date) {
     dups <- duplicated(ca_before$Package, fromLast = TRUE)
     ca_before_date <- ca_before[!dups, c("Package", "Version", "Datetime", "Status")]
 
-    cc <- save_state("cran_comments", cran_comments())
+    cc <- cran_comments()
 
     # If date is earlier than any comments return what it was.
     if (date < min(cc$date, na.rm = TRUE)) {

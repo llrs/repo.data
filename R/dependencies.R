@@ -13,15 +13,17 @@
 #' head(rd)
 repos_dependencies <- function(which = "all") {
     fields_selected <- check_which(which)
+    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+    on.exit(options(opts), add = TRUE)
     pd <- save_state("repos_dependencies", packages_dependencies(
-        available.packages(filters = c("CRAN", "duplicates"))[, fields_selected]))
+        available.packages()[, fields_selected]))
     if (all(fields_selected %in% pd$type)) {
         return(pd[fields_selected %in% pd$type, , drop = FALSE])
     }
     # Remove and calculate it again when new fields are required.
     pkg_state[["repos_dependencies"]] <- NULL
     save_state("repos_dependencies", packages_dependencies(
-        available.packages(filters = c("CRAN", "duplicates"))[, fields_selected]))
+        available.packages()[, fields_selected]))
 }
 
 
@@ -29,10 +31,10 @@ repos_dependencies <- function(which = "all") {
 #'
 #' Despite the description minimal requirements find which versions are
 #' required due to dependencies.
-#' @param pkg Path to a file with a DESCRIPTION file or a the name of a package.
+#' @param pkg Path to a file with a DESCRIPTION file or a package's names.
 #' @inheritParams repos_dependencies
 #'
-#' @returns A data.frame with the name, version required and version used.
+#' @returns A data.frame with the name, version required, if only one package is provided it also show the version used.
 #' @export
 #'
 #' @examples
@@ -40,40 +42,57 @@ repos_dependencies <- function(which = "all") {
 #' head(pd)
 package_dependencies <- function(pkg = ".", which = "strong") {
     fields_selected <- check_which(which)
-    desc_pack <- file.path(pkg, "DESCRIPTION")
-    local_pkg <- file.exists(desc_pack)
+    desc_pkg <- check_local(pkg)
 
     all_deps_df <- repos_dependencies(which = fields_selected)
-    # Get package dependencies recursively
-    if (local_pkg) {
-        desc <- read.dcf(desc_pack, fields = c(PACKAGE_FIELDS, "Package"))
+    # Get packages dependencies recursively
+    deps_df <- NULL
+    if (any(file.exists(desc_pkg))) {
+        desc <- read.dcf(desc_pkg, fields = c(PACKAGE_FIELDS, "Package"))
         deps <- desc[, intersect(fields_selected, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         deps_df <- packages_dependencies(deps)
-    } else {
-        pkgs_n_fields <- all_deps_df$type %in% fields_selected & all_deps_df$package %in% pkg
-        deps_df <- all_deps_df[pkgs_n_fields, , drop = FALSE]
     }
-    ap <- available.packages(filters = c("CRAN", "duplicates"))
-    rd <- save_state("repos_dependencies", packages_dependencies(ap[, fields_selected, drop = FALSE]))
-    all_deps <- tools::package_dependencies(deps_df$name, recursive = TRUE, which = which,
-                                            db = ap[, c(fields_selected, "Package"), drop = FALSE])
-
-    # Some package depend on Additional_repositories or Bioconductor
+    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+    on.exit(options(opts), add = TRUE)
+    ap <- available.packages()
+    rd <- save_state(
+        "repos_dependencies",
+        packages_dependencies(ap[, c(fields_selected, "Package"), drop = FALSE])
+    )
+    all_deps <- tools::package_dependencies(
+        deps_df$name,
+        recursive = TRUE,
+        which = which,
+        db = ap[, c(fields_selected, "Package"), drop = FALSE]
+    )
+    # Extract recursive dependencies versions requirements
     unique_deps <- unique(funlist(all_deps))
-    deps_available <- intersect(unique_deps, c(rownames(rd), BASE))
-    if (length(deps_available) < length(unique_deps)) {
-        warning(paste0("Some dependencies are not on available repositories: ",
-                       toString(setdiff(unique_deps, deps_available))," .\n",
-                       "Check for Additional_repositories or other repositories (Bioconductor.org?)."),
-                immediate. = TRUE)
+    if (any(!file.exists(desc_pkg))) {
+        pkgs_n_fields <- (all_deps_df$type %in% fields_selected) & (all_deps_df$package %in% unique_deps)
+        deps_df <- rbind(deps_df, all_deps_df[pkgs_n_fields, , drop = FALSE])
+    }
+    
+    # Some package depend on Additional_repositories or Bioconductor
+    # But some don't have dependencies!
+    deps_available <- c(ap[, "Package"], BASE)
+    missing_pkg <- setdiff(unique_deps, deps_available)
+    if (length(missing_pkg)) {
+        warning(
+            paste0(
+                "Some dependencies are not on available repositories. ",
+                "Check for 'Additional_repositories' or other repositories (Bioconductor.org?):\n",
+                toString(missing_pkg)
+            ),
+            immediate. = TRUE
+        )
     }
     pkgs_n_fields <- all_deps_df$type %in% fields_selected & all_deps_df$package %in% deps_available
     rd <- all_deps_df[pkgs_n_fields, , drop = FALSE]
     rd2 <- unique(rd[, c(1, 3)])
     rd2 <- sort_by(rd2, rd2[, c("name", "version")])
     s <- split(rd2$version, rd2$name)
-    v <- lapply(s, function(x){
+    v <- lapply(s, function(x) {
         y <- x[!is.na(x)]
         if (length(y) == 0L) {
             return(NA)
@@ -81,6 +100,9 @@ package_dependencies <- function(pkg = ".", which = "strong") {
         as.character(y[length(y)])
     })
     df <- data.frame(name = names(v), required = package_version(funlist(v)))
+    if (length(pkg) > 1L) {
+        return(df)
+    } 
     m <- merge(deps_df, df, all = TRUE, sort = FALSE)
     m <- sort_by(m, ~ package + name + !is.na(version))
     rownames(m) <- NULL

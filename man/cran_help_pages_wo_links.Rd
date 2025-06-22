@@ -17,7 +17,9 @@ Help pages without links from other help pages.
 This makes harder to find them.
 }
 \examples{
-chwl <- cran_help_pages_wo_links("A3")
+ap <- available.packages()
+a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
+chwl <- cran_help_pages_wo_links(a_package)
 head(chwl)
 }
 \seealso{

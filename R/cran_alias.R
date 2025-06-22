@@ -13,6 +13,7 @@ cran_alias <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
     raw_alias <- save_state("cran_aliases", tools::CRAN_aliases_db())
+    check_packages(packages, NA)
     # Place to store modified data
     env <- "full_cran_aliases"
     # Check for random packages

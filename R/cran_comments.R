@@ -24,6 +24,7 @@
 #' }
 cran_comments <- function(packages = NULL) {
     save_state("cran_comments", cran_all_comments(), verbose = FALSE)
+    check_packages(packages, NA)
     get_package_subset("cran_comments", packages)
 }
 
