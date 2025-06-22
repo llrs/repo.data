@@ -57,6 +57,7 @@
 <!-- badges: start -->
 
 <p>The goal of repo.data is to make repository data accessible. Mainly it consumes existing data but the idea is to also generate it.</p>
+<p>When a function is specific of a repository it will start with its name: <code>cran_</code> or <code>bioc_</code>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -70,47 +71,51 @@
 <p>We can get a data.frame of all packages on CRAN archive:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/llrs/repo.data" class="external-link">repo.data</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Altering install.packages behavior!</span></span>
 <span><span class="va">ca</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cran_archive.html">cran_archive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: There are 5 packages both archived and published</span></span>
+<span><span class="co">#&gt; This indicate manual CRAN intervention.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ca</span><span class="op">)</span></span>
-<span><span class="co">#&gt;         package      published_date version cran_team   size   status</span></span>
-<span><span class="co">#&gt; 1            A3 2013-02-07 09:00:29   0.9.1    hornik  45252 archived</span></span>
-<span><span class="co">#&gt; 2            A3 2013-03-26 18:58:40   0.9.2    ligges  45907 archived</span></span>
-<span><span class="co">#&gt; 3            A3 2015-08-16 21:05:54   1.0.0    hornik  42810  current</span></span>
-<span><span class="co">#&gt; 4 AalenJohansen 2023-03-01 10:42:11     1.0    ligges 165057  current</span></span>
-<span><span class="co">#&gt; 5          aaMI 2005-06-24 15:55:17   1.0-0      root   2968 archived</span></span>
-<span><span class="co">#&gt; 6          aaMI 2005-10-17 19:24:18   1.0-1      root   3487 archived</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] Package  Datetime Version  User     Size     Status  </span></span>
+<span><span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span></span></code></pre></div>
 <p>We can also check CRAN comments about the packages on its archive:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cran_comments.html">cran_comments</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Retrieving comments, this might take a bit.</span></span>
+<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cc</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       package</span></span>
-<span><span class="co">#&gt; 1       aaSEA</span></span>
-<span><span class="co">#&gt; 2         aba</span></span>
-<span><span class="co">#&gt; 3      abbyyR</span></span>
-<span><span class="co">#&gt; 4      abcADM</span></span>
-<span><span class="co">#&gt; 5    abcdeFBA</span></span>
-<span><span class="co">#&gt; 6 ABCExtremes</span></span>
-<span><span class="co">#&gt;                                                                                        comment</span></span>
-<span><span class="co">#&gt; 1               Archived on 2022-06-21 as check problems were not corrected despite reminders.</span></span>
-<span><span class="co">#&gt; 2                         Archived on 2022-03-27 as check problems were not corrected in time.</span></span>
-<span><span class="co">#&gt; 3                                          Archived on 2023-11-03 at the maintainer's request.</span></span>
-<span><span class="co">#&gt; 4                                 Archived on 2023-03-02 as issues were not corrected in time.</span></span>
-<span><span class="co">#&gt; 5                         Archived on 2022-03-07 as check problems were not corrected in time.</span></span>
-<span><span class="co">#&gt; 6 Archived on 2015-06-19 as incomplete maintainer address was not corrected despite reminders.</span></span>
+<span><span class="co">#&gt;    package</span></span>
+<span><span class="co">#&gt; 1       A3</span></span>
+<span><span class="co">#&gt; 2    aaSEA</span></span>
+<span><span class="co">#&gt; 3      aba</span></span>
+<span><span class="co">#&gt; 4   abbyyR</span></span>
+<span><span class="co">#&gt; 5   abcADM</span></span>
+<span><span class="co">#&gt; 6 abcdeFBA</span></span>
+<span><span class="co">#&gt;                                                                          comment</span></span>
+<span><span class="co">#&gt; 1         Archived on 2025-06-13 as issues were not corrected despite reminders.</span></span>
+<span><span class="co">#&gt; 2 Archived on 2022-06-21 as check problems were not corrected despite reminders.</span></span>
+<span><span class="co">#&gt; 3           Archived on 2022-03-27 as check problems were not corrected in time.</span></span>
+<span><span class="co">#&gt; 4                            Archived on 2023-11-03 at the maintainer's request.</span></span>
+<span><span class="co">#&gt; 5                   Archived on 2023-03-02 as issues were not corrected in time.</span></span>
+<span><span class="co">#&gt; 6           Archived on 2022-03-07 as check problems were not corrected in time.</span></span>
 <span><span class="co">#&gt;         date   action</span></span>
-<span><span class="co">#&gt; 1 2022-06-21 archived</span></span>
-<span><span class="co">#&gt; 2 2022-03-27 archived</span></span>
-<span><span class="co">#&gt; 3 2023-11-03 archived</span></span>
-<span><span class="co">#&gt; 4 2023-03-02 archived</span></span>
-<span><span class="co">#&gt; 5 2022-03-07 archived</span></span>
-<span><span class="co">#&gt; 6 2015-06-19 archived</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 2025-06-13 archived</span></span>
+<span><span class="co">#&gt; 2 2022-06-21 archived</span></span>
+<span><span class="co">#&gt; 3 2022-03-27 archived</span></span>
+<span><span class="co">#&gt; 4 2023-11-03 archived</span></span>
+<span><span class="co">#&gt; 5 2023-03-02 archived</span></span>
+<span><span class="co">#&gt; 6 2022-03-07 archived</span></span></code></pre></div>
 <p>Or estimate the last date of update of our packages, by the information on the session info or a data.frame:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/cran_date.html">cran_session</a></span><span class="op">(</span>session <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-11-08"</span></span>
+<span><span class="co">#&gt; Warning in cran_archive(versions[, "Package"]): Omitting packages repo.data.</span></span>
+<span><span class="co">#&gt; Maybe they were not on CRAN?</span></span>
+<span><span class="co">#&gt; [1] "2025-06-18"</span></span>
 <span><span class="va">ip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/cran_date.html">cran_date</a></span><span class="op">(</span><span class="va">ip</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2024-12-08"</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in cran_archive(versions[, "Package"]): Omitting packages repo.data, airway, alabaster.base, alabaster.matrix, alabaster.ranges, alabaster.sce, alabaster.schemas, alabaster.se, annotate, AnnotationDbi, AnnotationFilter, AnnotationHub, assorthead, Biobase, BiocFileCache, BiocGenerics, BiocIO, BioCor, BiocParallel, BiocPkgTools, BiocStyle, BiocVersion, biocViews, biomformat, Biostrings, cransays, DelayedArray, DESeq2, ensembldb, ExperimentHub, fgsea, GenomeInfoDb, GenomeInfoDbData, GenomicAlignments, GenomicFeatures, GenomicRanges, GO.db, GOSemSim, GSEABase, gypsum, h5mread, HDF5Array, IRanges, KEGGREST, MatrixGenerics, microshades, org.Hs.eg.db, phyloseq, preprocessCore, ProtGenerics, reactome.db, resios, rhdf5, rhdf5filters, Rhdf5lib, Rhtslib, rostemplate, rotemplate, Rsamtools, rtracklayer, rutils, S4Arrays, S4Vectors, scRNAseq, SingleCellExperiment, SparseArray, SummarizedExperiment, UCSC.utils, XVector.</span></span>
+<span><span class="co">#&gt; Maybe they were not on CRAN?</span></span>
+<span><span class="co">#&gt; [1] "2025-06-21"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="related-packages">Related packages<a class="anchor" aria-label="anchor" href="#related-packages"></a>
@@ -119,12 +124,16 @@
 <ul>
 <li>Task views: <a href="https://github.com/epiverse-connect/ctv-analysis/" class="external-link uri">https://github.com/epiverse-connect/ctv-analysis/</a>
 </li>
-<li>static packages: <a href="https://docs.ropensci.org/pkgstats" class="external-link">pkgstats</a>
+<li>static packages: <a href="https://docs.ropensci.org/pkgstats/" class="external-link">pkgstats</a>
 </li>
 <li>Bioconductor: biopkgtools</li>
 <li>R-universe: universe</li>
 <li>
 <a href="https://cran.r-project.org/package=cranly" class="external-link">cranly</a>: About package dependencies and authors of packages.</li>
+<li>
+<a href="https://github.com/goldingn/versions" class="external-link">versions</a>: A package about installing packages versions. <code>install.dates()</code> requires a CRAN date, if you are unsure you can use <code><a href="reference/cran_date.html">cran_date()</a></code> to estimate it given a <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> or a <code>sessionInfo</code> report.</li>
+<li>
+<a href="https://cran.r-project.org/package=checkpoint" class="external-link">checkpoint</a> provides tools to ensure the results of R code are repeatable over time.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -168,6 +177,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://CRAN.R-project.org/package=repo.data" class="external-link"><img src="https://www.r-pkg.org/badges/version/repo.data" alt="CRAN status"></a></li>
+<li><a href="https://github.com/llrs/repo.data/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/llrs/repo.data/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
@@ -180,7 +190,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

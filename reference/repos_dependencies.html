@@ -72,15 +72,16 @@ the operator (op), the version it depends the type of dependency and the package
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rd</span> <span class="op">&lt;-</span> <span class="fu">repos_dependencies</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving repos_dependencies, this might take a bit. Caching results to be faster next call in this session.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving repos_dependencies, this might take a bit.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Caching results to be faster next call in this session.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           name   op version     type  package</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1            R   &gt;=  2.15.0  Depends       A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      pbapply &lt;NA&gt;    &lt;NA&gt;  Depends       A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       xtable &lt;NA&gt;    &lt;NA&gt;  Depends       A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        e1071 &lt;NA&gt;    &lt;NA&gt; Suggests       A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 randomForest &lt;NA&gt;    &lt;NA&gt; Suggests       A3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6            R   &gt;=   3.6.0  Depends AATtools</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         name   op version    type  package</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1          R   &gt;=   3.6.0 Depends AATtools</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 doParallel &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      dplyr &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    foreach &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   magrittr &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6          R   &gt;=   3.1.0 Depends   ABACUS</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -92,7 +93,7 @@ the operator (op), the version it depends the type of dependency and the package
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
