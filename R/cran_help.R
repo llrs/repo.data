@@ -93,12 +93,10 @@ cran_help_cliques <- function(packages = NULL) {
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.")
     }
-    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
-    on.exit(options(opts), add = TRUE)
     if (!is.null(packages)) {
         pkges <- tools::package_dependencies(packages, which = "all",
                                              reverse = TRUE, recursive = FALSE,
-                                             db = available.packages())
+                                             db = available.packages(filters = c("CRAN", "duplicates")))
     } else {
         pkges <- NULL
     }
@@ -134,8 +132,25 @@ cran_help_cliques <- function(packages = NULL) {
     msorted
 }
 
-# Identify packages with cross-references to pages of packages they do not depend to.
-cran_help_pages_links_wo_deps <- function() {
-    ap <- available.packages()
-    xrefs_wo_deps(cran_links(), ap[, check_which("strong")])
+#' Links without dependencies
+#'
+#' On WRE section "2.5 Cross-references" explains that packages shouldn't link to help pages outside the dependency
+#'
+#' @inheritParams cran_links
+#'
+#' @returns A data.frame of help pages and links.
+#' @export
+#'
+#' @examples
+#' evmix <- cran_help_pages_links_wo_deps("evmix")
+cran_help_pages_links_wo_deps <- function(packages = NULL) {
+    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    if (check_packages(packages)) {
+        pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
+        ap <- ap[funlist(pkg), c("Package", check_which("strong"))]
+    } else {
+        ap <- ap[, c("Package", check_which("strong"))]
+    }
+
+    xrefs_wo_deps(cran_links(packages), ap)
 }
