@@ -103,15 +103,16 @@ cran_targets_links <- function(packages = NULL) {
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_Rd, n (Number of links).
 #' @export
 #' @examples
-#' cpl <- cran_pages_links()
+#' cpl <- cran_pages_links("Matrix")
 #' head(cpl)
 cran_pages_links <- function(packages = NULL) {
     check_packages(packages, NA)
-    target_links <- save_state("cran_targets_links", cran_targets_links(packages))
+    target_links <- save_state("cran_targets_links", cran_targets_links(packages),
+                               verbose = FALSE)
     w <- which(colnames(target_links) %in% "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {
-        keep_rows <- keep_rows & target_links %in% packages
+        keep_rows <- keep_rows & (target_links$from_pkg %in% packages | target_links$to_pkg %in% packages)
     }
     add_uniq_count(target_links[keep_rows, -w])
 }

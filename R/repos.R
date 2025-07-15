@@ -12,27 +12,49 @@
 #' @export
 #'
 #' @examples
-#' pr <- pkges_repos()
+#' pr <- pkges_repos("experDesign")
 #' head(pr)
-pkges_repos <- function(repos = getOption("repos"), which = "all") {
+pkges_repos <- function(packages = NULL, repos = getOption("repos"), which = "all") {
     stopifnot(is.character(repos) && length(repos))
+    check_packages(packages, length = NA)
+
     which <- check_which(which)
-    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
-    on.exit(options(opts), add = TRUE)
-    ap <- available.packages(repos = repos)
+    ap <- available.packages(repos = repos, filters = c("CRAN", "duplicates"))
+
+    # Check packages
+    repos_packages <- setdiff(packages, BASE)
+    omit_pkg <- setdiff(packages, rownames(ap))
+    if (length(omit_pkg)) {
+        warning("Omitting packages, maybe they are currently not on the repositories?\n",
+                toString(omit_pkg), immediate. = TRUE)
+    }
+    if (is.null(packages)) {
+        packages <- rownames(ap)
+    } else {
+        packages <- intersect(packages, rownames(ap))
+    }
+
+    # Get the repo where each package comes from
     repositories <- gsub("/src/contrib", "", ap[, "Repository"], fixed = TRUE)
-    repositories_names <- names(repos)[match(repositories, repos)]
-    packages <- ap[, "Package"]
-    pd <- packages_dependencies(ap = ap[, which])
-    pd2 <- pd[!pd$name %in% c(tools::standard_package_names()$base, "R"), c("name", "package")]
-    position <- match(pd2$name, packages)
-    repos_packages <- repositories_names[position]
-    repos_packages[is.na(repos_packages)] <- "Other"
-    s <- split(repos_packages, pd2$package)
+    names(repositories) <- rownames(ap)
+    repositories[] <- names(repos)[match(repositories, repos)]
+
+
+    # Get the direct dependencies for each package
+    rd <- repos_dependencies(packages, which)
+
+    pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]
+
+    pd2$Repo <- repositories[pd2$Name]
+    pd2$Repo[is.na(pd2$Repo)] <- "Other"
+
+    # Prefill matrix
     M <- matrix(0, ncol = length(repos) + 1L, nrow = nrow(ap))
     colnames(M) <- c(names(repos), "Other")
-    rownames(M) <- packages
+    rownames(M) <- rownames(ap)
 
+    # Count repositories
+    s <- split(pd2$Repo, pd2$Package)
     l <- lapply(s, function(pkg) {
         tab <- table(factor(pkg, levels = c(names(repos), "Other")))
         as.matrix(tab)
@@ -47,7 +69,8 @@ pkges_repos <- function(repos = getOption("repos"), which = "all") {
     M2 <- cbind(M, Packages_deps = deps_n, Repos = repos_n)
     df2 <- as.data.frame(M2)
     # bioc_deps <- rowSums(M2[, 2:6])
-    df3 <- cbind(Package = rownames(df2), Repository = repositories_names, df2)
+    df3 <- cbind(Package = rownames(df2), Repository = repositories, df2)
+    df3 <- df3[packages, , drop = FALSE]
     rownames(df3) <- NULL
     df3
 }

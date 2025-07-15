@@ -93,19 +93,18 @@ cran_help_cliques <- function(packages = NULL) {
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.")
     }
-    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
-    on.exit(options(opts), add = TRUE)
     if (!is.null(packages)) {
-        pkges <- tools::package_dependencies(packages, which = "all",
+        pkges <- tools::package_dependencies(packages,
                                              reverse = TRUE, recursive = FALSE,
-                                             db = available.packages())
+                                             db = available.packages(filters = c("CRAN", "duplicates")))
     } else {
         pkges <- NULL
     }
 
     pkges <- c(packages, funlist(pkges))
-    cal <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
-    # FIXME: we need the reverse dependencies packages as links to a package should be on depend/suggest
+
+    cal <- cran_targets_links(funlist(pkges))
+
     cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), ]
     # Filter out those links not resolved
     cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
@@ -134,8 +133,26 @@ cran_help_cliques <- function(packages = NULL) {
     msorted
 }
 
-# Identify packages with cross-references to pages of packages they do not depend to.
-cran_help_pages_links_wo_deps <- function() {
-    ap <- available.packages()
-    xrefs_wo_deps(cran_links(), ap[, check_which("strong")])
+#' Links without dependencies
+#'
+#' On WRE section "2.5 Cross-references" explains that packages shouldn't link to help pages outside the dependency
+#'
+#' @inheritParams cran_links
+#'
+#' @returns A data.frame of help pages and links.
+#' @export
+#'
+#' @examples
+#' evmix <- cran_help_pages_links_wo_deps("evmix")
+cran_help_pages_links_wo_deps <- function(packages = NULL) {
+    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    if (check_packages(packages)) {
+        pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
+        packages <- setdiff(funlist(pkg), BASE)
+        ap <- ap[packages, c("Package", check_which("strong"))]
+    } else {
+        ap <- ap[, c("Package", check_which("strong"))]
+    }
+
+    xrefs_wo_deps(cran_links(packages), ap)
 }

@@ -20,10 +20,10 @@ bioc_cran_archived <- function(which = "strong") {
     bioc_deps <- packages_dependencies(as.matrix(bioc[, fields_selected]))
     base_r <- tools::standard_package_names()$base
 
-    present <- !bioc_deps$name %in% c(db_all$Package, base_r, "R")
+    present <- !bioc_deps$Name %in% c(db_all$Package, base_r, "R")
     missing_deps <- bioc_deps[present, ]
     # TODO: Check any dependency to these packages.
-    miss_p_pkg <- split(missing_deps$name, missing_deps$package)
+    miss_p_pkg <- split(missing_deps$Name, missing_deps$Package)
     lmissing_dep <- lengths(miss_p_pkg)
     p_missing <- vapply(miss_p_pkg, toString, character(1L))
     df <- data.frame(Package = names(miss_p_pkg), Archived = p_missing, n = lmissing_dep)

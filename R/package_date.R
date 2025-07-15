@@ -27,8 +27,8 @@ package_date <- function(pkg = ".", which = "strong") {
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
-        deps_df <- packages_dependencies(deps)
-    } 
+        deps_df <- repos_dependencies(deps, which = fields)
+    }
     if (any(!file.exists(local_pkg))) {
         rd <- repos_dependencies(which = fields)
         deps_df <- rbind(deps_df, rd[rd$package %in% pkg, , drop = FALSE])
@@ -130,14 +130,14 @@ package_date_actions <- function(pkg = ".", which = "strong") {
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
         deps_df <- rbind(deps_df, packages_dependencies(deps))
-    } 
+    }
     if (any(!file.exists(local_pkg))) {
         rd <- repos_dependencies(which = fields)
         deps_df <- rbind(deps_df, rd[rd$package == pkg, , drop = FALSE])
         p <- cran_archive(pkg)
         date_package <- p$Datetime[nrow(p)]
     }
-    
+
 
     # We don't need base packages
     deps_df <- deps_df[!deps_df$name %in% BASE, , drop = FALSE]

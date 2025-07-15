@@ -83,14 +83,14 @@ cran_all_history <- function() {
     m <- sort_by(m, m[, c("Package", "Pub.Date", "Arch.Date")])
 
     # TODO: Find the dates of previous publish actions to use as archive date
-    lapply(unique(m$package), function(i, data) {
-        p <- data[data$Package == i, , drop = FALSE]
-        if (nrow(p) <= 1L) {
-            return(p)
-        }
-        arch_i <- which(!is.na(p$Date.Arch))
-        p$Date.Arch[-nrow(p)] <- p$Date.Pub[-1L]
-    }, data = m)
+    # lapply(unique(m$package), function(i, data) {
+    #     p <- data[data$Package == i, , drop = FALSE]
+    #     if (nrow(p) <= 1L) {
+    #         return(p)
+    #     }
+    #     arch_i <- which(!is.na(p$Date.Arch))
+    #     p$Date.Arch[-nrow(p)] <- p$Date.Pub[-1L]
+    # }, data = m)
     m$Date.Arch
     m$Date.Pub[-1L]
 

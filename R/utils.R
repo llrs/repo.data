@@ -151,7 +151,7 @@ check_packages <- function(packages, length = 1L) {
     check <- if (is.null(packages)) {
         TRUE
     }  else {
-        is.character(packages) && length(na.omit(packages)) >= 1L && length(na.omit(packages)) <= length
+        is.character(packages) && length(na.omit(packages)) >= 1L && !(!as.logical(length) && length(na.omit(packages)) <= length)
     }
 
     if (isFALSE(check)) {

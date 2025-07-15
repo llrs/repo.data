@@ -1,13 +1,14 @@
 # Raw testing without using any package (testthat or tinytest) as described on WRE
 
 library("repo.data")
-options(repos = "https://CRAN.R-project.org")
+opts <- options(repos = "https://CRAN.R-project.org")
+on.exit(options(opts), add = TRUE)
 # cran archive ####
 rtweet <- cran_archive("rtweet")
 stopifnot(nrow(rtweet) >= 15L)
 # Repeat search for a different package to test for accessing the cache with a package currently on CRAN
 BaseSet <- cran_archive("BaseSet")
-stopifnot(nrow(BaseSet) > 1L && nrow(BaseSet) < 200)
+stopifnot(nrow(BaseSet) > 1L, nrow(BaseSet) < 200L)
 # Test on a package without archive
 ABACUS <- cran_archive("ABACUS")
 stopifnot(nrow(ABACUS) == 1L)
@@ -37,20 +38,32 @@ stopifnot(identical(cpk, cpk2))
 
 
 # dependencies ####
-pkges <- c("BaseSet")
-suppressWarnings(cpk <- package_dependencies(pkges))
-stopifnot(ncol(cpk) == 6L)
+pkges <- "BaseSet"
+cpk <- package_dependencies(pkges)
+stopifnot(ncol(cpk) == 5L)
 pkgs_out <- setdiff(pkges, cpk$package)
 stopifnot(identical(pkgs_out, pkges))
-suppressWarnings(cpk2 <- package_dependencies(pkges))
+cpk2 <- package_dependencies(pkges)
 stopifnot(identical(cpk, cpk2))
 
-suppressWarnings(pd <- package_dependencies(c("ggeasy", "BaseSet")))
-stopifnot(ncol(pd) == 2L)
+pd <- package_dependencies(c("ggeasy", "BaseSet"))
+stopifnot(ncol(pd) == 5L)
 
 # Snapshot ####
-cs <- cran_snapshot(Sys.Date() -2 )
+suppressWarnings(cs <- cran_snapshot(Sys.Date() -2 ))
 stopifnot(NROW(cs) > 1000)
 
 # check_packages
 stopifnot(isTRUE((tryCatch(suppressWarnings(package_dependencies(character())), error = function(e){TRUE}))))
+
+# Repos_dependencies
+rd <- repos_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue", "lifecycle",
+"magrittr", "pillar", "R6", "tibble", "tidyselect", "vctrs",
+"utf8", "pkgconfig", "withr"))
+stopifnot(NROW(rd) > 1)
+
+# Repos_dependencies
+pd <- package_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue", "lifecycle",
+"magrittr", "pillar", "R6", "tibble", "tidyselect", "vctrs",
+"utf8", "pkgconfig", "withr"))
+stopifnot(NROW(rd) > 1)

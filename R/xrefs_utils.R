@@ -132,14 +132,14 @@ targets2files <- function(links, alias) {
     # This allows to keep duplicated links on the original help pages
     removing_all_issues <- unique(c(removing_idx, removing_idy, removing_ids))
     # In case there are no issues it would remove all data!
-    if (length(removing_all_issues)) {
+   if (length(removing_all_issues)) {
         links_w_files <- links_w_files[-removing_all_issues, ]
-    }
+   }
 
     # Prepare for the output
     colnames(links_w_files) <- c("to_pkg", "to_target", "from_pkg", "from_Rd", "n", "to_Rd")
     links_w_files[is.na(links_w_files[, "to_Rd"]), "to_Rd"] <- ""
-    links_w_files <- links_w_files[, c(3, 4, 1, 2, 6, 5)]
+    links_w_files <- links_w_files[, c(3L, 4L, 1L, 2L, 6L, 5L)]
     links_w_files <- sort_by(links_w_files,
                              links_w_files[, c("from_pkg", "from_Rd", "to_target", "to_Rd")])
     rownames(links_w_files) <- NULL
@@ -156,12 +156,12 @@ xrefs_wo_deps <- function(links, ap) {
     links3 <- split_anchor(links2)
     s <- split(links3$to_pkg, links3$Package)
 
-    pkg_dep <- packages_dependencies(ap[, check_which("strong")])
-    pkg_dep2 <- pkg_dep[pkg_dep[, "name"] != "R", c("package", "name")]
-    s2 <- split(pkg_dep2$name, pkg_dep2$package)
+    pkg_dep <- packages_dependencies(ap = ap)
+    pkg_dep2 <- pkg_dep[pkg_dep[, "Name"] != "R", c("Package", "Name")]
+    s2 <- split(pkg_dep2$Name, pkg_dep2$Package)
 
     for (pkg in names(s)) {
-        s[[pkg]] <- setdiff(s[[pkg]], c(s2[[pkg]], pkg, BASE))
+       s[[pkg]] <- setdiff(s[[pkg]], c(s2[[pkg]], pkg, BASE))
     }
     s <- s[lengths(s) != 0]
     links4 <- links2[links3$Package %in% names(s), ]
@@ -171,13 +171,30 @@ xrefs_wo_deps <- function(links, ap) {
 
 # Targets linked.
 pkgs_linked_missing <- function(links, alias) {
-    anchor <- links$Anchor
-    eq_anchor <- startsWith(anchor, "=")
+   anchor <- links$Anchor
+   eq_anchor <- startsWith(anchor, "=")
 
-    links2 <- links[eq_anchor, ]
-    topics <- substring(links2$Anchor, 2)
-    missing_topics <- setdiff(unique(topics), alias$Target)
-    links2 <- links2[topics %in% missing_topics, ]
-    rownames(links2) <- NULL
-    links2
+   links2 <- links[eq_anchor, ]
+   topics <- substring(links2$Anchor, 2L)
+   missing_topics <- setdiff(unique(topics), alias$Target)
+   links2 <- links2[topics %in% missing_topics, ]
+   rownames(links2) <- NULL
+   links2
+}
+
+check_anchor <- function(targets) {
+    target <- targets$Target
+    anchor <- targets$Anchor
+    using_anchor <- nzchar(anchor)
+    whitespaces_target <- (grepl("^\\s+", target) | grepl("\\s+$", target))
+    whitespaces_anchor <- (grepl("^\\s+", anchor) | grepl("\\s+$", anchor))
+    error_anchor <- (whitespaces_target & !using_anchor) | (whitespaces_anchor & using_anchor)
+    if (any(error_anchor)) {
+        pkges <- unique(targets$Package[error_anchor])
+        warning("Packages ", toString(sQuote(pkges)),
+                " have a trailing whitespace on 'Anchors' that can create problems.\n",
+                "Check section 2.5 section of Writing R Extensions. ")
+        return(FALSE)
+    }
+    TRUE
 }

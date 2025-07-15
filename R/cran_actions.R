@@ -22,8 +22,9 @@ cran_actions <- function(packages = NULL, silent = FALSE) {
 }
 
 cran_all_actions <- function() {
-    if (!empty_env("full_cran_actions")) {
-        return(pkg_state[["full_cran_actions"]])
+    env <- "full_cran_actions"
+    if (!empty_env(env)) {
+        return(pkg_state[[env]])
     }
 
     actions_f <- system.file(package = "repo.data", "data", "actions.rds")
@@ -42,7 +43,7 @@ cran_all_actions <- function() {
     actions$Package <- as.factor(actions$Package)
     actions <- sort_by(actions, ~Package + datetime2POSIXct(Date, Time) + Action)
     rownames(actions) <- NULL
-    pkg_state[["full_cran_actions"]] <- actions
+    pkg_state[[env]] <- actions
     actions
 }
 

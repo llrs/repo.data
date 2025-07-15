@@ -4,9 +4,11 @@
 \alias{repos_dependencies}
 \title{Tidy dependencies}
 \usage{
-repos_dependencies(which = "all")
+repos_dependencies(packages = NULL, which = "all")
 }
 \arguments{
+\item{packages}{a character vector of package names.}
+
 \item{which}{a character vector listing the types of
     dependencies, a subset of
     \code{c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")}.
@@ -26,6 +28,6 @@ Extract the packages dependencies, name of the dependency, operator and version
 for each type and package of current repositories (\code{getOptions("repos")}).
 }
 \examples{
-rd <- repos_dependencies()
+rd <- repos_dependencies("BaseSet")
 head(rd)
 }
