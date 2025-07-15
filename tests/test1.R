@@ -57,13 +57,13 @@ stopifnot(NROW(cs) > 1000)
 stopifnot(isTRUE((tryCatch(suppressWarnings(package_dependencies(character())), error = function(e){TRUE}))))
 
 # Repos_dependencies
-rd <- repos_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue", "lifecycle", 
-"magrittr", "pillar", "R6", "tibble", "tidyselect", "vctrs", 
+rd <- repos_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue", "lifecycle",
+"magrittr", "pillar", "R6", "tibble", "tidyselect", "vctrs",
 "utf8", "pkgconfig", "withr"))
 stopifnot(NROW(rd) > 1)
 
 # Repos_dependencies
-pd <- package_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue", "lifecycle", 
-"magrittr", "pillar", "R6", "tibble", "tidyselect", "vctrs", 
+pd <- package_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue", "lifecycle",
+"magrittr", "pillar", "R6", "tibble", "tidyselect", "vctrs",
 "utf8", "pkgconfig", "withr"))
 stopifnot(NROW(rd) > 1)
