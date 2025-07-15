@@ -157,8 +157,8 @@ xrefs_wo_deps <- function(links, ap) {
     s <- split(links3$to_pkg, links3$Package)
 
     pkg_dep <- packages_dependencies(ap = ap)
-    pkg_dep2 <- pkg_dep[pkg_dep[, "name"] != "R", c("package", "name")]
-    s2 <- split(pkg_dep2$name, pkg_dep2$package)
+    pkg_dep2 <- pkg_dep[pkg_dep[, "Name"] != "R", c("Package", "Name")]
+    s2 <- split(pkg_dep2$Name, pkg_dep2$Package)
 
     for (pkg in names(s)) {
        s[[pkg]] <- setdiff(s[[pkg]], c(s2[[pkg]], pkg, BASE))

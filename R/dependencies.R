@@ -17,7 +17,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     opts <- options(available_packages_filters = c("CRAN", "duplicates"))
     on.exit(options(opts), add = TRUE)
     env <- "repos_dependencies"
-    
+
     first <- empty_env(env)
     ap <- available.packages()
     pd <- pkg_state[[env]]
@@ -25,7 +25,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 
     omit_pkg <- setdiff(packages, all_packages)
     if (length(omit_pkg)) {
-        warning("Omitting some packages, maybe they were not on CRAN?\n", 
+        warning("Omitting some packages, maybe they were not on CRAN?\n",
         toString(omit_pkg), immediate. = TRUE)
     }
 
@@ -36,7 +36,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     } else if (!first) {
         setdiff(packages, pd$Package)
     }
-    
+
     if  (length(new_pkgs)) {
         pd_new <- packages_dependencies(ap[new_pkgs, PACKAGE_FIELDS, drop = FALSE])
         pd <- rbind(pd, pd_new)
@@ -77,29 +77,29 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     local_ap <- NULL
     local_pkgs <- NULL
     if (any(file.exists(desc_pkg))) {
-        local_pkgs <- lapply(desc_pkg[file.exists(desc_pkg)], {
-            desc <- read.dcf(desc_pkg, fields = c(PACKAGE_FIELDS, "Package"))
-            deps <- desc[, intersect(fields_selected, colnames(desc)), drop = FALSE]
-            rownames(deps) <- desc[, "Package"]
+        local_pkgs <- lapply(desc_pkg[file.exists(desc_pkg)], function(lp){
+            desc <- read.dcf(lp, fields = c(PACKAGE_FIELDS, "Package", "Version"))
+            rownames(desc) <- desc[, "Package"]
+            desc
         })
-        local_ap <- list2DF(local_pkgs)
+        local_ap <- do.call(rbind, local_pkgs)
         local_pkgs <- rownames(local_ap)
-    } 
+    }
 
     pkges_names <- unique(c(local_pkgs, pkg[!file.exists(desc_pkg)]))
 
     ap <- available.packages(filters = c("CRAN", "duplicates"))
-    new_ap <- rbind(ap[, c(fields_selected, "Package"), drop = FALSE], 
+    new_ap <- rbind(ap[, c(fields_selected, "Package"), drop = FALSE],
                     local_ap[, c(fields_selected, "Package"), drop = FALSE])
-                    all_deps <- tools::package_dependencies(
-                        pkges_names,
+    all_deps <- tools::package_dependencies(
+        pkges_names,
         recursive = TRUE,
         which = which,
         db = new_ap
     )
     # Extract recursive dependencies versions requirements
     unique_deps <- unique(funlist(all_deps))
-    
+
     # Some package depend on Additional_repositories or Bioconductor
     # But some don't have dependencies!
     deps_available <- c(rownames(new_ap), BASE)
@@ -115,7 +115,14 @@ package_dependencies <- function(pkg = ".", which = "strong") {
             immediate. = TRUE
         )
     }
-    rd <- repos_dependencies(setdiff(packages_reported, BASE), which = fields_selected)
+    rd <- repos_dependencies(setdiff(packages_reported, c(BASE, local_pkgs)), which = fields_selected)
+    # Add local packages information (not just their dependencies)
+    if (!is.null(local_ap)) {
+        local_v <- cbind(local_ap[, c("Package", "Version"), drop = FALSE],
+                        Type = NA, Name = NA, Op = NA)
+        rd <- rbind(rd, local_v[, colnames(rd)])
+    }
+
 
     if (!anyDuplicated(rd$Name)){
         return(rd)
@@ -134,7 +141,7 @@ package_dependencies <- function(pkg = ".", which = "strong") {
         as.character(max(versions))
     }, character(1L))
     df <- data.frame(Name = names(v2n), Version = as.package_version(required), Type = type, Op = ">=")
-    
+
     rd_no_ver <- rd[!rd$Name %in% df$Name, , drop = FALSE]
     # Replace Package by NA if Name is repeated.
     dup_name <- rd_no_ver$Name %in% rd_no_ver$Name[duplicated(rd_no_ver$Name)]
@@ -181,6 +188,13 @@ cache_pkg_dep <- function(package, which, keepR = TRUE) {
 
 packages_dependencies <- function(ap) {
     stopifnot(is.matrix(ap) || is.data.frame(ap))
+    no_deps <- apply(ap, 1, function(x){all(is.na(x))})
+    ap <- ap[!no_deps, , drop = FALSE]
+    if (!NROW(ap)) {
+        m <- matrix(NA, ncol = 5, nrow = 0)
+        colnames(m) <- c("Package", "Type", "Name", "Op", "Version")
+        return(as.data.frame(m))
+    }
 
     # Split by dependency, requires a matrix
     deps <- apply(ap, 1L, strsplit, split = "[[:space:]]*,[[:space:]]*")

@@ -94,7 +94,7 @@ cran_help_cliques <- function(packages = NULL) {
         stop("This function requires igraph to find help pages not linked to the network.")
     }
     if (!is.null(packages)) {
-        pkges <- tools::package_dependencies(packages, which = "all",
+        pkges <- tools::package_dependencies(packages,
                                              reverse = TRUE, recursive = FALSE,
                                              db = available.packages(filters = c("CRAN", "duplicates")))
     } else {
@@ -102,8 +102,9 @@ cran_help_cliques <- function(packages = NULL) {
     }
 
     pkges <- c(packages, funlist(pkges))
-    cal <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
-    # FIXME: we need the reverse dependencies packages as links to a package should be on depend/suggest
+
+    cal <- cran_targets_links(funlist(pkges))
+
     cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), ]
     # Filter out those links not resolved
     cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
@@ -147,7 +148,8 @@ cran_help_pages_links_wo_deps <- function(packages = NULL) {
     ap <- available.packages(filters = c("CRAN", "duplicates"))
     if (check_packages(packages)) {
         pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
-        ap <- ap[funlist(pkg), c("Package", check_which("strong"))]
+        packages <- setdiff(funlist(pkg), BASE)
+        ap <- ap[packages, c("Package", check_which("strong"))]
     } else {
         ap <- ap[, c("Package", check_which("strong"))]
     }

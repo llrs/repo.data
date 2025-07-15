@@ -4,9 +4,11 @@
 \alias{pkges_repos}
 \title{Package dependencies to repositories}
 \usage{
-pkges_repos(repos = getOption("repos"), which = "all")
+pkges_repos(packages = NULL, repos = getOption("repos"), which = "all")
 }
 \arguments{
+\item{packages}{a character vector of package names.}
+
 \item{repos}{Repositories and their names are taken from \code{getOptions("repos")}.}
 
 \item{which}{a character vector listing the types of
@@ -29,6 +31,6 @@ number of repositories used.
 Explore the relationships between packages and repositories.
 }
 \examples{
-pr <- pkges_repos()
+pr <- pkges_repos("experDesign")
 head(pr)
 }
