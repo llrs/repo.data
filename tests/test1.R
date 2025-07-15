@@ -39,15 +39,15 @@ stopifnot(identical(cpk, cpk2))
 
 # dependencies ####
 pkges <- "BaseSet"
-suppressWarnings(cpk <- package_dependencies(pkges))
-stopifnot(ncol(cpk) == 6L)
+cpk <- package_dependencies(pkges)
+stopifnot(ncol(cpk) == 5L)
 pkgs_out <- setdiff(pkges, cpk$package)
 stopifnot(identical(pkgs_out, pkges))
-suppressWarnings(cpk2 <- package_dependencies(pkges))
+cpk2 <- package_dependencies(pkges)
 stopifnot(identical(cpk, cpk2))
 
-suppressWarnings(pd <- package_dependencies(c("ggeasy", "BaseSet")))
-stopifnot(ncol(pd) == 6L)
+pd <- package_dependencies(c("ggeasy", "BaseSet"))
+stopifnot(ncol(pd) == 5L)
 
 # Snapshot ####
 suppressWarnings(cs <- cran_snapshot(Sys.Date() -2 ))
