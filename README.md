@@ -30,13 +30,17 @@ We can get a data.frame of all packages on CRAN archive:
 
 ``` r
 library(repo.data)
-#> Warning: Altering install.packages behavior!
 ca <- cran_archive()
-#> Warning: There are 5 packages both archived and published
+#> Warning: There are 7 packages both archived and published
 #> This indicate manual CRAN intervention.
 head(ca)
-#> [1] Package  Datetime Version  User     Size     Status  
-#> <0 rows> (or 0-length row.names)
+#>         Package            Datetime Version   User   Size   Status
+#> 1            A3 2013-02-07 10:00:29   0.9.1 hornik  45252 archived
+#> 2            A3 2013-03-26 19:58:40   0.9.2 ligges  45907 archived
+#> 3            A3 2015-08-16 23:05:54   1.0.0 hornik  42810 archived
+#> 4 AalenJohansen 2023-03-01 11:42:11     1.0 ligges 165057  current
+#> 5       aamatch 2025-06-24 11:40:05   0.3.7 ligges 222104  current
+#> 6          aaMI 2005-06-24 17:55:17   1.0-0   root   2968 archived
 ```
 
 We can also check CRAN comments about the packages on its archive:
