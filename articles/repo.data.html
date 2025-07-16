@@ -72,26 +72,22 @@ dependencies have some requirements too. The maintainer might consider
 if he can raise the version requirements.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/package_dependencies.html">package_dependencies</a></span><span class="op">(</span><span class="st">"ggeasy"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Retrieving repos_dependencies, this might take a bit.</span></span>
-<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
-<span><span class="co">#&gt; Warning in package_dependencies("ggeasy"): Some dependencies are not on available repositories. Check for 'Additional_repositories' or other repositories (Bioconductor.org?):</span></span>
-<span><span class="co">#&gt; aroma.light, DNAcopy, phyloseq, preprocessCore, pcaMethods, sparseMatrixStats, qvalue, Rgraphviz, edgeR, ALDEx2, EBImage, Biostrings, GenomicAlignments, IRanges, limma, org.Hs.eg.db, AnnotationDbi, DESeq2, Biobase, pwalign, maftools, ComplexHeatmap, GSVA, SummarizedExperiment, siggenes, annotate, fgsea, ConsensusClusterPlus, clusterProfiler, sva, affyPLM, affy, graph, fabia, RBGL, Rsamtools, impute, GO.db, biomaRt, rhdf5, mixOmics, survcomp, ggtree, treeio, GOSemSim, GENIE3, GenomicRanges, org.Dr.eg.db, org.Mm.eg.db, bluster, genefilter, BiocParallel, multtest, fmcsR, ChemmineR, ChIPseeker, TxDb.Hsapiens.UCSC.hg38.knownGene, TxDb.Hsapiens.UCSC.hg19.knownGene, TxDb.Mmusculus.UCSC.mm10.knownGene, SingleCellExperiment, TCseq, GSEABase, singscore, GenomicInteractions, rtracklayer, BiocFileCache, DECIPHER, tximport, BiocGenerics, GenomeInfoDb, S4Vectors, ensembldb, STRINGdb, GenomicFeatures, TCGAbiolinks, SNPRelate, snpStats, dada2, ShortRead, RedeR, Icens, RCy3, signatureSearch, signatureSearchData, MLInterfaces, ALL, TSCAN, MAST, DelayedArray, HDF5Array, minfi, IlluminaHumanMethylationEPICanno.ilm10b4.hg19, IlluminaHumanMethylation450kanno.ilmn12.hg19, AUCell, Rdisop, gdsfmt, BiocStyle, BSgenome, BSgenome.Hsapiens.UCSC.hg38, GEOquery, biocViews, reactome.db, ggmsa, VariantAnnotation, DOSE, Heatplus, fmrs, bamsignals, KEGGgraph, graphite, SparseArray, zlibbioc, Rhtslib, seqLogo, vsn, M3C, pathview, AnnotationFilter, QSutils, MassSpecWavelet, qusage, microbiome, InteractiveComplexHeatmap, globaltest, GlobalAncova, scran, scuttle, a4Core, ggkegg, ReactomePA, Mfuzz, BiocVersion, EmpiricalBrownsMethod, minet, scater, glmSparseNet, tweeDEseq, iBBiG, BicARE, R4RNA, AnnotationHub, beadarray, GSVAdata, rWikiPathways, glmGamPoi, UCell, batchelor, MatrixGenerics, ReactomeGSA, celldex, SingleR, splatter, widgetTools, Rhdf5lib, GWASTools, SpatialExperiment, zinbwave, DelayedMatrixStats, qpgraph, csaw, InteractionSet, HiCDOC, coRdon, KEGGREST</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       name   op version    type package   required</span></span>
-<span><span class="co">#&gt; 1 abc.data &lt;NA&gt;    &lt;NA&gt; Depends     abc       &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 2   locfit &lt;NA&gt;    &lt;NA&gt; Depends     abc    1.5.9.1</span></span>
-<span><span class="co">#&gt; 3     MASS &lt;NA&gt;    &lt;NA&gt; Depends     abc 7.3.60.0.1</span></span>
-<span><span class="co">#&gt; 4     nnet &lt;NA&gt;    &lt;NA&gt; Depends     abc     7.3.19</span></span>
-<span><span class="co">#&gt; 5 quantreg &lt;NA&gt;    &lt;NA&gt; Depends     abc       5.97</span></span>
-<span><span class="co">#&gt; 6        R   &gt;=    2.10 Depends     abc        4.5</span></span>
+<span><span class="co">#&gt;        Name Version    Type   Op Package</span></span>
+<span><span class="co">#&gt; 1       cli   3.4.0 Imports   &gt;=    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2 lifecycle   1.0.3 Imports   &gt;=    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 3         R   4.4.0 Depends   &gt;=    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4     rlang   1.1.0 Imports   &gt;=    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 5     vctrs   0.6.0 Imports   &gt;=    &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 6     utils    &lt;NA&gt;    &lt;NA&gt; &lt;NA&gt;    &lt;NA&gt;</span></span>
 <span><span class="co"># Discover the requirements that can be upgraded</span></span>
 <span><span class="fu"><a href="../reference/update_dependencies.html">update_dependencies</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span></code></pre></div>
 <p>We can also be interested on since when did a package can be
 installed we can use:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/package_date.html">package_date</a></span><span class="op">(</span><span class="st">"ggeasy"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                  Published             deps_available </span></span>
-<span><span class="co">#&gt; "2025-06-15 06:40:04 CEST" "2025-04-11 08:40:18 CEST"</span></span></code></pre></div>
+<span><span class="co">#&gt;                 Published            deps_available </span></span>
+<span><span class="co">#&gt; "2025-06-15 04:40:04 UTC"                        NA</span></span></code></pre></div>
 <p>Which will show when it was published and when the R dependencies
 required become available.</p>
 <div class="section level2">
@@ -102,7 +98,7 @@ required become available.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cran_date.html">cran_session</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in cran_archive(versions[, "Package"]): Omitting packages repo.data.</span></span>
 <span><span class="co">#&gt; Maybe they were not on CRAN?</span></span>
-<span><span class="co">#&gt; [1] "2025-06-22"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2025-07-07"</span></span></code></pre></div>
 <p>This uses the <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> output to find the date of
 last installation. There is a sister function for an arbitrary data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -130,14 +126,14 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 <span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
 <span><span class="va">cd</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"time_till_last"</span>, <span class="st">"last_archived"</span>, <span class="st">"npackages"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $time_till_last</span></span>
-<span><span class="co">#&gt; Time difference of 51 days</span></span>
+<span><span class="co">#&gt; Time difference of 75 days</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $last_archived</span></span>
-<span><span class="co">#&gt; [1] "2025-08-12"</span></span>
+<span><span class="co">#&gt; [1] "2025-09-29"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $npackages</span></span>
 <span><span class="co">#&gt;  CRAN   all </span></span>
-<span><span class="co">#&gt; 22354 26059</span></span>
+<span><span class="co">#&gt; 22426 26131</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cd</span><span class="op">$</span><span class="va">details</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -149,53 +145,53 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">duckdb</td>
-<td align="left">2025-06-17</td>
+<td align="left">blockCV</td>
+<td align="left">2025-07-14</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">tealeaves</td>
-<td align="left">2025-06-17</td>
+<td align="left">htrSPRanalysis</td>
+<td align="left">2025-07-14</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="left">EpiEstim</td>
-<td align="left">2025-06-18</td>
+<td align="left">rtop</td>
+<td align="left">2025-07-14</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">likert</td>
-<td align="left">2025-06-21</td>
+<td align="left">pageviews</td>
+<td align="left">2025-07-15</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="left">prettifyAddins</td>
-<td align="left">2025-06-21</td>
+<td align="left">lsnstat</td>
+<td align="left">2025-07-16</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">MIMER</td>
-<td align="left">2025-06-23</td>
+<td align="left">ruimtehol</td>
+<td align="left">2025-07-16</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">2</td>
+<td align="right">1</td>
 </tr>
 </tbody>
 </table>
 <p>For reproducibility here is the session info:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R Under development (unstable) (2025-06-20 r88332)</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2025-07-14 r88410)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 24.04.2 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -220,13 +216,12 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] cli_3.6.5         knitr_1.50        rlang_1.1.6       xfun_0.52        </span></span>
-<span><span class="co">#&gt;  [5] rversions_2.1.2   textshaping_1.0.1 jsonlite_2.0.0    litedown_0.7     </span></span>
-<span><span class="co">#&gt;  [9] markdown_2.0      htmltools_0.5.8.1 ragg_1.4.0        sass_0.4.10      </span></span>
-<span><span class="co">#&gt; [13] rmarkdown_2.29    evaluate_1.0.4    jquerylib_0.1.4   fastmap_1.2.0    </span></span>
-<span><span class="co">#&gt; [17] yaml_2.3.10       lifecycle_1.0.4   compiler_4.6.0    fs_1.6.6         </span></span>
-<span><span class="co">#&gt; [21] systemfonts_1.2.3 digest_0.6.37     R6_2.6.1          curl_6.4.0       </span></span>
-<span><span class="co">#&gt; [25] commonmark_1.9.5  bslib_0.9.0       tools_4.6.0       xml2_1.3.8       </span></span>
-<span><span class="co">#&gt; [29] pkgdown_2.1.3     cachem_1.1.0      desc_1.4.3</span></span></code></pre></div>
+<span><span class="co">#&gt;  [5] textshaping_1.0.1 jsonlite_2.0.0    litedown_0.7      markdown_2.0     </span></span>
+<span><span class="co">#&gt;  [9] htmltools_0.5.8.1 ragg_1.4.0        sass_0.4.10       rmarkdown_2.29   </span></span>
+<span><span class="co">#&gt; [13] evaluate_1.0.4    jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.10      </span></span>
+<span><span class="co">#&gt; [17] lifecycle_1.0.4   compiler_4.6.0    fs_1.6.6          systemfonts_1.2.3</span></span>
+<span><span class="co">#&gt; [21] digest_0.6.37     R6_2.6.1          commonmark_2.0.0  bslib_0.9.0      </span></span>
+<span><span class="co">#&gt; [25] tools_4.6.0       pkgdown_2.1.3     cachem_1.1.0      desc_1.4.3</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

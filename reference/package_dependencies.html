@@ -53,7 +53,7 @@ required due to dependencies.</p>
 
 
 <dl><dt id="arg-pkg">pkg<a class="anchor" aria-label="anchor" href="#arg-pkg"></a></dt>
-<dd><p>Path to a file with a DESCRIPTION file or a package's names.</p></dd>
+<dd><p>Path to a file with a DESCRIPTION file or package's names from a repository.</p></dd>
 
 
 <dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
@@ -75,16 +75,14 @@ required due to dependencies.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="fu">package_dependencies</span><span class="op">(</span><span class="st">"ggeasy"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some dependencies are not on available repositories. Check for 'Additional_repositories' or other repositories (Bioconductor.org?):</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> aroma.light, DNAcopy, phyloseq, preprocessCore, pcaMethods, sparseMatrixStats, qvalue, Rgraphviz, edgeR, ALDEx2, EBImage, Biostrings, GenomicAlignments, IRanges, limma, org.Hs.eg.db, AnnotationDbi, DESeq2, Biobase, pwalign, maftools, ComplexHeatmap, GSVA, SummarizedExperiment, siggenes, annotate, fgsea, ConsensusClusterPlus, clusterProfiler, sva, affyPLM, affy, graph, fabia, RBGL, Rsamtools, impute, GO.db, biomaRt, rhdf5, mixOmics, survcomp, ggtree, treeio, GOSemSim, GENIE3, GenomicRanges, org.Dr.eg.db, org.Mm.eg.db, bluster, genefilter, BiocParallel, multtest, fmcsR, ChemmineR, ChIPseeker, TxDb.Hsapiens.UCSC.hg38.knownGene, TxDb.Hsapiens.UCSC.hg19.knownGene, TxDb.Mmusculus.UCSC.mm10.knownGene, SingleCellExperiment, TCseq, GSEABase, singscore, GenomicInteractions, rtracklayer, BiocFileCache, DECIPHER, tximport, BiocGenerics, GenomeInfoDb, S4Vectors, ensembldb, STRINGdb, GenomicFeatures, TCGAbiolinks, SNPRelate, snpStats, dada2, ShortRead, RedeR, Icens, RCy3, signatureSearch, signatureSearchData, MLInterfaces, ALL, TSCAN, MAST, DelayedArray, HDF5Array, minfi, IlluminaHumanMethylationEPICanno.ilm10b4.hg19, IlluminaHumanMethylation450kanno.ilmn12.hg19, AUCell, Rdisop, gdsfmt, BiocStyle, BSgenome, BSgenome.Hsapiens.UCSC.hg38, GEOquery, biocViews, reactome.db, ggmsa, VariantAnnotation, DOSE, Heatplus, fmrs, bamsignals, KEGGgraph, graphite, SparseArray, zlibbioc, Rhtslib, seqLogo, vsn, M3C, pathview, AnnotationFilter, QSutils, MassSpecWavelet, qusage, microbiome, InteractiveComplexHeatmap, globaltest, GlobalAncova, scran, scuttle, a4Core, ggkegg, ReactomePA, Mfuzz, BiocVersion, EmpiricalBrownsMethod, minet, scater, glmSparseNet, tweeDEseq, iBBiG, BicARE, R4RNA, AnnotationHub, beadarray, GSVAdata, rWikiPathways, glmGamPoi, UCell, batchelor, MatrixGenerics, ReactomeGSA, celldex, SingleR, splatter, widgetTools, Rhdf5lib, GWASTools, SpatialExperiment, zinbwave, DelayedMatrixStats, qpgraph, csaw, InteractionSet, HiCDOC, coRdon, KEGGREST</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      name   op version    type     package required</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1       R   &gt;=    2.10 Depends ABCanalysis    4.5.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 plotrix &lt;NA&gt;    &lt;NA&gt; Imports ABCanalysis    3.8.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       R   &gt;=  2.10.0 Depends        ACDm    4.5.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  Rsolnp &lt;NA&gt;    &lt;NA&gt; Imports        ACDm     1.16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   dplyr &lt;NA&gt;    &lt;NA&gt; Imports        ACDm    1.1.4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 ggplot2 &lt;NA&gt;    &lt;NA&gt; Imports        ACDm    3.5.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Name Version    Type   Op Package</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1         R   4.4.0 Depends   &gt;=    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       cli   3.4.0 Imports   &gt;=    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 lifecycle   1.0.3 Imports   &gt;=    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     rlang   1.1.0 Imports   &gt;=    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     vctrs   0.6.0 Imports   &gt;=    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 grDevices    &lt;NA&gt;    &lt;NA&gt; &lt;NA&gt;    &lt;NA&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

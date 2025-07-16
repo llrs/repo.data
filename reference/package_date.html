@@ -81,20 +81,17 @@ This might change on the future if other operators are more used.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">package_date</span><span class="op">(</span><span class="st">"ABACUS"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving repos_dependencies, this might take a bit.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Caching results to be faster next call in this session.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Published             deps_available </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "2019-09-20 07:40:07 CEST" "2019-08-10 22:30:20 CEST" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Published            deps_available </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "2019-09-20 05:40:07 UTC"                        NA </span>
 <span class="r-in"><span><span class="fu">package_date</span><span class="op">(</span><span class="st">"paramtest"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Published             deps_available </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  "2025-03-24 19:50:04 CET" "2024-08-28 13:20:06 CEST" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Published            deps_available </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "2025-03-24 18:50:04 UTC"                        NA </span>
 <span class="r-in"><span><span class="fu">package_date</span><span class="op">(</span><span class="st">"Seurat"</span><span class="op">)</span> <span class="co"># Dependencies on packages not on CRAN</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Published             deps_available </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "2025-04-23 22:10:03 CEST" "2025-04-22 19:40:02 CEST" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Published            deps_available </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "2025-04-23 20:10:03 UTC"                        NA </span>
 <span class="r-in"><span><span class="fu">package_date</span><span class="op">(</span><span class="st">"afmToolkit"</span><span class="op">)</span> <span class="co"># Dependency was removed from CRAN</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Package's dependencies were archived from CRAN after package publication: minpack.lm</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Published             deps_available </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "2017-04-03 15:30:50 CEST" "2017-04-01 22:55:38 CEST" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Published            deps_available </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "2017-04-03 13:30:50 UTC"                        NA </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

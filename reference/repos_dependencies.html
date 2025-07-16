@@ -45,14 +45,18 @@ for each type and package of current repositories (<code>getOptions("repos")</co
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">repos_dependencies</span><span class="op">(</span>which <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">repos_dependencies</span><span class="op">(</span>packages <span class="op">=</span> <span class="cn">NULL</span>, which <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
+<dl><dt id="arg-packages">packages<a class="anchor" aria-label="anchor" href="#arg-packages"></a></dt>
+<dd><p>a character vector of package names.</p></dd>
+
+
+<dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
 <dd><p>a character vector listing the types of
     dependencies, a subset of
     <code>c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")</code>.
@@ -71,17 +75,15 @@ the operator (op), the version it depends the type of dependency and the package
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rd</span> <span class="op">&lt;-</span> <span class="fu">repos_dependencies</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving repos_dependencies, this might take a bit.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Caching results to be faster next call in this session.</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rd</span> <span class="op">&lt;-</span> <span class="fu">repos_dependencies</span><span class="op">(</span><span class="st">"BaseSet"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rd</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         name   op version    type  package</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1          R   &gt;=   3.6.0 Depends AATtools</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 doParallel &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      dplyr &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    foreach &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   magrittr &lt;NA&gt;    &lt;NA&gt; Imports AATtools</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6          R   &gt;=   3.1.0 Depends   ABACUS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Package     Type    Name   Op Version</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 BaseSet  Depends       R   &gt;=   4.1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 BaseSet  Imports   dplyr   &gt;=   1.0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 BaseSet  Imports methods &lt;NA&gt;    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 BaseSet  Imports   rlang &lt;NA&gt;    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 BaseSet  Imports   utils &lt;NA&gt;    &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 BaseSet Suggests Biobase &lt;NA&gt;    &lt;NA&gt;</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
