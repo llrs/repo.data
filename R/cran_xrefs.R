@@ -75,7 +75,8 @@ cran_targets_links <- function(packages = NULL) {
     out <- NULL
     out <- save_state("cran_targets_links", out, verbose = FALSE)
     check_packages(packages, NA)
-    if (is.null(out)) {
+
+    if (is.null(out) && is.null(packages)) {
         bal <- base_alias()
         cal <- cran_alias()
         cl <- cran_links()
@@ -84,7 +85,37 @@ cran_targets_links <- function(packages = NULL) {
         t2b2 <- targets2files(cl2, rbind(bal, cal))
         out <- add_uniq_count(t2b2)
         out <- save_state("cran_targets_links", out, verbose = FALSE)
+
+    } else if (is.null(out) && !is.null(packages)) {
+        # Search only the links from packages that are valid
+        pd <- tools::package_dependencies(packages, which = c("Depends", "Imports", "LinkingTo", "Enhances"))
+        deps <- funlist(pd)
+        bal <- base_alias(intersect(deps, BASE))
+        cal <- cran_alias(setdiff(deps, c(BASE, "R")))
+        cl <- cran_links(setdiff(deps, c(BASE, "R")))
+        cl2 <- split_anchor(cl)
+
+        t2b2 <- targets2files(cl2, rbind(bal, cal))
+        out <- add_uniq_count(t2b2)
+        out <- save_state("cran_targets_links", out, verbose = FALSE)
+
+    } else  if (!is.null(out) && is.null(packages)) {
+        # FIXME: only add those needed.
+        bal <- base_alias()
+        cal <- cran_alias()
+        cl <- cran_links()
+        cl2 <- split_anchor(cl)
+
+        t2b2 <- targets2files(cl2, rbind(bal, cal))
+        out <- add_uniq_count(t2b2)
+        out <- save_state("cran_targets_links", out, verbose = FALSE)
+
+    } else if (!is.null(out) && !is.null(packages)) {
+        out <- out[out$from_pkg %in% packages | out$to_pkg %in% packages, ]
+        rownames(out) <- NULL
+
     }
+
     if (!is.null(packages)) {
         out <- out[out$from_pkg %in% packages | out$to_pkg %in% packages, ]
         rownames(out) <- NULL
@@ -107,8 +138,9 @@ cran_targets_links <- function(packages = NULL) {
 #' head(cpl)
 cran_pages_links <- function(packages = NULL) {
     check_packages(packages, NA)
-    target_links <- save_state("cran_targets_links", cran_targets_links(packages),
-                               verbose = FALSE)
+
+    target_links <- cran_targets_links(packages)
+
     w <- which(colnames(target_links) %in% "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {

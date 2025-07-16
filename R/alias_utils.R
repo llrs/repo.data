@@ -1,3 +1,10 @@
+
+#' Create a matrix of alias
+#'
+#' Joins the matrices of each file
+#' @param x A raw alias output as given by CRAN (and Bioconductor).
+#' @returns A matrix with Package, Source (The name of the file), and the Target (or Alias)
+#' @keywords internal
 alias2df <- function(x) {
     if (!length(x)) {
         return(NULL)

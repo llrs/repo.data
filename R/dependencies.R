@@ -59,19 +59,19 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 #'
 #' Despite the description minimal requirements find which versions are
 #' required due to dependencies.
-#' @param pkg Path to a file with a DESCRIPTION file or package's names from a repository.
+#' @param packages Path to a file with a DESCRIPTION file or package's names from a repository.
 #' @inheritParams repos_dependencies
 #'
-#' @returns A data.frame with the name, version required, if only one package is provided it also show the version used.
+#' @returns A data.frame with the name, version required, if only one package requires it it also show the name of the package.
+#' @note It keeps the base packages too even if just knowing the R version required would be enough.
 #' @export
 #'
 #' @examples
 #' pd <- package_dependencies("ggeasy")
 #' head(pd)
-package_dependencies <- function(pkg = ".", which = "strong") {
+package_dependencies <- function(packages = ".", which = "strong") {
     fields_selected <- check_which(which)
-    desc_pkg <- check_local(pkg)
-
+    desc_pkg <- check_local(packages)
 
     # Get packages dependencies recursively
     local_ap <- NULL
@@ -86,7 +86,7 @@ package_dependencies <- function(pkg = ".", which = "strong") {
         local_pkgs <- rownames(local_ap)
     }
 
-    pkges_names <- unique(c(local_pkgs, pkg[!file.exists(desc_pkg)]))
+    pkges_names <- unique(c(local_pkgs, packages[!file.exists(desc_pkg)]))
 
     ap <- available.packages(filters = c("CRAN", "duplicates"))
     new_ap <- rbind(ap[, c(fields_selected, "Package"), drop = FALSE],
@@ -115,7 +115,7 @@ package_dependencies <- function(pkg = ".", which = "strong") {
             immediate. = TRUE
         )
     }
-    rd <- repos_dependencies(setdiff(packages_reported, c(BASE, local_pkgs)), which = fields_selected)
+    rd <- repos_dependencies(setdiff(packages_reported, c(BASE, local_pkgs, "R")), which = fields_selected)
     # Add local packages information (not just their dependencies)
     if (!is.null(local_ap)) {
         local_v <- cbind(local_ap[, c("Package", "Version"), drop = FALSE],
@@ -123,10 +123,11 @@ package_dependencies <- function(pkg = ".", which = "strong") {
         rd <- rbind(rd, local_v[, colnames(rd)])
     }
 
-
+    # No package is depended by more than one package
     if (!anyDuplicated(rd$Name)){
         return(rd)
     }
+
     # Calculate the dependency path
     with_ver_n_dup <- !is.na(rd$Version) & rd$Name %in% rd$Name[duplicated(rd$Name)]
     t2n <- split(rd$Type[with_ver_n_dup], rd$Name[with_ver_n_dup])
@@ -140,17 +141,20 @@ package_dependencies <- function(pkg = ".", which = "strong") {
     required <- vapply(v2n, function(versions) {
         as.character(max(versions))
     }, character(1L))
-    df <- data.frame(Name = names(v2n), Version = as.package_version(required), Type = type, Op = ">=")
+    df <- data.frame(Name = names(v2n), Version = as.package_version(required),
+                     Type = type, Op = ">=")
 
     rd_no_ver <- rd[!rd$Name %in% df$Name, , drop = FALSE]
     # Replace Package by NA if Name is repeated.
     dup_name <- rd_no_ver$Name %in% rd_no_ver$Name[duplicated(rd_no_ver$Name)]
     rd_no_ver$Package[dup_name] <- NA
+
     # Replace Type by NA if multiple packages import it with different types
     t2n <- split(rd_no_ver$Type, rd_no_ver$Name)
     type_n <- vapply(t2n, function(x){length(unique(x))}, numeric(1L))
     multiple_types <- rd_no_ver$Name %in% names(type_n)[type_n > 1]
     rd_no_ver$Type[multiple_types] <- NA
+
     # Remove duplicated rows
     rd_no_ver <- unique(rd_no_ver)
 
@@ -188,7 +192,7 @@ cache_pkg_dep <- function(package, which, keepR = TRUE) {
 
 packages_dependencies <- function(ap) {
     stopifnot(is.matrix(ap) || is.data.frame(ap))
-    no_deps <- apply(ap, 1, function(x){all(is.na(x))})
+    no_deps <- apply(as.matrix(ap), 1, function(x){all(is.na(x))})
     ap <- ap[!no_deps, , drop = FALSE]
     if (!NROW(ap)) {
         m <- matrix(NA, ncol = 5, nrow = 0)
@@ -197,7 +201,7 @@ packages_dependencies <- function(ap) {
     }
 
     # Split by dependency, requires a matrix
-    deps <- apply(ap, 1L, strsplit, split = "[[:space:]]*,[[:space:]]*")
+    deps <- apply(as.matrix(ap), 1L, strsplit, split = "[[:space:]]*,[[:space:]]*")
     names(deps) <- trimws(rownames(ap))
 
     deps <- deps[lengths(deps) > 0L]
