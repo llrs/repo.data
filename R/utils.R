@@ -113,6 +113,13 @@ datetime2POSIXct <- function(date, time, tz = cran_tz) {
 
 uniq_count <- function(x, name = "n") {
     id <- apply(as.matrix(x), 1, paste0, collapse = "")
+
+    # Return if no duplicates
+    if (!anyDuplicated(id)) {
+        n <- matrix(1L, nrow = nrow(x),
+                    dimnames = list(seq_len(nrow(x)), name))
+        return(cbind(x, n))
+    }
     ids <- table(id)
     names(ids) <- NULL
     uid <- unique(x)
@@ -131,6 +138,13 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     dup_f <- duplicated(id)
     dup_r <- duplicated(id, fromLast = TRUE)
     dup <- dup_f | dup_r
+
+    # Return if no duplicates
+    if (!any(dup)) {
+        n <- matrix(1L, nrow = nrow(x),
+                    dimnames = list(seq_len(nrow(x)), name))
+        return(cbind(x[, -w, drop = FALSE], n))
+    }
 
     y <- x[!dup, ]
     df <- tapply(x[dup, , drop = FALSE], id[dup], function(xy, column_to_add) {
