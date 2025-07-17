@@ -11,6 +11,9 @@ targets2files(links, alias)
 
 \item{alias}{The output of \code{\link[=alias2df]{alias2df()}} as data.frame.}
 }
+\value{
+A data.frame with to_pkg, to_target, from_pkg, from_Rd, n, to_Rd.
+}
 \description{
 Resolves links that require to know available alias so solve them.
 }

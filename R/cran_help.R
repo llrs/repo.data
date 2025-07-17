@@ -86,7 +86,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' @family cran_help_pages
 #' @export
 #' @examples
-#' chc <- cran_help_cliques("DZEXPM")
+#' chc <- cran_help_cliques("BaseSet")
 #' head(chc)
 cran_help_cliques <- function(packages = NULL) {
     check_packages(packages)
@@ -102,7 +102,8 @@ cran_help_cliques <- function(packages = NULL) {
     }
 
     pkges <- c(packages, funlist(pkges))
-
+    # FIXME: We don't need to calculate the number of unique links targets 2 pages
+    # Solution: create an internal version that omits countting them
     cal <- cran_targets_links(funlist(pkges))
 
     cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), ]

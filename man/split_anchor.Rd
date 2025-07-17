@@ -4,10 +4,12 @@
 \alias{split_anchor}
 \title{Resolve links}
 \usage{
-split_anchor(links)
+split_anchor(links, count = TRUE)
 }
 \arguments{
 \item{links}{A data.frame with Package, Source, Anchor and Target.}
+
+\item{count}{A logical value if links should be counted.}
 }
 \value{
 A data.frame with Package, Source, to_pkg, to_target, n (number of times it happens)

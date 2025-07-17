@@ -20,7 +20,7 @@ Some help pages have links to and from but they are closed networks.
 Requires igraph
 }
 \examples{
-chc <- cran_help_cliques("DZEXPM")
+chc <- cran_help_cliques("BaseSet")
 head(chc)
 }
 \seealso{

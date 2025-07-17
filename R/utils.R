@@ -165,3 +165,7 @@ check_packages <- function(packages, length = 1L) {
     }
     check
 }
+
+is_logical <- function(x) {
+    isTRUE(x) || isFALSE(x)
+}
