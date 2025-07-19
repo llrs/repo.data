@@ -58,7 +58,7 @@ split_anchor <- function(links, count = TRUE) {
     sort_order <- intersect(c("Package", "Source", "to_pkg", "to_target"), colnames(link_w_targets))
     l2t <- link_w_targets[, sort_order]
     l2t <- sort_by(l2t, l2t[sort_order])
-    if (count) {
+    if (NROW(l2t) && count) {
         uniq_count(l2t)
     } else {
         unique(l2t)
