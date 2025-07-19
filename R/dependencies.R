@@ -87,6 +87,7 @@ package_dependencies <- function(packages = ".", which = "strong") {
     }
 
     pkges_names <- unique(c(local_pkgs, packages[!file.exists(desc_pkg)]))
+    check_packages(packages, NA)
 
     ap <- available.packages(filters = c("CRAN", "duplicates"))
     new_ap <- rbind(ap[, c(fields_selected, "Package"), drop = FALSE],

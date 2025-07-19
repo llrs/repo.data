@@ -168,6 +168,7 @@ check_packages <- function(packages, length = 1L) {
         is.character(packages) && length(na.omit(packages)) >= 1L && !(!as.logical(length) && length(na.omit(packages)) <= length)
     }
 
+
     if (isFALSE(check)) {
         arbitrary_length <- is.na(length) || length == 0L
         msg <- if (arbitrary_length) {
@@ -177,6 +178,14 @@ check_packages <- function(packages, length = 1L) {
         }
         stop(msg, call. = FALSE)
     }
+    # least two characters and start with a letter and not end in a dot
+    valid_names <- nchar(packages) >= 2L & grepl("^[alpha]", packages) & grepl("\\.$", packages)
+
+    if (!any(valid_names)) {
+        stop("Packages names should have at least two characters and start",
+             " with a letter and not end in a dot.")
+    }
+
     check
 }
 

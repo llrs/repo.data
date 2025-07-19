@@ -77,7 +77,8 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 
 #' Help pages with cliques
 #'
-#' Some help pages have links to and from but they are closed networks.
+#' Some help pages have links to other pages and they might be linked from others
+#' but they are closed network: there is no link that leads to different help pages.
 #'
 #' Requires igraph
 #' @inheritParams base_alias
@@ -109,9 +110,11 @@ cran_help_cliques <- function(packages = NULL) {
     cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), ]
     # Filter out those links not resolved
     cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
+
     if (!nrow(cal)) {
         return(NULL)
     }
+    cal <- unique(cal)
     df_links <- data.frame(from = paste0(cal$from_pkg, ":", cal$from_Rd),
                            to = paste0(cal$to_pkg, ":", cal$to_Rd))
     df_links <- unique(df_links)
