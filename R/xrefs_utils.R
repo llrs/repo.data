@@ -229,3 +229,11 @@ check_anchor <- function(targets) {
     }
     TRUE
 }
+
+
+packages_in_links <- function(links, packages) {
+    to_pkg <- (!is.na(links$to_pkg) & links$to_pkg %in% packages)
+    links <- links[links$from_pkg %in% packages | to_pkg, , drop = TRUE]
+    rownames(links) <- NULL
+    links
+}

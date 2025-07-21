@@ -21,7 +21,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     if (!is.null(packages)) {
-        rbl <- rbl[rbl$from_pkg %in% packages | rbl$to_pkg %in% packages, ]
+        rbl <- packages_in_links(rbl, packages)
     }
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
@@ -60,7 +60,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
     if (!is.null(packages)) {
-        rbl <- rbl[rbl$from_pkg %in% packages | rbl$to_pkg %in% packages, ]
+        rbl <- packages_in_links(rbl, packages)
     }
     alias_cols <- c("Package", "Source")
     links_cols <- c("from_pkg", "from_Rd")
@@ -107,9 +107,10 @@ cran_help_cliques <- function(packages = NULL) {
     # Solution: create an internal version that omits countting them
     cal <- cran_targets_links(funlist(pkges))
 
-    cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), ]
+    cal <- packages_in_links(cal, pkges)
+    cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), , drop = FALSE]
     # Filter out those links not resolved
-    cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), ]
+    cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), , drop = FALSE]
 
     if (!nrow(cal)) {
         return(NULL)
@@ -139,10 +140,11 @@ cran_help_cliques <- function(packages = NULL) {
 
 #' Links without dependencies
 #'
-#' On WRE section "2.5 Cross-references" explains that packages shouldn't link to help pages outside the dependency
+#' On [WRE section "2.5 Cross-references"](https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Cross_002dreferences) explains that packages shouldn't link
+#' to help pages outside the dependency.
 #'
 #' @inheritParams cran_links
-#'
+#' @references <https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Cross_002dreferences>
 #' @returns A data.frame of help pages and links.
 #' @export
 #'

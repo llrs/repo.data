@@ -43,9 +43,7 @@ base_targets_links <- function(packages = NULL) {
         out <- save_state("base_targets_links", out, verbose = FALSE)
     }
     if (!is.null(packages)) {
-        out <- out[out$from_pkg %in% packages | out$to_pkg %in% packages, ]
-        rownames(out) <- NULL
-        out
+        packages_in_links(out, packages)
     } else {
         out
     }

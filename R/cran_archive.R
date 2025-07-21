@@ -40,7 +40,7 @@ cran_archive <- function(packages = NULL) {
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
-    if (!is.null(packages) && !length(packages)) {
+    if (!length(packages)) {
         return(NULL)
     }
 
@@ -98,3 +98,11 @@ cran_archive_dates <- function() {
 }
 
 
+cran_packages <- function(packages = NULL) {
+    current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
+    s <- strsplit(rownames(current), "_", fixed = TRUE)
+    current_packages <- vapply(s, "[", FUN.VALUE = character(1L), i = 1L)
+    archive_packages <- names(archive)
+    unique(current_packages, archive_packages)
+}
