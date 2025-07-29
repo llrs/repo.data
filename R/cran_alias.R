@@ -25,7 +25,7 @@ cran_alias <- function(packages = NULL) {
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
-    if (!length(packages)) {
+    if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
 

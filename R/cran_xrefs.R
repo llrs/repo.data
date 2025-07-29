@@ -24,7 +24,7 @@ cran_links <- function(packages = NULL) {
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
-    if (!length(packages)) {
+    if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
 
@@ -84,15 +84,19 @@ cran_targets_links <- function(packages = NULL) {
         NULL
     }
 
-    omit_pkg <- setdiff(packages, current_packages)
-    if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE)
+    if (!is.null(current_packages)) {
+
+        omit_pkg <- setdiff(packages, current_packages)
+        if (length(omit_pkg)) {
+            warning("Omitting packages ", toString(omit_pkg),
+                    ".\nMaybe they are currently not on CRAN?", immediate. = TRUE)
+        }
+
+        # Keep only packages that can be processed
+        packages <- setdiff(packages, omit_pkg)
     }
 
-    # Keep only packages that can be processed
-    packages <- setdiff(packages, omit_pkg)
-    if (!length(packages)) {
+    if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
 
@@ -133,8 +137,10 @@ cran_targets_links <- function(packages = NULL) {
 
     # Add new package's data
     if (length(new_packages)) {
+        raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
         new_xrefs <- xrefs2df(raw_xrefs[new_packages])
         # warnings_links(new_xrefs)
+        xrefs <- pkg_state[["full_cran_rdxrefs"]]
         xrefs <- rbind(xrefs, new_xrefs)
         pkg_state[[env]] <- xrefs[, c("Package", "Source", "Anchor", "Target")]
     }
@@ -145,43 +151,7 @@ cran_targets_links <- function(packages = NULL) {
     }
 
     new_out <- out[out$from_pkg %in% new_packages, , drop = FALSE]
-
     out <- save_state(env, out, verbose = FALSE)
-
-    } else if (!first_call && is.null(packages)) {
-        bal <- base_alias()
-        cal <- cran_alias()
-        cl <- cran_links()
-        cl2 <- split_anchor(cl)
-
-        t2b2 <- targets2files(cl2, rbind(bal, cal))
-        out <- add_uniq_count(t2b2)
-        out <- save_state("cran_targets_links", out, verbose = FALSE)
-
-    }  else if (first_call && is.null(packages)) {
-        bal <- base_alias()
-        cal <- cran_alias()
-        cl <- cran_links()
-        cl2 <- split_anchor(cl)
-
-        t2b2 <- targets2files(cl2, rbind(bal, cal))
-        out <- add_uniq_count(t2b2)
-        out <- save_state("cran_targets_links", out, verbose = FALSE)
-
-    } else if (all(packages %in% out$from_pkg)) {
-        out <- out[out$from_pkg %in% packages | out$to_pkg %in% packages, ]
-        rownames(out) <- NULL
-    } else {
-        new_pacakges <- setdiff(packages, out$from_pkg)
-        bal <- base_alias()
-        cal <- cran_alias(new_pacakges)
-        cl2 <- split_anchor(cran_links(new_pacakges))
-
-        t2b2 <- targets2files(cl2, rbind(bal, cal))
-        out <- add_uniq_count(t2b2)
-        out <- save_state("cran_targets_links", out, verbose = FALSE)
-        stop("logical error in processing data")
-    }
 
     if (!is.null(packages)) {
         out <- out[out$from_pkg %in% packages | out$to_pkg %in% packages, ]

@@ -96,7 +96,7 @@ cran_help_cliques <- function(packages = NULL) {
     }
     if (!is.null(packages)) {
         pkges <- tools::package_dependencies(packages,
-                                             reverse = TRUE, recursive = FALSE,
+                                             recursive = TRUE,
                                              db = available.packages(filters = c("CRAN", "duplicates")))
     } else {
         pkges <- NULL
@@ -105,7 +105,7 @@ cran_help_cliques <- function(packages = NULL) {
     pkges <- c(packages, funlist(pkges))
     # FIXME: We don't need to calculate the number of unique links targets 2 pages
     # Solution: create an internal version that omits countting them
-    cal <- cran_targets_links(funlist(pkges))
+    cal <- cran_targets_links(pkges)
 
     cal <- packages_in_links(cal, pkges)
     cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), , drop = FALSE]
