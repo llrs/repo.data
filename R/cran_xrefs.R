@@ -111,11 +111,11 @@ cran_targets_links <- function(packages = NULL) {
 
     # Search only the links from packages that are valid
     if (is.null(packages)) {
-        pd <- tools::package_dependencies(packages, which = c("Depends", "Imports", "LinkingTo", "Enhances"))
-        deps <- unique(c(packages, funlist(pd)))
+        deps <- c(cran_packages(), BASE)
     } else {
-        deps <- NULL
+        deps <- tools::package_dependencies(packages)
     }
+    deps <- unique(c(packages, funlist(deps)))
 
     # Get the packages
     bal <- base_alias(intersect(deps, c(BASE, "R")))

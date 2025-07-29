@@ -31,7 +31,7 @@ cran_snapshot <- function(date) {
     dups <- duplicated(ca_before$Package, fromLast = TRUE)
     ca_before_date <- ca_before[!dups, c("Package", "Version", "Datetime", "Status")]
 
-    cc <- cran_comments()
+    cc <- cran_comments(ca_before_date[, "Package"])
 
     # If date is earlier than any comments return what it was.
     if (date < min(cc$date, na.rm = TRUE)) {
