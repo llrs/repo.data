@@ -120,7 +120,7 @@ uniq_count <- function(x, name = "n") {
                     dimnames = list(seq_len(nrow(x)), name))
         return(cbind(x, n))
     }
-    ids <- table(id)
+    ids <- table(factor(id, levels = unique(id)))
     names(ids) <- NULL
     uid <- unique(x)
     rownames(uid) <- NULL
