@@ -1,7 +1,7 @@
 
 #' Package dependencies to repositories
 #'
-#' Explore the relationships between packages and repositories.
+#' Explore the relationships between packages and repositories available.
 #' @inheritParams tools::package_dependencies
 #' @param repos Repositories and their names are taken from `getOptions("repos")`.
 #'
@@ -12,9 +12,9 @@
 #' @export
 #' @family utilities
 #' @examples
-#' pr <- pkges_repos("experDesign")
+#' pr <- package_repos("experDesign")
 #' head(pr)
-pkges_repos <- function(packages = NULL, repos = getOption("repos"), which = "all") {
+package_repos <- function(packages = NULL, repos = getOption("repos"), which = "all") {
     stopifnot(is.character(repos) && length(repos))
     check_packages(packages, length = NA)
 

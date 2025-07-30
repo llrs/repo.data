@@ -3,6 +3,10 @@ template:
   bootstrap: 5
 
 reference:
+- title: "Utilities"
+  desc: "Functions useful for package developers and maintainers as well as users"
+  contents:
+  - has_concept("utilities")
 - title: "About R"
   desc: "Functions for exploring base R"
   contents:
@@ -41,7 +45,7 @@ reference:
   desc: "Explore packages, session and the relationship with multiple repositories"
   contents:
   - repos_dependencies
-  - pkges_repos
+  - package_repos
   - package_dependencies
   - package_date
   - update_dependencies

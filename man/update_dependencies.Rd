@@ -29,7 +29,7 @@ Other utilities:
 \code{\link{cran_doom}()},
 \code{\link{cran_snapshot}()},
 \code{\link{package_date}()},
-\code{\link{pkges_repos}()},
+\code{\link{package_repos}()},
 \code{\link{repos_dependencies}()}
 }
 \concept{utilities}
