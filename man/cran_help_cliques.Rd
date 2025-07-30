@@ -25,8 +25,8 @@ chc <- cran_help_cliques("BaseSet")
 head(chc)
 }
 \seealso{
-Other cran_help_pages: 
+Other functions related to CRAN help pages: 
 \code{\link{cran_help_pages_not_linked}()},
 \code{\link{cran_help_pages_wo_links}()}
 }
-\concept{cran_help_pages}
+\concept{functions related to CRAN help pages}

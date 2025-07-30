@@ -6,7 +6,7 @@
 #' @inheritParams cran_links
 #' @returns A data.frame with two columns: Package and Source
 #' @export
-#' @family cran_help_pages
+#' @family functions related to CRAN help pages
 #' @examples
 #' ap <- available.packages()
 #' a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
@@ -48,7 +48,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
 #' @inheritParams base_alias
 #' @returns A data.frame with two columns: Package and Source
 #' @export
-#' @family cran_help_pages
+#' @family functions related to CRAN help pages
 #' @examples
 #' ap <- available.packages()
 #' a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
@@ -84,7 +84,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' @inheritParams base_alias
 #' @returns Return a data.frame of help pages not connected to the network of help pages.
 #' Or NULL if nothing are found.
-#' @family cran_help_pages
+#' @family functions related to CRAN help pages
 #' @export
 #' @examples
 #' chc <- cran_help_cliques("BaseSet")

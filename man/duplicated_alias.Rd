@@ -16,7 +16,7 @@ A sorted data.frame with the Target, Package and Source of the duplicate alias.
 Report duplicated alias
 }
 \examples{
-# Checking the overlap between to seemingly unrelated packges:
+# Checking the overlap between to seemingly unrelated packages:
 alias <- cran_alias(c("fect", "gsynth"))
 dup_alias <- duplicated_alias(alias)
 head(dup_alias)
