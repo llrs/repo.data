@@ -2,7 +2,7 @@
 % Please edit documentation in R/cran_help.R
 \name{cran_help_pages_wo_links}
 \alias{cran_help_pages_wo_links}
-\title{Help pages not linked from base R.}
+\title{Help pages not linked}
 \usage{
 cran_help_pages_wo_links(packages = NULL)
 }

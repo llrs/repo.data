@@ -1,4 +1,4 @@
-
+#' Check package history on CRAN
 #'
 #' It uses available information to provide the most accurate information of
 #' CRAN at any given time.
@@ -11,7 +11,7 @@
 #' @export
 #' @seealso [cran_archive()], [cran_actions()], [cran_comments()].
 #' @examples
-#' cran_history
+#' cran_history()
 cran_history <- function(packages = NULL) {
     save_state("cran_history", cran_all_history())
     check_packages(packages, NA)

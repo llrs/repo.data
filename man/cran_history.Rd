@@ -2,8 +2,7 @@
 % Please edit documentation in R/cran_history.R
 \name{cran_history}
 \alias{cran_history}
-\title{It uses available information to provide the most accurate information of
-CRAN at any given time.}
+\title{Check package history on CRAN}
 \usage{
 cran_history(packages = NULL)
 }
@@ -14,12 +13,16 @@ cran_history(packages = NULL)
 A data.frame with the information to recreate CRAN at any point before today.
 }
 \description{
+It uses available information to provide the most accurate information of
+CRAN at any given time.
+}
+\details{
 Several sources are used: CRAN's database to check packages files and versions,
 CRAN's volunteers actions for when packages are archived or removed and
 CRAN's comments to fill in the gaps.
 }
 \examples{
-cran_history
+cran_history()
 }
 \seealso{
 \code{\link[=cran_archive]{cran_archive()}}, \code{\link[=cran_actions]{cran_actions()}}, \code{\link[=cran_comments]{cran_comments()}}.

@@ -2,3 +2,51 @@ url: https://llrs.github.io/repo.data/
 template:
   bootstrap: 5
 
+reference:
+- title: "About R"
+  desc: "Functions for exploring base R"
+  contents:
+  - base_alias
+  - base_links
+- subtitle: "R help pages"
+  desc: "Explore the relationship between alias, pages and packages"
+  contents:
+  - starts_with("base_help_")
+  - base_targets_links
+  - base_pages_links
+  - base_pkges_links
+  - os_alias
+- title: "About CRAN"
+  desc: "Functions for exploring CRAN"
+  contents:
+  - cran_alias
+  - cran_links
+  - starts_with("cran_")
+  - -starts_with("cran_help_")
+  - -cran_targets_links
+  - -cran_pages_links
+  - -cran_pkges_links
+- subtitle: "CRAN help pages"
+  desc: "Explore the relationship between alias, pages and packages"
+  contents:
+  - starts_with("cran_help_")
+  - cran_targets_links
+  - cran_pages_links
+  - cran_pkges_links
+- title: "About Bioconductor"
+  desc: "Functions for exploring Bioconductor"
+  contents:
+  - starts_with("bioc_")
+- title: "About arbitrary repositories"
+  desc: "Explore packages, session and the relationship with multiple repositories"
+  contents:
+  - repos_dependencies
+  - pkges_repos
+  - package_dependencies
+  - package_date
+  - update_dependencies
+  - cran_doom
+- title: "Miscelania"
+  desc: "Utilities for working with this package"
+  contents:
+  - clean_cache

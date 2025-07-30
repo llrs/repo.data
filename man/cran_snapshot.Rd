@@ -2,7 +2,7 @@
 % Please edit documentation in R/cran_snapshot.R
 \name{cran_snapshot}
 \alias{cran_snapshot}
-\title{Check CRAN package state}
+\title{Check CRAN package state on any given date.}
 \usage{
 cran_snapshot(date)
 }

@@ -3,7 +3,7 @@
 \name{cran_date}
 \alias{cran_date}
 \alias{cran_session}
-\title{Estimate CRAN's date}
+\title{Estimate CRAN's date of packages}
 \usage{
 cran_date(versions)
 

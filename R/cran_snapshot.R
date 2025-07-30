@@ -1,4 +1,4 @@
-#' Check CRAN package state
+#' Check CRAN package state on any given date.
 #'
 #' Given the available information which packages were on CRAN on a given date?
 #' @note Due to missing of CRAN comments some packages are not annotated when
@@ -57,7 +57,7 @@ cran_snapshot <- function(date) {
 }
 
 
-#' Estimate CRAN's date
+#' Estimate CRAN's date of packages
 #'
 #' Check which CRAN dates are possible for a given packages and versions.
 #' @param versions A data.frame with the packages names and versions
