@@ -5,6 +5,7 @@
 <url><loc>https://llrs.github.io/repo.data/articles/repo.data.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/authors.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/index.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/alias2df.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/base_alias.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/base_help_cliques.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/base_help_pages_not_linked.html</loc></url>
@@ -40,6 +41,8 @@
 <url><loc>https://llrs.github.io/repo.data/reference/pkges_repos.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/repo.data-package.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/repos_dependencies.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/split_anchor.html</loc></url>
+<url><loc>https://llrs.github.io/repo.data/reference/targets2files.html</loc></url>
 <url><loc>https://llrs.github.io/repo.data/reference/update_dependencies.html</loc></url>
 </urlset>
 
