@@ -51,6 +51,7 @@ The raw source of the data is: \code{\link[tools:CRAN_package_db]{tools::CRAN_pa
 Other utilities: 
 \code{\link{cran_date}()},
 \code{\link{cran_snapshot}()},
+\code{\link{duplicated_alias}()},
 \code{\link{package_date}()},
 \code{\link{package_repos}()},
 \code{\link{repos_dependencies}()},

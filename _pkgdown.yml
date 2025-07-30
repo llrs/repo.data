@@ -44,10 +44,10 @@ reference:
 - title: "About arbitrary repositories"
   desc: "Explore packages, session and the relationship with multiple repositories"
   contents:
-  - repos_dependencies
-  - package_repos
-  - package_dependencies
   - package_date
+  - package_repos
+  - repos_dependencies
+  - package_dependencies
   - update_dependencies
   - cran_doom
 - title: "Miscelania"

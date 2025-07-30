@@ -7,7 +7,7 @@
 \alias{repo.data-package}
 \title{repo.data: R Repository Data}
 \description{
-Retrieve repositories package data to explore the package dependencies, help links, alias, dates... Extra data from each repository is also downloaded and processed, specifically CRAN and Bioconductor specific data.
+Retrieve repositories package metadata to explore the package dependencies, help links, alias, dates... Package metadata from CRAN and Bioconductor is exposed and processed.
 }
 \seealso{
 Useful links:
