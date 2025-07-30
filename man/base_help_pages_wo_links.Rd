@@ -2,7 +2,7 @@
 % Please edit documentation in R/base_help.R
 \name{base_help_pages_wo_links}
 \alias{base_help_pages_wo_links}
-\title{Help pages not linked from base R.}
+\title{Help pages not linked from base R}
 \usage{
 base_help_pages_wo_links()
 }

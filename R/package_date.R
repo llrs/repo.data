@@ -11,6 +11,7 @@
 #' @returns A vector with the datetimes of the published package (or current
 #' date if not published) and the datetime the required restrictions were met.
 #' @export
+#' @family utilities
 #' @examples
 #' package_date("ABACUS")
 #' package_date("paramtest")

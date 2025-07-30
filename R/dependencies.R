@@ -8,6 +8,7 @@
 #' @returns A data.frame with 5 columns: the name of the dependency,
 #' the operator (op), the version it depends the type of dependency and the package.
 #' @export
+#' @family utilities
 #' @examples
 #' rd <- repos_dependencies("BaseSet")
 #' head(rd)
@@ -174,6 +175,7 @@ package_dependencies <- function(packages = ".", which = "strong") {
 #' version and required column.
 #' @seealso [package_dependencies()]
 #' @returns The data.frame filtered with some relevant rows
+#' @family utilities
 #' @export
 #' @examples
 #' pd <- package_dependencies("arrow")

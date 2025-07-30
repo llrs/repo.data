@@ -24,5 +24,12 @@ The raw source of the data is: \code{\link[tools:CRAN_aliases_db]{CRAN_aliases_d
 
 Other alias: 
 \code{\link{base_alias}()}
+
+Other meta info from CRAN: 
+\code{\link{cran_archive}()},
+\code{\link{cran_comments}()},
+\code{\link{cran_history}()},
+\code{\link{cran_links}()}
 }
 \concept{alias}
+\concept{meta info from CRAN}

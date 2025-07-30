@@ -2,7 +2,7 @@
 % Please edit documentation in R/cran_snapshot.R
 \name{cran_snapshot}
 \alias{cran_snapshot}
-\title{Check CRAN package state on any given date.}
+\title{Check CRAN package state on any given date}
 \usage{
 cran_snapshot(date)
 }
@@ -24,3 +24,13 @@ given date.
 cs <- cran_snapshot(Sys.Date() -2 )
 head(cs)
 }
+\seealso{
+Other utilities: 
+\code{\link{cran_date}()},
+\code{\link{cran_doom}()},
+\code{\link{package_date}()},
+\code{\link{pkges_repos}()},
+\code{\link{repos_dependencies}()},
+\code{\link{update_dependencies}()}
+}
+\concept{utilities}

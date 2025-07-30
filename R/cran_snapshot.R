@@ -1,4 +1,4 @@
-#' Check CRAN package state on any given date.
+#' Check CRAN package state on any given date
 #'
 #' Given the available information which packages were on CRAN on a given date?
 #' @note Due to missing of CRAN comments some packages are not annotated when
@@ -8,7 +8,7 @@
 #'
 #' @returns The data.frame with the packages and versions at a given date.
 #' @export
-#'
+#' @family utilities
 #' @examples
 #' cs <- cran_snapshot(Sys.Date() -2 )
 #' head(cs)
@@ -65,6 +65,7 @@ cran_snapshot <- function(date) {
 #'
 #' @returns Last installation date from CRAN.
 #' @export
+#' @family utilities
 #' @rdname cran_date
 #' @importFrom utils installed.packages
 #' @examples

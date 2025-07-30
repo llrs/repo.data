@@ -29,7 +29,7 @@ base_help_pages_not_linked <- function() {
     p
 }
 
-#' Help pages not linked from base R.
+#' Help pages not linked from base R
 #'
 #' Help pages without links from other help pages.
 #' This makes harder to find them.

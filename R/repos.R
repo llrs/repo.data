@@ -10,7 +10,7 @@
 #' or missing repositories), and the total number of dependencies and total
 #' number of repositories used.
 #' @export
-#'
+#' @family utilities
 #' @examples
 #' pr <- pkges_repos("experDesign")
 #' head(pr)

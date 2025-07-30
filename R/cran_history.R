@@ -7,11 +7,13 @@
 #' CRAN's volunteers actions for when packages are archived or removed and
 #' CRAN's comments to fill in the gaps.
 #' @inheritParams base_alias
+#' @inheritParams cran_alias
 #' @returns A data.frame with the information to recreate CRAN at any point before today.
 #' @export
 #' @seealso [cran_archive()], [cran_actions()], [cran_comments()].
+#' @family meta info from CRAN
 #' @examples
-#' cran_history()
+#' cran_history
 cran_history <- function(packages = NULL) {
     save_state("cran_history", cran_all_history())
     check_packages(packages, NA)

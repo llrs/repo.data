@@ -34,3 +34,13 @@ Explore the relationships between packages and repositories.
 pr <- pkges_repos("experDesign")
 head(pr)
 }
+\seealso{
+Other utilities: 
+\code{\link{cran_date}()},
+\code{\link{cran_doom}()},
+\code{\link{cran_snapshot}()},
+\code{\link{package_date}()},
+\code{\link{repos_dependencies}()},
+\code{\link{update_dependencies}()}
+}
+\concept{utilities}

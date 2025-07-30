@@ -22,8 +22,15 @@ CRAN's volunteers actions for when packages are archived or removed and
 CRAN's comments to fill in the gaps.
 }
 \examples{
-cran_history()
+cran_history
 }
 \seealso{
 \code{\link[=cran_archive]{cran_archive()}}, \code{\link[=cran_actions]{cran_actions()}}, \code{\link[=cran_comments]{cran_comments()}}.
+
+Other meta info from CRAN: 
+\code{\link{cran_alias}()},
+\code{\link{cran_archive}()},
+\code{\link{cran_comments}()},
+\code{\link{cran_links}()}
 }
+\concept{meta info from CRAN}

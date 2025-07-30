@@ -31,3 +31,13 @@ for each type and package of current repositories (\code{getOptions("repos")}).
 rd <- repos_dependencies("BaseSet")
 head(rd)
 }
+\seealso{
+Other utilities: 
+\code{\link{cran_date}()},
+\code{\link{cran_doom}()},
+\code{\link{cran_snapshot}()},
+\code{\link{package_date}()},
+\code{\link{pkges_repos}()},
+\code{\link{update_dependencies}()}
+}
+\concept{utilities}
