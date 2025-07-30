@@ -112,8 +112,15 @@ datetime2POSIXct <- function(date, time, tz = cran_tz) {
 
 
 uniq_count <- function(x, name = "n") {
-    id <- apply(x, 1, paste0, collapse = "")
-    ids <- table(id)
+    id <- apply(as.matrix(x), 1, paste0, collapse = "")
+
+    # Return if no duplicates
+    if (!anyDuplicated(id)) {
+        n <- matrix(1L, nrow = nrow(x),
+                    dimnames = list(seq_len(nrow(x)), name))
+        return(cbind(x, n))
+    }
+    ids <- table(factor(id, levels = unique(id)))
     names(ids) <- NULL
     uid <- unique(x)
     rownames(uid) <- NULL
@@ -127,10 +134,17 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     if (!length(w)) {
         return(x)
     }
-    id <- apply(x[, -w, drop = FALSE], 1, paste0, collapse = ";")
+    id <- apply(as.matrix(x[, -w, drop = FALSE]), 1, paste0, collapse = ";")
     dup_f <- duplicated(id)
     dup_r <- duplicated(id, fromLast = TRUE)
     dup <- dup_f | dup_r
+
+    # Return if no duplicates
+    if (!any(dup)) {
+        n <- matrix(1L, nrow = nrow(x),
+                    dimnames = list(seq_len(nrow(x)), name))
+        return(cbind(x[, -w, drop = FALSE], n))
+    }
 
     y <- x[!dup, ]
     df <- tapply(x[dup, , drop = FALSE], id[dup], function(xy, column_to_add) {
@@ -154,6 +168,7 @@ check_packages <- function(packages, length = 1L) {
         is.character(packages) && length(na.omit(packages)) >= 1L && !(!as.logical(length) && length(na.omit(packages)) <= length)
     }
 
+
     if (isFALSE(check)) {
         arbitrary_length <- is.na(length) || length == 0L
         msg <- if (arbitrary_length) {
@@ -163,5 +178,21 @@ check_packages <- function(packages, length = 1L) {
         }
         stop(msg, call. = FALSE)
     }
+
+    if (is.null(packages)) {
+        return(TRUE)
+    }
+    # least two characters and start with a letter and not end in a dot
+    valid_names <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !grepl("\\.$", packages)
+
+    if (!any(valid_names)) {
+        stop("Packages names should have at least two characters and start",
+             " with a letter and not end in a dot.")
+    }
+
     check
+}
+
+is_logical <- function(x) {
+    isTRUE(x) || isFALSE(x)
 }

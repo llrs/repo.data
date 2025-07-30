@@ -39,7 +39,6 @@ pkges_repos <- function(packages = NULL, repos = getOption("repos"), which = "al
     names(repositories) <- rownames(ap)
     repositories[] <- names(repos)[match(repositories, repos)]
 
-
     # Get the direct dependencies for each package
     rd <- repos_dependencies(packages, which)
 

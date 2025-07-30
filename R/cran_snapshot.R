@@ -16,7 +16,7 @@ cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),
               "Accepted ranges is from the beginning of CRAN to today" = date <= Sys.Date() || date >= as.Date("1997-10-08"))
-    
+
     ca <- cran_archive()
     if (date == Sys.Date()) {
         return(ca[ca$status == "current", ])
@@ -31,7 +31,7 @@ cran_snapshot <- function(date) {
     dups <- duplicated(ca_before$Package, fromLast = TRUE)
     ca_before_date <- ca_before[!dups, c("Package", "Version", "Datetime", "Status")]
 
-    cc <- cran_comments()
+    cc <- cran_comments(ca_before_date[, "Package"])
 
     # If date is earlier than any comments return what it was.
     if (date < min(cc$date, na.rm = TRUE)) {
@@ -89,9 +89,9 @@ cran_date <- function(versions) {
     }
     versions[, "Version"] <- as.character(versions[, "Version"])
     # match packages names and versions
-    ca_v <- apply(ca_packages[, c("Package", "Version")], 1L, paste, collapse = "_")
+    ca_v <- apply(as.matrix(ca_packages[, c("Package", "Version")]), 1L, paste, collapse = "_")
     # if version is NA match to whatever
-    v_v <- apply(versions[, c("Package", "Version")], 1L, paste, collapse = "_")
+    v_v <- apply(as.matrix(versions[, c("Package", "Version")]), 1L, paste, collapse = "_")
     missing_v <- anyNA(versions[, "Version"])
     if (missing_v) {
         any_v <- is.na(versions[, "Version"])

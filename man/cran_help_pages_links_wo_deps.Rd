@@ -13,8 +13,12 @@ cran_help_pages_links_wo_deps(packages = NULL)
 A data.frame of help pages and links.
 }
 \description{
-On WRE section "2.5 Cross-references" explains that packages shouldn't link to help pages outside the dependency
+On \href{https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Cross_002dreferences}{WRE section "2.5 Cross-references"} explains that packages shouldn't link
+to help pages outside the dependency.
 }
 \examples{
 evmix <- cran_help_pages_links_wo_deps("evmix")
+}
+\references{
+\url{https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Cross_002dreferences}
 }

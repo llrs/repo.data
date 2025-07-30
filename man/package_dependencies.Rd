@@ -4,10 +4,10 @@
 \alias{package_dependencies}
 \title{Find current installations}
 \usage{
-package_dependencies(pkg = ".", which = "strong")
+package_dependencies(packages = ".", which = "strong")
 }
 \arguments{
-\item{pkg}{Path to a file with a DESCRIPTION file or package's names from a repository.}
+\item{packages}{Path to a file with a DESCRIPTION file or package's names from a repository.}
 
 \item{which}{a character vector listing the types of
     dependencies, a subset of
@@ -20,11 +20,14 @@ package_dependencies(pkg = ".", which = "strong")
   }
 }
 \value{
-A data.frame with the name, version required, if only one package is provided it also show the version used.
+A data.frame with the name, version required, if only one package requires it it also show the name of the package.
 }
 \description{
 Despite the description minimal requirements find which versions are
 required due to dependencies.
+}
+\note{
+It keeps the base packages too even if just knowing the R version required would be enough.
 }
 \examples{
 pd <- package_dependencies("ggeasy")

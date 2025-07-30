@@ -14,13 +14,14 @@ Return a data.frame of help pages not connected to the network of help pages.
 Or NULL if nothing are found.
 }
 \description{
-Some help pages have links to and from but they are closed networks.
+Some help pages have links to other pages and they might be linked from others
+but they are closed network: there is no link that leads to different help pages.
 }
 \details{
 Requires igraph
 }
 \examples{
-chc <- cran_help_cliques("DZEXPM")
+chc <- cran_help_cliques("BaseSet")
 head(chc)
 }
 \seealso{

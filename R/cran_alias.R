@@ -38,13 +38,13 @@ cran_alias <- function(packages = NULL) {
     }
 
     # Decide which packages are to be added to the data
-    if (!is.null(packages) & !first_alias) {
+    if (!is.null(packages) && !first_alias) {
         new_packages <- setdiff(packages, alias[, "Package"])
-    } else if (!is.null(packages) & first_alias) {
+    } else if (!is.null(packages) && first_alias) {
         new_packages <- intersect(packages, current_packages)
-    } else if (is.null(packages) & first_alias) {
+    } else if (is.null(packages) && first_alias) {
         new_packages <- current_packages
-    } else if (is.null(packages) & !first_alias) {
+    } else if (is.null(packages) && !first_alias) {
         new_packages <- setdiff(current_packages, alias[, "Package"])
     }
 

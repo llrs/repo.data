@@ -9,7 +9,26 @@ xrefs2df <- function(x) {
     rdxrefsDF[, c("Package", "Source", "Anchor", "Target"), drop = FALSE]
 }
 
-split_anchor <- function(links) {
+#' Resolve links
+#'
+#' Converts Anchors and targets so that it can be easily understood.
+#' See [WRE](https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Cross_002dreferences)
+#' for extensive explanations
+#'
+#' There are 4 different types of links:
+#' - `{Target}`
+#' - `[=Target]{name}`
+#' - `[package]{Target}`
+#' - `[package:target]{name}`
+#' The first two can be to any package and led to disambiguation pages, the last
+#' two are fully resolved (package and alias)
+#' @param links A data.frame with Package, Source, Anchor and Target.
+#' @param count A logical value if links should be counted.
+#' @seealso [targets2files()]
+#'
+#' @returns A data.frame with Package, Source, to_pkg, to_target, n (number of times it happens)
+#' @keywords internal
+split_anchor <- function(links, count = TRUE) {
     links_targets <- strcapture("([[:alnum:].]*{2,})?[:=]?(.*)",
                                 x = links[, "Anchor"],
                                 proto = data.frame(to_pkg = character(),
@@ -38,8 +57,12 @@ split_anchor <- function(links) {
 
     sort_order <- intersect(c("Package", "Source", "to_pkg", "to_target"), colnames(link_w_targets))
     l2t <- link_w_targets[, sort_order]
-    l2t <- sort_by(l2t, l2t[sort_order])
-    uniq_count(l2t)
+    l2t <- sort_by(l2t, l2t)
+    if (NROW(l2t) && count) {
+        uniq_count(l2t)
+    } else {
+        unique(l2t)
+    }
 }
 
 self_refs <- function(refs) {
@@ -47,6 +70,14 @@ self_refs <- function(refs) {
     unique(refs[same, c("Rd_origin", "from_pkg", "Target")])
 }
 
+#' Resolves missing targets
+#'
+#' Resolves links that require to know available alias so solve them.
+#' @param links The output of [split_anchor()].
+#' @param alias The output of [alias2df()] as data.frame.
+#'
+#' @returns A data.frame with to_pkg, to_target, from_pkg, from_Rd, n, to_Rd.
+#' @keywords internal
 targets2files <- function(links, alias) {
 
     to_pkg <- links[, "to_pkg"]
@@ -197,4 +228,12 @@ check_anchor <- function(targets) {
         return(FALSE)
     }
     TRUE
+}
+
+
+packages_in_links <- function(links, packages) {
+    to_pkg <- (!is.na(links$to_pkg) & links$to_pkg %in% packages)
+    links <- links[links$from_pkg %in% packages | to_pkg, , drop = TRUE]
+    rownames(links) <- NULL
+    links
 }
