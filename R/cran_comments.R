@@ -17,6 +17,7 @@
 #' @returns A data.frame with four columns: package, comment, date and action.
 #' @references Original file: <https://cran.r-project.org/src/contrib/PACKAGES.in>
 #' @export
+#' @family meta info from CRAN
 #' @examples
 #' \donttest{
 #' cc <- cran_comments()

@@ -23,13 +23,16 @@ head(cl)
 \seealso{
 The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_db()}}.
 
-Other links: 
-\code{\link{base_links}()},
-\code{\link{base_pages_links}()},
-\code{\link{base_pkges_links}()},
-\code{\link{base_targets_links}()},
+Other links from CRAN: 
 \code{\link{cran_pages_links}()},
 \code{\link{cran_pkges_links}()},
 \code{\link{cran_targets_links}()}
+
+Other meta info from CRAN: 
+\code{\link{cran_alias}()},
+\code{\link{cran_archive}()},
+\code{\link{cran_comments}()},
+\code{\link{cran_history}()}
 }
-\concept{links}
+\concept{links from CRAN}
+\concept{meta info from CRAN}

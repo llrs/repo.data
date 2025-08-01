@@ -17,6 +17,7 @@
 #'  (by archival causing issues.)
 #' @importFrom utils available.packages
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
+#' @family utilities
 #' @export
 #' @examples
 #' cd <- cran_doom()

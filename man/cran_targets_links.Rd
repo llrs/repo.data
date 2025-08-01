@@ -20,13 +20,9 @@ ctl <- cran_targets_links("BaseSet")
 head(ctl)
 }
 \seealso{
-Other links: 
-\code{\link{base_links}()},
-\code{\link{base_pages_links}()},
-\code{\link{base_pkges_links}()},
-\code{\link{base_targets_links}()},
+Other links from CRAN: 
 \code{\link{cran_links}()},
 \code{\link{cran_pages_links}()},
 \code{\link{cran_pkges_links}()}
 }
-\concept{links}
+\concept{links from CRAN}

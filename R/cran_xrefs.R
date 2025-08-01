@@ -4,7 +4,8 @@
 #' @inheritParams base_alias
 #' @returns A data.frame with the links on CRAN's packages.
 #' It has 4 columns: Package, Anchor, Target and Source.
-#' @family links
+#' @family links from CRAN
+#' @family meta info from CRAN
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_db()}}.
 #' @export
 #' @examples
@@ -65,7 +66,7 @@ cran_links <- function(packages = NULL) {
 #'
 #' Explore the relationship between CRAN packages and other help pages by the target they use.
 #' @inheritParams base_alias
-#' @family links
+#' @family links from CRAN
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Number of links).
 #' @export
 #' @examples
@@ -167,7 +168,7 @@ cran_targets_links <- function(packages = NULL) {
 #' Explore the relationship between CRAN packages and other help pages.
 #' If the target help page is ambiguous it is omitted.
 #' @inheritParams base_alias
-#' @family links
+#' @family links from CRAN
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_Rd, n (Number of links).
 #' @export
 #' @examples
@@ -191,7 +192,7 @@ cran_pages_links <- function(packages = NULL) {
 #' Explore the relationship between CRAN packages and other packages.
 #' If the target package is ambiguous it is omitted.
 #' @inheritParams base_alias
-#' @family links
+#' @family links from CRAN
 #' @returns A data.frame with 6 columns: from_pkg, to_pkg, n (Number of links).
 #' @export
 #' @examples

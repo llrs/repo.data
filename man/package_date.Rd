@@ -37,3 +37,14 @@ package_date("paramtest")
 package_date("Seurat") # Dependencies on packages not on CRAN
 package_date("afmToolkit") # Dependency was removed from CRAN
 }
+\seealso{
+Other utilities: 
+\code{\link{cran_date}()},
+\code{\link{cran_doom}()},
+\code{\link{cran_snapshot}()},
+\code{\link{duplicated_alias}()},
+\code{\link{package_repos}()},
+\code{\link{repos_dependencies}()},
+\code{\link{update_dependencies}()}
+}
+\concept{utilities}

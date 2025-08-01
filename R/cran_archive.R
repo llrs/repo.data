@@ -12,6 +12,7 @@
 #'  User, size and status (archived or current).
 #'  It is sorted by package name and date.
 #' @export
+#' @family meta info from CRAN
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_db()}},
 #' \code{\link[tools:CRAN_current_db]{CRAN_current_db()}}.
 #'  For some dates and comments about archiving packages: [cran_comments()].

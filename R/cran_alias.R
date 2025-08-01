@@ -6,6 +6,7 @@
 #' @export
 #' @family alias
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_aliases_db]{CRAN_aliases_db()}}.
+#' @family meta info from CRAN
 #' @examples
 #' ca <- cran_alias("BWStest")
 #' head(ca)
