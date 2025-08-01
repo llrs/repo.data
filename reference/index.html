@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">repo.data</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/repo.data.html">repo.data</a></li>
   </ul></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/llrs/repo.data/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -35,9 +36,68 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
+
+      <div class="section-desc"><p>Functions useful for package developers and maintainers as well as users</p></div>
 
 
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cran_date.html">cran_date()</a></code> <code><a href="cran_date.html">cran_session()</a></code>
+
+        </dt>
+        <dd>Estimate CRAN's date of packages</dd>
+      </dl><dl><dt>
+
+          <code><a href="cran_doom.html">cran_doom()</a></code>
+
+        </dt>
+        <dd>Calculate time till packages are archived</dd>
+      </dl><dl><dt>
+
+          <code><a href="cran_snapshot.html">cran_snapshot()</a></code>
+
+        </dt>
+        <dd>Check CRAN package state on any given date</dd>
+      </dl><dl><dt>
+
+          <code><a href="duplicated_alias.html">duplicated_alias()</a></code>
+
+        </dt>
+        <dd>Report duplicated alias</dd>
+      </dl><dl><dt>
+
+          <code><a href="package_date.html">package_date()</a></code>
+
+        </dt>
+        <dd>Find earliest date of compatibility</dd>
+      </dl><dl><dt>
+
+          <code><a href="package_repos.html">package_repos()</a></code>
+
+        </dt>
+        <dd>Package dependencies to repositories</dd>
+      </dl><dl><dt>
+
+          <code><a href="repos_dependencies.html">repos_dependencies()</a></code>
+
+        </dt>
+        <dd>Tidy dependencies</dd>
+      </dl><dl><dt>
+
+          <code><a href="update_dependencies.html">update_dependencies()</a></code>
+
+        </dt>
+        <dd>Check versions</dd>
+      </dl></div><div class="section level2">
+      <h2 id="about-r">About R<a class="anchor" aria-label="anchor" href="#about-r"></a></h2>
+
+      <div class="section-desc"><p>Functions for exploring base R</p></div>
 
 
     </div><div class="section level2">
@@ -52,6 +112,23 @@
         </dt>
         <dd>Base R's alias</dd>
       </dl><dl><dt>
+
+          <code><a href="base_links.html">base_links()</a></code>
+
+        </dt>
+        <dd>Base R's links</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="r-help-pages">R help pages<a class="anchor" aria-label="anchor" href="#r-help-pages"></a></h3>
+      <div class="section-desc"><p>Explore the relationship between alias, pages and packages</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="base_help_cliques.html">base_help_cliques()</a></code>
 
@@ -68,13 +145,13 @@
           <code><a href="base_help_pages_wo_links.html">base_help_pages_wo_links()</a></code>
 
         </dt>
-        <dd>Help pages not linked from base R.</dd>
+        <dd>Help pages not linked from base R</dd>
       </dl><dl><dt>
 
-          <code><a href="base_links.html">base_links()</a></code>
+          <code><a href="base_targets_links.html">base_targets_links()</a></code>
 
         </dt>
-        <dd>Base R's links</dd>
+        <dd>Links between help pages by target</dd>
       </dl><dl><dt>
 
           <code><a href="base_pages_links.html">base_pages_links()</a></code>
@@ -89,28 +166,33 @@
         <dd>Links between help pages by package</dd>
       </dl><dl><dt>
 
-          <code><a href="base_targets_links.html">base_targets_links()</a></code>
+          <code><a href="os_alias.html">os_alias</a></code>
 
         </dt>
-        <dd>Links between help pages by target</dd>
-      </dl><dl><dt>
+        <dd>Base R OS specific alias</dd>
+      </dl></div><div class="section level2">
+      <h2 id="about-cran">About CRAN<a class="anchor" aria-label="anchor" href="#about-cran"></a></h2>
 
-          <code><a href="bioc_cran_archived.html">bioc_cran_archived()</a></code>
+      <div class="section-desc"><p>Functions for exploring CRAN</p></div>
 
-        </dt>
-        <dd>Bioconductor packages using CRAN archived packages</dd>
-      </dl><dl><dt>
 
-          <code><a href="clean_cache.html">clean_cache()</a></code>
+    </div><div class="section level2">
 
-        </dt>
-        <dd>Clean cache</dd>
-      </dl><dl><dt>
+
+
+
+      <dl><dt>
 
           <code><a href="cran_alias.html">cran_alias()</a></code>
 
         </dt>
         <dd>CRAN's alias</dd>
+      </dl><dl><dt>
+
+          <code><a href="cran_links.html">cran_links()</a></code>
+
+        </dt>
+        <dd>CRAN's links</dd>
       </dl><dl><dt>
 
           <code><a href="cran_archive.html">cran_archive()</a></code>
@@ -128,7 +210,7 @@
           <code><a href="cran_date.html">cran_date()</a></code> <code><a href="cran_date.html">cran_session()</a></code>
 
         </dt>
-        <dd>Estimate CRAN's date</dd>
+        <dd>Estimate CRAN's date of packages</dd>
       </dl><dl><dt>
 
           <code><a href="cran_doom.html">cran_doom()</a></code>
@@ -136,6 +218,35 @@
         </dt>
         <dd>Calculate time till packages are archived</dd>
       </dl><dl><dt>
+
+          <code><a href="cran_history.html">cran_history()</a></code>
+
+        </dt>
+        <dd>Check package history on CRAN</dd>
+      </dl><dl><dt>
+
+          <code><a href="cran_maintainers.html">cran_maintainers()</a></code>
+
+        </dt>
+        <dd>Tidy information about maintainers</dd>
+      </dl><dl><dt>
+
+          <code><a href="cran_snapshot.html">cran_snapshot()</a></code>
+
+        </dt>
+        <dd>Check CRAN package state on any given date</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="cran-help-pages">CRAN help pages<a class="anchor" aria-label="anchor" href="#cran-help-pages"></a></h3>
+      <div class="section-desc"><p>Explore the relationship between alias, pages and packages</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="cran_help_cliques.html">cran_help_cliques()</a></code>
 
@@ -158,25 +269,13 @@
           <code><a href="cran_help_pages_wo_links.html">cran_help_pages_wo_links()</a></code>
 
         </dt>
-        <dd>Help pages not linked from base R.</dd>
+        <dd>Help pages not linked</dd>
       </dl><dl><dt>
 
-          <code><a href="cran_history.html">cran_history()</a></code>
+          <code><a href="cran_targets_links.html">cran_targets_links()</a></code>
 
         </dt>
-        <dd>It uses available information to provide the most accurate information of CRAN at any given time.</dd>
-      </dl><dl><dt>
-
-          <code><a href="cran_links.html">cran_links()</a></code>
-
-        </dt>
-        <dd>CRAN's links</dd>
-      </dl><dl><dt>
-
-          <code><a href="cran_maintainers.html">cran_maintainers()</a></code>
-
-        </dt>
-        <dd>Prepare information about maintainers</dd>
+        <dd>Links between help pages by target</dd>
       </dl><dl><dt>
 
           <code><a href="cran_pages_links.html">cran_pages_links()</a></code>
@@ -189,25 +288,35 @@
 
         </dt>
         <dd>Links between help pages by package</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      <h2 id="about-bioconductor">About Bioconductor<a class="anchor" aria-label="anchor" href="#about-bioconductor"></a></h2>
 
-          <code><a href="cran_snapshot.html">cran_snapshot()</a></code>
+      <div class="section-desc"><p>Functions for exploring Bioconductor</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="bioc_cran_archived.html">bioc_cran_archived()</a></code>
 
         </dt>
-        <dd>Check CRAN package state</dd>
-      </dl><dl><dt>
+        <dd>Bioconductor packages using CRAN archived packages</dd>
+      </dl></div><div class="section level2">
+      <h2 id="about-arbitrary-repositories">About arbitrary repositories<a class="anchor" aria-label="anchor" href="#about-arbitrary-repositories"></a></h2>
 
-          <code><a href="cran_targets_links.html">cran_targets_links()</a></code>
+      <div class="section-desc"><p>Explore packages, session and the relationship with multiple repositories</p></div>
 
-        </dt>
-        <dd>Links between help pages by target</dd>
-      </dl><dl><dt>
 
-          <code><a href="os_alias.html">os_alias</a></code>
+    </div><div class="section level2">
 
-        </dt>
-        <dd>OS specific alias</dd>
-      </dl><dl><dt>
+
+
+
+      <dl><dt>
 
           <code><a href="package_date.html">package_date()</a></code>
 
@@ -215,13 +324,7 @@
         <dd>Find earliest date of compatibility</dd>
       </dl><dl><dt>
 
-          <code><a href="package_dependencies.html">package_dependencies()</a></code>
-
-        </dt>
-        <dd>Find current installations</dd>
-      </dl><dl><dt>
-
-          <code><a href="pkges_repos.html">pkges_repos()</a></code>
+          <code><a href="package_repos.html">package_repos()</a></code>
 
         </dt>
         <dd>Package dependencies to repositories</dd>
@@ -233,12 +336,42 @@
         <dd>Tidy dependencies</dd>
       </dl><dl><dt>
 
+          <code><a href="package_dependencies.html">package_dependencies()</a></code>
+
+        </dt>
+        <dd>Find current installations</dd>
+      </dl><dl><dt>
+
           <code><a href="update_dependencies.html">update_dependencies()</a></code>
 
         </dt>
         <dd>Check versions</dd>
+      </dl><dl><dt>
+
+          <code><a href="cran_doom.html">cran_doom()</a></code>
+
+        </dt>
+        <dd>Calculate time till packages are archived</dd>
+      </dl></div><div class="section level2">
+      <h2 id="miscelania">Miscelania<a class="anchor" aria-label="anchor" href="#miscelania"></a></h2>
+
+      <div class="section-desc"><p>Utilities for working with this package</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="clean_cache.html">clean_cache()</a></code>
+
+        </dt>
+        <dd>Clean cache</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
