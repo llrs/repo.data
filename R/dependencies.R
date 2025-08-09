@@ -165,25 +165,72 @@ package_dependencies <- function(packages = ".", which = "strong") {
 }
 
 
-#' Check versions
+#' Upgradable versions
 #'
 #' Helper function to detect which package have a required version on the
 #' dependencies that could be upgraded.
 #'
-#' @param deps The output of [package_dependencies()] or any data.frame with a
-#' version and required column.
+#' Increasing this version requirements won't affect users as they already
+#' should have these versions installed as required by other dependencies.
+#'
+#' @param packages A character vector of packages names.
 #' @seealso [package_dependencies()]
 #' @returns The data.frame filtered with some relevant rows
+#' @family utilities
 #' @export
 #' @examples
-#' pd <- package_dependencies("arrow")
-#' update_dependencies(pd)
-update_dependencies <- function(deps) {
-    deps_higher_v <- (!is.na(deps$version) & package_version(deps$version) < package_version(deps$required))
+#' update_dependencies("arrow")
+update_dependencies <- function(packages) {
+    check_packages(packages, length = NA)
+
+    if (is.null(packages)) {
+        stop("Please provide a vector of packages.")
+    }
+    pd <- package_dependencies(packages)
+    rd <- repos_dependencies(packages)
+    comparison <- merge(pd, rd, all.y = FALSE,
+          all.x = TRUE, sort = FALSE,
+          by.x = "Name", by.y = "Name")
+
+    ver_change <- comparison[!is.na(comparison$Version.x) & !is.na(comparison$Package.y), ,drop = TRUE]
+    out <- ver_change[, 1:2]
+    colnames(out)[2] <- "Version"
+    out
+}
+
+minimal_version <- function(){
+
+
+    packages <- setdiff(deps$Name, c(BASE, "R"))
+    ca <- cran_archive(packages)
+    r_position <- which(deps$Name == "R")
+
+    # Filter by R version
+    if (length(r_position) && !is.na(deps$Version[r_position]) && check_installed("rversions")) {
+        rver <- deps$Version[r_position]
+
+        ver <- rversions::r_versions()
+        r_min_date <- as.Date(ver$date[min(which(ver$version >= rver))])
+        ca <- filter_arch_date(ca, r_min_date)
+    }
+    no_version <- intersect(packages, deps$Name[is.na(deps$Version)])
+
+    # minimal CRAN version
+    keep_pkges_no_ver <- ca$Package %in% no_version
+    min_no_ver <- ca[keep_pkges_no_ver, , drop = FALSE]
+    min_no_ver <- min_no_ver[!duplicated(min_no_ver$Package), , drop = FALSE]
+
+
+    pkgs_version <- setdiff(packages, no_version)
+
+    min_ver <- ca[ca$Package %in% pkgs_version, , drop = FALSE]
+    min_ver <- merge(deps[deps$Name %in% pkgs_version, , drop = FALSE],
+                     min_ver, all.x = TRUE, all.y = FALSE)
+
+    deps_higher_v <- (!is.na(deps$version) & package_version(deps$version) < package_version(deps$Version))
     deps_req_v <- is.na(deps$version) & !is.na(deps$required)
     deps <- deps[which(deps_higher_v | deps_req_v), , drop = FALSE]
     rownames(deps) <- NULL
-
 }
 
 cache_pkg_dep <- function(package, which, keepR = TRUE) {

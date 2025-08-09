@@ -77,3 +77,50 @@ warnings_archive <- function(all_packages) {
     }
     all_packages
 }
+
+
+filter_arch_date <- function(arch, date, type = "[") {
+    type <- match.arg(type, c("[", "("))
+    bd <- as.Date(arch$Datetime) < as.Date(date)
+    if (identical(type, "[")) {
+        before_date <- arch[bd, , drop = FALSE]
+        before_date <- before_date[!duplicated(before_date$Package, fromLast = TRUE), , drop = FALSE]
+    } else {
+        before_date <- NULL
+    }
+    after_date <- arch[!bd, , drop = FALSE]
+    out <- rbind(before_date, after_date)
+    out <- sort_by(out, out[, c("Package", "Datetime")])
+    rownames(out) <- NULL
+    out
+}
+
+
+filter_arch_ver <- function(req, arch, req_column = "Name") {
+    stopifnot(c(req_column, "Version") %in% colnames(req))
+    stopifnot(c("Package", "Version") %in% colnames(arch))
+
+    no_version <- is.na(req[, "Version"])
+    # Return the first version of the packages available
+    if (all(no_version)) {
+        return(arch[!duplicated(arch[, "Package"]), , drop = FALSE])
+    }
+
+
+    arch_ver <- arch[arch[, "Package"] %in% req[!no_version, req_column], , drop = FALSE]
+
+    m <- merge(req[!no_version, , drop = FALSE], arch_ver,
+          by.x = c("Name", "Version"), by.y = c("Package", "Version"),
+          all.x = TRUE, all.y = FALSE, sort = FALSE)
+    # If no version the release dates of those packages is earlier than R or other requirements
+    m <- m[!is.na(m$Datetime), , drop = FALSE]
+    m$Package <- m$Name
+    #
+    if (any(no_version)) {
+        pkg_wo_ver_req <- req[no_version, req_column]
+        arch_no_ver <- arch[arch[, "Package"] %in% pkg_wo_ver_req, , drop = FALSE]
+        arch_no_ver <- arch_no_ver[!duplicated(arch_no_ver[, "Package"]), , drop = FALSE]
+    }
+
+    rbind(m[, c("Package", "Datetime")], arch_no_ver[, c("Package", "Datetime")])
+}
