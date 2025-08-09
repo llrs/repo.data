@@ -19,49 +19,106 @@ options(repos = c("@CRAN@" = "https://CRAN.R-project.org"))
 library(repo.data)
 ```
 
-Let's think a package that has some required dependencies, but its dependencies have some requirements too.
-The maintainer might consider if he can raise the version requirements. 
+
+This vignette is written for concerned package maintainers or users that want to check their package in relationship with other packages.
+For general usage of the other functions check the manual or package index (a vignette might come too).
+
+# Keeping up with the repositories
+
+Packages required by a package might have their own dependencies with minimal versions requirements.
+The maintainers or developers might wonder what is the oldest version of each recursive package their users are required to have.
+This is useful for developing packages that should remain compatible with old versions of R and packages.
 
 ```{r package_dependencies}
 pd <- package_dependencies("ggeasy")
 head(pd)
-# Discover the requirements that can be upgraded
-update_dependencies(pd)
 ```
 
-We can also be interested on since when did a package can be installed we can use:
+`package_dependencies()` identify the minimal version required for each dependency. 
+If no version is required by any dependencies `NA` is used.
+
+We can identify packages that are required on a lower version than one of the dependencies with
+
+```{r package_dependencies}
+# Discover the requirements that can be upgraded
+update_dependencies("ggeasy")
+```
+
+Increasing these version requirements on `{ggeasy}` won't affect users as they already should have these versions installed as required by other dependencies. 
+
+We can also be interested on since when can users install a package.
+There can be two possible answers:
+ - Since it was published/release on the repositories
+ - If the maintainer developers are careful the requirements might be available earlier.
+ 
+We can use `package_date()` to get those answers:
 
 ```{r package_date}
 package_date("ggeasy")
 ```
 
-Which will show when it was published and when the R dependencies required become available. 
+
+Why are they important? 
+The first one is important to know if it hasn't been updated in a long time.
+The second one helps estimate if it can be installed on old systems without updating anything else.
+If the date the dependencies are available is closer to the published date, the users will need to have updated systems and dependencies. 
+
+# Improving packages
+
+Help pages are found via alias, when a user press `?word` it searches for alias.
+Checking for existing alias might help you to find packages and reduce the confusion on the help pages.
+
+```{r}
+duplicated_alias
+```
 
 
-##  Other utils
+# Reproducibility
 
-When were packages last updated?
+
+If you wish to know what packages were available on CRAN on any given date you can use:
+
+```{r}
+cs <- cran_snapshot(as.Date("2020-01-31"))
+nrow(cs)
+```
+
+This might be helpful to know what was available on old project and why some feature of a given package wasn't used.
+Maybe it wasn't available on a given date!
+
+
+### Local versions
+
+While working it might be good to update packages.
+To decide if it is needed maybe you'd like to know when were packages last updated on the system?
 
 ```{r cran_sessions}
 cran_session()
 ```
 
-
 This uses the `sessionInfo()` output to find the date of last installation.
-There is a sister function for an arbitrary data:
+Under the hood it uses a function for an arbitrary packages and their versions:
 
 ```{r cran_date}
-versions <- data.frame(Package = c("dplyr", "Rcpp"),
-                       Version = c("1.1.4", "0.8.9"))
-versions
+versions <- data.frame(Package = c("dplyr", "Rcpp", "rlang"),
+                       Version = c("1.1.4", "0.8.9", NA))
 cran_date(versions)
 ```
 
-This date doesn't mean that all packages are up to date to this given date (this can be easily checked with `old.packages()`)
+This is the first date were these packages were at the requested version number (or available). 
+Currently these packages can have a release with higher version numbers (this can be easily checked with `old.packages()`).
 
-## Risk of being archived
+To answer the original question of this section we can use:
 
-If you ever wonder which packages are at risk you can use `cran_doom()`:
+```{r}
+ip <- cran_date(installed.packages())
+ip
+```
+
+
+### Risk of being archived
+
+If you ever wonder which packages are at risk of being archived you can use `cran_doom()`:
 
 ```{r doom}
 cd <- cran_doom(bioc = TRUE)
@@ -69,6 +126,12 @@ cd[c("time_till_last", "last_archived", "npackages")]
 knitr::kable(head(cd$details))
 ```
 
+There are website dedicated to track those and provide information about new version submissions to CRAN to fix those.
+I participate on the [cranhaven.org dashboard](https://www.cranhaven.org/dashboard-at-risk.html) (and project).
+
+Note that if a package is archived it can be brought back to the repository. 
+
+# Reproducibility
 
 For reproducibility here is the session info:  
 

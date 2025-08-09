@@ -19,20 +19,14 @@ cran_snapshot <- function(date) {
 
     ca <- cran_archive()
     if (date == Sys.Date()) {
-        return(ca[ca$status == "current", ])
+        return(ca[ca$Status == "current", , drop = FALSE])
     }
     if (is.null(ca)) {
         return(NULL)
     }
-    ca <- sort_by(ca, ca[, c("Package", "Datetime"), drop = FALSE])
-    ca_before <- ca[as.Date(ca$Datetime) <= date, , drop = TRUE]
-
-    # Remove duplicated packages from the last to keep the latest version
-    dups <- duplicated(ca_before$Package, fromLast = TRUE)
-    ca_before_date <- ca_before[!dups, c("Package", "Version", "Datetime", "Status")]
+    ca_before_date <- filter_arch_date(ca, date)
 
     cc <- cran_comments(ca_before_date[, "Package"])
-
     # If date is earlier than any comments return what it was.
     if (date < min(cc$date, na.rm = TRUE)) {
         return(ca_before_date)
@@ -51,7 +45,7 @@ cran_snapshot <- function(date) {
     on_cran <- rep_len(TRUE, nrow(ca_before_date))
     names(on_cran) <- ca_before_date$package
     on_cran[na.omit(archived)] <- as.Date(ca_before_date$Datetime[na.omit(archived)]) > last_archival$date[!is.na(archived)]
-    out <- ca_before_date[on_cran, ]
+    out <- ca_before_date[on_cran, , drop = FALSE]
     rownames(out) <- NULL
     out
 }
@@ -109,7 +103,7 @@ cran_date <- function(versions) {
 
     }
     # Find range of dates where was last updated.
-    as.Date(max(d, na.rm = TRUE))
+    max(d, na.rm = TRUE)
 }
 
 #' @rdname cran_date
