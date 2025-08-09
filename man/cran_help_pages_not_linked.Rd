@@ -23,8 +23,8 @@ chnl <- cran_help_pages_not_linked(a_package)
 head(chnl)
 }
 \seealso{
-Other cran_help_pages: 
+Other functions related to CRAN help pages: 
 \code{\link{cran_help_cliques}()},
 \code{\link{cran_help_pages_wo_links}()}
 }
-\concept{cran_help_pages}
+\concept{functions related to CRAN help pages}

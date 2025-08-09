@@ -20,13 +20,9 @@ btl <- base_targets_links()
 head(btl)
 }
 \seealso{
-Other links: 
+Other links from R: 
 \code{\link{base_links}()},
 \code{\link{base_pages_links}()},
-\code{\link{base_pkges_links}()},
-\code{\link{cran_links}()},
-\code{\link{cran_pages_links}()},
-\code{\link{cran_pkges_links}()},
-\code{\link{cran_targets_links}()}
+\code{\link{base_pkges_links}()}
 }
-\concept{links}
+\concept{links from R}

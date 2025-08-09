@@ -2,7 +2,7 @@
 % Please edit documentation in R/cran_maintainers.R
 \name{cran_maintainers}
 \alias{cran_maintainers}
-\title{Prepare information about maintainers}
+\title{Tidy information about maintainers}
 \usage{
 cran_maintainers()
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cran_help.R
 \name{cran_help_pages_wo_links}
 \alias{cran_help_pages_wo_links}
-\title{Help pages not linked from base R.}
+\title{Help pages not linked}
 \usage{
 cran_help_pages_wo_links(packages = NULL)
 }
@@ -23,8 +23,8 @@ chwl <- cran_help_pages_wo_links(a_package)
 head(chwl)
 }
 \seealso{
-Other cran_help_pages: 
+Other functions related to CRAN help pages: 
 \code{\link{cran_help_cliques}()},
 \code{\link{cran_help_pages_not_linked}()}
 }
-\concept{cran_help_pages}
+\concept{functions related to CRAN help pages}

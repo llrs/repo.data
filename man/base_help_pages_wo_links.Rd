@@ -2,7 +2,7 @@
 % Please edit documentation in R/base_help.R
 \name{base_help_pages_wo_links}
 \alias{base_help_pages_wo_links}
-\title{Help pages not linked from base R.}
+\title{Help pages not linked from base R}
 \usage{
 base_help_pages_wo_links()
 }
@@ -18,8 +18,8 @@ bhwl <- base_help_pages_wo_links()
 head(bhwl)
 }
 \seealso{
-Other base_help_pages: 
+Other functions related to BASE help pages: 
 \code{\link{base_help_cliques}()},
 \code{\link{base_help_pages_not_linked}()}
 }
-\concept{base_help_pages}
+\concept{functions related to BASE help pages}

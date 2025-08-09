@@ -3,7 +3,7 @@
 \docType{data}
 \name{os_alias}
 \alias{os_alias}
-\title{OS specific alias}
+\title{Base R OS specific alias}
 \format{
 \subsection{\code{os_alias}}{
 
@@ -22,6 +22,6 @@ os_alias
 }
 \description{
 Data from the R source code of OS specific man help pages.
-This is to complement \code{tools::base_aliases_db()}.
+This is to complement \code{tools::base_aliases_db()} which only provides links for Unix.
 }
 \keyword{datasets}

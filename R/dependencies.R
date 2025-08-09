@@ -8,6 +8,7 @@
 #' @returns A data.frame with 5 columns: the name of the dependency,
 #' the operator (op), the version it depends the type of dependency and the package.
 #' @export
+#' @family utilities
 #' @examples
 #' rd <- repos_dependencies("BaseSet")
 #' head(rd)

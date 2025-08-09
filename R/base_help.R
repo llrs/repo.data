@@ -5,7 +5,7 @@
 #' This makes harder to navigate to related help pages.
 #' @returns A data.frame with two columns: Package and Source
 #' @export
-#' @family base_help_pages
+#' @family functions related to BASE help pages
 #' @examples
 #' bhnl <- base_help_pages_not_linked()
 #' head(bhnl)
@@ -29,13 +29,13 @@ base_help_pages_not_linked <- function() {
     p
 }
 
-#' Help pages not linked from base R.
+#' Help pages not linked from base R
 #'
 #' Help pages without links from other help pages.
 #' This makes harder to find them.
 #' @returns A data.frame with two columns: Package and Source
 #' @export
-#' @family base_help_pages
+#' @family functions related to BASE help pages
 #' @examples
 #' bhwl <- base_help_pages_wo_links()
 #' head(bhwl)
@@ -65,7 +65,7 @@ base_help_pages_wo_links <- function() {
 #'
 #' Requires igraph
 #' @returns Return a data.frame of help pages not connected to the network of help pages.
-#' @family base_help_pages
+#' @family functions related to BASE help pages
 #' @export
 #' @examples
 #' base_help_cliques()

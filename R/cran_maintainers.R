@@ -1,4 +1,4 @@
-#' Prepare information about maintainers
+#' Tidy information about maintainers
 #'
 #' Make more accessible information about maintainers. Extracts and makes
 #' comparable some dates. It also provides the user name used and cleans the

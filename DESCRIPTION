@@ -1,12 +1,16 @@
 Package: repo.data
 Title: R Repository Data
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: 
     person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9747-2570"))
-Description: Retrieve repositories package data to explore the package dependencies, help links, alias, dates...
-    Extra data from each repository is also downloaded and processed, specifically CRAN and Bioconductor specific data.
+Description: Retrieve repositories package metadata to explore the package
+    dependencies, help links, alias, dates...  Provides functions for repository 
+    maintainers, package maintainers and users to navigate links and dependencies
+    changes.
 License: GPL (>= 3)
+URL: https://github.com/llrs/repo.data, https://llrs.github.io/repo.data/
+BugReports: https://github.com/llrs/repo.data/issues
 Depends: 
     R (>= 4.4)
 Imports: 
@@ -18,10 +22,9 @@ Suggests:
     knitr (>= 1.49),
     markdown (>= 1.13),
     rversions (>= 2.1.2)
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-VignetteBuilder: knitr
-URL: https://github.com/llrs/repo.data, https://llrs.github.io/repo.data/
-BugReports: https://github.com/llrs/repo.data/issues
-LazyData: true

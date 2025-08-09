@@ -1,7 +1,7 @@
-#' OS specific alias
+#' Base R OS specific alias
 #'
 #' Data from the R source code of OS specific man help pages.
-#' This is to complement `tools::base_aliases_db()`.
+#' This is to complement `tools::base_aliases_db()` which only provides links for Unix.
 #' @format ## `os_alias`
 #' A matrix with 33 rows and 5 columns:
 #' \describe{

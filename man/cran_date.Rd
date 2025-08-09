@@ -3,7 +3,7 @@
 \name{cran_date}
 \alias{cran_date}
 \alias{cran_session}
-\title{Estimate CRAN's date}
+\title{Estimate CRAN's date of packages}
 \usage{
 cran_date(versions)
 
@@ -25,3 +25,14 @@ ip <- installed.packages()
 cran_date(ip)
 cran_session()
 }
+\seealso{
+Other utilities: 
+\code{\link{cran_doom}()},
+\code{\link{cran_snapshot}()},
+\code{\link{duplicated_alias}()},
+\code{\link{package_date}()},
+\code{\link{package_repos}()},
+\code{\link{repos_dependencies}()},
+\code{\link{update_dependencies}()}
+}
+\concept{utilities}

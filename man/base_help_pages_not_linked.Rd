@@ -18,8 +18,8 @@ bhnl <- base_help_pages_not_linked()
 head(bhnl)
 }
 \seealso{
-Other base_help_pages: 
+Other functions related to BASE help pages: 
 \code{\link{base_help_cliques}()},
 \code{\link{base_help_pages_wo_links}()}
 }
-\concept{base_help_pages}
+\concept{functions related to BASE help pages}

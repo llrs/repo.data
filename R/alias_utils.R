@@ -1,3 +1,21 @@
+#' Report duplicated alias
+#'
+#' @param alias The output of [cran_alias()] or [base_alias()]
+#'
+#' @returns A sorted data.frame with the Target, Package and Source of the duplicate alias.
+#' @export
+#' @family utilities
+#' @examples
+#' # Checking the overlap between to seemingly unrelated packages:
+#' alias <- cran_alias(c("fect", "gsynth"))
+#' dup_alias <- duplicated_alias(alias)
+#' head(dup_alias)
+duplicated_alias <- function(alias) {
+    stopifnot(all(c("Package", "Source", "Target") %in% colnames(alias)))
+    da <- dup_alias(alias)
+    da[, c("Target", "Package", "Source"), drop = FALSE]
+}
+
 
 #' Create a matrix of alias
 #'
