@@ -68,9 +68,18 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"@CRAN@"</span> <span class="op">=</span> <span class="st">"https://CRAN.R-project.org"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/llrs/repo.data" class="external-link">repo.data</a></span><span class="op">)</span></span></code></pre></div>
-<p>Let’s think a package that has some required dependencies, but its
-dependencies have some requirements too. The maintainer might consider
-if he can raise the version requirements.</p>
+<p>This vignette is written for concerned package maintainers or users
+that want to check their package in relationship with other packages.
+For general usage of the other functions check the manual or package
+index (a vignette might come too).</p>
+<div class="section level2">
+<h2 id="keeping-up-with-the-repositories">Keeping up with the repositories<a class="anchor" aria-label="anchor" href="#keeping-up-with-the-repositories"></a>
+</h2>
+<p>Packages required by a package might have their own dependencies with
+minimal versions requirements. The maintainers or developers might
+wonder what is the oldest version of each recursive package their users
+are required to have. This is useful for developing packages that should
+remain compatible with old versions of R and packages.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/package_dependencies.html">package_dependencies</a></span><span class="op">(</span><span class="st">"ggeasy"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span>
@@ -80,46 +89,168 @@ if he can raise the version requirements.</p>
 <span><span class="co">#&gt; 3         R   4.4.0 Depends   &gt;=    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 4     rlang   1.1.0 Imports   &gt;=    &lt;NA&gt;</span></span>
 <span><span class="co">#&gt; 5     vctrs   0.6.0 Imports   &gt;=    &lt;NA&gt;</span></span>
-<span><span class="co">#&gt; 6     utils    &lt;NA&gt;    &lt;NA&gt; &lt;NA&gt;    &lt;NA&gt;</span></span>
-<span><span class="co"># Discover the requirements that can be upgraded</span></span>
-<span><span class="fu"><a href="../reference/update_dependencies.html">update_dependencies</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span></code></pre></div>
-<p>We can also be interested on since when did a package can be
-installed we can use:</p>
+<span><span class="co">#&gt; 6     utils    &lt;NA&gt;    &lt;NA&gt; &lt;NA&gt;    &lt;NA&gt;</span></span></code></pre></div>
+<p><code><a href="../reference/package_dependencies.html">package_dependencies()</a></code> identify the minimal version
+required for each dependency. If no version is required by any
+dependencies <code>NA</code> is used.</p>
+<p>We can identify packages that are required on a lower version than
+one of the dependencies with</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Discover the requirements that can be upgraded</span></span>
+<span><span class="fu"><a href="../reference/update_dependencies.html">update_dependencies</a></span><span class="op">(</span><span class="st">"ggeasy"</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Name Version</span></span>
+<span><span class="co">#&gt; 1     R   4.4.0</span></span>
+<span><span class="co">#&gt; 2 rlang   1.1.0</span></span></code></pre></div>
+<p>Increasing these version requirements on <a href="https://github.com/jonocarroll/ggeasy" class="external-link">ggeasy</a> won’t
+affect users as they already should have these versions installed as
+required by other dependencies.</p>
+<p>We can also be interested on since when can users install a package.
+There can be two possible answers: - Since it was published/release on
+the repositories - If the maintainer developers are careful the
+requirements might be available earlier.</p>
+<p>We can use <code><a href="../reference/package_date.html">package_date()</a></code> to get those answers:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/package_date.html">package_date</a></span><span class="op">(</span><span class="st">"ggeasy"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 Published            deps_available </span></span>
-<span><span class="co">#&gt; "2025-06-15 04:40:04 UTC"                        NA</span></span></code></pre></div>
-<p>Which will show when it was published and when the R dependencies
-required become available.</p>
+<span><span class="co">#&gt; "2025-06-15 04:40:04 UTC" "2021-05-18 07:05:22 UTC"</span></span></code></pre></div>
+<p>Why are they important? The first one is important to know if it
+hasn’t been updated in a long time. The second one helps estimate if it
+can be installed on old systems without updating anything else. If the
+date the dependencies are available is closer to the published date, the
+users will need to have updated systems and dependencies.</p>
+</div>
 <div class="section level2">
-<h2 id="other-utils">Other utils<a class="anchor" aria-label="anchor" href="#other-utils"></a>
+<h2 id="improving-packages">Improving packages<a class="anchor" aria-label="anchor" href="#improving-packages"></a>
 </h2>
-<p>When were packages last updated?</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>Help pages are found via alias, when a user press <code>?word</code>
+it searches for alias. Checking for existing alias might help you to
+find packages and reduce the confusion on the help pages.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">alias</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cran_alias.html">cran_alias</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fect"</span>, <span class="st">"gsynth"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Retrieving cran_aliases, this might take a bit.</span></span>
+<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
+<span><span class="va">dup_alias</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/duplicated_alias.html">duplicated_alias</a></span><span class="op">(</span><span class="va">alias</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dup_alias</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                     Target Package             Source</span></span>
+<span><span class="co">#&gt; 1        _gsynth_beta_iter    fect   fect-internal.Rd</span></span>
+<span><span class="co">#&gt; 2        _gsynth_beta_iter  gsynth gsynth-internal.Rd</span></span>
+<span><span class="co">#&gt; 3      _gsynth_data_ub_adj    fect   fect-internal.Rd</span></span>
+<span><span class="co">#&gt; 4      _gsynth_data_ub_adj  gsynth gsynth-internal.Rd</span></span>
+<span><span class="co">#&gt; 5 _gsynth_fe_ad_covar_iter    fect   fect-internal.Rd</span></span>
+<span><span class="co">#&gt; 6 _gsynth_fe_ad_covar_iter  gsynth gsynth-internal.Rd</span></span></code></pre></div>
+<p>For example these two packages have the same alias for the internal
+functions but most of them point to the same file.</p>
+<div class="section level3">
+<h3 id="connecting-help-pages">Connecting help pages<a class="anchor" aria-label="anchor" href="#connecting-help-pages"></a>
+</h3>
+<p>Often it is helpful to link help pages so that: - Pages are linked to
+other pages - Pages are linked from other pages.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="st">"BaseSet"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/cran_help_pages_wo_links.html">cran_help_pages_wo_links</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Retrieving base_aliases, this might take a bit.</span></span>
+<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
+<span><span class="co">#&gt; Warning in cran_alias(cran_pkgs): Omitting packages bartMachineJARs, clean, fontBitstreamVera, fontLiberation, GreedyExperimentalDesignJARs, hse, LifeInsuranceContracts, openNLPdata, positron.tutorials, RKEAjars, RMOAjars, ROI.plugin.cplex, ROI.plugin.glpk, ROI.plugin.ipop, ROI.plugin.symphony, rsparkling, RWekajars, Sejong.</span></span>
+<span><span class="co">#&gt; Maybe they are currently not on CRAN?</span></span>
+<span><span class="co">#&gt; Warning: Packages 'geneHapR', 'Hmisc', 'sfsmisc' have targets not present in a</span></span>
+<span><span class="co">#&gt; OS.</span></span>
+<span><span class="co">#&gt; Retrieving cran_rdxrefs, this might take a bit.</span></span>
+<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
+<span><span class="co">#&gt; Warning in cran_links(cran_pkgs): Omitting packages bartMachineJARs, clean, fontBitstreamVera, fontLiberation, GreedyExperimentalDesignJARs, hse, LifeInsuranceContracts, openNLPdata, positron.tutorials, RKEAjars, RMOAjars, ROI.plugin.cplex, ROI.plugin.glpk, ROI.plugin.ipop, ROI.plugin.symphony, rsparkling, RWekajars, Sejong.</span></span>
+<span><span class="co">#&gt; Maybe they are currently not on CRAN?</span></span>
+<span><span class="co">#&gt; Warning: Some pages point to different places according to the OS.</span></span>
+<span><span class="co">#&gt; Warning: Some links are distinct depending on the OS.</span></span>
+<span><span class="co">#&gt;   Package           Source</span></span>
+<span><span class="co">#&gt; 1 BaseSet      activate.Rd</span></span>
+<span><span class="co">#&gt; 2 BaseSet    add_column.Rd</span></span>
+<span><span class="co">#&gt; 3 BaseSet  add_elements.Rd</span></span>
+<span><span class="co">#&gt; 4 BaseSet  add_relation.Rd</span></span>
+<span><span class="co">#&gt; 5 BaseSet add_relations.Rd</span></span>
+<span><span class="co">#&gt; 6 BaseSet      add_sets.Rd</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/cran_help_pages_not_linked.html">cran_help_pages_not_linked</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   Package           Source</span></span>
+<span><span class="co">#&gt; 1 BaseSet      activate.Rd</span></span>
+<span><span class="co">#&gt; 2 BaseSet    add_column.Rd</span></span>
+<span><span class="co">#&gt; 3 BaseSet  add_elements.Rd</span></span>
+<span><span class="co">#&gt; 4 BaseSet  add_relation.Rd</span></span>
+<span><span class="co">#&gt; 5 BaseSet add_relations.Rd</span></span>
+<span><span class="co">#&gt; 6 BaseSet      add_sets.Rd</span></span></code></pre></div>
+<p>In addition to those help pages that are not well connected it could
+be that some pages are linked but link to each other without connecting
+with other help pages of the package or other packages.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cliques</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cran_help_cliques.html">cran_help_cliques</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in cran_targets_links(pkges): Omitting packages BaseSet, dplyr, methods, rlang, utils, cli, generics, glue, lifecycle, magrittr, pillar, R6, tibble, tidyselect, vctrs, utf8, pkgconfig, withr, graphics, grDevices.</span></span>
+<span><span class="co">#&gt; Maybe they are currently not on CRAN?</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cliques</span><span class="op">$</span><span class="va">n</span><span class="op">)</span> <span class="co"># Number of help pages connected</span></span>
+<span><span class="co">#&gt; &lt; table of extent 0 &gt;</span></span></code></pre></div>
+<p>If there is more than one length this would mean some pages not
+linked to the rest of the package.</p>
+<p>Sometimes even if links exists they might not resolve correctly on
+the html version. For example if they link to a help page of a package
+that is not on the strong dependency list.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/cran_help_pages_links_wo_deps.html">cran_help_pages_links_wo_deps</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] Package Source  Anchor  Target </span></span>
+<span><span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span></span></code></pre></div>
+<p>If there is some output then the link cannot be resolved correctly if
+the other package is not independently installed on the same
+machine.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
+</h2>
+<p>If you wish to know what packages were available on CRAN on any given
+date you can use:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cran_snapshot.html">cran_snapshot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2020-01-31"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: There are 5 packages both archived and published</span></span>
+<span><span class="co">#&gt; This indicate manual CRAN intervention.</span></span>
+<span><span class="co">#&gt; Retrieving comments, this might take a bit.</span></span>
+<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 100338</span></span></code></pre></div>
+<p>This might be helpful to know what was available on old project and
+why some feature of a given package wasn’t used. Maybe it wasn’t
+available on a given date!</p>
+<div class="section level4">
+<h4 id="local-versions">Local versions<a class="anchor" aria-label="anchor" href="#local-versions"></a>
+</h4>
+<p>While working it might be good to update packages. To decide if it is
+needed maybe you’d like to know when were packages last updated on the
+system?</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cran_date.html">cran_session</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in cran_archive(versions[, "Package"]): Omitting packages repo.data.</span></span>
 <span><span class="co">#&gt; Maybe they were not on CRAN?</span></span>
-<span><span class="co">#&gt; [1] "2025-07-07"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2025-07-07 13:40:05 CEST"</span></span></code></pre></div>
 <p>This uses the <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> output to find the date of
-last installation. There is a sister function for an arbitrary data:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">versions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dplyr"</span>, <span class="st">"Rcpp"</span><span class="op">)</span>,</span>
-<span>                       Version <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1.1.4"</span>, <span class="st">"0.8.9"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">versions</span></span>
-<span><span class="co">#&gt;   Package Version</span></span>
-<span><span class="co">#&gt; 1   dplyr   1.1.4</span></span>
-<span><span class="co">#&gt; 2    Rcpp   0.8.9</span></span>
+last installation. Under the hood it uses a function for an arbitrary
+packages and their versions:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">versions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Package <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dplyr"</span>, <span class="st">"Rcpp"</span>, <span class="st">"rlang"</span><span class="op">)</span>,</span>
+<span>                       Version <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1.1.4"</span>, <span class="st">"0.8.9"</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cran_date.html">cran_date</a></span><span class="op">(</span><span class="va">versions</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2023-11-17"</span></span></code></pre></div>
-<p>This date doesn’t mean that all packages are up to date to this given
-date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/update.packages.html" class="external-link">old.packages()</a></code>)</p>
+<span><span class="co">#&gt; [1] "2023-11-17 16:50:03 CET"</span></span></code></pre></div>
+<p>This is the first date were these packages were at the requested
+version number (or available). Currently these packages can have a
+release with higher version numbers (this can be easily checked with
+<code><a href="https://rdrr.io/r/utils/update.packages.html" class="external-link">old.packages()</a></code>).</p>
+<p>To answer the original question of this section we can use:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cran_date.html">cran_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in cran_archive(versions[, "Package"]): Omitting packages repo.data.</span></span>
+<span><span class="co">#&gt; Maybe they were not on CRAN?</span></span>
+<span><span class="va">ip</span></span>
+<span><span class="co">#&gt; [1] "2025-07-22 04:41:01 CEST"</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="risk-of-being-archived">Risk of being archived<a class="anchor" aria-label="anchor" href="#risk-of-being-archived"></a>
-</h2>
-<p>If you ever wonder which packages are at risk you can use
-<code><a href="../reference/cran_doom.html">cran_doom()</a></code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="section level4">
+<h4 id="risk-of-being-archived">Risk of being archived<a class="anchor" aria-label="anchor" href="#risk-of-being-archived"></a>
+</h4>
+<p>If you ever wonder which packages are at risk of being archived you
+can use <code><a href="../reference/cran_doom.html">cran_doom()</a></code>:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cran_doom.html">cran_doom</a></span><span class="op">(</span>bioc <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Retrieving CRAN_db, this might take a bit.</span></span>
 <span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
@@ -127,14 +258,14 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 <span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
 <span><span class="va">cd</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"time_till_last"</span>, <span class="st">"last_archived"</span>, <span class="st">"npackages"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $time_till_last</span></span>
-<span><span class="co">#&gt; Time difference of 68 days</span></span>
+<span><span class="co">#&gt; Time difference of 59 days</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $last_archived</span></span>
 <span><span class="co">#&gt; [1] "2025-10-08"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $npackages</span></span>
 <span><span class="co">#&gt;  CRAN   all </span></span>
-<span><span class="co">#&gt; 22529 26234</span></span>
+<span><span class="co">#&gt; 22524 26229</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cd</span><span class="op">$</span><span class="va">details</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -146,53 +277,64 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">ggalt</td>
-<td align="left">2025-07-31</td>
-<td align="left">direct</td>
-<td align="left">CRAN</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">googleLanguageR</td>
-<td align="left">2025-07-31</td>
-<td align="left">direct</td>
-<td align="left">CRAN</td>
-<td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">ClimaRep</td>
-<td align="left">2025-07-31</td>
-<td align="left">direct</td>
-<td align="left">CRAN</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td align="left">likert</td>
-<td align="left">2025-07-31</td>
-<td align="left">direct</td>
-<td align="left">CRAN</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="left">hmeasure</td>
-<td align="left">2025-07-31</td>
+<td align="left">GGMselect</td>
+<td align="left">2025-08-14</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">pgnorm</td>
-<td align="left">2025-07-31</td>
+<td align="left">geouy</td>
+<td align="left">2025-08-18</td>
+<td align="left">direct</td>
+<td align="left">CRAN</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">seminr</td>
+<td align="left">2025-08-19</td>
+<td align="left">direct</td>
+<td align="left">CRAN</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">truncSP</td>
+<td align="left">2025-08-19</td>
+<td align="left">direct</td>
+<td align="left">CRAN</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">butcher</td>
+<td align="left">2025-08-19</td>
+<td align="left">direct</td>
+<td align="left">CRAN</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">gamlss</td>
+<td align="left">2025-08-19</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">1</td>
 </tr>
 </tbody>
 </table>
+<p>There are website dedicated to track those and provide information
+about new version submissions to CRAN to fix those. I participate on the
+<a href="https://www.cranhaven.org/dashboard-at-risk.html" class="external-link">cranhaven.org
+dashboard</a> (and project).</p>
+<p>Note that if a package is archived it can be brought back to the
+repository.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="reproducibility-1">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility-1"></a>
+</h2>
 <p>For reproducibility here is the session info:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R Under development (unstable) (2025-07-30 r88476)</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2025-08-08 r88539)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 24.04.2 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -217,12 +359,14 @@ date (this can be easily checked with <code><a href="https://rdrr.io/r/utils/upd
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] cli_3.6.5         knitr_1.50        rlang_1.1.6       xfun_0.52        </span></span>
-<span><span class="co">#&gt;  [5] textshaping_1.0.1 jsonlite_2.0.0    litedown_0.7      markdown_2.0     </span></span>
-<span><span class="co">#&gt;  [9] htmltools_0.5.8.1 ragg_1.4.0        sass_0.4.10       rmarkdown_2.29   </span></span>
-<span><span class="co">#&gt; [13] evaluate_1.0.4    jquerylib_0.1.4   fastmap_1.2.0     yaml_2.3.10      </span></span>
-<span><span class="co">#&gt; [17] lifecycle_1.0.4   compiler_4.6.0    fs_1.6.6          systemfonts_1.2.3</span></span>
-<span><span class="co">#&gt; [21] digest_0.6.37     R6_2.6.1          commonmark_2.0.0  bslib_0.9.0      </span></span>
-<span><span class="co">#&gt; [25] tools_4.6.0       pkgdown_2.1.3     cachem_1.1.0      desc_1.4.3</span></span></code></pre></div>
+<span><span class="co">#&gt;  [5] rversions_2.1.2   textshaping_1.0.1 jsonlite_2.0.0    litedown_0.7     </span></span>
+<span><span class="co">#&gt;  [9] markdown_2.0      htmltools_0.5.8.1 ragg_1.4.0        sass_0.4.10      </span></span>
+<span><span class="co">#&gt; [13] rmarkdown_2.29    evaluate_1.0.4    jquerylib_0.1.4   fastmap_1.2.0    </span></span>
+<span><span class="co">#&gt; [17] yaml_2.3.10       lifecycle_1.0.4   compiler_4.6.0    igraph_2.1.4     </span></span>
+<span><span class="co">#&gt; [21] fs_1.6.6          pkgconfig_2.0.3   systemfonts_1.2.3 digest_0.6.37    </span></span>
+<span><span class="co">#&gt; [25] R6_2.6.1          curl_6.4.0        magrittr_2.0.3    commonmark_2.0.0 </span></span>
+<span><span class="co">#&gt; [29] bslib_0.9.0       tools_4.6.0       xml2_1.3.8        pkgdown_2.1.3    </span></span>
+<span><span class="co">#&gt; [33] cachem_1.1.0      desc_1.4.3</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
