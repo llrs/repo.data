@@ -121,6 +121,8 @@ filter_arch_ver <- function(req, arch, req_column = "Name") {
         pkg_wo_ver_req <- req[no_version, req_column]
         arch_no_ver <- arch[arch[, "Package"] %in% pkg_wo_ver_req, , drop = FALSE]
         arch_no_ver <- arch_no_ver[!duplicated(arch_no_ver[, "Package"]), , drop = FALSE]
+    } else  {
+        arch_no_ver <- NULL
     }
 
     rbind(m[, c("Package", "Datetime")], arch_no_ver[, c("Package", "Datetime")])

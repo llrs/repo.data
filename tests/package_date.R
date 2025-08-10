@@ -1,3 +1,5 @@
+library("repo.data")
+
 # Test deps without version number
 pd <- package_date("ggeasy")
 stopifnot(length(pd) == 2L)
