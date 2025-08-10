@@ -7,7 +7,7 @@
 package_date(packages = ".", which = "strong")
 }
 \arguments{
-\item{packages}{a character vector of package names.}
+\item{packages}{Path to the package folder and/or name of packages published.}
 
 \item{which}{a character vector listing the types of
     dependencies, a subset of
@@ -18,8 +18,6 @@ package_date(packages = ".", which = "strong")
     character string \code{"strong"} (default) for the first three
     elements of that vector.
   }
-
-\item{pkg}{Path to the package folder and/or name of packages published.}
 }
 \value{
 A vector with the datetimes of the published package (or current

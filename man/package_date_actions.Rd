@@ -4,10 +4,10 @@
 \alias{package_date_actions}
 \title{Package dates}
 \usage{
-package_date_actions(pkg = ".", which = "strong")
+package_date_actions(packages = ".", which = "strong")
 }
 \arguments{
-\item{pkg}{Name of the package on CRAN.
+\item{packages}{Name of the package on CRAN.
 It accepts also local path to packages source directories but then the
 function works as if the package is not released yet.}
 
