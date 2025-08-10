@@ -39,7 +39,7 @@ If no version is required by any dependencies `NA` is used.
 
 We can identify packages that are required on a lower version than one of the dependencies with
 
-```{r package_dependencies}
+```{r update_dependencies}
 # Discover the requirements that can be upgraded
 update_dependencies("ggeasy")
 ```
@@ -69,9 +69,42 @@ Help pages are found via alias, when a user press `?word` it searches for alias.
 Checking for existing alias might help you to find packages and reduce the confusion on the help pages.
 
 ```{r}
-duplicated_alias
+alias <- cran_alias(c("fect", "gsynth"))
+dup_alias <- duplicated_alias(alias)
+head(dup_alias)
 ```
 
+For example these two packages have the same alias for the internal functions but most of them point to the same file. 
+
+## Connecting help pages
+
+Often it is helpful to link help pages so that:
+ - Pages are linked to other pages
+ - Pages are linked from other pages.
+
+```{r}
+pkg <- "BaseSet"
+head(cran_help_pages_wo_links(pkg))
+head(cran_help_pages_not_linked(pkg))
+```
+
+In addition to those help pages that are not well connected it could be that some pages are linked but link to each other without connecting with other help pages of the package or other packages.
+
+```{r}
+cliques <- cran_help_cliques(pkg)
+table(cliques$n) # Number of help pages connected
+```
+
+If there is more than one length this would mean some pages not linked to the rest of the package.
+
+Sometimes even if links exists they might not resolve correctly on the html version.
+For example if they link to a help page of a package that is not on the strong dependency list. 
+
+```{r}
+cran_help_pages_links_wo_deps(pkg)
+```
+
+If there is some output then the link cannot be resolved correctly if the other package is not independently installed on the same machine. 
 
 # Reproducibility
 

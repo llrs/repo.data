@@ -5,7 +5,7 @@
 #'
 #' Currently this function assumes that packages only use ">=" and not other operators.
 #' This might change on the future if other operators are more used.
-#' @param pkg Path to the package folder and/or name of packages published.
+#' @param packages Path to the package folder and/or name of packages published.
 #' @inheritParams tools::package_dependencies
 #'
 #' @returns A vector with the datetimes of the published package (or current
@@ -52,13 +52,13 @@ package_date <- function(packages = ".", which = "strong") {
 
     # Max release date across packages requested: minimal date when this was possible.
     date_package <- max(ca$Datetime[ca$Package %in% packages])
-
-    if (sum(which_r) && !check_installed("rversions")) {
+    r_versions <- check_installed("rversions")
+    if (sum(which_r) && !r_versions) {
         warning("To take into consideration R versions too please install package rversions.")
     }
     r_ver_date <- NULL
     # Find release date of R version
-    if (sum(which_r) && check_installed("rversions")) {
+    if (sum(which_r) && r_versions) {
         rver <- rversions::r_versions()
         max_version <- max(deps_df$Version[which_r])
         r_ver_date <- rver$date[package_version(rver$version) >= package_version(max_version)][1L]
@@ -99,16 +99,16 @@ package_date <- function(packages = ".", which = "strong") {
 #'
 #' This provides information about when a package was removed or archived for a
 #' more accurate estimation.
-#' @param pkg Name of the package on CRAN.
+#' @param packages Name of the package on CRAN.
 #' It accepts also local path to packages source directories but then the
 #' function works as if the package is not released yet.
 #' @inheritParams tools::package_dependencies
 #' @keywords internal
 #' @examples
 #' # package_date_actions("afmToolkit")
-package_date_actions <- function(pkg = ".", which = "strong") {
+package_date_actions <- function(packages = ".", which = "strong") {
     fields <- check_which(which)
-    local_pkg <- check_local(pkg)
+    local_pkg <- check_local(packages)
 
     # Get package dependencies.
     deps_df <- NULL
@@ -121,8 +121,8 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     }
     if (any(!file.exists(local_pkg))) {
         rd <- repos_dependencies(which = fields)
-        deps_df <- rbind(deps_df, rd[rd$package == pkg, , drop = FALSE])
-        p <- cran_archive(pkg)
+        deps_df <- rbind(deps_df, rd[rd$package == packages, , drop = FALSE])
+        p <- cran_archive(packages)
         date_package <- p$Datetime[nrow(p)]
     }
 
@@ -140,7 +140,7 @@ package_date_actions <- function(pkg = ".", which = "strong") {
     if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
     } else if (!local_pkg && nrow(p) == 0L) {
-        stop("Package ", sQuote(pkg), " wasn't found on past or current CRAN archive or locally.",
+        stop("Package ", sQuote(packages), " wasn't found on past or current CRAN archive or locally.",
              call.  = FALSE)
     }
 

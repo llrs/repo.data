@@ -2,13 +2,12 @@
 % Please edit documentation in R/dependencies.R
 \name{update_dependencies}
 \alias{update_dependencies}
-\title{Check versions}
+\title{Upgradable versions}
 \usage{
-update_dependencies(deps)
+update_dependencies(packages)
 }
 \arguments{
-\item{deps}{The output of \code{\link[=package_dependencies]{package_dependencies()}} or any data.frame with a
-version and required column.}
+\item{packages}{A character vector of packages names.}
 }
 \value{
 The data.frame filtered with some relevant rows
@@ -17,9 +16,12 @@ The data.frame filtered with some relevant rows
 Helper function to detect which package have a required version on the
 dependencies that could be upgraded.
 }
+\details{
+Increasing this version requirements won't affect users as they already
+should have these versions installed as required by other dependencies.
+}
 \examples{
-pd <- package_dependencies("arrow")
-update_dependencies(pd)
+update_dependencies("arrow")
 }
 \seealso{
 \code{\link[=package_dependencies]{package_dependencies()}}

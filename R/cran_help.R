@@ -104,7 +104,7 @@ cran_help_cliques <- function(packages = NULL) {
 
     pkges <- c(packages, funlist(pkges))
     # FIXME: We don't need to calculate the number of unique links targets 2 pages
-    # Solution: create an internal version that omits countting them
+    # Solution: create an internal version that omits counting them
     cal <- cran_targets_links(pkges)
 
     cal <- packages_in_links(cal, pkges)
@@ -112,7 +112,7 @@ cran_help_cliques <- function(packages = NULL) {
     # Filter out those links not resolved
     cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), , drop = FALSE]
 
-    if (!nrow(cal)) {
+    if (!NROW(cal)) {
         return(NULL)
     }
     cal <- unique(cal)
@@ -151,6 +151,8 @@ cran_help_cliques <- function(packages = NULL) {
 #' @examples
 #' evmix <- cran_help_pages_links_wo_deps("evmix")
 cran_help_pages_links_wo_deps <- function(packages = NULL) {
+    check_packages(packages)
+    ref_packages <- packages
     ap <- available.packages(filters = c("CRAN", "duplicates"))
     if (check_packages(packages)) {
         pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
@@ -160,5 +162,5 @@ cran_help_pages_links_wo_deps <- function(packages = NULL) {
         ap <- ap[, c("Package", check_which("strong"))]
     }
 
-    xrefs_wo_deps(cran_links(packages), ap)
+    xrefs_wo_deps(cran_links(ref_packages), ap, ref = ref_packages)
 }

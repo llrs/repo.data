@@ -178,24 +178,17 @@ targets2files <- function(links, alias) {
 }
 
 # pkg:topic but pkg is not on the dependencies.
-xrefs_wo_deps <- function(links, ap) {
+xrefs_wo_deps <- function(links, ap, ref) {
     anchor <- links$Anchor
+    # WRE: only applies to these conditions:
     eq_anchor <- startsWith(anchor, "=")
     full_anchor <- grepl(":", anchor, fixed = TRUE)
 
     links2 <- links[full_anchor & !eq_anchor, ]
     links3 <- split_anchor(links2)
-    s <- split(links3$to_pkg, links3$Package)
 
-    pkg_dep <- packages_dependencies(ap = ap)
-    pkg_dep2 <- pkg_dep[pkg_dep[, "Name"] != "R", c("Package", "Name")]
-    s2 <- split(pkg_dep2$Name, pkg_dep2$Package)
-
-    for (pkg in names(s)) {
-       s[[pkg]] <- setdiff(s[[pkg]], c(s2[[pkg]], pkg, BASE))
-    }
-    s <- s[lengths(s) != 0]
-    links4 <- links2[links3$Package %in% names(s), ]
+    # Filter out those that are not on the recursive dependency tree
+    links4 <- links2[!links3$to_pkg %in% c(rownames(ap), BASE, ref), ]
     rownames(links4) <- NULL
     links4
 }
