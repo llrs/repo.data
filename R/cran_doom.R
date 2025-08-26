@@ -48,7 +48,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     l <- lapply(rev_dep, function(pkg) {
         data.frame(
         Package = tp[[pkg]],
-        Deadline = danger$Deadline[danger$Package == pkg] + total_time_given)
+        Deadline = unique(danger$Deadline[danger$Package == pkg]) + total_time_given)
     })
     df2 <- do.call(rbind, l)
     affected <- table(df2$Package)
