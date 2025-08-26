@@ -134,9 +134,10 @@ package_dependencies <- function(packages = ".", which = "strong") {
     with_ver_n_dup <- !is.na(rd$Version) & rd$Name %in% rd$Name[duplicated(rd$Name)]
     t2n <- split(rd$Type[with_ver_n_dup], rd$Name[with_ver_n_dup])
     type_n <- vapply(t2n, function(x){length(unique(x))}, numeric(1L))
+    one_dep <- type_n == 1
     type <- vector("character", length(t2n))
-    type[type_n != 1] <- NA
-    type[type_n == 1] <- vapply(t2n, function(x){x[1]}, character(1L))
+    type[!one_dep] <- NA
+    type[one_dep] <- vapply(t2n[one_dep], function(x){x[1]}, character(1L))
 
     # Calculate the version required by the packages selected
     v2n <- split(rd$Version[with_ver_n_dup], rd$Name[with_ver_n_dup])
@@ -192,10 +193,11 @@ update_dependencies <- function(packages) {
     comparison <- merge(pd, rd, all.y = FALSE,
           all.x = TRUE, sort = FALSE,
           by.x = "Name", by.y = "Name")
-
-    ver_change <- comparison[!is.na(comparison$Version.x) & !is.na(comparison$Package.y), ,drop = TRUE]
-    out <- ver_change[, 1:2]
+    has_version <- !is.na(comparison$Version.x) | !is.na(comparison$Package.y)
+    needs_update <- has_version & comparison$Version.y < comparison$Version.x
+    out <- comparison[which(needs_update), 1:2, drop = FALSE]
     colnames(out)[2] <- "Version"
+    rownames(out) <- NULL
     out
 }
 
