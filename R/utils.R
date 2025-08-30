@@ -168,35 +168,36 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 }
 
 check_packages <- function(packages, length = 1L) {
-    check <- if (is.null(packages)) {
-        TRUE
-    }  else {
-        is.character(packages) && length(na.omit(packages)) >= 1L && !(!as.logical(length) && length(na.omit(packages)) <= length)
-    }
+    char_packages <- is.character(packages) && length(na.omit(packages))
 
-
-    if (isFALSE(check)) {
-        arbitrary_length <- is.na(length) || length == 0L
-        msg <- if (arbitrary_length) {
-            "Use NULL or a character vector."
+    if (isFALSE(char_packages) & !is.na(length)) {
+        if (length <= length(packages)) {
+            msg <- "Use NULL or a character vector with some packages."
         } else {
-            sprintf("Use NULL or a character vector (without NA) of length %d.", length)
+            msg <- sprintf("Use NULL or a character vector (without NA) of length %d.", length)
         }
         stop(msg, call. = FALSE)
     }
 
+    # If length = NA it can be NULL
     if (is.null(packages)) {
         return(TRUE)
     }
-    # least two characters and start with a letter and not end in a dot
+    local_packages <- dir.exists(packages)
+
+    # is a directory (local package) or :
+    #  - least two characters
+    #  - start with a letter
+    #  - not end in a dot
     valid_names <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !grepl("\\.$", packages)
 
-    if (!any(valid_names)) {
+    # Don't trigger error on local packages
+    if (!any(local_packages) && !any(valid_names[!local_packages])) {
         stop("Packages names should have at least two characters and start",
-             " with a letter and not end in a dot.")
+             " with a letter and not end in a dot.", call. = FALSE)
     }
 
-    check
+    TRUE
 }
 
 is_logical <- function(x) {
