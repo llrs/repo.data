@@ -117,16 +117,28 @@ package_dependencies <- function(packages = ".", which = "strong") {
             immediate. = TRUE
         )
     }
-    rd <- repos_dependencies(setdiff(packages_reported, c(BASE, local_pkgs, "R")), which = fields_selected)
+    repo_pkges <- setdiff(packages_reported, c(BASE, local_pkgs, "R"))
+    if (length(repo_pkges) <= 0) {
+        rd <- matrix(nrow = 0, ncol = 5, dimnames = list(list(),
+                                                   c("Package", "Version", "Type", "Name", "Op")))
+        rd <- as.data.frame(rd)
+    } else {
+        rd <- repos_dependencies(repo_pkges, which = fields_selected)
+    }
+
     # Add local packages information (not just their dependencies)
     if (!is.null(local_ap)) {
-        local_v <- cbind(local_ap[, c("Package", "Version"), drop = FALSE],
-                        Type = NA, Name = NA, Op = NA)
+        keep_columns <- intersect(colnames(local_ap), fields_selected)
+        local_v <- packages_dependencies(local_ap[, keep_columns, drop = FALSE])
         rd <- rbind(rd, local_v[, colnames(rd)])
     }
 
+    if (length(repo_pkges) <= 0) {
+        return(rd)
+    }
+
     # No package is depended by more than one package
-    if (!anyDuplicated(rd$Name)){
+    if (!anyDuplicated(rd$Name)) {
         return(rd)
     }
 
@@ -134,9 +146,10 @@ package_dependencies <- function(packages = ".", which = "strong") {
     with_ver_n_dup <- !is.na(rd$Version) & rd$Name %in% rd$Name[duplicated(rd$Name)]
     t2n <- split(rd$Type[with_ver_n_dup], rd$Name[with_ver_n_dup])
     type_n <- vapply(t2n, function(x){length(unique(x))}, numeric(1L))
+    one_dep <- type_n == 1
     type <- vector("character", length(t2n))
-    type[type_n != 1] <- NA
-    type[type_n == 1] <- vapply(t2n, function(x){x[1]}, character(1L))
+    type[!one_dep] <- NA
+    type[one_dep] <- vapply(t2n[one_dep], function(x){x[1]}, character(1L))
 
     # Calculate the version required by the packages selected
     v2n <- split(rd$Version[with_ver_n_dup], rd$Name[with_ver_n_dup])
@@ -192,10 +205,11 @@ update_dependencies <- function(packages) {
     comparison <- merge(pd, rd, all.y = FALSE,
           all.x = TRUE, sort = FALSE,
           by.x = "Name", by.y = "Name")
-
-    ver_change <- comparison[!is.na(comparison$Version.x) & !is.na(comparison$Package.y), ,drop = TRUE]
-    out <- ver_change[, 1:2]
+    has_version <- !is.na(comparison$Version.x) | !is.na(comparison$Package.y)
+    needs_update <- has_version & comparison$Version.y < comparison$Version.x
+    out <- comparison[which(needs_update), 1:2, drop = FALSE]
     colnames(out)[2] <- "Version"
+    rownames(out) <- NULL
     out
 }
 

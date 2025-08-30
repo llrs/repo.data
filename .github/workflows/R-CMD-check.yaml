@@ -47,8 +47,6 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
-      - name: Options
-        run: R -q -e "(repos <- getOption('repos'));contrib.url(repos)"
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
