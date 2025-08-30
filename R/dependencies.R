@@ -117,16 +117,28 @@ package_dependencies <- function(packages = ".", which = "strong") {
             immediate. = TRUE
         )
     }
-    rd <- repos_dependencies(setdiff(packages_reported, c(BASE, local_pkgs, "R")), which = fields_selected)
+    repo_pkges <- setdiff(packages_reported, c(BASE, local_pkgs, "R"))
+    if (length(repo_pkges) <= 0) {
+        rd <- matrix(nrow = 0, ncol = 5, dimnames = list(list(),
+                                                   c("Package", "Version", "Type", "Name", "Op")))
+        rd <- as.data.frame(rd)
+    } else {
+        rd <- repos_dependencies(repo_pkges, which = fields_selected)
+    }
+
     # Add local packages information (not just their dependencies)
     if (!is.null(local_ap)) {
-        local_v <- cbind(local_ap[, c("Package", "Version"), drop = FALSE],
-                        Type = NA, Name = NA, Op = NA)
+        keep_columns <- intersect(colnames(local_ap), fields_selected)
+        local_v <- packages_dependencies(local_ap[, keep_columns, drop = FALSE])
         rd <- rbind(rd, local_v[, colnames(rd)])
     }
 
+    if (length(repo_pkges) <= 0) {
+        return(rd)
+    }
+
     # No package is depended by more than one package
-    if (!anyDuplicated(rd$Name)){
+    if (!anyDuplicated(rd$Name)) {
         return(rd)
     }
 
