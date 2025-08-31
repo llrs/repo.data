@@ -16,8 +16,8 @@ knitr::opts_chunk$set(
 # repo.data
 
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/repo.data)](https://CRAN.R-project.org/package=repo.data)
 [![R-CMD-check](https://github.com/llrs/repo.data/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/llrs/repo.data/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/llrs/repo.data/graph/badge.svg)](https://app.codecov.io/gh/llrs/repo.data)
 <!-- badges: end -->
 
 The goal of repo.data is to make repository data accessible. 

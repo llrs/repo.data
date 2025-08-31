@@ -12,3 +12,4 @@
 ^data/*.rds
 data/actions.rds
 .lintr
+^codecov\.yml$
