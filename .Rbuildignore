@@ -13,3 +13,4 @@
 data/actions.rds
 .lintr
 ^codecov\.yml$
+^CRAN-SUBMISSION$
