@@ -27,11 +27,19 @@ When a function is specific of a repository it will start with its name: `cran_`
 
 ## Installation
 
+From CRAN:
+
+``` r
+install.packages("repo.data")
+```
+
 You can install the development version of repo.data like so:
 
 ``` r
 remotes::install_github("llrs/repo.data")
 ```
+
+
 
 ## Example
 
