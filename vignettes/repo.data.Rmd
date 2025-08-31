@@ -90,9 +90,12 @@ head(cran_help_pages_not_linked(pkg))
 
 In addition to those help pages that are not well connected it could be that some pages are linked but link to each other without connecting with other help pages of the package or other packages.
 
-```{r}
+To retrieve these help pages forming a clique it requires the suggested package igraph. 
+
+```{r eval=requireNamespace("igraph", quietly = TRUE)}
 cliques <- cran_help_cliques(pkg)
-table(cliques$n) # Number of help pages connected
+# Number of help pages connected
+table(cliques$n) 
 ```
 
 If there is more than one length this would mean some pages not linked to the rest of the package.
