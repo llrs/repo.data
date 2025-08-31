@@ -8,7 +8,7 @@
 #' @inheritParams tools::package_dependencies
 #' @param bioc Logical value if Bioconductor packages should be provided,
 #' (Requires internet connection).
-#' @return A list with multiple elements:
+#' @returns A list with multiple elements:
 #'  - time_till_last: Time till last package is affected.
 #'  - last_archived: the date of the last package that would be affected.
 #'  - npackages: Numeric vector with the number of packages used.
