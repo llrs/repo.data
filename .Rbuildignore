@@ -10,4 +10,5 @@
 ^data-raw$
 ^data/no_load
 ^data/*.rds
+data/actions.rds
 .lintr
