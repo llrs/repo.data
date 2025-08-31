@@ -71,7 +71,8 @@ base_help_pages_wo_links <- function() {
 #' base_help_cliques()
 base_help_cliques <- function() {
     if (!check_installed("igraph")) {
-        stop("This function requires igraph to find closed networks.")
+        warning("This function requires igraph to find closed networks.")
+        return(FALSE)
     }
     bal <- base_alias()
     bl <- base_links()

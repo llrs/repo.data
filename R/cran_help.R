@@ -92,7 +92,8 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 cran_help_cliques <- function(packages = NULL) {
     check_packages(packages)
     if (!check_installed("igraph")) {
-        stop("This function requires igraph to find help pages not linked to the network.")
+        warning("This function requires igraph to find help pages not linked to the network.")
+        return(FALSE)
     }
     if (!is.null(packages)) {
         pkges <- tools::package_dependencies(packages,
