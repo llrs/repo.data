@@ -67,12 +67,11 @@ base_help_pages_wo_links <- function() {
 #' @returns Return a data.frame of help pages not connected to the network of help pages.
 #' @family functions related to BASE help pages
 #' @export
-#' @examples
+#' @examplesIf requireNamespace("igraph", quietly = TRUE)
 #' base_help_cliques()
 base_help_cliques <- function() {
     if (!check_installed("igraph")) {
-        warning("This function requires igraph to find closed networks.")
-        return(FALSE)
+        stop("This function requires igraph to find closed networks.")
     }
     bal <- base_alias()
     bl <- base_links()
