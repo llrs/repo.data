@@ -2,7 +2,7 @@ Package: repo.data
 Title: R Repository Data
 Version: 0.0.0.9004
 Authors@R: 
-    person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre"),
+    person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-9747-2570"))
 Description: Retrieve repositories package metadata to explore the package
     dependencies, help links, alias, dates...  Provides functions for repository 
