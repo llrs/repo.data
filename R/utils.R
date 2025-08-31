@@ -116,11 +116,11 @@ uniq_count <- function(x, name = "n") {
 
     # Return if no duplicates
     if (!anyDuplicated(id)) {
-        if (!nrow(x)) {
+        if (!NROW(x)) {
             return(cbind(x, n = numeric(0L)))
         }
-        n <- matrix(1L, nrow = nrow(x),
-                    dimnames = list(seq_len(nrow(x)), name))
+        n <- matrix(1L, nrow = NROW(x),
+                    dimnames = list(seq_len(NROW(x)), name))
         return(cbind(x, n))
     }
     ids <- table(factor(id, levels = unique(id)))
@@ -144,11 +144,11 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 
     # Return if no duplicates
     if (!any(dup)) {
-        if (!nrow(x)) {
+        if (!NROW(x)) {
             return(cbind(x[, -w, drop = FALSE], n = numeric(0L)))
         }
-        n <- matrix(1L, nrow = nrow(x),
-                    dimnames = list(seq_len(nrow(x)), name))
+        n <- matrix(1L, nrow = NROW(x),
+                    dimnames = list(seq_len(NROW(x)), name))
         return(cbind(x[, -w, drop = FALSE], n))
     }
 

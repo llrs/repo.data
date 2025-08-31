@@ -78,7 +78,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
 
     list(time_till_last = max(out$Deadline) - Sys.Date(),
          last_archived = max(out$Deadline),
-         npackages = c(CRAN = nrow(db), all = nrow(db_all)),
+         npackages = c(CRAN = NROW(db), all = NROW(db_all)),
          details = out)
 
 }

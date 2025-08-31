@@ -48,7 +48,7 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     pd2$Repo[is.na(pd2$Repo)] <- "Other"
 
     # Prefill matrix
-    M <- matrix(0, ncol = length(repos) + 1L, nrow = nrow(ap))
+    M <- matrix(0, ncol = length(repos) + 1L, nrow = NROW(ap))
     colnames(M) <- c(names(repos), "Other")
     rownames(M) <- rownames(ap)
 
