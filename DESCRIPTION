@@ -4,11 +4,11 @@ Version: 0.1.1
 Authors@R: 
     person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-9747-2570"))
-Description: Retrieve metadata about packages from repositories in order
-    to explore package dependencies, links between help pages, aliases,
-    package availability on a given date, and other repository dependent
-    outcome. The package provides functions that allow package
-    maintainers and users to navigate changes on dependencies.
+Description: Retrieve metadata about packages from repositories to explore
+    package dependencies, links between help pages, aliases, package
+    availability on a given date, and other repository dependent outcome.
+    This metadata can be used to help package maintainers and users to
+    navigate changes on dependencies and with reproducibility.
 License: GPL (>= 3)
 URL: https://github.com/llrs/repo.data, https://llrs.github.io/repo.data/
 BugReports: https://github.com/llrs/repo.data/issues
