@@ -2,7 +2,7 @@
 * This is a new package being submitted to CRAN
 
 * There are some examples that might take longer than 10 seconds depending on the machine.
-  I couldn't find more minimal examples or improve the speed of the functions more to pass in time on CRAN machines. 
+  On those that I found I added a \donttest{}
 
 * This packages access data on src/contrib/Meta/ via the tools package: 
   Sometimes it fails to read it if the data is being written.
