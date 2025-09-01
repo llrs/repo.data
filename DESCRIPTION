@@ -19,11 +19,11 @@ Imports:
     tools,
     utils
 Suggests: 
-    igraph (>= 2.1.4),
+    igraph (>= 2.1),
     knitr (>= 1.49),
     markdown (>= 1.13),
-    rversions (>= 2.1.2),
-    spelling (>= 2.3.2)
+    rversions (>= 2.1),
+    spelling (>= 2.3)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
