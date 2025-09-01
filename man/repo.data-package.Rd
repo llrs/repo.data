@@ -7,7 +7,7 @@
 \alias{repo.data-package}
 \title{repo.data: R Repository Data}
 \description{
-Retrieve metadata about packages from repositories in order to explore package dependencies, links between help pages, aliases, package availability on a given date, and other repository dependent outcome. The package provides functions that allow package maintainers and users to navigate changes on dependencies.
+Retrieve metadata about packages from repositories to explore package dependencies, links between help pages, aliases, package availability on a given date, and other repository dependent outcome. This metadata can be used to help package maintainers and users to navigate changes on dependencies and with reproducibility.
 }
 \seealso{
 Useful links:

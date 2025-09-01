@@ -16,8 +16,10 @@ A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Num
 Explore the relationship between base R packages and other help pages by the target they use.
 }
 \examples{
+\donttest{
 btl <- base_targets_links()
 head(btl)
+}
 }
 \seealso{
 Other links from R: 
