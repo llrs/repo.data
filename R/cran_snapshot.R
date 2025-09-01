@@ -10,8 +10,10 @@
 #' @export
 #' @family utilities
 #' @examples
+#' \donttest{
 #' cs <- cran_snapshot(Sys.Date() -2 )
 #' head(cs)
+#' }
 cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),

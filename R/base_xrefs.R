@@ -58,8 +58,10 @@ base_targets_links <- function(packages = NULL) {
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_Rd, n (Number of links).
 #' @export
 #' @examples
+#' \donttest{
 #' bpl <- base_pages_links()
 #' head(bpl)
+#' }
 base_pages_links <- function(packages = NULL) {
     target_links <- save_state("base_targets_links", base_targets_links())
     check_packages(packages, NA)

@@ -20,8 +20,10 @@
 #' @family utilities
 #' @export
 #' @examples
+#' \donttest{
 #' cd <- cran_doom()
 #' head(cd$details)
+#' }
 cran_doom <- function(which = "strong", bioc = FALSE) {
     fields_selected <- check_which(which)
 
