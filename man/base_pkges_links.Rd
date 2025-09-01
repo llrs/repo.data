@@ -17,8 +17,10 @@ Explore the relationship between base R packages and other packages.
 If the target package is ambiguous it is omitted.
 }
 \examples{
+\donttest{
 bpkl <- base_pkges_links()
 head(bpkl)
+}
 }
 \seealso{
 Other links from R: 

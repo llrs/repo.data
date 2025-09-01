@@ -68,7 +68,9 @@ base_help_pages_wo_links <- function() {
 #' @family functions related to BASE help pages
 #' @export
 #' @examplesIf requireNamespace("igraph", quietly = TRUE)
+#' \donttest{
 #' base_help_cliques()
+#' }
 base_help_cliques <- function() {
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find closed networks.")

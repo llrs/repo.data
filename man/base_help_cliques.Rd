@@ -17,7 +17,9 @@ Requires igraph
 }
 \examples{
 \dontshow{if (requireNamespace("igraph", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\donttest{
 base_help_cliques()
+}
 \dontshow{\}) # examplesIf}
 }
 \seealso{
