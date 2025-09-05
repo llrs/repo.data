@@ -55,15 +55,17 @@ check_installed <- function(x) {
 
 check_local <- function(x) {
     desc_pkg <- file.path(x, "DESCRIPTION")
-    local_pkg <- file.exists(desc_pkg)
-    if (any(local_pkg) && sum(local_pkg) > 1L) {
-        stop(
-            "This function only allows to use one local package",
-            .call = FALSE
-        )
-    } else {
-        desc_pkg
-    }
+    vapply(desc_pkg, file.exists, FUN.VALUE = logical(1L))
+}
+
+get_from_local_pkg <- function(x, fields = "Package") {
+    # if  (any(!check_local(x))) {
+    #     stop("A package provided wasn't locally available.")
+    # }
+    desc_pkg <- file.path(x, "DESCRIPTION")
+    desc <- lapply(desc_pkg, read.dcf, fields = fields)
+    names(desc) <- x
+    desc
 }
 
 # tools:::CRAN_baseurl_for_src_area but with fixed mirror
