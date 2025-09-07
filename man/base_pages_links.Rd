@@ -17,8 +17,10 @@ Explore the relationship between base R packages and other help pages.
 If the target help page is ambiguous it is omitted.
 }
 \examples{
+\donttest{
 bpl <- base_pages_links()
 head(bpl)
+}
 }
 \seealso{
 Other links from R: 

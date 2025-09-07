@@ -8,7 +8,7 @@
 #' @inheritParams tools::package_dependencies
 #' @param bioc Logical value if Bioconductor packages should be provided,
 #' (Requires internet connection).
-#' @return A list with multiple elements:
+#' @returns A list with multiple elements:
 #'  - time_till_last: Time till last package is affected.
 #'  - last_archived: the date of the last package that would be affected.
 #'  - npackages: Numeric vector with the number of packages used.
@@ -20,8 +20,10 @@
 #' @family utilities
 #' @export
 #' @examples
+#' \donttest{
 #' cd <- cran_doom()
 #' head(cd$details)
+#' }
 cran_doom <- function(which = "strong", bioc = FALSE) {
     fields_selected <- check_which(which)
 
@@ -78,7 +80,7 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
 
     list(time_till_last = max(out$Deadline) - Sys.Date(),
          last_archived = max(out$Deadline),
-         npackages = c(CRAN = nrow(db), all = nrow(db_all)),
+         npackages = c(CRAN = NROW(db), all = NROW(db_all)),
          details = out)
 
 }

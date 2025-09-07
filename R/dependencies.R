@@ -216,41 +216,6 @@ update_dependencies <- function(packages) {
     out
 }
 
-minimal_version <- function(){
-
-
-    packages <- setdiff(deps$Name, c(BASE, "R"))
-    ca <- cran_archive(packages)
-    r_position <- which(deps$Name == "R")
-
-    # Filter by R version
-    if (length(r_position) && !is.na(deps$Version[r_position]) && check_installed("rversions")) {
-        rver <- deps$Version[r_position]
-
-        ver <- rversions::r_versions()
-        r_min_date <- as.Date(ver$date[min(which(ver$version >= rver))])
-        ca <- filter_arch_date(ca, r_min_date)
-    }
-    no_version <- intersect(packages, deps$Name[is.na(deps$Version)])
-
-    # minimal CRAN version
-    keep_pkges_no_ver <- ca$Package %in% no_version
-    min_no_ver <- ca[keep_pkges_no_ver, , drop = FALSE]
-    min_no_ver <- min_no_ver[!duplicated(min_no_ver$Package), , drop = FALSE]
-
-
-    pkgs_version <- setdiff(packages, no_version)
-
-    min_ver <- ca[ca$Package %in% pkgs_version, , drop = FALSE]
-    min_ver <- merge(deps[deps$Name %in% pkgs_version, , drop = FALSE],
-                     min_ver, all.x = TRUE, all.y = FALSE)
-
-    deps_higher_v <- (!is.na(deps$version) & package_version(deps$version) < package_version(deps$Version))
-    deps_req_v <- is.na(deps$version) & !is.na(deps$required)
-    deps <- deps[which(deps_higher_v | deps_req_v), , drop = FALSE]
-    rownames(deps) <- NULL
-}
-
 cache_pkg_dep <- function(package, which, keepR = TRUE) {
     which <- check_which(which)
 

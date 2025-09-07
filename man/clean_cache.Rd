@@ -12,3 +12,7 @@ Clean cache to download repository data again.
 \details{
 Cleans the package's environment used for caching the data.
 }
+\examples{
+clean_cache()
+
+}

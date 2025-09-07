@@ -125,7 +125,7 @@ package_date_actions <- function(packages = ".", which = "strong") {
         rd <- repos_dependencies(which = fields)
         deps_df <- rbind(deps_df, rd[rd$package == packages, , drop = FALSE])
         p <- cran_archive(packages)
-        date_package <- p$Datetime[nrow(p)]
+        date_package <- p$Datetime[NROW(p)]
     }
 
 
@@ -141,7 +141,7 @@ package_date_actions <- function(packages = ".", which = "strong") {
 
     if (!is_local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
-    } else if (!is_local_pkg && nrow(p) == 0L) {
+    } else if (!local_pkg && NROW(p) == 0L) {
         stop("Package ", sQuote(packages), " wasn't found on past or current CRAN archive or locally.",
              call.  = FALSE)
     }
@@ -184,7 +184,7 @@ package_date_actions <- function(packages = ".", which = "strong") {
     }
 
     # Add date to those not version specified
-    pkg_no_ver_match <- deps_df$name[setdiff(seq_len(nrow(deps_df)), m_vm)]
+    pkg_no_ver_match <- deps_df$name[setdiff(seq_len(NROW(deps_df)), m_vm)]
     pkg_no_ver_match <- setdiff(pkg_no_ver_match, c(not_on_actions, "R"))
     if (length(pkg_no_ver_match)) {
         ver_no_match <- pkg_available[pkg_available$Package %in% pkg_no_ver_match, , drop = FALSE]

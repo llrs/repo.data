@@ -16,7 +16,11 @@ Some help pages have links to and from but they are closed networks.
 Requires igraph
 }
 \examples{
+\dontshow{if (requireNamespace("igraph", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\donttest{
 base_help_cliques()
+}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other functions related to BASE help pages: 

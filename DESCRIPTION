@@ -1,30 +1,33 @@
 Package: repo.data
 Title: R Repository Data
-Version: 0.0.0.9004
+Version: 0.1.2
 Authors@R: 
-    person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre"),
+    person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-9747-2570"))
-Description: Retrieve repositories package metadata to explore the package
-    dependencies, help links, alias, dates...  Provides functions for repository 
-    maintainers, package maintainers and users to navigate links and dependencies
-    changes.
+Description: Retrieve metadata about packages from repositories to explore
+    package dependencies, links between help pages, aliases, package
+    availability on a given date, and other repository dependent outcome.
+    This metadata can be used to help package maintainers and users to
+    navigate changes on dependencies and with reproducibility.
 License: GPL (>= 3)
 URL: https://github.com/llrs/repo.data, https://llrs.github.io/repo.data/
 BugReports: https://github.com/llrs/repo.data/issues
 Depends: 
-    R (>= 4.4)
+    R (>= 4.5)
 Imports: 
     methods,
     tools,
     utils
 Suggests: 
-    igraph (>= 2.1.4),
+    igraph (>= 2.1),
     knitr (>= 1.49),
     markdown (>= 1.13),
-    rversions (>= 2.1.2)
+    rversions (>= 2.1),
+    spelling (>= 2.3)
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
