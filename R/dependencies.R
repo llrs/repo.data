@@ -35,7 +35,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     } else if (first && !is.null(packages)) {
         setdiff(packages, omit_pkg)
     } else if (!first) {
-        setdiff(packages, pd$Package)
+        setdiff(packages, c(pd$Package, omit_pkg))
     }
 
     if  (length(new_pkgs)) {
@@ -72,22 +72,20 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 #' head(pd)
 package_dependencies <- function(packages = ".", which = "strong") {
     fields_selected <- check_which(which)
-    desc_pkg <- check_local(packages)
+    is_local_pkg <- check_local(packages)
 
     # Get packages dependencies recursively
     local_ap <- NULL
     local_pkgs <- NULL
-    if (any(file.exists(desc_pkg))) {
-        local_pkgs <- lapply(desc_pkg[file.exists(desc_pkg)], function(lp){
-            desc <- read.dcf(lp, fields = c(PACKAGE_FIELDS, "Package", "Version"))
-            rownames(desc) <- desc[, "Package"]
-            desc
-        })
+    if (any(is_local_pkg)) {
+        local_pkgs <- get_from_local_pkg(packages[is_local_pkg],
+                                         fields = c(PACKAGE_FIELDS, "Package", "Version"))
         local_ap <- do.call(rbind, local_pkgs)
+        rownames(local_ap) <- local_ap[, "Package"]
         local_pkgs <- rownames(local_ap)
     }
 
-    pkges_names <- unique(c(local_pkgs, packages[!file.exists(desc_pkg)]))
+    pkges_names <- unique(c(local_pkgs, packages[!is_local_pkg]))
     check_packages(packages, NA)
 
     ap <- available.packages(filters = c("CRAN", "duplicates"))
@@ -200,8 +198,13 @@ update_dependencies <- function(packages) {
     if (is.null(packages)) {
         stop("Please provide a vector of packages.")
     }
-    pd <- package_dependencies(packages)
-    rd <- repos_dependencies(packages)
+    # Replace names of packages by the one on the description
+    all_packages_names <- packages
+    is_local_pkg <- check_local(packages)
+    all_packages_names[is_local_pkg] <- unlist(get_from_local_pkg(packages[is_local_pkg]))
+
+    pd <- package_dependencies(packages) # Local paths
+    rd <- repos_dependencies(all_packages_names) # packages names
     comparison <- merge(pd, rd, all.y = FALSE,
           all.x = TRUE, sort = FALSE,
           by.x = "Name", by.y = "Name")
