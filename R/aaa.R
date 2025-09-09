@@ -7,7 +7,7 @@ pkg_state <- new.env(parent = emptyenv())
 #' Clean cache to download repository data again.
 #' @details
 #' Cleans the package's environment used for caching the data.
-#' @returns NULL
+#' @returns Returns `NULL`.
 #' @examples
 #' clean_cache()
 #'

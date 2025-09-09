@@ -6,6 +6,9 @@
 \usage{
 clean_cache()
 }
+\value{
+Returns \code{NULL}.
+}
 \description{
 Clean cache to download repository data again.
 }
