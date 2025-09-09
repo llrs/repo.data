@@ -141,7 +141,7 @@ package_date_actions <- function(packages = ".", which = "strong") {
 
     if (!is_local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
-    } else if (!local_pkg && NROW(p) == 0L) {
+    } else if (!is_local_pkg && NROW(p) == 0L) {
         stop("Package ", sQuote(packages), " wasn't found on past or current CRAN archive or locally.",
              call.  = FALSE)
     }
