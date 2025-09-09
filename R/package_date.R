@@ -104,8 +104,8 @@ package_date <- function(packages = ".", which = "strong") {
 #' function works as if the package is not released yet.
 #' @inheritParams tools::package_dependencies
 #' @keywords internal
-#' @examples
-#' # package_date_actions("afmToolkit")
+# @examples
+# # package_date_actions("afmToolkit")
 package_date_actions <- function(packages = ".", which = "strong") {
     fields <- check_which(which)
     is_local_pkg <- check_local(packages)
