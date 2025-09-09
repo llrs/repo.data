@@ -17,8 +17,10 @@ Explore the relationship between CRAN packages and other packages.
 If the target package is ambiguous it is omitted.
 }
 \examples{
+\donttest{
 cpkl <- cran_pkges_links()
 head(cpkl)
+}
 }
 \seealso{
 Other links from CRAN: 

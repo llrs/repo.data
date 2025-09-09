@@ -196,8 +196,10 @@ cran_pages_links <- function(packages = NULL) {
 #' @returns A data.frame with 6 columns: from_pkg, to_pkg, n (Number of links).
 #' @export
 #' @examples
+#' \donttest{
 #' cpkl <- cran_pkges_links()
 #' head(cpkl)
+#' }
 cran_pkges_links <- function(packages = NULL) {
     target_links <- save_state("cran_pages_links", base_targets_links())
     check_packages(packages, NA)
