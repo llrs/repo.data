@@ -204,7 +204,15 @@ update_dependencies <- function(packages) {
     all_packages_names[is_local_pkg] <- unlist(get_from_local_pkg(packages[is_local_pkg]))
 
     pd <- package_dependencies(packages) # Local paths
-    rd <- repos_dependencies(all_packages_names) # packages names
+    # Versions of packages on repositories
+    if (all(is_local_pkg)) {
+        ap <- available.packages()
+        rd <- ap[setdiff(pd$Name, c(BASE, "R")), c("Package", "Version")]
+        colnames(rd)[1] <- "Name"
+    } else {
+        rd <- repos_dependencies(all_packages_names)
+    }
+
     comparison <- merge(pd, rd, all.y = FALSE,
           all.x = TRUE, sort = FALSE,
           by.x = "Name", by.y = "Name")
