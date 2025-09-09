@@ -28,7 +28,4 @@ Same as package_date but using CRAN's actions instead of public archive.
 This provides information about when a package was removed or archived for a
 more accurate estimation.
 }
-\examples{
-# package_date_actions("afmToolkit")
-}
 \keyword{internal}
