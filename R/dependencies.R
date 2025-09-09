@@ -26,8 +26,9 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 
     omit_pkg <- setdiff(packages, all_packages)
     if (length(omit_pkg)) {
-        warning("Omitting some packages, maybe they were not on CRAN?\n",
-        toString(omit_pkg), immediate. = TRUE)
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\n Maybe they are currently not available?",
+                immediate. = TRUE, call. = FALSE)
     }
 
     new_pkgs <- if (first && is.null(packages)) {

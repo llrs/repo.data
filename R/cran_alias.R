@@ -22,7 +22,8 @@ cran_alias <- function(packages = NULL) {
     omit_pkg <- setdiff(packages, current_packages)
     if (length(omit_pkg)) {
         warning("Omitting packages ", toString(omit_pkg),
-                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE)
+                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE,
+                call. = FALSE)
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)

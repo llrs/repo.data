@@ -25,8 +25,9 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     repos_packages <- setdiff(packages, BASE)
     omit_pkg <- setdiff(packages, rownames(ap))
     if (length(omit_pkg)) {
-        warning("Omitting packages, maybe they are currently not on the repositories?\n",
-                toString(omit_pkg), immediate. = TRUE)
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\n Maybe they are currently not available?",
+                immediate. = TRUE, call. = FALSE)
     }
     if (is.null(packages)) {
         packages <- rownames(ap)
