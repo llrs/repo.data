@@ -62,10 +62,13 @@ get_from_local_pkg <- function(x, fields = "Package") {
     # if  (any(!check_local(x))) {
     #     stop("A package provided wasn't locally available.")
     # }
+    if (!length(x)) {
+        return(NULL)
+    }
     desc_pkg <- file.path(x, "DESCRIPTION")
     desc <- lapply(desc_pkg, read.dcf, fields = fields)
-    names(desc) <- x
-    desc
+    names(desc) <- if (is.null(names(x))) x else names(x)
+    do.call(rbind, desc)
 }
 
 # tools:::CRAN_baseurl_for_src_area but with fixed mirror

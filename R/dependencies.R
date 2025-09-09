@@ -101,6 +101,11 @@ package_dependencies <- function(packages = ".", which = "strong") {
     # Extract recursive dependencies versions requirements
     unique_deps <- unique(funlist(all_deps))
 
+    # In case there are no dependencies
+    if (!length(unique_deps)) {
+        return(NULL)
+    }
+
     # Some package depend on Additional_repositories or Bioconductor
     # But some don't have dependencies!
     deps_available <- c(rownames(new_ap), BASE)
@@ -199,30 +204,65 @@ update_dependencies <- function(packages) {
     if (is.null(packages)) {
         stop("Please provide a vector of packages.")
     }
+
+    pkg_fields <- check_which("all")
     # Replace names of packages by the one on the description
     all_packages_names <- packages
     is_local_pkg <- check_local(packages)
-    all_packages_names[is_local_pkg] <- unlist(get_from_local_pkg(packages[is_local_pkg]))
-
-    pd <- package_dependencies(packages) # Local paths
-    # Versions of packages on repositories
-    if (all(is_local_pkg)) {
-        ap <- available.packages()
-        rd <- ap[setdiff(pd$Name, c(BASE, "R")), c("Package", "Version")]
-        colnames(rd)[1] <- "Name"
+    # Get the direct dependencies of the packages
+    # Local
+    if (any(is_local_pkg)) {
+        ap_local <- get_from_local_pkg(packages[is_local_pkg], fields = c("Package", pkg_fields))
+        all_packages_names[is_local_pkg] <- ap_local[, "Package"]
+        rownames(ap_local) <- ap_local[, "Package"]
+        ap_local <- ap_local[, pkg_fields]
     } else {
-        rd <- repos_dependencies(all_packages_names)
+        ap_local <- NULL
     }
 
-    comparison <- merge(pd, rd, all.y = FALSE,
-          all.x = TRUE, sort = FALSE,
-          by.x = "Name", by.y = "Name")
-    has_version <- !is.na(comparison$Version.x) | !is.na(comparison$Package.y)
-    needs_update <- has_version & comparison$Version.y < comparison$Version.x
-    out <- comparison[which(needs_update), 1:2, drop = FALSE]
-    colnames(out)[2] <- "Version"
-    rownames(out) <- NULL
-    out
+    # Remote
+    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+    on.exit(options(opts), add = TRUE)
+    ap <- available.packages()
+    ap_remote <- ap[all_packages_names[!is_local_pkg], pkg_fields, drop = FALSE]
+    pd <- packages_dependencies(rbind(ap_local, ap_remote))
+
+    # Dependencies on repositories
+    dep_packages <- setdiff(pd$Name, c(BASE, "R"))
+    # Shortcut in case no (strong) dependency on repos
+    if (!length(dep_packages)) {
+        return(NULL)
+    }
+
+    # Check even for local packages their dependencies
+    rd <- repos_dependencies(c(dep_packages, all_packages_names), which = pkg_fields)
+
+    # Keep only those interesting
+    columns <- c("Name", "Version")
+
+    comparison <- merge(unique(pd[, columns, drop = FALSE]),
+                        unique(rd[, columns, drop = FALSE]),
+                        all.y = FALSE, all.x = TRUE,
+                        sort = FALSE,
+                        suffixes = c(".set", ".recursive"),
+                        by.x = "Name", by.y = "Name")
+    has_version <- !is.na(comparison$Version.recursive) | !is.na(comparison$Name)
+    needs_update <- has_version & comparison$Version.set < comparison$Version.recursive
+    out <- comparison[which(needs_update), c("Name", "Version.recursive"), drop = FALSE]
+
+    if (!NROW(out)) {
+        df <- data.frame(Name = character(1L), Version = package_version("0.0.0"))
+        return(df[0, ])
+    }
+
+    s <- split(out$Version.recursive, out$Name)
+    l <- lapply(s, function(x){
+        as.character(max(x))
+    })
+    df <- data.frame(Name = names(l), Version = rep(package_version("0.0.0"),
+                                                    length.out = length(l)))
+    df$Version[] <- as.package_version(funlist(l))
+    df
 }
 
 cache_pkg_dep <- function(package, which, keepR = TRUE) {

@@ -27,7 +27,6 @@ package_date <- function(packages = ".", which = "strong") {
     if (any(is_local_pkg)) {
         desc <- get_from_local_pkg(packages[is_local_pkg],
                                    fields = c(PACKAGE_FIELDS, "Package"))
-        desc <- do.call(rbind, desc)
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
@@ -113,11 +112,9 @@ package_date_actions <- function(packages = ".", which = "strong") {
     # Get package dependencies.
     deps_df <- NULL
     if (any(is_local_pkg)) {
-        desc <- get_from_local_pkg(packages[is_local_pkg],
+        local_ap <- get_from_local_pkg(packages[is_local_pkg],
                                    fields = c(fields, "Package"))
-        local_ap <- do.call(rbind, desc)
-        deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
-        rownames(deps) <- desc[, "Package"]
+        deps <- local_ap[, intersect(fields, colnames(local_ap)), drop = FALSE]
         date_package <- Sys.Date()
         deps_df <- rbind(deps_df, packages_dependencies(deps))
     }

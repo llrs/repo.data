@@ -10,6 +10,6 @@ rd <- repos_dependencies(pkg)
 pd <- package_dependencies(pkg)
 diff <- merge(pd, rd, by = "Name")
 
-ud <- update_dependencies(pkg)
+ud <- suppressWarnings(update_dependencies(pkg))
 m <- merge(ud, pd, all = FALSE)
 stopifnot("Packages that don't need updating show up on update_dependencies" = NROW(m) <= NROW(diff))
