@@ -109,7 +109,7 @@ targets2files <- function(links, alias) {
         links[z_keep, "to_pkg"][selfs] <- links$Package[z_keep][selfs]
     }
 
-    links$tmp <- seq_len(nrow(links))
+    links$tmp <- seq_len(NROW(links))
     links_w_files <- merge(links, alias,
                            by.x = c("to_pkg", "to_target"),
                            by.y = c("Package", "Target"),

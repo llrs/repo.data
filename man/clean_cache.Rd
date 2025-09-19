@@ -6,9 +6,16 @@
 \usage{
 clean_cache()
 }
+\value{
+Returns \code{NULL}.
+}
 \description{
 Clean cache to download repository data again.
 }
 \details{
 Cleans the package's environment used for caching the data.
+}
+\examples{
+clean_cache()
+
 }

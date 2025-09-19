@@ -55,15 +55,20 @@ check_installed <- function(x) {
 
 check_local <- function(x) {
     desc_pkg <- file.path(x, "DESCRIPTION")
-    local_pkg <- file.exists(desc_pkg)
-    if (any(local_pkg) && sum(local_pkg) > 1L) {
-        stop(
-            "This function only allows to use one local package",
-            .call = FALSE
-        )
-    } else {
-        desc_pkg
+    vapply(desc_pkg, file.exists, FUN.VALUE = logical(1L))
+}
+
+get_from_local_pkg <- function(x, fields = "Package") {
+    # if  (any(!check_local(x))) {
+    #     stop("A package provided wasn't locally available.")
+    # }
+    if (!length(x)) {
+        return(NULL)
     }
+    desc_pkg <- file.path(x, "DESCRIPTION")
+    desc <- lapply(desc_pkg, read.dcf, fields = fields)
+    names(desc) <- if (is.null(names(x))) x else names(x)
+    do.call(rbind, desc)
 }
 
 # tools:::CRAN_baseurl_for_src_area but with fixed mirror
@@ -116,11 +121,11 @@ uniq_count <- function(x, name = "n") {
 
     # Return if no duplicates
     if (!anyDuplicated(id)) {
-        if (!nrow(x)) {
+        if (!NROW(x)) {
             return(cbind(x, n = numeric(0L)))
         }
-        n <- matrix(1L, nrow = nrow(x),
-                    dimnames = list(seq_len(nrow(x)), name))
+        n <- matrix(1L, nrow = NROW(x),
+                    dimnames = list(seq_len(NROW(x)), name))
         return(cbind(x, n))
     }
     ids <- table(factor(id, levels = unique(id)))
@@ -144,11 +149,11 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 
     # Return if no duplicates
     if (!any(dup)) {
-        if (!nrow(x)) {
+        if (!NROW(x)) {
             return(cbind(x[, -w, drop = FALSE], n = numeric(0L)))
         }
-        n <- matrix(1L, nrow = nrow(x),
-                    dimnames = list(seq_len(nrow(x)), name))
+        n <- matrix(1L, nrow = NROW(x),
+                    dimnames = list(seq_len(NROW(x)), name))
         return(cbind(x[, -w, drop = FALSE], n))
     }
 

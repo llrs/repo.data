@@ -86,7 +86,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' Or NULL if nothing are found.
 #' @family functions related to CRAN help pages
 #' @export
-#' @examples
+#' @examplesIf requireNamespace("igraph", quietly = TRUE)
 #' chc <- cran_help_cliques("BaseSet")
 #' head(chc)
 cran_help_cliques <- function(packages = NULL) {

@@ -7,7 +7,7 @@
 \alias{repo.data-package}
 \title{repo.data: R Repository Data}
 \description{
-Retrieve repositories package metadata to explore the package dependencies, help links, alias, dates... Provides functions for repository maintainers, package maintainers and users to navigate links and dependencies changes.
+Retrieve metadata about packages from repositories to explore package dependencies, links between help pages, aliases, package availability on a given date, and other repository dependent outcome. This metadata can be used to help package maintainers and users to navigate changes on dependencies and with reproducibility.
 }
 \seealso{
 Useful links:
@@ -19,7 +19,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Lluís Revilla Sancho \email{lluis.revilla@gmail.com} (\href{https://orcid.org/0000-0001-9747-2570}{ORCID})
+\strong{Maintainer}: Lluís Revilla Sancho \email{lluis.revilla@gmail.com} (\href{https://orcid.org/0000-0001-9747-2570}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}

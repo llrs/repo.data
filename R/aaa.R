@@ -3,11 +3,14 @@ cran_tz <- "Europe/Vienna"
 pkg_state <- new.env(parent = emptyenv())
 
 #' Clean cache
-#' 
+#'
 #' Clean cache to download repository data again.
 #' @details
 #' Cleans the package's environment used for caching the data.
-#' @returns NULL
+#' @returns Returns `NULL`.
+#' @examples
+#' clean_cache()
+#'
 #' @export
 clean_cache <- function() {
     pkg_state <- new.env(parent = emptyenv())

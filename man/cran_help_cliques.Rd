@@ -21,8 +21,10 @@ but they are closed network: there is no link that leads to different help pages
 Requires igraph
 }
 \examples{
+\dontshow{if (requireNamespace("igraph", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 chc <- cran_help_cliques("BaseSet")
 head(chc)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other functions related to CRAN help pages: 

@@ -21,8 +21,10 @@ were they archived and more packages than present might be returned for any
 given date.
 }
 \examples{
+\donttest{
 cs <- cran_snapshot(Sys.Date() -2 )
 head(cs)
+}
 }
 \seealso{
 Other utilities: 

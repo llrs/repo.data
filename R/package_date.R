@@ -19,15 +19,14 @@
 #' package_date("afmToolkit") # Dependency was removed from CRAN
 package_date <- function(packages = ".", which = "strong") {
     fields <- check_which(which)
-    local_pkg <- check_local(packages)
+    is_local_pkg <- check_local(packages)
 
     # Get package dependencies.
     deps_df <- NULL
-    logical_local_pkg <- file.exists(local_pkg)
     # Dependencies of local packages
-    if (any(logical_local_pkg)) {
-        desc <- lapply(local_pkg[file.exists(local_pkg)], read.dcf, fields = c(PACKAGE_FIELDS, "Package"))
-        desc <- do.call(rbind, desc)
+    if (any(is_local_pkg)) {
+        desc <- get_from_local_pkg(packages[is_local_pkg],
+                                   fields = c(PACKAGE_FIELDS, "Package"))
         deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
         rownames(deps) <- desc[, "Package"]
         date_package <- Sys.Date()
@@ -37,8 +36,8 @@ package_date <- function(packages = ".", which = "strong") {
     }
 
     # Dependencies of remote packages
-    if (any(!logical_local_pkg)) {
-        rd <- repos_dependencies(packages[!logical_local_pkg], which = fields)
+    if (any(!is_local_pkg)) {
+        rd <- repos_dependencies(packages[!is_local_pkg], which = fields)
         deps_df <- rbind(deps_df, rd)
     }
 
@@ -65,9 +64,9 @@ package_date <- function(packages = ".", which = "strong") {
         ca <- filter_arch_date(ca, r_ver_date)
     }
 
-    if (logical_local_pkg && length(local_pkg) == 1L && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
+    if (is_local_pkg && length(is_local_pkg) == 1L && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
-    } else if (!logical_local_pkg && NROW(ca) == 0L) {
+    } else if (!is_local_pkg && NROW(ca) == 0L) {
         stop("Package ", sQuote(packages), " wasn't found on past or current CRAN archive or locally.")
     }
 
@@ -104,26 +103,26 @@ package_date <- function(packages = ".", which = "strong") {
 #' function works as if the package is not released yet.
 #' @inheritParams tools::package_dependencies
 #' @keywords internal
-#' @examples
-#' # package_date_actions("afmToolkit")
+# @examples
+# # package_date_actions("afmToolkit")
 package_date_actions <- function(packages = ".", which = "strong") {
     fields <- check_which(which)
-    local_pkg <- check_local(packages)
+    is_local_pkg <- check_local(packages)
 
     # Get package dependencies.
     deps_df <- NULL
-    if (any(file.exists(local_pkg))) {
-        desc <- read.dcf(local_pkg[file.exists(local_pkg)], fields = c(PACKAGE_FIELDS, "Package"))
-        deps <- desc[, intersect(fields, colnames(desc)), drop = FALSE]
-        rownames(deps) <- desc[, "Package"]
+    if (any(is_local_pkg)) {
+        local_ap <- get_from_local_pkg(packages[is_local_pkg],
+                                   fields = c(fields, "Package"))
+        deps <- local_ap[, intersect(fields, colnames(local_ap)), drop = FALSE]
         date_package <- Sys.Date()
         deps_df <- rbind(deps_df, packages_dependencies(deps))
     }
-    if (any(!file.exists(local_pkg))) {
+    if (any(!is_local_pkg)) {
         rd <- repos_dependencies(which = fields)
         deps_df <- rbind(deps_df, rd[rd$package == packages, , drop = FALSE])
         p <- cran_archive(packages)
-        date_package <- p$Datetime[nrow(p)]
+        date_package <- p$Datetime[NROW(p)]
     }
 
 
@@ -137,9 +136,9 @@ package_date_actions <- function(packages = ".", which = "strong") {
     }
     r_versions <- sum(which_r) && check_installed("rversions")
 
-    if (!local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
+    if (!is_local_pkg && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
-    } else if (!local_pkg && nrow(p) == 0L) {
+    } else if (!is_local_pkg && NROW(p) == 0L) {
         stop("Package ", sQuote(packages), " wasn't found on past or current CRAN archive or locally.",
              call.  = FALSE)
     }
@@ -182,7 +181,7 @@ package_date_actions <- function(packages = ".", which = "strong") {
     }
 
     # Add date to those not version specified
-    pkg_no_ver_match <- deps_df$name[setdiff(seq_len(nrow(deps_df)), m_vm)]
+    pkg_no_ver_match <- deps_df$name[setdiff(seq_len(NROW(deps_df)), m_vm)]
     pkg_no_ver_match <- setdiff(pkg_no_ver_match, c(not_on_actions, "R"))
     if (length(pkg_no_ver_match)) {
         ver_no_match <- pkg_available[pkg_available$Package %in% pkg_no_ver_match, , drop = FALSE]

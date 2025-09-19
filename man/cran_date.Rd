@@ -21,7 +21,8 @@ Last installation date from CRAN.
 Check which CRAN dates are possible for a given packages and versions.
 }
 \examples{
-ip <- installed.packages()
+# ip <- installed.packages()
+ip <- data.frame(Package = c("A3", "AER"), Version = c("1.0.0", "1.2-15"))
 cran_date(ip)
 cran_session()
 }

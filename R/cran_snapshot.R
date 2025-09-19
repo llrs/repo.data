@@ -10,8 +10,10 @@
 #' @export
 #' @family utilities
 #' @examples
+#' \donttest{
 #' cs <- cran_snapshot(Sys.Date() -2 )
 #' head(cs)
+#' }
 cran_snapshot <- function(date) {
 
     stopifnot("Provide a date" = is(date, "Date"),
@@ -42,7 +44,7 @@ cran_snapshot <- function(date) {
     missing2 <- setdiff(ca_before_date$package, last_archival$package)
     # archived2 <- match(ca_before_date$package, last_archival$package, incomparables = missing2)
 
-    on_cran <- rep_len(TRUE, nrow(ca_before_date))
+    on_cran <- rep_len(TRUE, NROW(ca_before_date))
     names(on_cran) <- ca_before_date$package
     on_cran[na.omit(archived)] <- as.Date(ca_before_date$Datetime[na.omit(archived)]) > last_archival$date[!is.na(archived)]
     out <- ca_before_date[on_cran, , drop = FALSE]
@@ -63,7 +65,8 @@ cran_snapshot <- function(date) {
 #' @rdname cran_date
 #' @importFrom utils installed.packages
 #' @examples
-#' ip <- installed.packages()
+#' # ip <- installed.packages()
+#' ip <- data.frame(Package = c("A3", "AER"), Version = c("1.0.0", "1.2-15"))
 #' cran_date(ip)
 cran_date <- function(versions) {
     if ((!is.data.frame(versions) || !is.matrix(versions)) && !all(c("Package", "Version") %in% colnames(versions))) {
@@ -72,13 +75,13 @@ cran_date <- function(versions) {
     if (any(versions[, "Package"] %in% BASE)) {
         versions <- versions[!versions[, "Package"] %in% c(BASE, "R"), , drop = FALSE]
     }
-    if (!nrow(versions)) {
+    if (!NROW(versions)) {
         warning("No packages to find a date on CRAN.")
         return(NA)
     }
 
     ca_packages <- cran_archive(versions[, "Package"])
-    if (!nrow(ca_packages)) {
+    if (!NROW(ca_packages)) {
         warning("No packages on CRAN to find a date.")
         return(NA)
     }

@@ -26,8 +26,9 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 
     omit_pkg <- setdiff(packages, all_packages)
     if (length(omit_pkg)) {
-        warning("Omitting some packages, maybe they were not on CRAN?\n",
-        toString(omit_pkg), immediate. = TRUE)
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\n Maybe they are currently not available?",
+                immediate. = TRUE, call. = FALSE)
     }
 
     new_pkgs <- if (first && is.null(packages)) {
@@ -35,7 +36,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     } else if (first && !is.null(packages)) {
         setdiff(packages, omit_pkg)
     } else if (!first) {
-        setdiff(packages, pd$Package)
+        setdiff(packages, c(pd$Package, omit_pkg))
     }
 
     if  (length(new_pkgs)) {
@@ -72,22 +73,20 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 #' head(pd)
 package_dependencies <- function(packages = ".", which = "strong") {
     fields_selected <- check_which(which)
-    desc_pkg <- check_local(packages)
+    is_local_pkg <- check_local(packages)
 
     # Get packages dependencies recursively
     local_ap <- NULL
     local_pkgs <- NULL
-    if (any(file.exists(desc_pkg))) {
-        local_pkgs <- lapply(desc_pkg[file.exists(desc_pkg)], function(lp){
-            desc <- read.dcf(lp, fields = c(PACKAGE_FIELDS, "Package", "Version"))
-            rownames(desc) <- desc[, "Package"]
-            desc
-        })
+    if (any(is_local_pkg)) {
+        local_pkgs <- get_from_local_pkg(packages[is_local_pkg],
+                                         fields = c(PACKAGE_FIELDS, "Package", "Version"))
         local_ap <- do.call(rbind, local_pkgs)
+        rownames(local_ap) <- local_ap[, "Package"]
         local_pkgs <- rownames(local_ap)
     }
 
-    pkges_names <- unique(c(local_pkgs, packages[!file.exists(desc_pkg)]))
+    pkges_names <- unique(c(local_pkgs, packages[!is_local_pkg]))
     check_packages(packages, NA)
 
     ap <- available.packages(filters = c("CRAN", "duplicates"))
@@ -101,6 +100,11 @@ package_dependencies <- function(packages = ".", which = "strong") {
     )
     # Extract recursive dependencies versions requirements
     unique_deps <- unique(funlist(all_deps))
+
+    # In case there are no dependencies
+    if (!length(unique_deps)) {
+        return(NULL)
+    }
 
     # Some package depend on Additional_repositories or Bioconductor
     # But some don't have dependencies!
@@ -200,52 +204,65 @@ update_dependencies <- function(packages) {
     if (is.null(packages)) {
         stop("Please provide a vector of packages.")
     }
-    pd <- package_dependencies(packages)
-    rd <- repos_dependencies(packages)
-    comparison <- merge(pd, rd, all.y = FALSE,
-          all.x = TRUE, sort = FALSE,
-          by.x = "Name", by.y = "Name")
-    has_version <- !is.na(comparison$Version.x) | !is.na(comparison$Package.y)
-    needs_update <- has_version & comparison$Version.y < comparison$Version.x
-    out <- comparison[which(needs_update), 1:2, drop = FALSE]
-    colnames(out)[2] <- "Version"
-    rownames(out) <- NULL
-    out
-}
 
-minimal_version <- function(){
-
-
-    packages <- setdiff(deps$Name, c(BASE, "R"))
-    ca <- cran_archive(packages)
-    r_position <- which(deps$Name == "R")
-
-    # Filter by R version
-    if (length(r_position) && !is.na(deps$Version[r_position]) && check_installed("rversions")) {
-        rver <- deps$Version[r_position]
-
-        ver <- rversions::r_versions()
-        r_min_date <- as.Date(ver$date[min(which(ver$version >= rver))])
-        ca <- filter_arch_date(ca, r_min_date)
+    pkg_fields <- check_which("all")
+    # Replace names of packages by the one on the description
+    all_packages_names <- packages
+    is_local_pkg <- check_local(packages)
+    # Get the direct dependencies of the packages
+    # Local
+    if (any(is_local_pkg)) {
+        ap_local <- get_from_local_pkg(packages[is_local_pkg], fields = c("Package", pkg_fields))
+        all_packages_names[is_local_pkg] <- ap_local[, "Package"]
+        rownames(ap_local) <- ap_local[, "Package"]
+        ap_local <- ap_local[, pkg_fields]
+    } else {
+        ap_local <- NULL
     }
-    no_version <- intersect(packages, deps$Name[is.na(deps$Version)])
 
-    # minimal CRAN version
-    keep_pkges_no_ver <- ca$Package %in% no_version
-    min_no_ver <- ca[keep_pkges_no_ver, , drop = FALSE]
-    min_no_ver <- min_no_ver[!duplicated(min_no_ver$Package), , drop = FALSE]
+    # Remote
+    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+    on.exit(options(opts), add = TRUE)
+    ap <- available.packages()
+    ap_remote <- ap[all_packages_names[!is_local_pkg], pkg_fields, drop = FALSE]
+    pd <- packages_dependencies(rbind(ap_local, ap_remote))
 
+    # Dependencies on repositories
+    dep_packages <- setdiff(pd$Name, c(BASE, "R"))
+    # Shortcut in case no (strong) dependency on repos
+    if (!length(dep_packages)) {
+        return(NULL)
+    }
 
-    pkgs_version <- setdiff(packages, no_version)
+    # Check even for local packages their dependencies
+    rd <- repos_dependencies(c(dep_packages, all_packages_names), which = pkg_fields)
 
-    min_ver <- ca[ca$Package %in% pkgs_version, , drop = FALSE]
-    min_ver <- merge(deps[deps$Name %in% pkgs_version, , drop = FALSE],
-                     min_ver, all.x = TRUE, all.y = FALSE)
+    # Keep only those interesting
+    columns <- c("Name", "Version")
 
-    deps_higher_v <- (!is.na(deps$version) & package_version(deps$version) < package_version(deps$Version))
-    deps_req_v <- is.na(deps$version) & !is.na(deps$required)
-    deps <- deps[which(deps_higher_v | deps_req_v), , drop = FALSE]
-    rownames(deps) <- NULL
+    comparison <- merge(unique(pd[, columns, drop = FALSE]),
+                        unique(rd[, columns, drop = FALSE]),
+                        all.y = FALSE, all.x = TRUE,
+                        sort = FALSE,
+                        suffixes = c(".set", ".recursive"),
+                        by.x = "Name", by.y = "Name")
+    has_version <- !is.na(comparison$Version.recursive) | !is.na(comparison$Name)
+    needs_update <- has_version & comparison$Version.set < comparison$Version.recursive
+    out <- comparison[which(needs_update), c("Name", "Version.recursive"), drop = FALSE]
+
+    if (!NROW(out)) {
+        df <- data.frame(Name = character(1L), Version = package_version("0.0.0"))
+        return(df[0, ])
+    }
+
+    s <- split(out$Version.recursive, out$Name)
+    l <- lapply(s, function(x){
+        as.character(max(x))
+    })
+    df <- data.frame(Name = names(l), Version = rep(package_version("0.0.0"),
+                                                    length.out = length(l)))
+    df$Version[] <- as.package_version(funlist(l))
+    df
 }
 
 cache_pkg_dep <- function(package, which, keepR = TRUE) {

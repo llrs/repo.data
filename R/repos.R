@@ -25,8 +25,9 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     repos_packages <- setdiff(packages, BASE)
     omit_pkg <- setdiff(packages, rownames(ap))
     if (length(omit_pkg)) {
-        warning("Omitting packages, maybe they are currently not on the repositories?\n",
-                toString(omit_pkg), immediate. = TRUE)
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\n Maybe they are currently not available?",
+                immediate. = TRUE, call. = FALSE)
     }
     if (is.null(packages)) {
         packages <- rownames(ap)
@@ -48,7 +49,7 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     pd2$Repo[is.na(pd2$Repo)] <- "Other"
 
     # Prefill matrix
-    M <- matrix(0, ncol = length(repos) + 1L, nrow = nrow(ap))
+    M <- matrix(0, ncol = length(repos) + 1L, nrow = NROW(ap))
     colnames(M) <- c(names(repos), "Other")
     rownames(M) <- rownames(ap)
 

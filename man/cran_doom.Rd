@@ -39,8 +39,10 @@ This code calculates how much time the chain reaction will go on if maintainer d
 Packages on Suggested: field should
 }
 \examples{
+\donttest{
 cd <- cran_doom()
 head(cd$details)
+}
 }
 \references{
 Original code from: \url{https://github.com/schochastics/cran-doomsday/blob/main/index.qmd}
