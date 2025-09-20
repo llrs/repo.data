@@ -21,6 +21,7 @@ bioc_cran_archived(which = "strong")
 A data.frame with the name of the Bioconductor packages
 depending on archived packages (on Archived column) and the
 number of missing packages (n).
+\code{NA} if not able to collect the data.
 }
 \description{
 Checks on the 4 Bioconductor repositories which packages depend on a

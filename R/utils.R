@@ -10,28 +10,33 @@ save_state <- function(name, out, verbose = TRUE) {
         message("Retrieving ", name, ", this might take a bit.\n",
                 "Caching results to be faster next call in this session.")
         }
-        pkg_state[[name]] <- out
+        m <- tryCatch(out, warning = function(w) {NA}, error = function(e) {NA})
+        if (is_not_data(m)) {
+            return(NA)
+        }
+        pkg_state[[name]] <- m
     }
     pkg_state[[name]]
 }
 
-funlist <- function(x){unlist(x, FALSE, FALSE)}
+funlist <- function(x) {unlist(x, FALSE, FALSE)}
 
 
 get_package_subset <- function(name, pkges) {
     stopifnot(is.character(name) && length(name) == 1L,
               "NULL or character vector" = is.null(pkges) || (is.character(pkges) && length(pkges)))
 
-    if (!empty_env(name)) {
-        df <- pkg_state[[name]]
-
-        if (is.null(pkges)) {
-            return(df)
-        }
-        df[pkg_in_x(df, pkges), , drop = FALSE]
-    } else {
-        NULL
+    if (empty_env(name)) {
+        return(NULL)
     }
+
+    df <- pkg_state[[name]]
+
+    if (is.null(pkges)) {
+        return(df)
+    }
+
+    df[pkg_in_x(df, pkges), , drop = FALSE]
 }
 
 pkg_in_x <- function(x, packages) {
@@ -59,9 +64,6 @@ check_local <- function(x) {
 }
 
 get_from_local_pkg <- function(x, fields = "Package") {
-    # if  (any(!check_local(x))) {
-    #     stop("A package provided wasn't locally available.")
-    # }
     if (!length(x)) {
         return(NULL)
     }
@@ -87,10 +89,19 @@ read_CRAN <- function(path, cran = CRAN_baseurl()) {
     con <- gzcon(url(sprintf("%s/%s", cran, path), open = "rb"))
     on.exit(close(con))
     if (endsWith(path, "rds") || endsWith(path, "RDS")) {
-        readRDS(con)
+        tryCatch(readRDS(con), error = function(e){
+            if (grepl("cannot read from connection", e, fixed = TRUE)) {
+                NULL
+            } else {e}
+        })
     } else {
-        read.dcf(con)
+        tryCatch(read.dcf(con), error = function(e){
+            if (grepl("cannot read from connection", e, fixed = TRUE)) {
+                NULL
+            } else {e}
+        })
     }
+
 }
 
 check_r_version <- function() {
@@ -117,7 +128,7 @@ datetime2POSIXct <- function(date, time, tz = cran_tz) {
 
 
 uniq_count <- function(x, name = "n") {
-    id <- apply(as.matrix(x), 1, paste0, collapse = "")
+    id <- apply(as.matrix(x), 1L, paste0, collapse = "")
 
     # Return if no duplicates
     if (!anyDuplicated(id)) {
@@ -175,7 +186,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 check_packages <- function(packages, length = 1L) {
     char_packages <- is.character(packages) && length(na.omit(packages))
 
-    if (isFALSE(char_packages) & !is.na(length)) {
+    if (isFALSE(char_packages) && !is.na(length)) {
         if (length <= length(packages)) {
             msg <- "Use NULL or a character vector with some packages."
         } else {
@@ -194,7 +205,7 @@ check_packages <- function(packages, length = 1L) {
     #  - least two characters
     #  - start with a letter
     #  - not end in a dot
-    valid_names <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !grepl("\\.$", packages)
+    valid_names <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !endsWith(packages, ".")
 
     # Don't trigger error on local packages
     if (!any(local_packages) && !any(valid_names[!local_packages])) {
@@ -210,3 +221,6 @@ is_logical <- function(x) {
 }
 
 
+is_not_data <- function(x) {
+    !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
+}

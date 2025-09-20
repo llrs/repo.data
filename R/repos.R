@@ -9,6 +9,7 @@
 #' repository. It also has a column for Other repositories (Additional_repositories,
 #' or missing repositories), and the total number of dependencies and total
 #' number of repositories used.
+#' `NA` if not able to collect the data from repositories.
 #' @export
 #' @family utilities
 #' @examples
@@ -19,7 +20,11 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     check_packages(packages, length = NA)
 
     which <- check_which(which)
-    ap <- available.packages(repos = repos, filters = c("CRAN", "duplicates"))
+    ap <- tryCatch(available.packages(repos = repos, filters = c("CRAN", "duplicates")),
+                   warning = function(w){NA})
+    if (is_not_data(ap)) {
+        return(NA)
+    }
 
     # Check packages
     repos_packages <- setdiff(packages, BASE)

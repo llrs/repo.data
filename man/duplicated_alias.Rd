@@ -18,8 +18,10 @@ Report duplicated alias
 \examples{
 # Checking the overlap between to seemingly unrelated packages:
 alias <- cran_alias(c("fect", "gsynth"))
-dup_alias <- duplicated_alias(alias)
-head(dup_alias)
+if (!is.na(alias)) {
+   dup_alias <- duplicated_alias(alias)
+   head(dup_alias)
+}
 }
 \seealso{
 Other utilities: 

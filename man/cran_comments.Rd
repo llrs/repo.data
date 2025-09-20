@@ -11,6 +11,7 @@ cran_comments(packages = NULL)
 }
 \value{
 A data.frame with four columns: package, comment, date and action.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 CRAN volunteers document since ~2009 why they archive packages.

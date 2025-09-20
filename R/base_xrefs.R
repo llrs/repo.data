@@ -4,6 +4,7 @@
 #' @inheritParams base_alias
 #' @returns A data.frame with the links on R's files.
 #' It has 4 columns: Package, Anchor, Target and Source.
+#' `NA` if not able to collect the data from CRAN.
 #' @family links from R
 #' @seealso The raw source of the data is: \code{\link[tools:base_rdxrefs_db]{base_rdxrefs_db()}}.
 #' @export
@@ -12,7 +13,10 @@
 #' head(bl)
 base_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    save_state("base_rdxrefs", xrefs2df(tools::base_rdxrefs_db()))
+    out <- save_state("base_rdxrefs", xrefs2df(tools::base_rdxrefs_db()))
+    if (!is.data.frame(out) && !is.matrix(out)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     links <- get_package_subset("base_rdxrefs", packages)
     as.data.frame(links)[, c("Package", "Source", "Target", "Anchor")]
@@ -24,6 +28,7 @@ base_links <- function(packages = NULL) {
 #' @inheritParams base_alias
 #' @family links from R
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Number of links).
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @examples
 #' \donttest{
@@ -34,6 +39,9 @@ base_targets_links <- function(packages = NULL) {
     out <- NULL
     check_packages(packages, NA)
     out <- save_state("base_targets_links", out, verbose = FALSE)
+    if (!is.data.frame(out) && !is.matrix(out)) {
+        return(NA)
+    }
     if (is.null(out)) {
         bl <- base_links()
         bal <- base_alias()
@@ -58,6 +66,7 @@ base_targets_links <- function(packages = NULL) {
 #' @inheritParams base_alias
 #' @family links from R
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_Rd, n (Number of links).
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @examples
 #' \donttest{
@@ -66,6 +75,9 @@ base_targets_links <- function(packages = NULL) {
 #' }
 base_pages_links <- function(packages = NULL) {
     target_links <- save_state("base_targets_links", base_targets_links())
+    if (!is.data.frame(target_links) && !is.matrix(target_links)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     w <- which(colnames(target_links) %in% "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
@@ -82,6 +94,7 @@ base_pages_links <- function(packages = NULL) {
 #' @inheritParams base_alias
 #' @family links from R
 #' @returns A data.frame with 6 columns: from_pkg, to_pkg, n (Number of links).
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @examples
 #' \donttest{
@@ -90,6 +103,9 @@ base_pages_links <- function(packages = NULL) {
 #' }
 base_pkges_links <- function(packages = NULL) {
     target_links <- save_state("base_targets_links", base_targets_links())
+    if (!is.data.frame(target_links) && !is.matrix(target_links)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg", "n"))
     keep_rows <- nzchar(target_links$to_pkg)

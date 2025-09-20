@@ -12,6 +12,7 @@ cran_links(packages = NULL)
 \value{
 A data.frame with the links on CRAN's packages.
 It has 4 columns: Package, Anchor, Target and Source.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Retrieve links on CRAN packages' R documentation files.

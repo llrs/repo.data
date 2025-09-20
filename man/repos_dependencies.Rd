@@ -22,6 +22,7 @@ repos_dependencies(packages = NULL, which = "all")
 \value{
 A data.frame with 5 columns: the name of the dependency,
 the operator (op), the version it depends the type of dependency and the package.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Extract the packages dependencies, name of the dependency, operator and version

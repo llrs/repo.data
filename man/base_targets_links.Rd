@@ -11,6 +11,7 @@ base_targets_links(packages = NULL)
 }
 \value{
 A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Number of links).
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Explore the relationship between base R packages and other help pages by the target they use.

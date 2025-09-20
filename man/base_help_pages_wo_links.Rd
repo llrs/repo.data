@@ -14,8 +14,10 @@ Help pages without links from other help pages.
 This makes harder to find them.
 }
 \examples{
+\donttest{
 bhwl <- base_help_pages_wo_links()
 head(bhwl)
+}
 }
 \seealso{
 Other functions related to BASE help pages: 

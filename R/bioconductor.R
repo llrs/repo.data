@@ -6,6 +6,7 @@
 #' @returns A data.frame with the name of the Bioconductor packages
 #' depending on archived packages (on Archived column) and the
 #' number of missing packages (n).
+#' `NA` if not able to collect the data.
 #' @export
 #' @seealso For CRAN's data source: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 #' @examples
@@ -15,6 +16,9 @@ bioc_cran_archived <- function(which = "strong") {
     fields_selected <- check_which(which)
     bioc <- bioc_available()
     db <- save_state("CRAN_db", tools::CRAN_package_db())
+    if (is_not_data(db)) {
+        return(NA)
+    }
     columns <- intersect(colnames(bioc), colnames(db))
     db_all <- rbind(db[, columns], bioc[, columns])
     bioc_deps <- packages_dependencies(as.matrix(bioc[, fields_selected]))
@@ -34,7 +38,10 @@ bioc_cran_archived <- function(which = "strong") {
 #' @importFrom utils read.csv
 bioc_version <- function(type = "release") {
     bioc_config <- "https://bioconductor.org/config.yaml"
-    rl <- readLines(con = url(bioc_config))
+    rl <- tryCatch(readLines(con = url(bioc_config)), warning = function(w){NA}, error = function(e){NA})
+    if (is_not_data(rl)) {
+        return(NA)
+    }
     type <- match.arg(type, c("release", "devel"))
     if (identical(type, "release")) {
         version <- which(startsWith(rl, "release_version"))
@@ -66,11 +73,17 @@ bioc_available <- function(version = "release",
     on.exit(options(opts), add = TRUE)
     bioc <- save_state(paste0("bioc_available_", version),
         available.packages(repos = url_repos))
+    if (is_not_data(bioc)) {
+        return(NA)
+    }
     bioc <- as.data.frame(bioc)
     bioc
 }
 
 bioc_views <- function(version = bioc_version()) {
+    if (is.na(version)) {
+        return(NA)
+    }
     url <- paste0("https://bioconductor.org/packages/", version, "/bioc/VIEWS")
     read.dcf(url(url))
 }
@@ -81,6 +94,7 @@ bioc_archive <- function() {
     # on the date most packages were updated
     v <- paste0(3, ".", 1:21)
     bv <- lapply(v, bioc_views)
+
     versions <- rep(v, vapply(bv, NROW, numeric(1L)))
     # m1 <- do.call(merge, bv, all = TRUE)
 

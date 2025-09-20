@@ -8,9 +8,14 @@
 #' @examples
 #' # Checking the overlap between to seemingly unrelated packages:
 #' alias <- cran_alias(c("fect", "gsynth"))
-#' dup_alias <- duplicated_alias(alias)
-#' head(dup_alias)
+#' if (!is.na(alias)) {
+#'    dup_alias <- duplicated_alias(alias)
+#'    head(dup_alias)
+#' }
 duplicated_alias <- function(alias) {
+    if (is_not_data(alias)) {
+        return(NA)
+    }
     stopifnot(all(c("Package", "Source", "Target") %in% colnames(alias)))
     da <- dup_alias(alias)
     da[, c("Target", "Package", "Source"), drop = FALSE]

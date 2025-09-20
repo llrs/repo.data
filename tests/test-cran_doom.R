@@ -1,5 +1,8 @@
 library("repo.data")
 cd <- cran_doom()
+if (is.na(cd)) {
+    q("no")
+}
 stopifnot(is.list(cd))
 stopifnot(names(cd) == c("time_till_last", "last_archived", "npackages", "details"))
 stopifnot(is.data.frame(cd$details))

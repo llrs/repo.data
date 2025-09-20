@@ -4,6 +4,7 @@
 #' @inheritParams base_alias
 #' @returns A data.frame with the links on CRAN's packages.
 #' It has 4 columns: Package, Anchor, Target and Source.
+#' `NA` if not able to collect the data from CRAN.
 #' @family links from CRAN
 #' @family meta info from CRAN
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_db()}}.
@@ -14,6 +15,9 @@
 cran_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
+    if (is_not_data(raw_xrefs)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     env <- "full_cran_rdxrefs"
     # Check for random packages
@@ -114,9 +118,14 @@ cran_targets_links <- function(packages = NULL) {
     if (is.null(packages)) {
         deps <- c(cran_packages(), BASE)
     } else {
-        deps <- tools::package_dependencies(packages)
+        ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
+        if (is_not_data(ap)) {
+            return(NA)
+        }
+        deps <- tools::package_dependencies(packages, db = ap)
     }
     deps <- unique(c(packages, funlist(deps)))
+
 
     # Get the packages
     bal <- base_alias(intersect(deps, c(BASE, "R")))
@@ -135,10 +144,12 @@ cran_targets_links <- function(packages = NULL) {
     out_fun <- t2b2[t2b2$from_pkg %in% packages, , drop = FALSE]
     return(add_uniq_count(out_fun))
 
-
     # Add new package's data
     if (length(new_packages)) {
         raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
+        if (is_not_data(raw_xrefs)) {
+            return(NA)
+        }
         new_xrefs <- xrefs2df(raw_xrefs[new_packages])
         # warnings_links(new_xrefs)
         xrefs <- pkg_state[["full_cran_rdxrefs"]]
@@ -153,8 +164,9 @@ cran_targets_links <- function(packages = NULL) {
 
     new_out <- out[out$from_pkg %in% new_packages, , drop = FALSE]
     out <- save_state(env, out, verbose = FALSE)
-
-    if (!is.null(packages)) {
+    if (!is.data.frame(out) && !is.matrix(out)) {
+        return(NA)
+    } else if (!is.null(packages)) {
         out <- out[out$from_pkg %in% packages | out$to_pkg %in% packages, ]
         rownames(out) <- NULL
         out
@@ -178,6 +190,9 @@ cran_pages_links <- function(packages = NULL) {
     check_packages(packages, NA)
 
     target_links <- cran_targets_links(packages)
+    if (is_not_data(target_links)) {
+        return(NA)
+    }
 
     w <- which(colnames(target_links) %in% "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
@@ -194,6 +209,7 @@ cran_pages_links <- function(packages = NULL) {
 #' @inheritParams base_alias
 #' @family links from CRAN
 #' @returns A data.frame with 6 columns: from_pkg, to_pkg, n (Number of links).
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @examples
 #' \donttest{
@@ -202,6 +218,9 @@ cran_pages_links <- function(packages = NULL) {
 #' }
 cran_pkges_links <- function(packages = NULL) {
     target_links <- save_state("cran_pages_links", base_targets_links())
+    if (is_not_data(target_links)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg"))
     keep_rows <- nzchar(target_links$to_pkg)

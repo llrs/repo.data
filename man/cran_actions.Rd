@@ -11,6 +11,7 @@ cran_actions(packages = NULL, silent = FALSE)
 }
 \value{
 A data.frame with Date, Time, User, Action, Package and Version columns.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 CRAN tracks movements of packages and the actions used (for example to report

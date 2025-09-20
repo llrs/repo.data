@@ -13,6 +13,7 @@ cran_archive(packages = NULL)
 A data.frame with 6 columns: Package, Date (of publication), Version,
 User, size and status (archived or current).
 It is sorted by package name and date.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Retrieve the archive and the current database.
@@ -25,12 +26,16 @@ Depending on the data requested and packages currently on CRAN, you might get
 a warning regarding a package being both archived and current.
 }
 \examples{
+\dontshow{if (NROW(available.packages())) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 ap <- available.packages()
-a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
-ca <- cran_archive(a_package)
-head(ca)
+if (NROW(ap)) {
+    a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
+    ca <- cran_archive(a_package)
+    head(ca)
 }
+}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_db()}},

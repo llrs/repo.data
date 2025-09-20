@@ -26,6 +26,7 @@ A data.frame with one line per package and at least one column per
 repository. It also has a column for Other repositories (Additional_repositories,
 or missing repositories), and the total number of dependencies and total
 number of repositories used.
+\code{NA} if not able to collect the data from repositories.
 }
 \description{
 Explore the relationships between packages and repositories available.

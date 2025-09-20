@@ -11,6 +11,7 @@ cran_history(packages = NULL)
 }
 \value{
 A data.frame with the information to recreate CRAN at any point before today.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 It uses available information to provide the most accurate information of

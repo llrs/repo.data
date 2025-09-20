@@ -11,6 +11,7 @@ cran_alias(packages = NULL)
 }
 \value{
 A data.frame with three columns: Package, Source and Target.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Retrieve alias available on CRAN.

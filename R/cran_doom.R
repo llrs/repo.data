@@ -15,6 +15,7 @@
 #'  - details: A data.frame with information for each individual package:
 #'  Name, date affected, affected directly, repository, times it is affected
 #'  (by archival causing issues.)
+#' `NA` if not able to collect the data from CRAN.
 #' @importFrom utils available.packages
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 #' @family utilities
@@ -22,12 +23,15 @@
 #' @examples
 #' \donttest{
 #' cd <- cran_doom()
-#' head(cd$details)
+#' if (!is.na(cd)) head(cd$details)
 #' }
 cran_doom <- function(which = "strong", bioc = FALSE) {
     fields_selected <- check_which(which)
 
     db <- save_state("CRAN_db", tools::CRAN_package_db())
+    if (is_not_data(db)) {
+        return(NA)
+    }
     db$repo <- "CRAN"
     if (isTRUE(bioc)) {
         bioc <- bioc_available()

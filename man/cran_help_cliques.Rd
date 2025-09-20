@@ -12,6 +12,7 @@ cran_help_cliques(packages = NULL)
 \value{
 Return a data.frame of help pages not connected to the network of help pages.
 Or NULL if nothing are found.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Some help pages have links to other pages and they might be linked from others

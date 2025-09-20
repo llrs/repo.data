@@ -11,24 +11,32 @@
 #' @returns A data.frame with 6 columns: Package, Date (of publication), Version,
 #'  User, size and status (archived or current).
 #'  It is sorted by package name and date.
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @family meta info from CRAN
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_db()}},
 #' \code{\link[tools:CRAN_current_db]{CRAN_current_db()}}.
 #'  For some dates and comments about archiving packages: [cran_comments()].
-#' @examples
+#' @examplesIf NROW(available.packages())
 #' \donttest{
 #' ap <- available.packages()
-#' a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
-#' ca <- cran_archive(a_package)
-#' head(ca)
+#' if (NROW(ap)) {
+#'     a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
+#'     ca <- cran_archive(a_package)
+#'     head(ca)
+#' }
 #' }
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     check_packages(packages, NA)
     current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    if (is_not_data(current)) {
+        return(NA)
+    }
     archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
-
+    if (is_not_data(archive)) {
+        return(NA)
+    }
     env <- "full_cran_archive"
     arch_names <- names(archive)
     curr_names <- gsub("_.+", "", rownames(current)) # Rownames without version
@@ -84,6 +92,9 @@ cran_archive <- function(packages = NULL) {
 # Like CRAN archive but provides the published date and the date of archival if known
 cran_archive_dates <- function() {
     ca <- save_state("full_cran_archive", cran_archive())
+    if (is_not_data(ca)) {
+        return(NA)
+    }
     dates <- split(ca$published_date, ca$package)
     l <- lapply(dates, function(x) {
         c(x[-length(x)] - 1L, NA)
@@ -94,6 +105,9 @@ cran_archive_dates <- function() {
 
     # TODO match package version with dates of archival or removal
     cc <- save_state("cran_comments", cran_comments())
+    if (is_not_data(cc)) {
+        return(NA)
+    }
     w <- which(cc$action %in% c("archived", "removed", "replaced", "renamed"))
     cc[w, ]
 }
@@ -101,7 +115,13 @@ cran_archive_dates <- function() {
 
 cran_packages <- function(packages = NULL) {
     current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    if (is_not_data(current)) {
+        return(NA)
+    }
     archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
+    if (is_not_data(archive)) {
+        return(NA)
+    }
     s <- strsplit(rownames(current), "_", fixed = TRUE)
     current_packages <- vapply(s, "[", FUN.VALUE = character(1L), i = 1L)
     archive_packages <- names(archive)

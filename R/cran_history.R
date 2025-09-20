@@ -9,20 +9,30 @@
 #' @inheritParams base_alias
 #' @inheritParams cran_alias
 #' @returns A data.frame with the information to recreate CRAN at any point before today.
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @seealso [cran_archive()], [cran_actions()], [cran_comments()].
 #' @family meta info from CRAN
 #' @examples
 #' cran_history
 cran_history <- function(packages = NULL) {
-    save_state("cran_history", cran_all_history())
+    history <- save_state("cran_history", cran_all_history())
+    if (is_not_data(history)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     get_package_subset("cran_history", packages)
 }
 
 cran_all_history <- function() {
     archive <- save_state("full_cran_archive", cran_archive())
+    if (is_not_data(archive)) {
+        return(NA)
+    }
     actions <- save_state("full_cran_actions", cran_actions())
+    if (is_not_data(actions)) {
+        return(NA)
+    }
     # comments <- save_state("cran_comments", cran_comments())
 
     archive$Date <- strftime(archive$Datetime, "%F")

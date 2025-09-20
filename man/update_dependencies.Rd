@@ -10,7 +10,8 @@ update_dependencies(packages)
 \item{packages}{A character vector of packages names.}
 }
 \value{
-The data.frame filtered with some relevant rows
+The data.frame filtered with some relevant rows.
+\code{NA} if not able to collect the data from repositories.
 }
 \description{
 Helper function to detect which package have a required version on the

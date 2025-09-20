@@ -5,13 +5,18 @@
 #' This makes harder to navigate to related help pages.
 #' @inheritParams cran_links
 #' @returns A data.frame with two columns: Package and Source
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @family functions related to CRAN help pages
 #' @examples
+#' \donttest{
 #' ap <- available.packages()
-#' a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
-#' chnl <- cran_help_pages_not_linked(a_package)
-#' head(chnl)
+#' if (NROW(ap)) {
+#'     a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
+#'     chnl <- cran_help_pages_not_linked(a_package)
+#'     head(chnl)
+#' }
+#' }
 cran_help_pages_not_linked <- function(packages = NULL) {
     check_packages(packages)
     cal <-  cran_alias(packages)
@@ -20,6 +25,9 @@ cran_help_pages_not_linked <- function(packages = NULL) {
     }
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    if (is_not_data(rbl)) {
+        return(NA)
+    }
     if (!is.null(packages)) {
         rbl <- packages_in_links(rbl, packages)
     }
@@ -47,18 +55,26 @@ cran_help_pages_not_linked <- function(packages = NULL) {
 #' This makes harder to find them.
 #' @inheritParams base_alias
 #' @returns A data.frame with two columns: Package and Source
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @family functions related to CRAN help pages
 #' @examples
+#' \donttest{
 #' ap <- available.packages()
-#' a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
-#' chwl <- cran_help_pages_wo_links(a_package)
-#' head(chwl)
+#' if (NROW(ap)) {
+#'     a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
+#'     chwl <- cran_help_pages_wo_links(a_package)
+#'     head(chwl)
+#' }
+#' }
 cran_help_pages_wo_links <- function(packages = NULL) {
     check_packages(packages)
     cal <- cran_alias(packages)
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    if (is_not_data(rbl)) {
+        return(NA)
+    }
     if (!is.null(packages)) {
         rbl <- packages_in_links(rbl, packages)
     }
@@ -84,6 +100,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' @inheritParams base_alias
 #' @returns Return a data.frame of help pages not connected to the network of help pages.
 #' Or NULL if nothing are found.
+#' `NA` if not able to collect the data from CRAN.
 #' @family functions related to CRAN help pages
 #' @export
 #' @examplesIf requireNamespace("igraph", quietly = TRUE)
@@ -95,9 +112,13 @@ cran_help_cliques <- function(packages = NULL) {
         stop("This function requires igraph to find help pages not linked to the network.")
     }
     if (!is.null(packages)) {
+        ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
+        if (is_not_data(ap)) {
+            return(NA)
+        }
         pkges <- tools::package_dependencies(packages,
                                              recursive = TRUE,
-                                             db = available.packages(filters = c("CRAN", "duplicates")))
+                                             db = ap)
     } else {
         pkges <- NULL
     }
@@ -106,7 +127,9 @@ cran_help_cliques <- function(packages = NULL) {
     # FIXME: We don't need to calculate the number of unique links targets 2 pages
     # Solution: create an internal version that omits counting them
     cal <- cran_targets_links(pkges)
-
+    if (is_not_data(cal)) {
+        return(NA)
+    }
     cal <- packages_in_links(cal, pkges)
     cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), , drop = FALSE]
     # Filter out those links not resolved
@@ -146,6 +169,7 @@ cran_help_cliques <- function(packages = NULL) {
 #' @inheritParams cran_links
 #' @references <https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Cross_002dreferences>
 #' @returns A data.frame of help pages and links.
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #'
 #' @examples
@@ -153,7 +177,10 @@ cran_help_cliques <- function(packages = NULL) {
 cran_help_pages_links_wo_deps <- function(packages = NULL) {
     check_packages(packages)
     ref_packages <- packages
-    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
+    if (is_not_data(ap)) {
+        return(NA)
+    }
     if (check_packages(packages)) {
         pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
         packages <- setdiff(funlist(pkg), BASE)

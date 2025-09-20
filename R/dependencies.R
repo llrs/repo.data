@@ -7,6 +7,7 @@
 #'
 #' @returns A data.frame with 5 columns: the name of the dependency,
 #' the operator (op), the version it depends the type of dependency and the package.
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @family utilities
 #' @examples
@@ -20,7 +21,10 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     env <- "repos_dependencies"
 
     first <- empty_env(env)
-    ap <- available.packages()
+    ap <- tryCatch(available.packages(), warning = function(w){NA})
+    if (is_not_data(ap)) {
+        return(NA)
+    }
     pd <- pkg_state[[env]]
     all_packages <- rownames(ap)
 
@@ -65,6 +69,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 #' @inheritParams repos_dependencies
 #'
 #' @returns A data.frame with the name, version required, if only one package requires it it also show the name of the package.
+#' `NA` if not able to collect the data from repositories.
 #' @note It keeps the base packages too even if just knowing the R version required would be enough.
 #' @export
 #'
@@ -89,7 +94,10 @@ package_dependencies <- function(packages = ".", which = "strong") {
     pkges_names <- unique(c(local_pkgs, packages[!is_local_pkg]))
     check_packages(packages, NA)
 
-    ap <- available.packages(filters = c("CRAN", "duplicates"))
+    ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
+    if (is_not_data(ap)) {
+        return(NA)
+    }
     new_ap <- rbind(ap[, c(fields_selected, "Package"), drop = FALSE],
                     local_ap[, c(fields_selected, "Package"), drop = FALSE])
     all_deps <- tools::package_dependencies(
@@ -193,7 +201,8 @@ package_dependencies <- function(packages = ".", which = "strong") {
 #'
 #' @param packages A character vector of packages names.
 #' @seealso [package_dependencies()]
-#' @returns The data.frame filtered with some relevant rows
+#' @returns The data.frame filtered with some relevant rows.
+#' `NA` if not able to collect the data from repositories.
 #' @family utilities
 #' @export
 #' @examples
@@ -223,7 +232,10 @@ update_dependencies <- function(packages) {
     # Remote
     opts <- options(available_packages_filters = c("CRAN", "duplicates"))
     on.exit(options(opts), add = TRUE)
-    ap <- available.packages()
+    ap <- tryCatch(available.packages(), warning = function(w){NA})
+    if (is_not_data(ap)) {
+        return(NA)
+    }
     ap_remote <- ap[all_packages_names[!is_local_pkg], pkg_fields, drop = FALSE]
     pd <- packages_dependencies(rbind(ap_local, ap_remote))
 
@@ -271,7 +283,7 @@ cache_pkg_dep <- function(package, which, keepR = TRUE) {
 }
 
 packages_dependencies <- function(ap) {
-    stopifnot(is.matrix(ap) || is.data.frame(ap))
+    stopifnot(is_not_data(ap))
     no_deps <- apply(as.matrix(ap), 1, function(x){all(is.na(x))})
     ap <- ap[!no_deps, , drop = FALSE]
     if (!NROW(ap)) {

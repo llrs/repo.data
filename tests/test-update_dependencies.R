@@ -1,6 +1,9 @@
 library("repo.data")
 pkg <- "ggeasy"
 pd <- package_dependencies(pkg)
+if (is.na(pd)) {
+    q("no")
+}
 ud <- update_dependencies(pkg)
 stopifnot(as.logical(length(ud)))
 stopifnot(NROW(ud) <= NROW(pd))

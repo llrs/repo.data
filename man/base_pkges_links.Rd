@@ -11,6 +11,7 @@ base_pkges_links(packages = NULL)
 }
 \value{
 A data.frame with 6 columns: from_pkg, to_pkg, n (Number of links).
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Explore the relationship between base R packages and other packages.

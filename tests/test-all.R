@@ -5,13 +5,16 @@ opts <- options(repos = "https://CRAN.R-project.org")
 on.exit(options(opts), add = TRUE)
 # cran archive ####
 rtweet <- cran_archive("rtweet")
+if (is.na(rtweet)) {
+    q("no")
+}
 stopifnot(nrow(rtweet) >= 15L)
 # Repeat search for a different package to test for accessing the cache with a package currently on CRAN
 BaseSet <- cran_archive("BaseSet")
-stopifnot(nrow(BaseSet) > 1L, nrow(BaseSet) < 200L)
+    stopifnot(nrow(BaseSet) > 1L, nrow(BaseSet) < 200L)
 # Test on a package without archive
 ABACUS <- cran_archive("ABACUS")
-stopifnot(nrow(ABACUS) == 1L)
+    stopifnot(nrow(ABACUS) == 1L)
 
 pkges <- c("BaseSet", "dplyr")
 cpk <- cran_archive(pkges)

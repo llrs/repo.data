@@ -29,6 +29,7 @@ A list with multiple elements:
 \item details: A data.frame with information for each individual package:
 Name, date affected, affected directly, repository, times it is affected
 (by archival causing issues.)
+\code{NA} if not able to collect the data from CRAN.
 }
 }
 \description{
@@ -41,7 +42,7 @@ Packages on Suggested: field should
 \examples{
 \donttest{
 cd <- cran_doom()
-head(cd$details)
+if (!is.na(cd)) head(cd$details)
 }
 }
 \references{

@@ -15,6 +15,7 @@
 #' Compare with the original file in case of doubts.
 #' @inheritParams base_alias
 #' @returns A data.frame with four columns: package, comment, date and action.
+#' `NA` if not able to collect the data from CRAN.
 #' @references Original file: <https://cran.r-project.org/src/contrib/PACKAGES.in>
 #' @export
 #' @family meta info from CRAN
@@ -24,7 +25,10 @@
 #' head(cc)
 #' }
 cran_comments <- function(packages = NULL) {
-    save_state("cran_comments", cran_all_comments(), verbose = FALSE)
+    out <- save_state("cran_comments", cran_all_comments(), verbose = FALSE)
+    if (!is.data.frame(out) && !is.matrix(out)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     get_package_subset("cran_comments", packages)
 }
@@ -32,6 +36,9 @@ cran_comments <- function(packages = NULL) {
 
 cran_all_comments <- function() {
     file <- save_state("comments", read_CRAN("/src/contrib/PACKAGES.in"))
+    if (is_not_data(file)) {
+        return(NA)
+    }
     file <- as.data.frame(file)
     comments_df <- extract_field(file, field = "X-CRAN-Comment")
     history_df <- extract_field(file, field = "X-CRAN-History")

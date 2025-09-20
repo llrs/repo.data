@@ -10,6 +10,7 @@ cran_maintainers()
 A data.frame with one row per package and 11 columns.
 The package name, Maintainer field, user maintainer manual date, packaged
 date, published date, name of maintainer used, email used, direction and domain.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Make more accessible information about maintainers. Extracts and makes

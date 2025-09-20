@@ -12,6 +12,7 @@
 #' @returns A data.frame with one row per package and 11 columns.
 #' The package name, Maintainer field, user maintainer manual date, packaged
 #' date, published date, name of maintainer used, email used, direction and domain.
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_authors_db]{CRAN_authors_db()}}
 #' @examples
@@ -19,6 +20,9 @@
 #' head(maintainers)
 cran_maintainers <- function() {
     db <- save_state("CRAN_db", tools::CRAN_package_db())
+    if (is_not_data(db)) {
+        return(NA)
+    }
     # https://mastodon.social/@eddelbuettel/114217492195207107
     sm <- strcapture(pattern = "['\"]?(.+)['\"]?<((.+)@(.+))>",
                          x = db$Maintainer,

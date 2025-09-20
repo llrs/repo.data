@@ -11,16 +11,21 @@ cran_help_pages_not_linked(packages = NULL)
 }
 \value{
 A data.frame with two columns: Package and Source
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Help pages without links to other help pages.
 This makes harder to navigate to related help pages.
 }
 \examples{
+\donttest{
 ap <- available.packages()
-a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
-chnl <- cran_help_pages_not_linked(a_package)
-head(chnl)
+if (NROW(ap)) {
+    a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
+    chnl <- cran_help_pages_not_linked(a_package)
+    head(chnl)
+}
+}
 }
 \seealso{
 Other functions related to CRAN help pages: 

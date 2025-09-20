@@ -5,12 +5,16 @@
 #' CRAN tracks movements of packages and the actions used (for example to report
 #' the number of manual actions taken by the volunteers).
 #' @inheritParams base_alias
-#' @return A data.frame with Date, Time, User, Action, Package and Version columns.
+#' @returns A data.frame with Date, Time, User, Action, Package and Version columns.
+#' `NA` if not able to collect the data from CRAN.
 #' @importFrom stats na.omit
 #' @importFrom utils head
 #' @keywords internal
 cran_actions <- function(packages = NULL, silent = FALSE) {
-    save_state("full_cran_actions", cran_all_actions())
+    out <- save_state("full_cran_actions", cran_all_actions())
+    if (is_not_data(out)) {
+        return(NA)
+    }
     check_packages(packages, NA)
     actions <- get_package_subset("full_cran_actions", packages)
     first_package <- !duplicated(actions$Package)

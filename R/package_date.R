@@ -10,6 +10,7 @@
 #'
 #' @returns A vector with the datetimes of the published package (or current
 #' date if not published) and the datetime when the requirements were met.
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @family utilities
 #' @examples
@@ -38,6 +39,9 @@ package_date <- function(packages = ".", which = "strong") {
     # Dependencies of remote packages
     if (any(!is_local_pkg)) {
         rd <- repos_dependencies(packages[!is_local_pkg], which = fields)
+        if (is_not_data(rd)) {
+            return(NA)
+        }
         deps_df <- rbind(deps_df, rd)
     }
 
@@ -58,7 +62,11 @@ package_date <- function(packages = ".", which = "strong") {
     r_ver_date <- NULL
     # Find release date of R version
     if (sum(which_r) && r_versions) {
-        rver <- rversions::r_versions()
+        rver <- versions()
+        if (is_not_data(rver)) {
+            return(NA)
+        }
+
         max_version <- max(deps_df$Version[which_r])
         r_ver_date <- rver$date[package_version(rver$version) >= package_version(max_version)][1L]
         ca <- filter_arch_date(ca, r_ver_date)
@@ -193,7 +201,10 @@ package_date_actions <- function(packages = ".", which = "strong") {
 
     # Find release date of R version
     if (r_versions) {
-        rver <- rversions::r_versions()
+        rver <- versions()
+        if (is_not_data(rver)) {
+            return(NA)
+        }
         ver_position <- match(deps_df$version[which_r], package_version(rver$version))
         deps_df$Datetime[which_r] <- rver$date[ver_position]
     }

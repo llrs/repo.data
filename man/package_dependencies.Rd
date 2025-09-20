@@ -21,6 +21,7 @@ package_dependencies(packages = ".", which = "strong")
 }
 \value{
 A data.frame with the name, version required, if only one package requires it it also show the name of the package.
+\code{NA} if not able to collect the data from repositories.
 }
 \description{
 Despite the description minimal requirements find which versions are

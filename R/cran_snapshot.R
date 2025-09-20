@@ -7,6 +7,7 @@
 #' @param date The date you want to check.
 #'
 #' @returns The data.frame with the packages and versions at a given date.
+#' `NA` if not able to collect the data from CRAN.
 #' @export
 #' @family utilities
 #' @examples
@@ -23,12 +24,15 @@ cran_snapshot <- function(date) {
     if (date == Sys.Date()) {
         return(ca[ca$Status == "current", , drop = FALSE])
     }
-    if (is.null(ca)) {
-        return(NULL)
+    if (is_not_data(ca)) {
+        return(NA)
     }
     ca_before_date <- filter_arch_date(ca, date)
 
     cc <- cran_comments(ca_before_date[, "Package"])
+    if (is_not_data(cc)) {
+        return(NA)
+    }
     # If date is earlier than any comments return what it was.
     if (date < min(cc$date, na.rm = TRUE)) {
         return(ca_before_date)
@@ -69,20 +73,18 @@ cran_snapshot <- function(date) {
 #' ip <- data.frame(Package = c("A3", "AER"), Version = c("1.0.0", "1.2-15"))
 #' cran_date(ip)
 cran_date <- function(versions) {
-    if ((!is.data.frame(versions) || !is.matrix(versions)) && !all(c("Package", "Version") %in% colnames(versions))) {
+    if (is_not_data(versions) && !all(c("Package", "Version") %in% colnames(versions))) {
         stop("Versions should be a data.frame with 'Package' and 'Version' columns.")
     }
     if (any(versions[, "Package"] %in% BASE)) {
         versions <- versions[!versions[, "Package"] %in% c(BASE, "R"), , drop = FALSE]
     }
-    if (!NROW(versions)) {
-        warning("No packages to find a date on CRAN.")
+    if (is_not_data(versions)) {
         return(NA)
     }
 
     ca_packages <- cran_archive(versions[, "Package"])
-    if (!NROW(ca_packages)) {
-        warning("No packages on CRAN to find a date.")
+    if (is_not_data(ca_packages)) {
         return(NA)
     }
     versions[, "Version"] <- as.character(versions[, "Version"])

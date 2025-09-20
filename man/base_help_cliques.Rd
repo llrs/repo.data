@@ -8,19 +8,13 @@ base_help_cliques()
 }
 \value{
 Return a data.frame of help pages not connected to the network of help pages.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Some help pages have links to and from but they are closed networks.
 }
 \details{
 Requires igraph
-}
-\examples{
-\dontshow{if (requireNamespace("igraph", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\donttest{
-base_help_cliques()
-}
-\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other functions related to BASE help pages: 

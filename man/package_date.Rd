@@ -22,6 +22,7 @@ package_date(packages = ".", which = "strong")
 \value{
 A vector with the datetimes of the published package (or current
 date if not published) and the datetime when the requirements were met.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Search the DESCRIPTION file for the release dates of dependencies and return the earliest date according to CRAN's archive.

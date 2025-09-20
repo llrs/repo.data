@@ -11,6 +11,7 @@ cran_snapshot(date)
 }
 \value{
 The data.frame with the packages and versions at a given date.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Given the available information which packages were on CRAN on a given date?

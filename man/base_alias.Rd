@@ -11,13 +11,16 @@ base_alias(packages = NULL)
 }
 \value{
 A data.frame with three columns: Package, Source and Target.
+\code{NA} if not able to collect the data from CRAN.
 }
 \description{
 Retrieve alias available on R.
 }
 \examples{
+\donttest{
 ba <- base_alias()
 head(ba)
+}
 }
 \seealso{
 The raw source of the data is: \code{\link[tools:base_aliases_db]{base_aliases_db()}}.
