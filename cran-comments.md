@@ -1,13 +1,6 @@
 
-* Example for cran_pkges_links was wrapped on \donttest{}
-
-* This is a new package being submitted to CRAN
-
-* This packages access data on src/contrib/Meta/ via the tools package: 
-  Sometimes it fails to read it if the data is being written.
+* Package was tested with no internet connection. No errors or warnings was detected.
 
 * This packages works without errors or warnings on the CRAN platforms: 
  - win-devel
- - win-release
- - macos
  
