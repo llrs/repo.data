@@ -84,12 +84,10 @@ on the session info or a data.frame:
 
 ``` r
 cran_session(session = sessionInfo())
-#> Warning in cran_archive(versions[, "Package"]): Omitting packages repo.data.
-#> Maybe they were not on CRAN?
 #> [1] "2025-08-27 18:40:06 CEST"
 ip <- installed.packages()
 cran_date(ip)
-#> Warning in cran_archive(versions[, "Package"]): Omitting packages repo.data, AnnotationDbi, AnnotationFilter, AnnotationHub, BioCor, Biobase, BiocFileCache, BiocGenerics, BiocIO, BiocParallel, BiocPkgTools, BiocStyle, BiocVersion, Biostrings, DESeq2, DelayedArray, ExperimentHub, GO.db, GOSemSim, GSEABase, GenomeInfoDb, GenomeInfoDbData, GenomicAlignments, GenomicFeatures, GenomicRanges, HDF5Array, IRanges, KEGGREST, MatrixGenerics, ProtGenerics, Rhdf5lib, Rhtslib, Rsamtools, S4Arrays, S4Vectors, SingleCellExperiment, SparseArray, SummarizedExperiment, UCSC.utils, XVector, airway, alabaster.base, alabaster.matrix, alabaster.ranges, alabaster.sce, alabaster.schemas, alabaster.se, annotate, assorthead, biocViews, biomformat, cransays, ensembldb, fgsea, gypsum, h5mread, microshades, org.Hs.eg.db, phyloseq, preprocessCore, reactome.db, resios, rhdf5, rhdf5filters, rostemplate, rotemplate, rtracklayer, rutils, scRNAseq.
+#> Warning in cran_archive(versions[, "Package"]): Omitting packages airway, alabaster.base, alabaster.matrix, alabaster.ranges, alabaster.sce, alabaster.schemas, alabaster.se, annotate, AnnotationDbi, AnnotationFilter, AnnotationHub, assorthead, Biobase, BiocFileCache, BiocGenerics, BiocIO, BioCor, BiocParallel, BiocPkgTools, BiocStyle, BiocVersion, biocViews, biomformat, Biostrings, cransays, DelayedArray, DESeq2, ensembldb, ExperimentHub, fgsea, GenomeInfoDb, GenomeInfoDbData, GenomicAlignments, GenomicFeatures, GenomicRanges, GO.db, GOSemSim, GSEABase, gypsum, h5mread, HDF5Array, IRanges, KEGGREST, MatrixGenerics, microshades, org.Hs.eg.db, phyloseq, preprocessCore, ProtGenerics, reactome.db, resios, rhdf5, rhdf5filters, Rhdf5lib, Rhtslib, rostemplate, rotemplate, Rsamtools, rtracklayer, rutils, S4Arrays, S4Vectors, scRNAseq, SingleCellExperiment, SparseArray, SummarizedExperiment, UCSC.utils, XVector.
 #> Maybe they were not on CRAN?
 #> [1] "2025-08-29 16:00:06 CEST"
 ```
