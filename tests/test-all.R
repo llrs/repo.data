@@ -5,7 +5,7 @@ opts <- options(repos = "https://CRAN.R-project.org")
 on.exit(options(opts), add = TRUE)
 # cran archive ####
 rtweet <- cran_archive("rtweet")
-if (is.na(rtweet)) {
+if (length(rtweet) == 1L && is.na(rtweet)) {
     q("no")
 }
 stopifnot(nrow(rtweet) >= 15L)

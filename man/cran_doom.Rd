@@ -42,7 +42,7 @@ Packages on Suggested: field should
 \examples{
 \donttest{
 cd <- cran_doom()
-if (!is.na(cd)) head(cd$details)
+if (length(cd) > 1L) head(cd$details)
 }
 }
 \references{

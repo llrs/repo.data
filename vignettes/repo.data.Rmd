@@ -96,7 +96,7 @@ To retrieve these help pages forming a clique it requires the suggested package 
 ```{r eval=requireNamespace("igraph", quietly = TRUE) && with_internet}
 cliques <- cran_help_cliques(pkg)
 # Number of help pages connected
-if (!is.na(cliques)) {
+if (length(cliques)) {
     table(cliques$n) 
 }
 ```

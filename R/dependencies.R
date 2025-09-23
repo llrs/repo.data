@@ -84,9 +84,8 @@ package_dependencies <- function(packages = ".", which = "strong") {
     local_ap <- NULL
     local_pkgs <- NULL
     if (any(is_local_pkg)) {
-        local_pkgs <- get_from_local_pkg(packages[is_local_pkg],
+        local_ap <- get_from_local_pkg(packages[is_local_pkg],
                                          fields = c(PACKAGE_FIELDS, "Package", "Version"))
-        local_ap <- do.call(rbind, local_pkgs)
         rownames(local_ap) <- local_ap[, "Package"]
         local_pkgs <- rownames(local_ap)
     }
@@ -283,7 +282,7 @@ cache_pkg_dep <- function(package, which, keepR = TRUE) {
 }
 
 packages_dependencies <- function(ap) {
-    stopifnot(is_not_data(ap))
+    stopifnot(!is_not_data(ap))
     no_deps <- apply(as.matrix(ap), 1, function(x){all(is.na(x))})
     ap <- ap[!no_deps, , drop = FALSE]
     if (!NROW(ap)) {

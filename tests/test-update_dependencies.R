@@ -1,7 +1,7 @@
 library("repo.data")
 pkg <- "ggeasy"
 pd <- package_dependencies(pkg)
-if (is.na(pd)) {
+if (length(pd) == 1L && is.na(pd)) {
     q("no")
 }
 ud <- update_dependencies(pkg)

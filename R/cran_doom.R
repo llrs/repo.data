@@ -23,7 +23,7 @@
 #' @examples
 #' \donttest{
 #' cd <- cran_doom()
-#' if (!is.na(cd)) head(cd$details)
+#' if (length(cd) > 1L) head(cd$details)
 #' }
 cran_doom <- function(which = "strong", bioc = FALSE) {
     fields_selected <- check_which(which)
