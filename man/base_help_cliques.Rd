@@ -16,6 +16,13 @@ Some help pages have links to and from but they are closed networks.
 \details{
 Requires igraph
 }
+\examples{
+\donttest{
+if (requireNamespace("igraph", quietly = TRUE)) {
+    base_help_cliques()
+}
+}
+}
 \seealso{
 Other functions related to BASE help pages: 
 \code{\link{base_help_pages_not_linked}()},

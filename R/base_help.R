@@ -8,8 +8,10 @@
 #' @export
 #' @family functions related to BASE help pages
 #' @examples
+#' \donttest{
 #' bhnl <- base_help_pages_not_linked()
 #' head(bhnl)
+#' }
 base_help_pages_not_linked <- function() {
     bal <- base_alias()
     bl <- base_links()
@@ -77,6 +79,7 @@ base_help_pages_wo_links <- function() {
 #' `NA` if not able to collect the data from CRAN.
 #' @family functions related to BASE help pages
 #' @export
+#' @examples
 #' \donttest{
 #' if (requireNamespace("igraph", quietly = TRUE)) {
 #'     base_help_cliques()

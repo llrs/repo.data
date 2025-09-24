@@ -15,8 +15,10 @@ Help pages without links to other help pages.
 This makes harder to navigate to related help pages.
 }
 \examples{
+\donttest{
 bhnl <- base_help_pages_not_linked()
 head(bhnl)
+}
 }
 \seealso{
 Other functions related to BASE help pages: 
