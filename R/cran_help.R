@@ -189,5 +189,9 @@ cran_help_pages_links_wo_deps <- function(packages = NULL) {
         ap <- ap[, c("Package", check_which("strong"))]
     }
 
-    xrefs_wo_deps(cran_links(ref_packages), ap, ref = ref_packages)
+    links <- cran_links(ref_packages)
+    if (is_not_data(links)) {
+        return(NA)
+    }
+    xrefs_wo_deps(links, ap, ref = ref_packages)
 }

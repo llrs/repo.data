@@ -7,14 +7,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
 options(repos = c("@CRAN@" = "https://CRAN.R-project.org"))
 with_internet <- as.logical(NROW(suppressWarnings(available.packages())))
 library(repo.data)
@@ -69,7 +66,7 @@ If the date the dependencies are available is closer to the published date, the 
 Help pages are found via alias, when a user press `?word` it searches for alias.
 Checking for existing alias might help you to find packages and reduce the confusion on the help pages.
 
-```{r eval = !is.na(cran_alias(c("fect", "gsynth")))}
+```{r dup_alias, eval = !is.na(cran_alias(c("fect", "gsynth")))}
 alias <- cran_alias(c("fect", "gsynth"))
 dup_alias <- duplicated_alias(alias)
 head(dup_alias)
@@ -83,7 +80,7 @@ Often it is helpful to link help pages so that:
  - Pages are linked to other pages
  - Pages are linked from other pages.
 
-```{r}
+```{r cran_help_pages}
 pkg <- "BaseSet"
 head(cran_help_pages_wo_links(pkg))
 head(cran_help_pages_not_linked(pkg))
@@ -93,10 +90,10 @@ In addition to those help pages that are not well connected it could be that som
 
 To retrieve these help pages forming a clique it requires the suggested package igraph. 
 
-```{r eval=requireNamespace("igraph", quietly = TRUE) && with_internet}
+```{r cran_help_cliques, eval=requireNamespace("igraph", quietly = TRUE) && with_internet}
 cliques <- cran_help_cliques(pkg)
 # Number of help pages connected
-if (length(cliques)) {
+if (length(cliques) && !is.na(cliques)) {
     table(cliques$n) 
 }
 ```
@@ -106,7 +103,7 @@ If there is more than one length this would mean some pages not linked to the re
 Sometimes even if links exists they might not resolve correctly on the html version.
 For example if they link to a help page of a package that is not on the strong dependency list. 
 
-```{r eval=with_internet}
+```{r cran_help_pages_links_wo_deps, eval=with_internet}
 cran_help_pages_links_wo_deps(pkg)
 ```
 
@@ -117,7 +114,7 @@ If there is some output then the link cannot be resolved correctly if the other 
 
 If you wish to know what packages were available on CRAN on any given date you can use:
 
-```{r eval=with_internet}
+```{r cran_snapshot, eval=with_internet}
 cs <- cran_snapshot(as.Date("2020-01-31"))
 nrow(cs)
 ```

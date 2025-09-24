@@ -52,7 +52,9 @@ package_date <- function(packages = ".", which = "strong") {
     which_r <- deps_df$Name == "R"
     # TODO replace by a repository independent function: cran_archive -> repos_archive(?)
     ca <- cran_archive(all_packages)
-
+    if (is_not_data(ca)) {
+        return(NA)
+    }
     # Max release date across packages requested: minimal date when this was possible.
     date_package <- max(ca$Datetime[ca$Package %in% packages])
     r_versions <- check_installed("rversions")

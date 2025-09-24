@@ -1,6 +1,6 @@
 library("repo.data")
 cd <- cran_doom()
-if (length(cd) == 1L && is.na(pd)) {
+if (length(cd) == 1L && is.na(cd)) {
     q("no")
 }
 stopifnot(is.list(cd))

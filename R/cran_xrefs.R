@@ -129,9 +129,18 @@ cran_targets_links <- function(packages = NULL) {
 
     # Get the packages
     bal <- base_alias(intersect(deps, c(BASE, "R")))
+    if (is_not_data(bal)) {
+        return(NA)
+    }
     cran_pkgs <- setdiff(deps, c(BASE, "R"))
     cal <- cran_alias(cran_pkgs)
+    if (is_not_data(cal)) {
+        return(NA)
+    }
     cl <- cran_links(cran_pkgs)
+    if (is_not_data(cl)) {
+        return(NA)
+    }
     t2b2 <- targets2files(split_anchor(cl), rbind(bal, cal))
 
     if (length(new_packages)) {
