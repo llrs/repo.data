@@ -59,7 +59,8 @@ If the target help page is ambiguous it is omitted.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_Rd, n (Number of links).</p>
+    <p>A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_Rd, n (Number of links).
+<code>NA</code> if not able to collect the data from CRAN.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -75,19 +76,8 @@ If the target help page is ambiguous it is omitted.</p>
 <span class="r-in"><span><span class="va">bpl</span> <span class="op">&lt;-</span> <span class="fu">base_pages_links</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving base_targets_links, this might take a bit.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Caching results to be faster next call in this session.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Retrieving cran_aliases, this might take a bit.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Caching results to be faster next call in this session.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Packages ‘Hmisc’, ‘geneHapR’, ‘sfsmisc’ have targets not present in a OS.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some pages point to different places according to the OS.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some links are distinct depending on the OS.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bpl</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   from_pkg       from_Rd to_pkg       to_Rd n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     base Arithmetic.Rd   base  matmult.Rd 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     base Arithmetic.Rd   base zMachine.Rd 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     base Arithmetic.Rd   base       NA.Rd 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     base Arithmetic.Rd   base  Special.Rd 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     base Arithmetic.Rd   base   Syntax.Rd 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6     base Arithmetic.Rd   base   double.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

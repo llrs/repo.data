@@ -76,7 +76,8 @@ This code calculates how much time the chain reaction will go on if maintainer d
 <li><p>npackages: Numeric vector with the number of packages used.</p></li>
 <li><p>details: A data.frame with information for each individual package:
 Name, date affected, affected directly, repository, times it is affected
-(by archival causing issues.)</p></li>
+(by archival causing issues.)
+<code>NA</code> if not able to collect the data from CRAN.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -103,14 +104,14 @@ Name, date affected, affected directly, repository, times it is affected
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">cd</span> <span class="op">&lt;-</span> <span class="fu">cran_doom</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cd</span><span class="op">$</span><span class="va">details</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              Package   Deadline   type repo n_affected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1              greta 2025-09-20 direct CRAN          2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2         pathwayTMB 2025-09-21 direct CRAN          3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3            kvkapiR 2025-09-22 direct CRAN          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4          ggseqplot 2025-09-23 direct CRAN          4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 inTextSummaryTable 2025-09-23 direct CRAN          4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6             MLVSBM 2025-09-23 direct CRAN          1</span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cd</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1L</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cd</span><span class="op">$</span><span class="va">details</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Package   Deadline   type repo n_affected</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      kvkapiR 2025-09-22 direct CRAN          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    metacoder 2025-09-25 direct CRAN          5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    DescrTab2 2025-09-25 direct CRAN          4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 OlinkAnalyze 2025-09-25 direct CRAN          4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         fgdr 2025-09-25 direct CRAN          4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        jstor 2025-09-25 direct CRAN          4</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
