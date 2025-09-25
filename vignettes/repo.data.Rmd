@@ -93,7 +93,7 @@ To retrieve these help pages forming a clique it requires the suggested package 
 ```{r cran_help_cliques, eval=requireNamespace("igraph", quietly = TRUE) && with_internet}
 cliques <- cran_help_cliques(pkg)
 # Number of help pages connected
-if (length(cliques) && !is.na(cliques)) {
+if (length(cliques) != 1) {
     table(cliques$n) 
 }
 ```
@@ -157,8 +157,10 @@ If you ever wonder which packages are at risk of being archived you can use `cra
 
 ```{r doom, eval=with_internet}
 cd <- cran_doom(bioc = TRUE)
-cd[c("time_till_last", "last_archived", "npackages")]
-knitr::kable(head(cd$details))
+if (length(cd) != 1) {
+    cd[c("time_till_last", "last_archived", "npackages")]
+    knitr::kable(head(cd$details))
+}
 ```
 
 There are website dedicated to track those and provide information about new version submissions to CRAN to fix those.
