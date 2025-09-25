@@ -1,4 +1,4 @@
-# repo.data (development version)
+# repo.data 0.1.5
 
 * Package will not generate errors if no internet connection is available.
 * Fix error with `update_packages()` with local packages.
