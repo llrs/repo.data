@@ -18,8 +18,10 @@ It has 4 columns: Package, Anchor, Target and Source.
 Retrieve links on R documentation files.
 }
 \examples{
+\donttest{
 bl <- base_links()
 head(bl)
+}
 }
 \seealso{
 The raw source of the data is: \code{\link[tools:base_rdxrefs_db]{base_rdxrefs_db()}}.

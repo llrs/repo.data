@@ -9,8 +9,10 @@
 #' @seealso The raw source of the data is: \code{\link[tools:base_rdxrefs_db]{base_rdxrefs_db()}}.
 #' @export
 #' @examples
+#' \donttest{
 #' bl <- base_links()
 #' head(bl)
+#' }
 base_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     out <- save_state("base_rdxrefs", xrefs2df(tools::base_rdxrefs_db()))
