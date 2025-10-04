@@ -9,12 +9,10 @@ around_archive <- function(e) {
     arc <- e$Action == "archive"
     pub_w <- which(pub)
     arc_w <- which(arc)
-    # a <- rle(cumsum(arc))
-    # p <- rle(cumsum(pub))
 
     dts <- e$Date
-    first_rel <- if (length(pub_w)) dts[pub_w[1]] else NA
-    first_arc <- if (length(arc_w)) dts[arc_w[1]] else NA
+    first_rel <- if (length(pub_w)) dts[pub_w[1L]] else NA
+    first_arc <- if (length(arc_w)) dts[arc_w[1L]] else NA
     last_rel <- if (length(pub_w)) dts[pub_w[length(pub_w)]] else NA
     last_arc <- if (length(arc_w)) dts[arc_w[length(arc_w)]] else NA
 
@@ -86,8 +84,7 @@ tab_p <- do.call(rbind,
                with(udb_delta[!is.na(udb_delta$Archived.Date), ],
                     tapply(Delta.Before,
                            format(Published.Before, "%Y"),
-                           function(e)
-                               c(summary(e), n = length(e))
+                           function(e) c(summary(e), n = length(e))
                            )))
 
 

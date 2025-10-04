@@ -64,9 +64,9 @@ repo.data:::no_internet(pd)
 stopifnot(ncol(pd) == 5L)
 
 # Snapshot ####
-suppressWarnings(cs <- cran_snapshot(Sys.Date() -2 ))
+suppressWarnings(cs <- cran_snapshot(Sys.Date() - 2L ))
 repo.data:::no_internet(cs)
-stopifnot(NROW(cs) > 1000)
+stopifnot(NROW(cs) > 1000L)
 
 # check_packages
 stopifnot(isTRUE((tryCatch(suppressWarnings(package_dependencies(character())), error = function(e){TRUE}))))
@@ -76,7 +76,7 @@ rd <- repos_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue
 "magrittr", "pillar", "R6", "tibble", "tidyselect", "vctrs",
 "utf8", "pkgconfig", "withr"))
 repo.data:::no_internet(rd)
-stopifnot(NROW(rd) > 1)
+stopifnot(NROW(rd) > 1L)
 
 # Repos_dependencies
 pd <- package_dependencies(c("BaseSet", "dplyr", "rlang", "cli", "generics", "glue", "lifecycle",

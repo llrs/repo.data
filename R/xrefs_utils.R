@@ -126,7 +126,7 @@ targets2files <- function(links, alias) {
                      links_w_files$Source.y[diff_paths_x])
     removing_idx <- numeric()
     if (any(lengths(table_x) > 1L)) {
-        source_y_dup <- names(table_x)[lengths(table_x) == 2]
+        source_y_dup <- names(table_x)[lengths(table_x) == 2L]
         dup_sources <- links_w_files[diff_paths_x, "Source.y"] %in% source_y_dup
         links_w_files[diff_paths_x, "Source.x"][dup_sources] <- basename(links_w_files[diff_paths_x, "Source.x"][dup_sources])
         dup_x <- duplicated(links_w_files$Source.x[diff_paths_x[dup_sources]])

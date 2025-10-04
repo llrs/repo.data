@@ -92,13 +92,13 @@ bioc_archive <- function() {
     # TODO convert this to extract the dates of the latest publication of the package.
     # As no new packages are added until the next release we can assume they were
     # on the date most packages were updated
-    v <- paste0(3, ".", 1:21)
+    v <- paste0(3, ".", 1L:21L)
     bv <- lapply(v, bioc_views)
 
     versions <- rep(v, vapply(bv, NROW, numeric(1L)))
     # m1 <- do.call(merge, bv, all = TRUE)
 
-    v2 <- paste0(2, ".", 1:14)
+    v2 <- paste0(2, ".", 1L:14L)
     bv2 <- lapply(v2, bioc_views)
     versions2 <- rep(v2, vapply(bv2, NROW, numeric(1L)))
     # m2 <- do.call(merge, bv2, all = TRUE)

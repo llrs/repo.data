@@ -64,9 +64,9 @@ cran_all_history <- function() {
 
     # Use version of the previously published package
     wo_version <- which(is.na(m0$Version))
-    diff_pkg <- m0$Package[wo_version] == m0$Package[(wo_version - 1)]
-    k2 <- m0$Action[wo_version] == "archive" & m0$Action[(wo_version - 1)] == "publish"
-    m0$Version[wo_version[diff_pkg & k2]] <- m0$Version[(wo_version[diff_pkg & k2] - 1)]
+    diff_pkg <- m0$Package[wo_version] == m0$Package[(wo_version - 1L)]
+    k2 <- m0$Action[wo_version] == "archive" & m0$Action[(wo_version - 1L)] == "publish"
+    m0$Version[wo_version[diff_pkg & k2]] <- m0$Version[(wo_version[diff_pkg & k2] - 1L)]
 
 
 
@@ -75,7 +75,7 @@ cran_all_history <- function() {
     # p <- m0$Package[wov]
     # table(m0$Action[m0$Package %in% p] == "publish",
     #       is.na(m0$Version[m0$Package %in% p]))
-    off_by_year <- abs(m0$Date[wov] - m0$Date[wov - 1]) == 365L
+    off_by_year <- abs(m0$Date[wov] - m0$Date[wov - 1L]) == 365L
     m0 <- m0[-na.omit(wov[off_by_year]), ]
 
 
@@ -108,7 +108,7 @@ cran_all_history <- function() {
 
     removed <- actions[actions$Action == "remove",  , drop = FALSE]
     removed$Action <- NULL
-    colnames(removed)[1:3] <- paste0(colnames(removed)[1:3], ".rm")
+    colnames(removed)[1L:3L] <- paste0(colnames(removed)[1L:3L], ".rm")
     m2 <- merge(m, removed, all = TRUE, sort = FALSE)
     m2$rm.Date <- datetime2POSIXct(m2$Date.rm, m2$Time.rm)
 

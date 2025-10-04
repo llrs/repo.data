@@ -17,4 +17,5 @@ diff <- merge(pd, rd, by = "Name")
 ud <- suppressWarnings(update_dependencies(pkg))
 repo.data:::no_internet(ud)
 m <- merge(ud, pd, all = FALSE)
-stopifnot("Packages that don't need updating show up on update_dependencies" = NROW(m) <= NROW(diff))
+stopifnot("Packages that don't need updating show up on update_dependencies" =
+              NROW(m) <= NROW(diff))

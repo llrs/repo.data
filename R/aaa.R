@@ -13,8 +13,10 @@ pkg_state <- new.env(parent = emptyenv())
 #'
 #' @export
 clean_cache <- function() {
-    pkg_state <- new.env(parent = emptyenv())
-    NULL
+    lapply(names(pkg_state), function(x) {
+        pkg_state[[x]] <- NULL
+    })
+    invisible(NULL)
 }
 
 PACKAGE_FIELDS <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")

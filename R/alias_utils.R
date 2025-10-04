@@ -16,7 +16,7 @@ duplicated_alias <- function(alias) {
     if (is_not_data(alias)) {
         return(NA)
     }
-    stopifnot(all(c("Package", "Source", "Target") %in% colnames(alias)))
+    stopifnot(c("Package", "Source", "Target") %in% colnames(alias))
     da <- dup_alias(alias)
     da[, c("Target", "Package", "Source"), drop = FALSE]
 }

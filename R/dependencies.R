@@ -15,13 +15,13 @@
 #' head(rd)
 repos_dependencies <- function(packages = NULL, which = "all") {
     fields_selected <- check_which(which)
-    check_packages(packages, 0)
+    check_packages(packages, 0L)
     opts <- options(available_packages_filters = c("CRAN", "duplicates"))
     on.exit(options(opts), add = TRUE)
     env <- "repos_dependencies"
 
     first <- empty_env(env)
-    ap <- tryCatch(available.packages(), warning = function(w){NA})
+    ap <- tryCatch(available.packages(), warning = function(w) {NA})
     if (is_not_data(ap)) {
         return(NA)
     }
@@ -93,7 +93,7 @@ package_dependencies <- function(packages = ".", which = "strong") {
     pkges_names <- unique(c(local_pkgs, packages[!is_local_pkg]))
     check_packages(packages, NA)
 
-    ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
+    ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w) {NA})
     if (is_not_data(ap)) {
         return(NA)
     }
@@ -123,14 +123,14 @@ package_dependencies <- function(packages = ".", which = "strong") {
             paste0(
                 "Some dependencies are not on available repositories. ",
                 "Check for 'Additional_repositories' or other repositories (Bioconductor.org?):\n",
-                toString(missing_pkg)
+                toString(missing_pkg), call. = FALSE
             ),
             immediate. = TRUE
         )
     }
     repo_pkges <- setdiff(packages_reported, c(BASE, local_pkgs, "R"))
-    if (length(repo_pkges) <= 0) {
-        rd <- matrix(nrow = 0, ncol = 5, dimnames = list(list(),
+    if (length(repo_pkges) <= 0L) {
+        rd <- matrix(nrow = 0L, ncol = 5L, dimnames = list(list(),
                                                    c("Package", "Version", "Type", "Name", "Op")))
         rd <- as.data.frame(rd)
     } else {
@@ -144,7 +144,7 @@ package_dependencies <- function(packages = ".", which = "strong") {
         rd <- rbind(rd, local_v[, colnames(rd)])
     }
 
-    if (length(repo_pkges) <= 0) {
+    if (length(repo_pkges) <= 0L) {
         return(rd)
     }
 
@@ -157,10 +157,10 @@ package_dependencies <- function(packages = ".", which = "strong") {
     with_ver_n_dup <- !is.na(rd$Version) & rd$Name %in% rd$Name[duplicated(rd$Name)]
     t2n <- split(rd$Type[with_ver_n_dup], rd$Name[with_ver_n_dup])
     type_n <- vapply(t2n, function(x){length(unique(x))}, numeric(1L))
-    one_dep <- type_n == 1
+    one_dep <- type_n == 1L
     type <- vector("character", length(t2n))
     type[!one_dep] <- NA
-    type[one_dep] <- vapply(t2n[one_dep], function(x){x[1]}, character(1L))
+    type[one_dep] <- vapply(t2n[one_dep], function(x){x[1L]}, character(1L))
 
     # Calculate the version required by the packages selected
     v2n <- split(rd$Version[with_ver_n_dup], rd$Name[with_ver_n_dup])
@@ -177,8 +177,8 @@ package_dependencies <- function(packages = ".", which = "strong") {
 
     # Replace Type by NA if multiple packages import it with different types
     t2n <- split(rd_no_ver$Type, rd_no_ver$Name)
-    type_n <- vapply(t2n, function(x){length(unique(x))}, numeric(1L))
-    multiple_types <- rd_no_ver$Name %in% names(type_n)[type_n > 1]
+    type_n <- vapply(t2n, function(x) {length(unique(x))}, numeric(1L))
+    multiple_types <- rd_no_ver$Name %in% names(type_n)[type_n > 1L]
     rd_no_ver$Type[multiple_types] <- NA
 
     # Remove duplicated rows
@@ -210,7 +210,7 @@ update_dependencies <- function(packages) {
     check_packages(packages, length = NA)
 
     if (is.null(packages)) {
-        stop("Please provide a vector of packages.")
+        stop("Please provide a vector of packages.", call. = FALSE)
     }
 
     pkg_fields <- check_which("all")
@@ -263,15 +263,15 @@ update_dependencies <- function(packages) {
 
     if (!NROW(out)) {
         df <- data.frame(Name = character(1L), Version = package_version("0.0.0"))
-        return(df[0, ])
+        return(df[0L, ])
     }
 
     s <- split(out$Version.recursive, out$Name)
     l <- lapply(s, function(x){
         as.character(max(x))
     })
-    df <- data.frame(Name = names(l), Version = rep(package_version("0.0.0"),
-                                                    length.out = length(l)))
+    df <- data.frame(Name = names(l), Version = rep_len(package_version("0.0.0"),
+                                                        length(l)))
     df$Version[] <- as.package_version(funlist(l))
     df
 }
@@ -283,10 +283,10 @@ cache_pkg_dep <- function(package, which, keepR = TRUE) {
 
 packages_dependencies <- function(ap) {
     stopifnot(!is_not_data(ap))
-    no_deps <- apply(as.matrix(ap), 1, function(x){all(is.na(x))})
+    no_deps <- apply(as.matrix(ap), 1L, function(x){all(is.na(x))})
     ap <- ap[!no_deps, , drop = FALSE]
     if (!NROW(ap)) {
-        m <- matrix(NA, ncol = 5, nrow = 0)
+        m <- matrix(NA, ncol = 5L, nrow = 0L)
         colnames(m) <- c("Package", "Type", "Name", "Op", "Version")
         return(as.data.frame(m))
     }
@@ -362,7 +362,7 @@ check_which <- function(x){
 
     if (!length(fields_selected)) {
         stop(sQuote("which"), " should be one of all, strong, most.\n",
-             "Or several valid fields should be passed: ", toString(PACKAGE_FIELDS), ".")
+             "Or several valid fields should be passed: ", toString(PACKAGE_FIELDS), ".", call. = FALSE)
     }
     fields_selected
 }

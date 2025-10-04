@@ -45,7 +45,7 @@ cran_archive <- function(packages = NULL) {
     omit_pkg <- setdiff(packages, all_names)
     if (length(omit_pkg)) {
         warning("Omitting packages ", toString(omit_pkg),
-                ".\nMaybe they were not on CRAN?", immediate. = TRUE)
+                ".\nMaybe they were not on CRAN?", immediate. = TRUE, call. = FALSE)
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
