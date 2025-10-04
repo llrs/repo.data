@@ -26,7 +26,7 @@ Depending on the data requested and packages currently on CRAN, you might get
 a warning regarding a package being both archived and current.
 }
 \examples{
-\dontshow{if (NROW(available.packages())) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (NROW(available.packages())) withAutoprint(\{ # examplesIf}
 \donttest{
 ap <- available.packages()
 if (NROW(ap)) {
