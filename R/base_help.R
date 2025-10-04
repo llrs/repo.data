@@ -106,7 +106,7 @@ base_help_cliques <- function() {
     lengths_graph <- lengths(graph_decomposed)
     isolated_help <- lapply(graph_decomposed[-which.max(lengths_graph)], igraph::vertex_attr)
 
-    l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
+    l <- strsplit(unlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
     lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]
