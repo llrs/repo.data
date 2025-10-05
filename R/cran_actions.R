@@ -33,7 +33,7 @@ cran_all_actions <- function() {
 
     actions_f <- system.file(package = "repo.data", "data", "actions.rds")
     if (!nzchar(actions_f)) {
-        stop("Data not released open, sorry can't share it (yet?)")
+        stop("Data not released open, sorry can't share it (yet?)", call. = FALSE)
     }
     actions <- readRDS(actions_f)
     actions <- unique(actions)
@@ -41,7 +41,7 @@ cran_all_actions <- function() {
     actions$User <- as.factor(actions$User)
     lev <- c("publish", "archive", "remove")
     if (any(!na.omit(actions$Action) %in% lev)) {
-        warning("New action by CRAN: ", na.omit(setdiff(actions$Action, lev)))
+        warning("New action by CRAN: ", na.omit(setdiff(actions$Action, lev)), call. = FALSE)
     }
     actions$Action <- factor(actions$Action, levels = lev)
     actions$Package <- as.factor(actions$Package)

@@ -224,3 +224,7 @@ is_logical <- function(x) {
 is_not_data <- function(x) {
     !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
 }
+
+no_internet <- function(x) {
+    if (length(x) == 1L && is.na(x)) q("no")
+}

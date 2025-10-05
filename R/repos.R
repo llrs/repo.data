@@ -28,16 +28,18 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
 
     # Check packages
     repos_packages <- setdiff(packages, BASE)
-    omit_pkg <- setdiff(packages, rownames(ap))
+    omit_pkg <- setdiff(repos_packages, rownames(ap))
     if (length(omit_pkg)) {
         warning("Omitting packages ", toString(omit_pkg),
                 ".\n Maybe they are currently not available?",
                 immediate. = TRUE, call. = FALSE)
+        repos_packages <- setdiff(repos_packages, omit_pkg)
     }
-    if (is.null(packages)) {
+
+    if (is.null(repos_packages)) {
         packages <- rownames(ap)
     } else {
-        packages <- intersect(packages, rownames(ap))
+        packages <- intersect(repos_packages, rownames(ap))
     }
 
     # Get the repo where each package comes from
@@ -54,7 +56,7 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     pd2$Repo[is.na(pd2$Repo)] <- "Other"
 
     # Prefill matrix
-    M <- matrix(0, ncol = length(repos) + 1L, nrow = NROW(ap))
+    M <- matrix(0L, ncol = length(repos) + 1L, nrow = NROW(ap))
     colnames(M) <- c(names(repos), "Other")
     rownames(M) <- rownames(ap)
 

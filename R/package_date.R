@@ -37,7 +37,7 @@ package_date <- function(packages = ".", which = "strong") {
     }
 
     # Dependencies of remote packages
-    if (any(!is_local_pkg)) {
+    if (!all(is_local_pkg)) {
         rd <- repos_dependencies(packages[!is_local_pkg], which = fields)
         if (is_not_data(rd)) {
             return(NA)
@@ -59,7 +59,7 @@ package_date <- function(packages = ".", which = "strong") {
     date_package <- max(ca$Datetime[ca$Package %in% packages])
     r_versions <- check_installed("rversions")
     if (sum(which_r) && !r_versions) {
-        warning("To take into consideration R versions too please install package rversions.")
+        warning("To take into consideration R versions too please install package rversions.", call. = FALSE)
     }
     r_ver_date <- NULL
     # Find release date of R version
@@ -77,7 +77,7 @@ package_date <- function(packages = ".", which = "strong") {
     if (is_local_pkg && length(is_local_pkg) == 1L && NROW(deps_df) == 0L || NROW(deps_df) == 1L && r_versions) {
         return(c(Published = date_package, deps_available = NA))
     } else if (!is_local_pkg && NROW(ca) == 0L) {
-        stop("Package ", sQuote(packages), " wasn't found on past or current CRAN archive or locally.")
+        stop("Package ", sQuote(packages), " wasn't found on past or current CRAN archive or locally.", call. = FALSE)
     }
 
     # Use cran_archive, to get the release dates of packages.
@@ -128,7 +128,7 @@ package_date_actions <- function(packages = ".", which = "strong") {
         date_package <- Sys.Date()
         deps_df <- rbind(deps_df, packages_dependencies(deps))
     }
-    if (any(!is_local_pkg)) {
+    if (!all(is_local_pkg)) {
         rd <- repos_dependencies(which = fields)
         deps_df <- rbind(deps_df, rd[rd$package == packages, , drop = FALSE])
         p <- cran_archive(packages)
@@ -171,7 +171,7 @@ package_date_actions <- function(packages = ".", which = "strong") {
     # Filter to those that were available at the time
     # browser()
     diff_time <- difftime(actions$Datetime, date_package)
-    pkg_available <- actions[sign(diff_time) < 0, , drop = FALSE]
+    pkg_available <- actions[sign(diff_time) < 0L, , drop = FALSE]
     not_on_actions <- setdiff(deps_df$name, c(pkg_available$Package, "R"))
 
     if (length(not_on_actions)) {

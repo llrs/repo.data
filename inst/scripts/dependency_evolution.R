@@ -116,7 +116,7 @@ cumulative_dependency_loss <- \(x) x[,
 		lapply(setdiff, base_or_recommended)
 ][
 	# filter out packages with only one version
-	x[, .(N = .N), by=Package][N > 1],
+	x[, .(N = .N), by=Package][N > 1L],
 	on = 'Package',
 	nomatch = NULL
 ][,
@@ -125,8 +125,8 @@ cumulative_dependency_loss <- \(x) x[,
 		Package = Package,
 		# otherwise data.table's runlock() spends more time walking these than merging
 		Version.old = as.character(Version)[-.N],
-		Version.new = as.character(Version[-1]),
-		dependency_decrease = Map(setdiff, strong[-.N], MoreArgs = tail(strong,1))
+		Version.new = as.character(Version[-1L]),
+		dependency_decrease = Map(setdiff, strong[-.N], MoreArgs = tail(strong, 1L))
 	),
 	by = Package
 ]

@@ -37,16 +37,16 @@ cran_maintainers <- function() {
     sm$Name <- trimws(sm$Name)
 
     # Packages using Maintainer keep the quotes on the field
-    sm$Name <- sub(', PhD"', "", sm$Name)
+    sm$Name <- sub(', PhD"', "", sm$Name, fixed = TRUE)
     modify <- endsWith(sm$Name, '"') & !is.na(sm$Name)
     sm$Name[modify] <- gsub(',.*"', "", sm$Name[modify])
 
-    s <- strsplit(db$Packaged, "; ")
+    s <- strsplit(db$Packaged, "; ", fixed = TRUE)
 
     cbind(db[, c("Package", "Maintainer")],
-          user = sapply(s, `[`, 2),
+          user = sapply(s, `[`, 2L),
           maintainer_date = charToDate(db$Date, c("%F", "%D", "%m.%d.%y", "%Y-%m-%d")),
-          packaged_date = charToDate(sapply(s, `[`, 1), c("%F %T", "%c", "%F", "%a %b %e %T %Y")),
+          packaged_date = charToDate(sapply(s, `[`, 1L), c("%F %T", "%c", "%F", "%a %b %e %T %Y")),
           published_date = charToDate(db$Published, "%F"),
           sm)
 }
@@ -58,16 +58,15 @@ charToDate <- function(x, tryFormat) {
     on.exit(Sys.setlocale("LC_TIME", lc_time), add = TRUE)
     Sys.setlocale("LC_TIME", "C")
 
-    stopifnot(is.character(x))
-    stopifnot(as.logical(length(tryFormat)))
+    stopifnot(is.character(x), as.logical(length(tryFormat)))
     # Preallocate while preserving Date class
     y <- rep_len(Sys.Date(), length(x))
     y[] <- NA
     # Avoid trying with NAs
     x_no_na <- !is.na(x)
-    y[x_no_na] <- as.Date(x[x_no_na], format = tryFormat[1])
+    y[x_no_na] <- as.Date(x[x_no_na], format = tryFormat[1L])
     # Try further methods.
-    for (format in tryFormat[-1]) {
+    for (format in tryFormat[-1L]) {
         is_relevant_na <- is.na(y) & x_no_na
         y[is_relevant_na] <- as.Date(x[is_relevant_na], format)
 

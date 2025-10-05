@@ -87,7 +87,7 @@ base_help_pages_wo_links <- function() {
 #' }
 base_help_cliques <- function() {
     if (!check_installed("igraph")) {
-        stop("This function requires igraph to find closed networks.")
+        stop("This function requires igraph to find closed networks.", call. = FALSE)
     }
     bal <- base_alias()
     bl <- base_links()
@@ -104,14 +104,14 @@ base_help_cliques <- function() {
 
     graph_decomposed <- igraph::decompose(graph)
     lengths_graph <- lengths(graph_decomposed)
-    isolated_help <- sapply(graph_decomposed[-which.max(lengths_graph)], igraph::vertex_attr)
+    isolated_help <- lapply(graph_decomposed[-which.max(lengths_graph)], igraph::vertex_attr)
 
-    l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
+    l <- strsplit(unlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
     lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]
     df$clique <- rep(seq_len(length(lengths_graph2)), times = lengths_graph2)
-    m <- merge(df, unique(rbl[, -4]), all.x = TRUE,
+    m <- merge(df, unique(rbl[, -4L]), all.x = TRUE,
                by = c("from_pkg", "from_Rd"), sort = FALSE)
     msorted <- sort_by(m, m[, c("clique", "from_pkg", "from_Rd")])
     rownames(msorted) <- NULL

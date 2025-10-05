@@ -25,7 +25,7 @@ cran_links <- function(packages = NULL) {
     omit_pkg <- setdiff(packages, current_packages)
     if (length(omit_pkg)) {
         warning("Omitting packages ", toString(omit_pkg),
-                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE)
+                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE, call. = FALSE)
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
@@ -82,11 +82,11 @@ cran_targets_links <- function(packages = NULL) {
     first_call <- empty_env(env)
     check_packages(packages, NA)
 
-    current_packages <- if (!first_call) {
+    current_packages <- if (first_call) {
+        NULL
+    } else {
         out <- pkg_state[[env]]
         unique(out$from_pkg)
-    } else {
-        NULL
     }
 
     if (!is.null(current_packages)) {
@@ -94,7 +94,7 @@ cran_targets_links <- function(packages = NULL) {
         omit_pkg <- setdiff(packages, current_packages)
         if (length(omit_pkg)) {
             warning("Omitting packages ", toString(omit_pkg),
-                    ".\nMaybe they are currently not on CRAN?", immediate. = TRUE)
+                    ".\nMaybe they are currently not on CRAN?", immediate. = TRUE, call. = FALSE)
         }
 
         # Keep only packages that can be processed
@@ -118,7 +118,7 @@ cran_targets_links <- function(packages = NULL) {
     if (is.null(packages)) {
         deps <- c(cran_packages(), BASE)
     } else {
-        ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
+        ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w) {NA})
         if (is_not_data(ap)) {
             return(NA)
         }
@@ -160,7 +160,7 @@ cran_targets_links <- function(packages = NULL) {
             return(NA)
         }
         new_xrefs <- xrefs2df(raw_xrefs[new_packages])
-        # warnings_links(new_xrefs)
+
         xrefs <- pkg_state[["full_cran_rdxrefs"]]
         xrefs <- rbind(xrefs, new_xrefs)
         pkg_state[[env]] <- xrefs[, c("Package", "Source", "Anchor", "Target")]

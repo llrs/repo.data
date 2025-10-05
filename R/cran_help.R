@@ -21,7 +21,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
     check_packages(packages)
     cal <-  cran_alias(packages)
     if (!NROW(cal)) {
-        stop("Package not found")
+        stop("Package not found", call. = FALSE)
     }
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
@@ -109,7 +109,8 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 cran_help_cliques <- function(packages = NULL) {
     check_packages(packages)
     if (!check_installed("igraph")) {
-        stop("This function requires igraph to find help pages not linked to the network.")
+        stop("This function requires igraph to find help pages not linked to the network.",
+             call. = FALSE)
     }
     if (!is.null(packages)) {
         ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})

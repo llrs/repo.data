@@ -83,23 +83,23 @@ merge_comments <- function(df, column) {
     }
     o <- outer(ends, starts, "-")
     d <- abs(diag(o))
-    wd <- which(d > 5)
-    while (length(wd) > 1) {
+    wd <- which(d > 5L)
+    while (length(wd) > 1L) {
         if (length(ends) > length(starts)) {
-            ends <- ends[-wd[1]]
+            ends <- ends[-wd[1L]]
         } else if (length(starts) > length(ends)) {
-            starts <- starts[-wd[1]]
+            starts <- starts[-wd[1L]]
         }
         o <- outer(ends, starts, "-")
         d <- abs(diag(o))
-        wd <- which(d > 5)
+        wd <- which(d > 5L)
     }
     stopifnot("Merging comments that don't match" = length(starts) == length(ends))
 
     # Do not merge comments that involve different packages
     diff_pkg <- which(df$package[starts] != df$package[ends])
     stopifnot("Would merge comments for different packages" = !length(diff_pkg))
-    rows_same_pkg <- mapply(seq, from = starts, to = ends)
+    rows_same_pkg <- Map(seq, from = starts, to = ends)
     if (all(lengths(rows_same_pkg) <= 1L)) {
         return(df)
     }
