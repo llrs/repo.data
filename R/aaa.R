@@ -22,3 +22,12 @@ clean_cache <- function() {
 PACKAGE_FIELDS <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
 
 BASE <- tools::standard_package_names()$base
+
+.onAttach <- function(libname, pkgname) {
+    opts <- options(repos = c("@CRAN@" = "https://CRAN.R-project.org"), getOption("repos"))
+    pkg_state$opts <- opts
+}
+
+.onDetach <- function(libpath) {
+    options(pkg_state$opts)
+}
