@@ -19,8 +19,14 @@ Same as \code{install.packages()}.
 \description{
 Install a package from CRAN of a specific version.
 }
+\details{
+Uses CRAN specific API \url{https://cran.r-project.org/package=\%s&version=\%s} to install a package.
+}
 \examples{
 \dontrun{
 install.packages("testthat", "0.7.1")
 }
+}
+\references{
+CRAN pages.
 }
