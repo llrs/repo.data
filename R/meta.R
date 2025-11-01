@@ -18,6 +18,8 @@ read_repo <- function(path, repo) {
   
 }
 
+#' @inheritParams cran_alias
+#' @export
 links <- function(packages = NULL) {
   
   raw_xrefs <- lapply(getOption("repos"), read_repo, path = "src/contrib/Meta/rdxrefs.rds")
@@ -79,4 +81,72 @@ links <- function(packages = NULL) {
   } else {
     as.data.frame(xrefs[xrefs[, "Package"] %in% packages, , drop = FALSE])
   }
+}
+
+#' @inheritParams cran_alias
+#' @export
+alias <- function(packages = NULL) {
+    stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
+    raw_alias <- lapply(getOption("repos"), read_repo, path = "src/contrib/Meta/aliases.rds")
+    if (is_not_data(raw_alias)) {
+      return(NA)
+    }
+    raw_alias <- save_state("aliases", raw_alias)
+    check_packages(packages, NA)
+    # Place to store modified data
+    env <- "full_cran_aliases"
+    # Check for random packages
+    current_packages <- unlist(lapply(raw_alias, names), use.names = FALSE)
+    dups <- anyDuplicated(current_packages)
+    if (length(dups) == 1L && dups[1L] != 0L) {
+      
+      warning("Packages found in multiple repositories", toString(current_packages[dups]), 
+      immediate. = TRUE, call. = FALSE)
+    }
+  
+    omit_pkg <- setdiff(packages, current_packages)
+    if (length(omit_pkg)) {
+        warning("Omitting packages ", toString(omit_pkg),
+                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE,
+                call. = FALSE)
+    }
+    # Keep only packages that can be processed
+    packages <- setdiff(packages, omit_pkg)
+    if (!is.null(packages) && !length(packages)) {
+        return(NULL)
+    }
+
+    # Check if there is already data
+    first_alias <- empty_env(env)
+    if (first_alias) {
+        alias <- NULL
+    } else {
+        alias <- pkg_state[[env]]
+    }
+
+    # Decide which packages are to be added to the data
+    if (!is.null(packages) && !first_alias) {
+        new_packages <- setdiff(packages, alias[, "Package"])
+    } else if (!is.null(packages) && first_alias) {
+        new_packages <- intersect(packages, current_packages)
+    } else if (is.null(packages) && first_alias) {
+        new_packages <- current_packages
+    } else if (is.null(packages) && !first_alias) {
+        new_packages <- setdiff(current_packages, alias[, "Package"])
+    }
+
+    alias_list <- do.call(c, raw_alias)
+    names(alias_list) <- current_packages
+    # Add new package's data
+    if (length(new_packages)) {
+        new_alias <- alias2df(alias_list[new_packages])
+        warnings_alias(new_alias)
+        alias <- rbind(alias, new_alias)
+        pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
+    }
+    if (is.null(packages)) {
+        as.data.frame(alias)
+    } else {
+        as.data.frame(alias[alias[, "Package"] %in% packages, , drop = FALSE])
+    }
 }
