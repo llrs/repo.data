@@ -33,7 +33,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Check CRAN package state on any given date</h1>
-      <small class="dont-index">Source: <a href="https://github.com/llrs/repo.data/blob/default/R/cran_snapshot.R" class="external-link"><code>R/cran_snapshot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/llrs/repo.data/blob/main/R/cran_snapshot.R" class="external-link"><code>R/cran_snapshot.R</code></a></small>
       <div class="d-none name"><code>cran_snapshot.Rd</code></div>
     </div>
 
@@ -68,20 +68,20 @@ given date.</p>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other utilities:
-<code><a href="cran_date.html">cran_date</a>()</code>,
-<code><a href="cran_doom.html">cran_doom</a>()</code>,
-<code><a href="duplicated_alias.html">duplicated_alias</a>()</code>,
-<code><a href="package_date.html">package_date</a>()</code>,
-<code><a href="package_repos.html">package_repos</a>()</code>,
-<code><a href="repos_dependencies.html">repos_dependencies</a>()</code>,
-<code><a href="update_dependencies.html">update_dependencies</a>()</code></p></div>
+<code><a href="cran_date.html">cran_date()</a></code>,
+<code><a href="cran_doom.html">cran_doom()</a></code>,
+<code><a href="duplicated_alias.html">duplicated_alias()</a></code>,
+<code><a href="package_date.html">package_date()</a></code>,
+<code><a href="package_repos.html">package_repos()</a></code>,
+<code><a href="repos_dependencies.html">repos_dependencies()</a></code>,
+<code><a href="update_dependencies.html">update_dependencies()</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">cs</span> <span class="op">&lt;-</span> <span class="fu">cran_snapshot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span><span class="fl">2</span> <span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There are 4 packages both archived and published</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>There are 3 packages both archived and published</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> This indicate manual CRAN intervention.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cs</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Package            Datetime Version   User    Size   Status</span>
@@ -103,7 +103,7 @@ given date.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
