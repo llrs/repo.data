@@ -29,7 +29,7 @@ number of repositories used.
 \code{NA} if not able to collect the data from repositories.
 }
 \description{
-Explore the relationships between packages and repositories available.
+Explore the relationships between packages and repositories.
 }
 \examples{
 pr <- package_repos("experDesign")

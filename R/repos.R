@@ -1,7 +1,7 @@
 
 #' Package dependencies to repositories
 #'
-#' Explore the relationships between packages and repositories available.
+#' Explore the relationships between packages and repositories.
 #' @inheritParams tools::package_dependencies
 #' @param repos Repositories and their names are taken from `getOptions("repos")`.
 #'
@@ -41,7 +41,7 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     } else {
         packages <- intersect(repos_packages, rownames(ap))
     }
-
+    
     # Get the repo where each package comes from
     repositories <- gsub("/src/contrib", "", ap[, "Repository"], fixed = TRUE)
     names(repositories) <- rownames(ap)
@@ -49,7 +49,7 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
 
     # Get the direct dependencies for each package
     rd <- repos_dependencies(packages, which)
-
+    
     pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]
 
     pd2$Repo <- repositories[pd2$Name]
