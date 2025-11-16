@@ -168,6 +168,20 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     out
 }
 
+
+valid_package_name <- function(packages) {
+    
+    #  - at least two characters
+    #  - start with a letter
+    #  - not end in a dot
+    validity <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !endsWith(packages, ".")
+    if (any(!validity)) {
+        stop("Packages names should have at least two characters and start",
+             " with a letter and not end in a dot.", call. = FALSE)
+    }
+    TRUE
+}
+
 check_packages <- function(packages, length = 1L) {
     char_packages <- is.character(packages) && length(na.omit(packages))
 
@@ -186,11 +200,7 @@ check_packages <- function(packages, length = 1L) {
     }
     local_packages <- dir.exists(packages)
 
-    # is a directory (local package) or :
-    #  - least two characters
-    #  - start with a letter
-    #  - not end in a dot
-    valid_names <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !endsWith(packages, ".")
+    valid_names <- valid_package_name(packages)
 
     # Don't trigger error on local packages
     if (!any(local_packages) && !any(valid_names[!local_packages])) {

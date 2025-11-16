@@ -70,7 +70,8 @@ package_date <- function(packages = ".", which = "strong") {
         }
 
         max_version <- max(deps_df$Version[which_r])
-        r_ver_date <- rver$date[package_version(rver$version) >= package_version(max_version)][1L]
+        wv <- which(package_version(rver$version, strict = FALSE) >= package_version(max_version))
+        r_ver_date <- rver$date[wv[1L]]
         ca <- filter_arch_date(ca, r_ver_date)
     }
 
