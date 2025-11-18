@@ -23,6 +23,8 @@ reference:
 - title: "About CRAN"
   desc: "Functions for exploring CRAN"
   contents:
+  - alias
+  - links
   - cran_alias
   - cran_links
   - starts_with("cran_")
