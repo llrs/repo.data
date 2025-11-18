@@ -86,22 +86,7 @@ CRAN_baseurl <- function() {
 
 # tools:::read_CRAN_object but for several types
 read_CRAN <- function(path, cran = CRAN_baseurl()) {
-    con <- gzcon(url(sprintf("%s/%s", cran, path), open = "rb"))
-    on.exit(close(con))
-    if (endsWith(path, "rds") || endsWith(path, "RDS")) {
-        tryCatch(readRDS(con), error = function(e){
-            if (grepl("cannot read from connection", e, fixed = TRUE)) {
-                NULL
-            } else {e}
-        })
-    } else {
-        tryCatch(read.dcf(con), error = function(e){
-            if (grepl("cannot read from connection", e, fixed = TRUE)) {
-                NULL
-            } else {e}
-        })
-    }
-
+    read_repo(path, cran)
 }
 
 check_r_version <- function() {
