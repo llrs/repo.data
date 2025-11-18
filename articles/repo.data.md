@@ -151,7 +151,7 @@ cs <- cran_snapshot(as.Date("2020-01-31"))
 #> Retrieving comments, this might take a bit.
 #> Caching results to be faster next call in this session.
 nrow(cs)
-#> [1] 104943
+#> [1] 105019
 ```
 
 This might be helpful to know what was available on old project and why
@@ -212,12 +212,12 @@ if (length(cd) != 1L) {
 
 | Package        | Deadline   | type   | repo | n_affected |
 |:---------------|:-----------|:-------|:-----|-----------:|
-| missCompare    | 2025-11-10 | direct | CRAN |         10 |
 | bp             | 2025-11-14 | direct | CRAN |          4 |
 | ggtern         | 2025-11-14 | direct | CRAN |          4 |
 | SWMPrExtension | 2025-11-15 | direct | CRAN |         12 |
 | MultBiplotR    | 2025-11-15 | direct | CRAN |         11 |
 | povmap         | 2025-11-15 | direct | CRAN |         11 |
+| spocc          | 2025-11-15 | direct | CRAN |         11 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -234,7 +234,7 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2025-11-15 r89024)
+#> R Under development (unstable) (2025-11-16 r89026)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.3 LTS
 #> 

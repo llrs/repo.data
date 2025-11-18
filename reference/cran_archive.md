@@ -41,7 +41,8 @@ Other meta info from CRAN:
 [`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md),
 [`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md),
 [`cran_history()`](https://llrs.github.io/repo.data/reference/cran_history.md),
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md)
+[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
+[`links()`](https://llrs.github.io/repo.data/reference/links.md)
 
 ## Examples
 

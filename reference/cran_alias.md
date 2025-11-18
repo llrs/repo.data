@@ -25,13 +25,15 @@ The raw source of the data is:
 [`CRAN_aliases_db()`](https://rdrr.io/r/tools/CRANtools.html).
 
 Other alias:
+[`alias()`](https://llrs.github.io/repo.data/reference/alias.md),
 [`base_alias()`](https://llrs.github.io/repo.data/reference/base_alias.md)
 
 Other meta info from CRAN:
 [`cran_archive()`](https://llrs.github.io/repo.data/reference/cran_archive.md),
 [`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md),
 [`cran_history()`](https://llrs.github.io/repo.data/reference/cran_history.md),
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md)
+[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
+[`links()`](https://llrs.github.io/repo.data/reference/links.md)
 
 ## Examples
 

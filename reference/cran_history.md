@@ -36,7 +36,8 @@ Other meta info from CRAN:
 [`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md),
 [`cran_archive()`](https://llrs.github.io/repo.data/reference/cran_archive.md),
 [`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md),
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md)
+[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
+[`links()`](https://llrs.github.io/repo.data/reference/links.md)
 
 ## Examples
 
@@ -51,6 +52,6 @@ cran_history
 #>     check_packages(packages, NA)
 #>     get_package_subset("cran_history", packages)
 #> }
-#> <bytecode: 0x555629039e10>
+#> <bytecode: 0x5630084590a8>
 #> <environment: namespace:repo.data>
 ```

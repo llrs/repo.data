@@ -162,6 +162,10 @@ Explore the relationship between alias, pages and packages
 
 Functions for exploring CRAN
 
+- [`alias()`](https://llrs.github.io/repo.data/reference/alias.md) :
+  Links
+- [`links()`](https://llrs.github.io/repo.data/reference/links.md) :
+  Links
 - [`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md)
   : CRAN's alias
 - [`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md)

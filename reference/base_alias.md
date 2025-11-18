@@ -25,6 +25,7 @@ The raw source of the data is:
 [`base_aliases_db()`](https://rdrr.io/r/tools/basetools.html).
 
 Other alias:
+[`alias()`](https://llrs.github.io/repo.data/reference/alias.md),
 [`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md)
 
 ## Examples

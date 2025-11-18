@@ -25,7 +25,8 @@ to_Rd, n (Number of links).
 Other links from CRAN:
 [`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
 [`cran_pages_links()`](https://llrs.github.io/repo.data/reference/cran_pages_links.md),
-[`cran_pkges_links()`](https://llrs.github.io/repo.data/reference/cran_pkges_links.md)
+[`cran_pkges_links()`](https://llrs.github.io/repo.data/reference/cran_pkges_links.md),
+[`links()`](https://llrs.github.io/repo.data/reference/links.md)
 
 ## Examples
 
