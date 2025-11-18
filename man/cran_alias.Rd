@@ -24,13 +24,15 @@ head(ca)
 The raw source of the data is: \code{\link[tools:CRAN_aliases_db]{CRAN_aliases_db()}}.
 
 Other alias: 
+\code{\link{alias}()},
 \code{\link{base_alias}()}
 
 Other meta info from CRAN: 
 \code{\link{cran_archive}()},
 \code{\link{cran_comments}()},
 \code{\link{cran_history}()},
-\code{\link{cran_links}()}
+\code{\link{cran_links}()},
+\code{\link{links}()}
 }
 \concept{alias}
 \concept{meta info from CRAN}

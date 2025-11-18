@@ -18,8 +18,22 @@ read_repo <- function(path, repo) {
   
 }
 
-#' @inheritParams cran_alias
+#' Links 
+#' 
+#' Retrieve links of repository packages to other packages' documentation.
+#' @inheritParams cran_links
+#' @returns A data.frame with the links on packages.  It has 4 columns: Package, Anchor, Target and Source. 
+#' NA if not able to collect the data from the repository.
+#' @family links from CRAN
+#' @family meta info from CRAN
 #' @export
+#' @examples
+#' oldrepos <- getOption("repos")
+#' setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
+#' head(links(c("ggplot2", "BiocCheck")))
+#' 
+#' # Clean  up
+#' options(repos = oldrepos)
 links <- function(packages = NULL) {
   
   raw_xrefs <- lapply(getOption("repos"), read_repo, path = "src/contrib/Meta/rdxrefs.rds")
@@ -83,8 +97,22 @@ links <- function(packages = NULL) {
   }
 }
 
+#' Links 
+#' 
+#' Retrieve links of repository packages to other packages' documentation.
 #' @inheritParams cran_alias
+#' @returns A data.frame with three columns: Package, Source and Target. 
+#' NA if not able to collect the data from the repository.
+#' @family alias
+#' @family meta info
 #' @export
+#' @examples
+#' oldrepos <- getOption("repos")
+#' setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
+#' head(alias(c("ggplot2", "BiocCheck")))
+#' 
+#' # Clean  up
+#' options(repos = oldrepos)
 alias <- function(packages = NULL) {
     stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
     raw_alias <- lapply(getOption("repos"), read_repo, path = "src/contrib/Meta/aliases.rds")

@@ -23,6 +23,7 @@ head(ctl)
 Other links from CRAN: 
 \code{\link{cran_links}()},
 \code{\link{cran_pages_links}()},
-\code{\link{cran_pkges_links}()}
+\code{\link{cran_pkges_links}()},
+\code{\link{links}()}
 }
 \concept{links from CRAN}

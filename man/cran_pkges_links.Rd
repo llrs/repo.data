@@ -27,6 +27,7 @@ head(cpkl)
 Other links from CRAN: 
 \code{\link{cran_links}()},
 \code{\link{cran_pages_links}()},
-\code{\link{cran_targets_links}()}
+\code{\link{cran_targets_links}()},
+\code{\link{links}()}
 }
 \concept{links from CRAN}

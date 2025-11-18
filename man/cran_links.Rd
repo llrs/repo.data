@@ -27,13 +27,15 @@ The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_d
 Other links from CRAN: 
 \code{\link{cran_pages_links}()},
 \code{\link{cran_pkges_links}()},
-\code{\link{cran_targets_links}()}
+\code{\link{cran_targets_links}()},
+\code{\link{links}()}
 
 Other meta info from CRAN: 
 \code{\link{cran_alias}()},
 \code{\link{cran_archive}()},
 \code{\link{cran_comments}()},
-\code{\link{cran_history}()}
+\code{\link{cran_history}()},
+\code{\link{links}()}
 }
 \concept{links from CRAN}
 \concept{meta info from CRAN}
