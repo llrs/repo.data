@@ -52,6 +52,6 @@ cran_history
 #>     check_packages(packages, NA)
 #>     get_package_subset("cran_history", packages)
 #> }
-#> <bytecode: 0x5630084590a8>
+#> <bytecode: 0x55ccc4844ed8>
 #> <environment: namespace:repo.data>
 ```

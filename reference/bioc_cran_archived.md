@@ -40,11 +40,11 @@ bca <- bioc_cran_archived()
 #> Retrieving CRAN_db, this might take a bit.
 #> Caching results to be faster next call in this session.
 head(bca)
-#>                Package            Archived n
-#> 1    BeadArrayUseCases           beadarray 1
-#> 2       ExpHunterSuite     EnhancedVolcano 1
-#> 3                 OHCA              HiCool 1
-#> 4        OSCA.advanced            PCAtools 1
-#> 5 beadarrayExampleData           beadarray 1
-#> 6           maEndToEnd arrayQualityMetrics 1
+#>                Package        Archived n
+#> 1    BeadArrayUseCases       beadarray 1
+#> 2               BioNAR       rSpectral 1
+#> 3       ExpHunterSuite EnhancedVolcano 1
+#> 4                 OHCA          HiCool 1
+#> 5        OSCA.advanced        PCAtools 1
+#> 6 beadarrayExampleData       beadarray 1
 ```

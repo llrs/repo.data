@@ -73,12 +73,12 @@ cd <- cran_doom()
 #> Retrieving CRAN_db, this might take a bit.
 #> Caching results to be faster next call in this session.
 if (length(cd) > 1L) head(cd$details)
-#>          Package   Deadline   type repo n_affected
-#> 1             bp 2025-11-14 direct CRAN          4
-#> 2         ggtern 2025-11-14 direct CRAN          4
-#> 3 SWMPrExtension 2025-11-15 direct CRAN         12
-#> 4    MultBiplotR 2025-11-15 direct CRAN         11
-#> 5         povmap 2025-11-15 direct CRAN         11
-#> 6          spocc 2025-11-15 direct CRAN         11
+#>            Package   Deadline   type repo n_affected
+#> 1              prt 2025-11-25 direct CRAN          4
+#> 2            rcldf 2025-11-25 direct CRAN          4
+#> 3    mlr3pipelines 2025-11-28 direct CRAN          4
+#> 4             qdap 2025-12-01 direct CRAN          8
+#> 5          DeSciDe 2025-12-01 direct CRAN          7
+#> 6 NPBayesImputeCat 2025-12-01 direct CRAN          7
 # }
 ```

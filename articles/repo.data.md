@@ -146,12 +146,12 @@ date you can use:
 
 ``` r
 cs <- cran_snapshot(as.Date("2020-01-31"))
-#> Warning: There are 3 packages both archived and published
+#> Warning: There are 5 packages both archived and published
 #> This indicate manual CRAN intervention.
 #> Retrieving comments, this might take a bit.
 #> Caching results to be faster next call in this session.
 nrow(cs)
-#> [1] 105019
+#> [1] 105564
 ```
 
 This might be helpful to know what was available on old project and why
@@ -166,7 +166,7 @@ system?
 
 ``` r
 cran_session()
-#> [1] "2025-11-12 08:40:06 CET"
+#> [1] "2025-11-28 13:40:06 CET"
 ```
 
 This uses the
@@ -210,14 +210,14 @@ if (length(cd) != 1L) {
 }
 ```
 
-| Package        | Deadline   | type   | repo | n_affected |
-|:---------------|:-----------|:-------|:-----|-----------:|
-| bp             | 2025-11-14 | direct | CRAN |          4 |
-| ggtern         | 2025-11-14 | direct | CRAN |          4 |
-| SWMPrExtension | 2025-11-15 | direct | CRAN |         12 |
-| MultBiplotR    | 2025-11-15 | direct | CRAN |         11 |
-| povmap         | 2025-11-15 | direct | CRAN |         11 |
-| spocc          | 2025-11-15 | direct | CRAN |         11 |
+| Package       | Deadline   | type   | repo | n_affected |
+|:--------------|:-----------|:-------|:-----|-----------:|
+| prt           | 2025-11-25 | direct | CRAN |          4 |
+| rcldf         | 2025-11-25 | direct | CRAN |          4 |
+| mlr3pipelines | 2025-11-28 | direct | CRAN |          4 |
+| qdap          | 2025-12-01 | direct | CRAN |          8 |
+| applicable    | 2025-12-01 | direct | CRAN |          7 |
+| DeSciDe       | 2025-12-01 | direct | CRAN |          7 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -234,7 +234,7 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2025-11-16 r89026)
+#> R Under development (unstable) (2025-11-29 r89077)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.3 LTS
 #> 
@@ -262,8 +262,8 @@ sessionInfo()
 #>  [5] rversions_3.0.0   textshaping_1.0.4 jsonlite_2.0.0    litedown_0.8     
 #>  [9] markdown_2.0      htmltools_0.5.8.1 ragg_1.5.0        sass_0.4.10      
 #> [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
-#> [17] yaml_2.3.10       lifecycle_1.0.4   compiler_4.6.0    igraph_2.2.1     
-#> [21] fs_1.6.6          pkgconfig_2.0.3   systemfonts_1.3.1 digest_0.6.38    
+#> [17] yaml_2.3.11       lifecycle_1.0.4   compiler_4.6.0    igraph_2.2.1     
+#> [21] fs_1.6.6          pkgconfig_2.0.3   systemfonts_1.3.1 digest_0.6.39    
 #> [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.4   
 #> [29] bslib_0.9.0       tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     
 #> [33] desc_1.4.3
