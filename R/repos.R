@@ -48,6 +48,8 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     repositories[] <- names(repos)[match(repositories, repos)]
 
     # Get the direct dependencies for each package
+    options <- options(repos = repos)
+    on.exit(options, add = TRUE)
     rd <- repos_dependencies(packages, which)
     
     pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]
