@@ -1,3 +1,4 @@
+library("repo.data")
 
 # Test that it works
 pr <- package_repos()
