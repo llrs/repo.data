@@ -59,7 +59,7 @@ warnings_alias <- function(alias) {
                 " have targets not present in a OS.", call. = FALSE)
         return(FALSE)
     } else if (sum(more_alias) == 1L) {
-        warning("Package ", unique(alias[, "Package"]),
+        warning("Package ", toString(sQuote(unique(alias[, "Package"]))),
                 " has targets not present in a OS.", call. = FALSE)
         return(FALSE)
     }
