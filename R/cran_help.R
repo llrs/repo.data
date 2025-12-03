@@ -68,7 +68,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
 #' }
 #' }
 cran_help_pages_wo_links <- function(packages = NULL) {
-    check_packages(packages)
+    check_packages(packages, NA)
     cal <- cran_alias(packages)
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
@@ -107,7 +107,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' chc <- cran_help_cliques("BaseSet")
 #' head(chc)
 cran_help_cliques <- function(packages = NULL) {
-    check_packages(packages)
+    check_packages(packages, NA)
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.",
              call. = FALSE)
@@ -176,7 +176,7 @@ cran_help_cliques <- function(packages = NULL) {
 #' @examples
 #' evmix <- cran_help_pages_links_wo_deps("evmix")
 cran_help_pages_links_wo_deps <- function(packages = NULL) {
-    check_packages(packages)
+    check_packages(packages, NA)
     ref_packages <- packages
     ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
     if (is_not_data(ap)) {
