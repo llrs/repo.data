@@ -18,7 +18,7 @@
 #' }
 #' }
 cran_help_pages_not_linked <- function(packages = NULL) {
-    check_packages(packages)
+    check_packages(packages, NA)
     cal <-  cran_alias(packages)
     if (!NROW(cal)) {
         stop("Package not found", call. = FALSE)

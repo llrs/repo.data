@@ -24,7 +24,7 @@ Uses CRAN specific API \url{https://cran.r-project.org/package=\%s&version=\%s} 
 }
 \examples{
 \dontrun{
-install.packages("testthat", "0.7.1")
+cran_version("testthat", "0.7.1")
 }
 }
 \references{

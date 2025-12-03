@@ -11,7 +11,7 @@
 #' @importFrom utils install.packages
 #' @examples
 #' \dontrun{
-#' install.packages("testthat", "0.7.1")
+#' cran_version("testthat", "0.7.1")
 #' }
 cran_version <- function(package, version, ...) {
   valid_package_name(package)
