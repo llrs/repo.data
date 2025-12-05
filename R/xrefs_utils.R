@@ -215,9 +215,8 @@ check_anchor <- function(targets) {
     error_anchor <- (whitespaces_target & !using_anchor) | (whitespaces_anchor & using_anchor)
     if (any(error_anchor)) {
         pkges <- unique(targets$Package[error_anchor])
-        warning("Packages ", toString(sQuote(pkges)),
-                " have a trailing whitespace on 'Anchors' that can create problems.\n",
-                "Check section 2.5 section of Writing R Extensions. ")
+        warning("A trailing whitespace on 'Anchors' that can create problems.\n",
+                "Check section 2.5 section of Writing R Extensions for, ", toString(sQuote(pkges)),)
         return(FALSE)
     }
     TRUE
