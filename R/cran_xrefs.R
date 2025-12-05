@@ -24,8 +24,8 @@ cran_links <- function(packages = NULL) {
     current_packages <- names(raw_xrefs)
     omit_pkg <- setdiff(packages, current_packages)
     if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE, call. = FALSE)
+        warning("Some package might not be currently on CRAN. Omitting ", toString(omit_pkg),immediate. = TRUE,
+                call. = FALSE)
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
@@ -93,8 +93,8 @@ cran_targets_links <- function(packages = NULL) {
 
         omit_pkg <- setdiff(packages, current_packages)
         if (length(omit_pkg)) {
-            warning("Omitting packages ", toString(omit_pkg),
-                    ".\nMaybe they are currently not on CRAN?", immediate. = TRUE, call. = FALSE)
+            warning("Some package might not be currently on CRAN. Omitting ", toString(omit_pkg),immediate. = TRUE,
+            call. = FALSE)
         }
 
         # Keep only packages that can be processed

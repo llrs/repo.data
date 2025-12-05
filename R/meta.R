@@ -4,25 +4,25 @@ read_repo <- function(path, repo) {
     error = function(e) {NULL},
     finally = {on.exit({if (!is.null(con)) close(con)}, add = TRUE)
   })
-  
+
   if (is.null(con)) {
     return(NULL)
   }
-  
+
   if (endsWith(path, "rds") || endsWith(path, "RDS")) {
     con <- gzcon(con)
     readRDS(con)
   } else {
     read.dcf(con)
   }
-  
+
 }
 
-#' Links 
-#' 
+#' Links
+#'
 #' Retrieve links of repository packages to other packages' documentation.
 #' @inheritParams cran_links
-#' @returns A data.frame with the links on packages.  It has 4 columns: Package, Anchor, Target and Source. 
+#' @returns A data.frame with the links on packages.  It has 4 columns: Package, Anchor, Target and Source.
 #' NA if not able to collect the data from the repository.
 #' @family links from CRAN
 #' @family meta info from CRAN
@@ -31,11 +31,11 @@ read_repo <- function(path, repo) {
 #' oldrepos <- getOption("repos")
 #' setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
 #' head(links(c("ggplot2", "BiocCheck")))
-#' 
+#'
 #' # Clean  up
 #' options(repos = oldrepos)
 links <- function(packages = NULL) {
-  
+
   raw_xrefs <- lapply(getOption("repos"), read_repo, path = "src/contrib/Meta/rdxrefs.rds")
   if (is_not_data(raw_xrefs)) {
     return(NA)
@@ -46,8 +46,8 @@ links <- function(packages = NULL) {
   current_packages <- unlist(lapply(raw_xrefs, names), use.names = FALSE)
   dups <- anyDuplicated(current_packages)
   if (length(dups) == 1L && dups[1L] != 0L) {
-    
-    warning("Packages found in multiple repositories", toString(current_packages[dups]), 
+
+    warning("Packages found in multiple repositories", toString(current_packages[dups]),
     immediate. = TRUE, call. = FALSE)
   }
 
@@ -61,7 +61,7 @@ links <- function(packages = NULL) {
   if (!is.null(packages) && !length(packages)) {
     return(NULL)
   }
-  
+
   # Check if there is already data
   first_xrefs <- empty_env(env)
   if (first_xrefs) {
@@ -69,7 +69,7 @@ links <- function(packages = NULL) {
   } else {
     xrefs <- pkg_state[[env]]
   }
-  
+
   # Decide which packages are to be added to the data
   if (!is.null(packages) && !first_xrefs) {
     new_packages <- setdiff(packages, xrefs[, "Package"])
@@ -80,7 +80,7 @@ links <- function(packages = NULL) {
   } else if (is.null(packages) && !first_xrefs) {
     new_packages <- setdiff(current_packages, xrefs[, "Package"])
   }
-  
+
   # Add new package's data
   xrefs_list <- do.call(c, raw_xrefs)
   names(xrefs_list) <- current_packages
@@ -97,11 +97,11 @@ links <- function(packages = NULL) {
   }
 }
 
-#' Links 
-#' 
+#' Links
+#'
 #' Retrieve links of repository packages to other packages' documentation.
 #' @inheritParams cran_alias
-#' @returns A data.frame with three columns: Package, Source and Target. 
+#' @returns A data.frame with three columns: Package, Source and Target.
 #' NA if not able to collect the data from the repository.
 #' @family alias
 #' @family meta info
@@ -110,7 +110,7 @@ links <- function(packages = NULL) {
 #' oldrepos <- getOption("repos")
 #' setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
 #' head(alias(c("ggplot2", "BiocCheck")))
-#' 
+#'
 #' # Clean  up
 #' options(repos = oldrepos)
 alias <- function(packages = NULL) {
@@ -127,16 +127,15 @@ alias <- function(packages = NULL) {
     current_packages <- unlist(lapply(raw_alias, names), use.names = FALSE)
     dups <- anyDuplicated(current_packages)
     if (length(dups) == 1L && dups[1L] != 0L) {
-      
-      warning("Packages found in multiple repositories", toString(current_packages[dups]), 
+
+      warning("Packages found in multiple repositories", toString(current_packages[dups]),
       immediate. = TRUE, call. = FALSE)
     }
-  
+
     omit_pkg <- setdiff(packages, current_packages)
     if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\nMaybe they are currently not on CRAN?", immediate. = TRUE,
-                call. = FALSE)
+        warning("Some package might not be currently on CRAN. Omitting ", toString(omit_pkg),immediate. = TRUE,
+        call. = FALSE)
     }
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
