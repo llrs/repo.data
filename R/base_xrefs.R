@@ -40,25 +40,19 @@ base_links <- function(packages = NULL) {
 base_targets_links <- function(packages = NULL) {
     out <- NULL
     check_packages(packages, NA)
-    out <- save_state("base_targets_links", out, verbose = FALSE)
-    if (!is.data.frame(out) && !is.matrix(out)) {
-        return(NA)
-    }
-    if (is.null(out)) {
-        bl <- base_links()
-        bal <- base_alias()
-        cal <- cran_alias()
-        bl2 <- split_anchor(bl)
-
-        t2b2 <- targets2files(bl2, rbind(bal, cal))
-        out <- uniq_count(t2b2)
-        out <- save_state("base_targets_links", out, verbose = FALSE)
-    }
-    if (!is.null(packages)) {
+    out <- get_package_subset("base_targets_links", pkges = packages)
+    if (!is.null(packages) && !is.null(out)) {
         packages_in_links(out, packages)
-    } else {
-        out
     }
+
+    bl <- base_links()
+    bal <- base_alias()
+    cal <- cran_alias()
+    bl2 <- split_anchor(bl)
+
+    t2b2 <- targets2files(bl2, rbind(bal, cal))
+    out <- uniq_count(t2b2)
+    save_state("base_targets_links", out, verbose = FALSE)
 }
 
 #' Links between help pages by page
