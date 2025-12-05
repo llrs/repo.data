@@ -24,7 +24,7 @@ Uses CRAN specific API \url{https://cran.r-project.org/package=\%s&version=\%s} 
 }
 \examples{
 \dontrun{
-cran_version("testthat", "0.7.1")
+cran_version("repo.data", "0.1.5", lib = tempdir())
 }
 }
 \references{
