@@ -3,6 +3,7 @@
 #' Install a package from CRAN of a specific version.
 #'
 #' Uses CRAN specific API <https://cran.r-project.org/package=%s&version=%s> to install a package.
+#' As this is an archived copy we only use source version.
 #' @param package Name of the package present on CRAN archive.
 #' @param version The version number.
 #' @param ... Other arguments passed to install.packages.
@@ -18,5 +19,5 @@ cran_version <- function(package, version, ...) {
   valid_package_name(package)
   version <- as.package_version(version)
   url_package <- sprintf("https://cran.r-project.org/package=%s&version=%s", package, as.character(version))
-  install.packages(pkgs = url_package, repos = NULL, ...)
+  install.packages(pkgs = url_package, repos = NULL, type = "source", ...)
 }
