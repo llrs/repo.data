@@ -21,14 +21,11 @@ cran_alias <- function(packages = NULL) {
     check_packages(packages, NA)
     # Place to store modified data
     env <- "full_cran_aliases"
-    # Check for random packages
+
+    # Check for missing packages
     current_packages <- names(raw_alias)
-    omit_pkg <- setdiff(packages, current_packages)
-    if (length(omit_pkg)) {
-        warning("Some package might not be currently on CRAN. Omitting ",
-                toString(omit_pkg),immediate. = TRUE,
-                call. = FALSE)
-    }
+    omit_pkg <- check_current_pkg(packages, current_packages)
+
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {

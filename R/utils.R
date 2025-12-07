@@ -170,7 +170,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 
 
 valid_package_name <- function(packages) {
-    
+
     #  - at least two characters
     #  - start with a letter
     #  - not end in a dot
@@ -211,6 +211,8 @@ check_packages <- function(packages, length = 1L) {
     TRUE
 }
 
+
+
 is_logical <- function(x) {
     isTRUE(x) || isFALSE(x)
 }
@@ -222,4 +224,21 @@ is_not_data <- function(x) {
 
 no_internet <- function(x) {
     if (length(x) == 1L && is.na(x)) q("no")
+}
+
+omitting_packages <- function(packages) {
+    if (length(packages)) {
+        warning("Some packages are not currently available. Omitting packages:\n",
+                toString(sQuote(packages)), ".", immediate. = TRUE, call. = FALSE)
+    }
+}
+
+check_current_pkg <- function(packages, current) {
+    warn <- empty_env("current_packages")
+    current_packages <- save_state("current_packages", current)
+    omit_pkg <- setdiff(packages, current_packages)
+    if (warn) {
+        omitting_packages(omit_pkg)
+    }
+    omit_pkg
 }
