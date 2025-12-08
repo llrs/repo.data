@@ -41,9 +41,9 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     } else {
         packages <- intersect(repos_packages, rownames(ap))
     }
-    
+
     # Get the repo where each package comes from
-    repositories <- gsub("/src/contrib", "", ap[, "Repository"], fixed = TRUE)
+    repositories <- gsub("/src/contrib.*", "", ap[, "Repository"], fixed = FALSE)
     names(repositories) <- rownames(ap)
     repositories[] <- names(repos)[match(repositories, repos)]
 
@@ -51,7 +51,7 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     options <- options(repos = repos)
     on.exit(options, add = TRUE)
     rd <- repos_dependencies(packages, which)
-    
+
     pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]
 
     pd2$Repo <- repositories[pd2$Name]
