@@ -40,22 +40,18 @@ links <- function(packages = NULL) {
   if (is_not_data(raw_xrefs)) {
     return(NA)
   }
-  check_packages(packages, NA)
+  check_pkg_names(packages, NA)
   env <- "full_rdxrefs"
   # Check for random packages
   current_packages <- unlist(lapply(raw_xrefs, names), use.names = FALSE)
   dups <- anyDuplicated(current_packages)
   if (length(dups) == 1L && dups[1L] != 0L) {
-
     warning("Packages found in multiple repositories", toString(current_packages[dups]),
     immediate. = TRUE, call. = FALSE)
   }
 
-  omit_pkg <- setdiff(packages, current_packages)
-  if (length(omit_pkg)) {
-    warning("Omitting packages ", toString(omit_pkg),
-    ".\nMaybe they are currently not on the repositories?", immediate. = TRUE, call. = FALSE)
-  }
+  omit_pkg <- check_current_pkg(packages, current_packages)
+
   # Keep only packages that can be processed
   packages <- setdiff(packages, omit_pkg)
   if (!is.null(packages) && !length(packages)) {
@@ -132,8 +128,7 @@ alias <- function(packages = NULL) {
       immediate. = TRUE, call. = FALSE)
     }
 
-    omit_pkg <- setdiff(packages, current_packages)
-    omitting_packages(omit_pkg)
+    omit_pkg <- check_current_pkg(packages, current_packages)
 
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)

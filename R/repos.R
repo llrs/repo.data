@@ -17,7 +17,7 @@
 #' head(pr)
 package_repos <- function(packages = NULL, repos = getOption("repos"), which = "all") {
     stopifnot(is.character(repos) && length(repos))
-    check_packages(packages, length = NA)
+    check_pkg_names(packages, length = NA)
 
     which <- check_which(which)
     ap <- tryCatch(available.packages(repos = repos, filters = c("CRAN", "duplicates")),
@@ -27,14 +27,10 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     }
 
     # Check packages
-    repos_packages <- setdiff(packages, BASE)
-    omit_pkg <- setdiff(repos_packages, rownames(ap))
-    if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\n Maybe they are currently not available?",
-                immediate. = TRUE, call. = FALSE)
-        repos_packages <- setdiff(repos_packages, omit_pkg)
-    }
+    omit_pkg <- check_current_pkg(setdiff(packages, BASE), rownames(ap))
+
+    # Keep only packages that can be processed
+    repos_packages <- setdiff(packages, omit_pkg)
 
     if (is.null(repos_packages)) {
         packages <- rownames(ap)
@@ -48,8 +44,8 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     repositories[] <- names(repos)[match(repositories, repos)]
 
     # Get the direct dependencies for each package
-    options <- options(repos = repos)
-    on.exit(options, add = TRUE)
+    opts <- options(repos = repos)
+    on.exit(opts, add = TRUE)
     rd <- repos_dependencies(packages, which)
 
     pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]

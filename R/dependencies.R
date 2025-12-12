@@ -28,12 +28,11 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     pd <- pkg_state[[env]]
     all_packages <- rownames(ap)
 
-    omit_pkg <- setdiff(packages, all_packages)
-    if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\n Maybe they are currently not available?",
-                immediate. = TRUE, call. = FALSE)
-    }
+    # Check for missing packages
+    omit_pkg <- check_current_pkg(packages, all_packages)
+
+    # Keep only packages that can be processed
+    packages <- setdiff(packages, omit_pkg)
 
     new_pkgs <- if (first && is.null(packages)) {
         all_packages
