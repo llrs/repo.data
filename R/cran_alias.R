@@ -18,7 +18,7 @@ cran_alias <- function(packages = NULL) {
     if (is_not_data(raw_alias)) {
         return(NA)
     }
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     # Place to store modified data
     env <- "full_cran_aliases"
 

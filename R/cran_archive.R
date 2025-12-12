@@ -28,7 +28,7 @@
 #' }
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     current <- save_state("current", tools::CRAN_current_db(), FALSE)
     if (is_not_data(current)) {
         return(NA)
@@ -111,17 +111,26 @@ cran_archive_dates <- function() {
 }
 
 
-cran_packages <- function(packages = NULL) {
-    current <- save_state("current", tools::CRAN_current_db(), FALSE)
-    if (is_not_data(current)) {
+cran_packages <- function() {
+    current_packages <- current_cran_packages()
+    if (is_not_data(current_packages)) {
         return(NA)
     }
     archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
     if (is_not_data(archive)) {
         return(NA)
     }
-    s <- strsplit(rownames(current), "_", fixed = TRUE)
-    current_packages <- vapply(s, "[", FUN.VALUE = character(1L), i = 1L)
     archive_packages <- names(archive)
-    unique(current_packages, archive_packages)
+    cran_packages <- unique(current_packages, archive_packages)
+    save_state("cran_packages", cran_packages, verbose = FALSE)
+
+}
+
+current_cran_packages <- function() {
+    current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    if (is_not_data(current)) {
+        return(NA)
+    }
+    s <- strsplit(rownames(current), "_", fixed = TRUE)
+    vapply(s, "[", FUN.VALUE = character(1L), i = 1L)
 }

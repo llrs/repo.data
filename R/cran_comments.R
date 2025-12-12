@@ -29,7 +29,7 @@ cran_comments <- function(packages = NULL) {
     if (!is.data.frame(out) && !is.matrix(out)) {
         return(NA)
     }
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     get_package_subset("cran_comments", packages)
 }
 

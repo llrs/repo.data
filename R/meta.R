@@ -116,7 +116,7 @@ alias <- function(packages = NULL) {
       return(NA)
     }
     raw_alias <- save_state("aliases", raw_alias)
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     # Place to store modified data
     env <- "full_cran_aliases"
     # Check for random packages

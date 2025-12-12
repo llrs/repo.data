@@ -18,7 +18,7 @@
 #' }
 #' }
 cran_help_pages_not_linked <- function(packages = NULL) {
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     cal <-  cran_alias(packages)
     if (!NROW(cal)) {
         stop("Package not found", call. = FALSE)
@@ -68,7 +68,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
 #' }
 #' }
 cran_help_pages_wo_links <- function(packages = NULL) {
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     cal <- cran_alias(packages)
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
@@ -107,7 +107,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' chc <- cran_help_cliques("BaseSet")
 #' head(chc)
 cran_help_cliques <- function(packages = NULL) {
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.",
              call. = FALSE)
@@ -153,7 +153,7 @@ cran_help_cliques <- function(packages = NULL) {
     l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
-    df$clique <- rep(seq_len(length(lengths_graph)), times = lengths_graph)
+    df$clique <- rep(seq_along(lengths_graph), times = lengths_graph)
     m <- merge(df, unique(cal), all.x = TRUE,
                by = c("from_pkg", "from_Rd"),
                sort = FALSE)
@@ -176,13 +176,13 @@ cran_help_cliques <- function(packages = NULL) {
 #' @examples
 #' evmix <- cran_help_pages_links_wo_deps("evmix")
 cran_help_pages_links_wo_deps <- function(packages = NULL) {
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     ref_packages <- packages
     ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
     if (is_not_data(ap)) {
         return(NA)
     }
-    if (check_packages(packages)) {
+    if (check_pkg_names(packages)) {
         pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
         packages <- setdiff(funlist(pkg), BASE)
         ap <- ap[packages, c("Package", check_which("strong"))]

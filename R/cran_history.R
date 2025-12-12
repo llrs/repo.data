@@ -20,7 +20,7 @@ cran_history <- function(packages = NULL) {
     if (is_not_data(history)) {
         return(NA)
     }
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     get_package_subset("cran_history", packages)
 }
 
