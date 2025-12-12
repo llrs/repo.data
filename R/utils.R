@@ -40,12 +40,15 @@ get_package_subset <- function(name, pkges) {
 }
 
 pkg_in_x <- function(x, packages) {
-    if ("package" %in% colnames(x)) {
-        x[, "package"] %in% packages
-    } else {
-        x[, "Package"] %in% packages
+    cols <- c("package", "Package", "from_pkg", "to_pkg")
+    w <- which(cols %in% colnames(x))
+    if (!length(w)) {
+        return(x)
     }
+    column <- cols[min(w)]
+    x[, column] %in% packages
 }
+
 check_subset <- function(obj, pkges) {
     if ("package" %in% colnames(obj)) {
         all(pkges %in% obj[, "package"])
@@ -175,14 +178,14 @@ valid_package_name <- function(packages) {
     #  - start with a letter
     #  - not end in a dot
     validity <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !endsWith(packages, ".")
-    if (any(!validity)) {
+    if (!all(validity)) {
         stop("Packages names should have at least two characters and start",
              " with a letter and not end in a dot.", call. = FALSE)
     }
     TRUE
 }
 
-check_packages <- function(packages, length = 1L) {
+check_pkg_names <- function(packages, length = 1L) {
     char_packages <- is.character(packages) && length(na.omit(packages))
 
     if (isFALSE(char_packages) && !is.na(length)) {
@@ -235,9 +238,9 @@ omitting_packages <- function(packages) {
 
 check_current_pkg <- function(packages, current) {
     warn <- empty_env("current_packages")
-    current_packages <- save_state("current_packages", current)
+    current_packages <- save_state("current_packages", current, verbose = FALSE)
     omit_pkg <- setdiff(packages, current_packages)
-    if (warn) {
+    if (warn && anyNA(current_packages) && any(current_packages != current)) {
         omitting_packages(omit_pkg)
     }
     omit_pkg
