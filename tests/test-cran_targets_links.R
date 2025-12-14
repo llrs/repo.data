@@ -8,10 +8,12 @@ stopifnot("CRAN has documentation pages" = as.logical(NROW(ctl)))
 
 # Cache
 st2 <- system.time(ctl2 <- cran_targets_links())
+repo.data:::no_internet(ctl2)
 stopifnot(identical(ctl, ctl2))
-stopifnot(st2["elapsed"] < st["elapsed"])
+stopifnot(st2["elapsed"] < st1["elapsed"])
 
 # Subsetting
 st3 <- system.time(ctl3 <- cran_targets_links("BaseSet"))
-stopifnot(identical(ctl, ctl3))
-stopifnot(st3["elapsed"] < st["elapsed"])
+stopifnot("Requests for some packages don't return a subset" = nrow(ctl3) < nrow(ctl))
+stopifnot("Returns more than from the packages requested" = all(ctl3$from_pkg == "BaseSet"))
+stopifnot("Cache doesn't work for requested packages" = st3["elapsed"] < st1["elapsed"])

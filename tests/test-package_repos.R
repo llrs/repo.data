@@ -13,9 +13,11 @@ stopifnot(all.equal(colnames(pr)[last_three_columns], c("Other", "Packages_deps"
 stopifnot("No NA" = !anyNA(pr))
 
 # Test that Bioconductor packages get their dependencies too
+opts <- options()
 repos <- c(getOption("repos"), repo.data:::bioc_repos())
 pr <- package_repos(repos = repos)
+opts2 <- options()
+stopifnot("package_repos is messing with opts" = !identical(opts, opts2))
 repo.data:::no_internet(pr)
 cran <- grep("CRAN", names(repos), value = TRUE)
-which_cran <- pr$Repository == cran
-stopifnot(sum(pr[!which_cran, -c(1, 2)]) != 0L)
+stopifnot("All packages have data" = sum(pr[, -c(1, 2)]) != 0L)

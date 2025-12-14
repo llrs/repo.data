@@ -18,6 +18,7 @@ stopifnot("No data on base_help_cliques" = as.logical(NROW(bhc)))
 stopifnot("No links == 0L" = !anyNA(bhc$n))
 
 # CRAN
+ctl <- cran_targets_links()
 chpnl <- cran_help_pages_not_linked()
 repo.data:::no_internet(chpnl)
 stopifnot("Column names not matching" = colnames(chpnl) == c("Package", "Source"))
