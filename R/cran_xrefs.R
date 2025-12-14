@@ -18,7 +18,7 @@ cran_links <- function(packages = NULL) {
     if (is_not_data(raw_xrefs)) {
         return(NA)
     }
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     env <- "full_cran_rdxrefs"
 
     # Check for missing packages
@@ -78,105 +78,25 @@ cran_targets_links <- function(packages = NULL) {
     out <- NULL
     env <- "cran_targets_links"
     first_call <- empty_env(env)
-    check_packages(packages, NA)
-
-    current_packages <- if (first_call) {
-        NULL
-    } else {
-        out <- pkg_state[[env]]
-        unique(out$from_pkg)
+    check_pkg_names(packages, NA)
+    out <- get_package_subset(env, pkges = packages)
+    targets_packages <- out$from_pkg
+    if (!is.null(packages) && !is.null(out)) {
+        return(packages_in_links(out, packages))
+    } else if (!first_call && !is.null(packages) && all(packages %in% targets_packages)) {
+        return(packages_in_links(out, packages))
+    } else if (!first_call && all(targets_packages %in% current_cran_packages())) {
+        return(out)
     }
 
-    if (!is.null(current_packages)) {
+    cl <- cran_links(packages)
+    bal <- base_alias()
+    cal <- cran_alias(packages)
+    bl2 <- split_anchor(cl)
 
-        omit_pkg <- setdiff(packages, current_packages)
-        omitting_packages(omit_pkg)
-
-        # Keep only packages that can be processed
-        packages <- setdiff(packages, omit_pkg)
-    }
-
-    if (!is.null(packages) && !length(packages)) {
-        return(NULL)
-    }
-
-    # Decide which packages are to be added to the data
-    if (!is.null(packages) && !first_call) {
-        new_packages <- setdiff(packages, current_packages)
-    } else if (is.null(packages) && !first_call) {
-        new_packages <- setdiff(cran_packages(), current_packages)
-    } else if (first_call) {
-        new_packages <- packages
-    }
-
-    # Search only the links from packages that are valid
-    if (is.null(packages)) {
-        deps <- c(cran_packages(), BASE)
-    } else {
-        ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w) {NA})
-        if (is_not_data(ap)) {
-            return(NA)
-        }
-        deps <- tools::package_dependencies(packages, db = ap)
-    }
-    deps <- unique(c(packages, funlist(deps)))
-
-
-    # Get the packages
-    bal <- base_alias(intersect(deps, c(BASE, "R")))
-    if (is_not_data(bal)) {
-        return(NA)
-    }
-    cran_pkgs <- setdiff(deps, c(BASE, "R"))
-    cal <- cran_alias(cran_pkgs)
-    if (is_not_data(cal)) {
-        return(NA)
-    }
-    cl <- cran_links(cran_pkgs)
-    if (is_not_data(cl)) {
-        return(NA)
-    }
-    t2b2 <- targets2files(split_anchor(cl), rbind(bal, cal))
-
-    if (length(new_packages)) {
-        new_out <- packages_in_links(t2b2, new_packages)
-
-        new_out <- add_uniq_count(t2b2)
-        pkg_state[[env]] <- rbind(out, new_out)
-    }
-
-    out_fun <- t2b2[t2b2$from_pkg %in% packages, , drop = FALSE]
-    return(add_uniq_count(out_fun))
-
-    # Add new package's data
-    if (length(new_packages)) {
-        raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
-        if (is_not_data(raw_xrefs)) {
-            return(NA)
-        }
-        new_xrefs <- xrefs2df(raw_xrefs[new_packages])
-
-        xrefs <- pkg_state[["full_cran_rdxrefs"]]
-        xrefs <- rbind(xrefs, new_xrefs)
-        pkg_state[[env]] <- xrefs[, c("Package", "Source", "Anchor", "Target")]
-    }
-    if (is.null(packages)) {
-        as.data.frame(xrefs)
-    } else {
-        as.data.frame(xrefs[xrefs[, "Package"] %in% packages, , drop = FALSE])
-    }
-
-    new_out <- out[out$from_pkg %in% new_packages, , drop = FALSE]
-    out <- save_state(env, out, verbose = FALSE)
-    if (!is.data.frame(out) && !is.matrix(out)) {
-        return(NA)
-    } else if (!is.null(packages)) {
-        out <- out[out$from_pkg %in% packages | out$to_pkg %in% packages, ]
-        rownames(out) <- NULL
-        out
-    } else {
-        out
-    }
+    t2b2 <- targets2files(bl2, rbind(bal, cal))
+    out <- uniq_count(t2b2)
+    save_state(env, out, verbose = FALSE)
 }
 
 #' Links between help pages by page
@@ -191,14 +111,14 @@ cran_targets_links <- function(packages = NULL) {
 #' cpl <- cran_pages_links("Matrix")
 #' head(cpl)
 cran_pages_links <- function(packages = NULL) {
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
 
     target_links <- cran_targets_links(packages)
     if (is_not_data(target_links)) {
         return(NA)
     }
 
-    w <- which(colnames(target_links) %in% "to_target")
+    w <- which(colnames(target_links) == "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {
         keep_rows <- keep_rows & (target_links$from_pkg %in% packages | target_links$to_pkg %in% packages)
@@ -221,11 +141,11 @@ cran_pages_links <- function(packages = NULL) {
 #' head(cpkl)
 #' }
 cran_pkges_links <- function(packages = NULL) {
-    target_links <- save_state("cran_pages_links", base_targets_links())
+    target_links <- cran_targets_links()
     if (is_not_data(target_links)) {
         return(NA)
     }
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg"))
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {
