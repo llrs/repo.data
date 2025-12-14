@@ -79,12 +79,13 @@ cran_archive <- function(packages = NULL) {
         pkg_state[[env]] <- arch
     }
 
-    out <- if (is.null(packages)) {
-        save_state("full_cran_archive", arch2df(arch))
+    out <- save_state(env, arch)
+    if (is.null(packages)) {
+        return(arch2df(out))
     }
 
     if (all(packages %in% out[, "package"])) {
-        out[pkg_in_x(out, packages), , drop = FALSE]
+        arch2df(out[pkg_in_x(out, packages), , drop = FALSE])
     } else {
         arch2df(arch[arch[, "package"] %in% packages, , drop = FALSE])
     }
