@@ -49,14 +49,6 @@ pkg_in_x <- function(x, packages) {
     x[, column] %in% packages
 }
 
-check_subset <- function(obj, pkges) {
-    if ("package" %in% colnames(obj)) {
-        all(pkges %in% obj[, "package"])
-    } else {
-        all(pkges %in% obj[, "Package"])
-    }
-}
-
 check_installed <- function(x) {
     requireNamespace(x, quietly = TRUE)
 }
