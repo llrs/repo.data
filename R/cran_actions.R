@@ -11,7 +11,7 @@
 #' @importFrom utils head
 #' @keywords internal
 cran_actions <- function(packages = NULL, silent = FALSE) {
-    out <- save_state("full_cran_actions", cran_all_actions())
+    out <- cran_all_actions()
     if (is_not_data(out)) {
         return(NA)
     }

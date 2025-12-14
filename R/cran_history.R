@@ -25,15 +25,14 @@ cran_history <- function(packages = NULL) {
 }
 
 cran_all_history <- function() {
-    archive <- save_state("full_cran_archive", cran_archive())
+    archive <- cran_archive()
     if (is_not_data(archive)) {
         return(NA)
     }
-    actions <- save_state("full_cran_actions", cran_actions())
+    actions <- cran_actions()
     if (is_not_data(actions)) {
         return(NA)
     }
-    # comments <- save_state("cran_comments", cran_comments())
 
     archive$Date <- strftime(archive$Datetime, "%F")
     archive$Time <- strftime(archive$Datetime, "%T")

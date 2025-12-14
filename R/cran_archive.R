@@ -79,8 +79,12 @@ cran_archive <- function(packages = NULL) {
         pkg_state[[env]] <- arch
     }
 
-    if (is.null(packages)) {
-        arch2df(arch)
+    out <- if (is.null(packages)) {
+        save_state("full_cran_archive", arch2df(arch))
+    }
+
+    if (all(packages %in% out[, "package"])) {
+        out[pkg_in_x(out, packages), , drop = FALSE]
     } else {
         arch2df(arch[arch[, "package"] %in% packages, , drop = FALSE])
     }
@@ -89,7 +93,7 @@ cran_archive <- function(packages = NULL) {
 
 # Like CRAN archive but provides the published date and the date of archival if known
 cran_archive_dates <- function() {
-    ca <- save_state("full_cran_archive", cran_archive())
+    ca <- cran_archive()
     if (is_not_data(ca)) {
         return(NA)
     }
@@ -102,12 +106,14 @@ cran_archive_dates <- function() {
     ca
 
     # TODO match package version with dates of archival or removal
-    cc <- save_state("cran_comments", cran_comments())
+    cc <- cran_comments()
     if (is_not_data(cc)) {
         return(NA)
     }
     w <- which(cc$action %in% c("archived", "removed", "replaced", "renamed"))
-    cc[w, ]
+    out <- cc[w, ]
+    rownames(out) <- NULL
+    out
 }
 
 

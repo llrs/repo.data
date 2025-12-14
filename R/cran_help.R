@@ -23,8 +23,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
     if (!NROW(cal)) {
         stop("Package not found", call. = FALSE)
     }
-    # cl <- cran_links()
-    rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    rbl <- cran_targets_links()
     if (is_not_data(rbl)) {
         return(NA)
     }
