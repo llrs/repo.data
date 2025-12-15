@@ -18,7 +18,6 @@ stopifnot("No data on base_help_cliques" = as.logical(NROW(bhc)))
 stopifnot("No links == 0L" = !anyNA(bhc$n))
 
 # CRAN
-ctl <- cran_targets_links()
 chpnl <- cran_help_pages_not_linked()
 repo.data:::no_internet(chpnl)
 stopifnot("Column names not matching" = colnames(chpnl) == c("Package", "Source"))
@@ -31,5 +30,21 @@ stopifnot("No data on cran_help_pages_wo_links" = as.logical(NROW(chpwl)))
 
 chc <- cran_help_cliques()
 repo.data:::no_internet(chc)
-stopifnot("Column names not matching" = colnames(chc) == c("Package", "Source"))
+stopifnot("Column names not matching" =
+              colnames(chc) == c("from_pkg", "from_Rd", "clique", "to_pkg",
+                                 "to_Rd", "n"))
 stopifnot("No data on cran_help_cliques" = as.logical(NROW(chc)))
+
+
+chc_BaseSet <- cran_help_cliques("BaseSet")
+repo.data:::no_internet(chc_BaseSet)
+stopifnot(unique(chc$clique) >= 1L)
+
+# chc_pkges <- cran_help_cliques(c("experDesign", "BaseSet"))
+# repo.data:::no_internet(chc_pkges)
+# stopifnot(unique(chc$clique) >= 1L)
+# stopifnot("More packages do not lead to more cliques" = nrow(chc_pkges) > nrow(chc_BaseSet))
+
+chplwd <- cran_help_pages_links_wo_deps()
+cpl <- cran_pages_links()
+cpl <- cran_pkges_links()

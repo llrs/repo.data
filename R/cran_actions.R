@@ -10,6 +10,8 @@
 #' @importFrom stats na.omit
 #' @importFrom utils head
 #' @keywords internal
+#' @examples
+#' # ca <- cran_actions()
 cran_actions <- function(packages = NULL, silent = FALSE) {
     out <- cran_all_actions()
     if (is_not_data(out)) {
@@ -33,7 +35,7 @@ cran_all_actions <- function() {
 
     actions_f <- system.file(package = "repo.data", "data", "actions.rds")
     if (!nzchar(actions_f)) {
-        stop("Data not released open, sorry can't share it (yet?)", call. = FALSE)
+        stop("Data not openly released, sorry can't share it (yet?)", call. = FALSE)
     }
     actions <- readRDS(actions_f)
     actions <- unique(actions)

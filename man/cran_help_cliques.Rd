@@ -17,14 +17,19 @@ Or NULL if nothing are found.
 \description{
 Some help pages have links to other pages and they might be linked from others
 but they are closed network: there is no link that leads to different help pages.
+Each group of linked help pages is a clique.
 }
 \details{
-Requires igraph
+The first clique is the biggest one.
+You might want to check if others cliques can be connected to this one.
+
+Requires igraph.
 }
 \examples{
 \dontshow{if (requireNamespace("igraph", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 chc <- cran_help_cliques("BaseSet")
-head(chc)
+table(chc$clique)
+chc[chc$clique != 1L, ]
 \dontshow{\}) # examplesIf}
 }
 \seealso{

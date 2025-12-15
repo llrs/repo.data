@@ -17,4 +17,7 @@ A data.frame with Date, Time, User, Action, Package and Version columns.
 CRAN tracks movements of packages and the actions used (for example to report
 the number of manual actions taken by the volunteers).
 }
+\examples{
+# ca <- cran_actions()
+}
 \keyword{internal}

@@ -13,15 +13,22 @@
 #' @export
 #' @seealso [cran_archive()], [cran_actions()], [cran_comments()].
 #' @family meta info from CRAN
+#' @keywords internal
 #' @examples
-#' cran_history
+#' # cran_history()
 cran_history <- function(packages = NULL) {
-    history <- save_state("cran_history", cran_all_history())
+    env <- "cran_history"
+    if (empty_env(env)) {
+        history <- cran_all_history()
+    } else {
+        history <- get_package_subset(env, packages)
+    }
+
     if (is_not_data(history)) {
         return(NA)
     }
     check_pkg_names(packages, NA)
-    get_package_subset("cran_history", packages)
+    get_package_subset(env, packages)
 }
 
 cran_all_history <- function() {
