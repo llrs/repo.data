@@ -142,11 +142,23 @@ other pages - Pages are linked from other pages.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="st">"BaseSet"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/cran_help_pages_wo_links.html">cran_help_pages_wo_links</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Retrieving cran_rdxrefs, this might take a bit.</span></span>
+<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
 <span><span class="co">#&gt; Retrieving base_aliases, this might take a bit.</span></span>
 <span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
 <span><span class="co">#&gt; [1] NA</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/cran_help_pages_not_linked.html">cran_help_pages_not_linked</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Package has targets not present in a OS:</span></span>
+<span><span class="co">#&gt; 'sfsmisc'</span></span>
+<span><span class="co">#&gt; Warning: Some pages point to different places according to the OS.</span></span>
+<span><span class="co">#&gt; Warning: Some links are distinct depending on the OS.</span></span>
+<span><span class="co">#&gt;   Package      Source</span></span>
+<span><span class="co">#&gt; 1 BaseSet activate.Rd</span></span>
+<span><span class="co">#&gt; 2 BaseSet activate.Rd</span></span>
+<span><span class="co">#&gt; 3 BaseSet activate.Rd</span></span>
+<span><span class="co">#&gt; 4 BaseSet activate.Rd</span></span>
+<span><span class="co">#&gt; 5 BaseSet activate.Rd</span></span>
+<span><span class="co">#&gt; 6 BaseSet activate.Rd</span></span></code></pre></div>
 <p>In addition to those help pages that are not well connected it could
 be that some pages are linked but link to each other without connecting
 with other help pages of the package or other packages.</p>
@@ -154,16 +166,13 @@ with other help pages of the package or other packages.</p>
 suggested package igraph.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cliques</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cran_help_cliques.html">cran_help_cliques</a></span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Retrieving cran_rdxrefs, this might take a bit.</span></span>
-<span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
-<span><span class="co">#&gt; Warning: Some links are distinct depending on the OS.</span></span>
 <span><span class="co"># Number of help pages connected</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">cliques</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">1L</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cliques</span><span class="op">$</span><span class="va">n</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;    1 </span></span>
-<span><span class="co">#&gt; 4047</span></span></code></pre></div>
+<span><span class="co">#&gt;    1    2    3    4    5    6 </span></span>
+<span><span class="co">#&gt; 3850   95   22    3    3    2</span></span></code></pre></div>
 <p>If there is more than one length this would mean some pages not
 linked to the rest of the package.</p>
 <p>Sometimes even if links exists they might not resolve correctly on
@@ -190,7 +199,7 @@ date you can use:</p>
 <span><span class="co">#&gt; Retrieving comments, this might take a bit.</span></span>
 <span><span class="co">#&gt; Caching results to be faster next call in this session.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cs</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 105564</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 106387</span></span></code></pre></div>
 <p>This might be helpful to know what was available on old project and
 why some feature of a given package wasn’t used. Maybe it wasn’t
 available on a given date!</p>
@@ -202,7 +211,7 @@ needed maybe you’d like to know when were packages last updated on the
 system?</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cran_date.html">cran_session</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2025-11-28 13:40:06 CET"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2025-12-10 07:00:06 CET"</span></span></code></pre></div>
 <p>This uses the <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> output to find the date of
 last installation. Under the hood it uses a function for an arbitrary
 packages and their versions:</p>
@@ -244,46 +253,46 @@ can use <code><a href="../reference/cran_doom.html">cran_doom()</a></code>:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">prt</td>
-<td align="left">2025-11-25</td>
+<td align="left">OpenLand</td>
+<td align="left">2025-12-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">4</td>
+<td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">rcldf</td>
-<td align="left">2025-11-25</td>
+<td align="left">fastmatch</td>
+<td align="left">2025-12-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">4</td>
+<td align="right">1</td>
 </tr>
 <tr class="odd">
-<td align="left">mlr3pipelines</td>
-<td align="left">2025-11-28</td>
+<td align="left">iotools</td>
+<td align="left">2025-12-11</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">4</td>
+<td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">qdap</td>
-<td align="left">2025-12-01</td>
+<td align="left">WRSS</td>
+<td align="left">2025-12-15</td>
+<td align="left">direct</td>
+<td align="left">CRAN</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">DFD</td>
+<td align="left">2025-12-16</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">8</td>
 </tr>
-<tr class="odd">
-<td align="left">applicable</td>
-<td align="left">2025-12-01</td>
-<td align="left">direct</td>
-<td align="left">CRAN</td>
-<td align="right">7</td>
-</tr>
 <tr class="even">
-<td align="left">DeSciDe</td>
-<td align="left">2025-12-01</td>
+<td align="left">deepredeff</td>
+<td align="left">2025-12-16</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">7</td>
+<td align="right">4</td>
 </tr>
 </tbody>
 </table>
@@ -301,7 +310,7 @@ repository.</p>
 <p>For reproducibility here is the session info:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R Under development (unstable) (2025-11-29 r89077)</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2025-12-14 r89168)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Ubuntu 24.04.3 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -327,9 +336,9 @@ repository.</p>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] cli_3.6.5         knitr_1.50        rlang_1.1.6       xfun_0.54        </span></span>
 <span><span class="co">#&gt;  [5] rversions_3.0.0   textshaping_1.0.4 jsonlite_2.0.0    litedown_0.8     </span></span>
-<span><span class="co">#&gt;  [9] markdown_2.0      htmltools_0.5.8.1 ragg_1.5.0        sass_0.4.10      </span></span>
+<span><span class="co">#&gt;  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.0        sass_0.4.10      </span></span>
 <span><span class="co">#&gt; [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    </span></span>
-<span><span class="co">#&gt; [17] yaml_2.3.11       lifecycle_1.0.4   compiler_4.6.0    igraph_2.2.1     </span></span>
+<span><span class="co">#&gt; [17] yaml_2.3.12       lifecycle_1.0.4   compiler_4.6.0    igraph_2.2.1     </span></span>
 <span><span class="co">#&gt; [21] fs_1.6.6          pkgconfig_2.0.3   systemfonts_1.3.1 digest_0.6.39    </span></span>
 <span><span class="co">#&gt; [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.4   </span></span>
 <span><span class="co">#&gt; [29] bslib_0.9.0       tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     </span></span>

@@ -71,8 +71,16 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">btl</span> <span class="op">&lt;-</span> <span class="fu">base_targets_links</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some pages point to different places according to the OS.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Some links are distinct depending on the OS.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">btl</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   from_pkg       from_Rd to_pkg      to_target           to_Rd n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     base Arithmetic.Rd   base            %*%      matmult.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     base Arithmetic.Rd   base       .Machine     zMachine.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     base Arithmetic.Rd                 Arith                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     base Arithmetic.Rd   base    NA_integer_           NA.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     base Arithmetic.Rd   base            NaN    is.finite.Rd 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     base Arithmetic.Rd   base S3groupGeneric groupGeneric.Rd 1</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

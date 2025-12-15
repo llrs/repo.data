@@ -35,7 +35,8 @@ Other alias:
 ba <- base_alias()
 #> Retrieving base_aliases, this might take a bit.
 #> Caching results to be faster next call in this session.
-#> Warning: Packages ‘base’, ‘parallel’ have targets not present in a OS.
+#> Warning: Packages with targets not present in a OS:
+#> ‘base’, ‘parallel’
 head(ba)
 #>   Package        Source Target
 #> 1    base Arithmetic.Rd      +

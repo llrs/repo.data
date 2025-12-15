@@ -33,9 +33,13 @@ Other links from CRAN:
 ``` r
 # \donttest{
 cpkl <- cran_pkges_links()
-#> Retrieving cran_pages_links, this might take a bit.
-#> Caching results to be faster next call in this session.
 head(cpkl)
-#> [1] NA
+#>   from_pkg  to_pkg
+#> 1  BaseSet BaseSet
+#> 2  BaseSet BaseSet
+#> 3  BaseSet BaseSet
+#> 4  BaseSet BaseSet
+#> 5  BaseSet BaseSet
+#> 6  BaseSet BaseSet
 # }
 ```

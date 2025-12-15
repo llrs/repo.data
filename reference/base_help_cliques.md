@@ -34,12 +34,12 @@ if (requireNamespace("igraph", quietly = TRUE)) {
 #> Caching results to be faster next call in this session.
 #> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
-#>   from_pkg          from_Rd clique to_pkg            to_Rd  n
-#> 1     grid absolute.size.Rd      1   grid  widthDetails.Rd  1
-#> 2     grid  widthDetails.Rd      1   grid absolute.size.Rd  1
-#> 3     grid    gridCoords.Rd      2   grid    grobCoords.Rd  1
-#> 4     grid    grobCoords.Rd      2   grid    gridCoords.Rd  1
-#> 5    tools    HTMLheader.Rd      3   <NA>             <NA> NA
-#> 6    tools        toHTML.Rd      3  tools    HTMLheader.Rd  2
+#>   from_pkg          from_Rd clique to_pkg            to_Rd n
+#> 1     grid absolute.size.Rd      1   grid  widthDetails.Rd 1
+#> 2     grid  widthDetails.Rd      1   grid absolute.size.Rd 1
+#> 3     grid    gridCoords.Rd      2   grid    grobCoords.Rd 1
+#> 4     grid    grobCoords.Rd      2   grid    gridCoords.Rd 1
+#> 5    tools    HTMLheader.Rd      3   <NA>             <NA> 0
+#> 6    tools        toHTML.Rd      3  tools    HTMLheader.Rd 2
 # }
 ```

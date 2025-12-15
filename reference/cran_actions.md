@@ -19,3 +19,9 @@ cran_actions(packages = NULL, silent = FALSE)
 
 A data.frame with Date, Time, User, Action, Package and Version columns.
 `NA` if not able to collect the data from CRAN.
+
+## Examples
+
+``` r
+# ca <- cran_actions()
+```

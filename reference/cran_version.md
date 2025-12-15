@@ -31,7 +31,8 @@ Same as
 
 Uses CRAN specific API
 [https://cran.r-project.org/package=%s&version=%s](https://cran.r-project.org/package=%s&version=%s)
-to install a package.
+to install a package. As this is an archived copy we only use source
+version.
 
 ## References
 
@@ -41,6 +42,6 @@ CRAN pages.
 
 ``` r
 if (FALSE) { # \dontrun{
-install.packages("testthat", "0.7.1")
+cran_version("repo.data", "0.1.5", lib = tempdir())
 } # }
 ```

@@ -95,11 +95,23 @@ other pages - Pages are linked from other pages.
 ``` r
 pkg <- "BaseSet"
 head(cran_help_pages_wo_links(pkg))
+#> Retrieving cran_rdxrefs, this might take a bit.
+#> Caching results to be faster next call in this session.
 #> Retrieving base_aliases, this might take a bit.
 #> Caching results to be faster next call in this session.
 #> [1] NA
 head(cran_help_pages_not_linked(pkg))
-#> [1] NA
+#> Warning: Package has targets not present in a OS:
+#> 'sfsmisc'
+#> Warning: Some pages point to different places according to the OS.
+#> Warning: Some links are distinct depending on the OS.
+#>   Package      Source
+#> 1 BaseSet activate.Rd
+#> 2 BaseSet activate.Rd
+#> 3 BaseSet activate.Rd
+#> 4 BaseSet activate.Rd
+#> 5 BaseSet activate.Rd
+#> 6 BaseSet activate.Rd
 ```
 
 In addition to those help pages that are not well connected it could be
@@ -111,16 +123,13 @@ package igraph.
 
 ``` r
 cliques <- cran_help_cliques(pkg)
-#> Retrieving cran_rdxrefs, this might take a bit.
-#> Caching results to be faster next call in this session.
-#> Warning: Some links are distinct depending on the OS.
 # Number of help pages connected
 if (length(cliques) != 1L) {
     table(cliques$n)
 }
 #> 
-#>    1 
-#> 4047
+#>    1    2    3    4    5    6 
+#> 3850   95   22    3    3    2
 ```
 
 If there is more than one length this would mean some pages not linked
@@ -151,7 +160,7 @@ cs <- cran_snapshot(as.Date("2020-01-31"))
 #> Retrieving comments, this might take a bit.
 #> Caching results to be faster next call in this session.
 nrow(cs)
-#> [1] 105564
+#> [1] 106387
 ```
 
 This might be helpful to know what was available on old project and why
@@ -166,7 +175,7 @@ system?
 
 ``` r
 cran_session()
-#> [1] "2025-11-28 13:40:06 CET"
+#> [1] "2025-12-10 07:00:06 CET"
 ```
 
 This uses the
@@ -210,14 +219,14 @@ if (length(cd) != 1L) {
 }
 ```
 
-| Package       | Deadline   | type   | repo | n_affected |
-|:--------------|:-----------|:-------|:-----|-----------:|
-| prt           | 2025-11-25 | direct | CRAN |          4 |
-| rcldf         | 2025-11-25 | direct | CRAN |          4 |
-| mlr3pipelines | 2025-11-28 | direct | CRAN |          4 |
-| qdap          | 2025-12-01 | direct | CRAN |          8 |
-| applicable    | 2025-12-01 | direct | CRAN |          7 |
-| DeSciDe       | 2025-12-01 | direct | CRAN |          7 |
+| Package    | Deadline   | type   | repo | n_affected |
+|:-----------|:-----------|:-------|:-----|-----------:|
+| OpenLand   | 2025-12-11 | direct | CRAN |          5 |
+| fastmatch  | 2025-12-11 | direct | CRAN |          1 |
+| iotools    | 2025-12-11 | direct | CRAN |          1 |
+| WRSS       | 2025-12-15 | direct | CRAN |          6 |
+| DFD        | 2025-12-16 | direct | CRAN |          8 |
+| deepredeff | 2025-12-16 | direct | CRAN |          4 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -234,7 +243,7 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2025-11-29 r89077)
+#> R Under development (unstable) (2025-12-14 r89168)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.3 LTS
 #> 
@@ -260,9 +269,9 @@ sessionInfo()
 #> loaded via a namespace (and not attached):
 #>  [1] cli_3.6.5         knitr_1.50        rlang_1.1.6       xfun_0.54        
 #>  [5] rversions_3.0.0   textshaping_1.0.4 jsonlite_2.0.0    litedown_0.8     
-#>  [9] markdown_2.0      htmltools_0.5.8.1 ragg_1.5.0        sass_0.4.10      
+#>  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.0        sass_0.4.10      
 #> [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
-#> [17] yaml_2.3.11       lifecycle_1.0.4   compiler_4.6.0    igraph_2.2.1     
+#> [17] yaml_2.3.12       lifecycle_1.0.4   compiler_4.6.0    igraph_2.2.1     
 #> [21] fs_1.6.6          pkgconfig_2.0.3   systemfonts_1.3.1 digest_0.6.39    
 #> [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.4   
 #> [29] bslib_0.9.0       tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     

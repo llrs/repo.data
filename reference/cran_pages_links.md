@@ -32,8 +32,6 @@ Other links from CRAN:
 
 ``` r
 cpl <- cran_pages_links("Matrix")
-#> Warning: Omitting packages Matrix.
-#> Maybe they are currently not on CRAN?
 head(cpl)
 #> [1] NA
 ```

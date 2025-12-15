@@ -42,16 +42,5 @@ Other meta info from CRAN:
 ## Examples
 
 ``` r
-cran_history
-#> function (packages = NULL) 
-#> {
-#>     history <- save_state("cran_history", cran_all_history())
-#>     if (is_not_data(history)) {
-#>         return(NA)
-#>     }
-#>     check_packages(packages, NA)
-#>     get_package_subset("cran_history", packages)
-#> }
-#> <bytecode: 0x55ccc4844ed8>
-#> <environment: namespace:repo.data>
+# cran_history()
 ```

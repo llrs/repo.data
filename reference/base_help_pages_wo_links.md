@@ -27,7 +27,12 @@ bhwl <- base_help_pages_wo_links()
 #> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
 head(bhwl)
-#> [1] Package Source 
-#> <0 rows> (or 0-length row.names)
+#>   Package          Source
+#> 1    base     S3method.Rd
+#> 2    base   Sys.getpid.Rd
+#> 3    base    Sys.sleep.Rd
+#> 4    base       append.Rd
+#> 5    base       asplit.Rd
+#> 6    base base-package.Rd
 # }
 ```

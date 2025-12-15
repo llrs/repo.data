@@ -59,7 +59,7 @@ package_date("paramtest")
 #> "2025-03-24 18:50:04 UTC"                        NA 
 package_date("Seurat") # Dependencies on packages not on CRAN
 #>                 Published            deps_available 
-#> "2025-10-29 09:10:08 UTC" "2024-05-08 00:00:00 UTC" 
+#> "2025-12-14 06:20:08 UTC" "2024-05-08 00:00:00 UTC" 
 package_date("afmToolkit") # Dependency was removed from CRAN
 #>                 Published            deps_available 
 #> "2025-09-23 08:40:12 UTC" "2022-04-13 00:00:00 UTC" 

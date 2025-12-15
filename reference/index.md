@@ -71,8 +71,6 @@ Functions for exploring CRAN
   : Estimate CRAN's date of packages
 - [`cran_doom()`](https://llrs.github.io/repo.data/reference/cran_doom.md)
   : Calculate time till packages are archived
-- [`cran_history()`](https://llrs.github.io/repo.data/reference/cran_history.md)
-  : Check package history on CRAN
 - [`cran_maintainers()`](https://llrs.github.io/repo.data/reference/cran_maintainers.md)
   : Tidy information about maintainers
 - [`cran_snapshot()`](https://llrs.github.io/repo.data/reference/cran_snapshot.md)
