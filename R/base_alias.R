@@ -14,7 +14,7 @@
 #' }
 base_alias <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     first <- empty_env("base_aliases") && is.null(packages)
     alias <- save_state("base_aliases",
                                r_os_alias(alias2df(tools::base_aliases_db())))

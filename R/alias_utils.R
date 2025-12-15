@@ -55,12 +55,10 @@ warnings_alias <- function(alias) {
     names(more_alias) <- names(s)
     # Recursive call
     if (sum(more_alias) > 1L) {
-        warning("Packages ", toString(sQuote(names(more_alias)[more_alias])),
-                " have targets not present in a OS.", call. = FALSE)
+        warning("Packages with targets not present in a OS:\n", toString(sQuote(names(more_alias)[more_alias])), call. = FALSE, immediate. = TRUE)
         return(FALSE)
     } else if (sum(more_alias) == 1L) {
-        warning("Package ", unique(alias[, "Package"]),
-                " has targets not present in a OS.", call. = FALSE)
+        warning("Package has targets not present in a OS:\n", toString(sQuote(names(more_alias)[more_alias])), call. = FALSE, immediate. = TRUE)
         return(FALSE)
     }
     TRUE

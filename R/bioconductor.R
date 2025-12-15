@@ -95,12 +95,12 @@ bioc_archive <- function() {
     v <- paste0(3, ".", 1L:21L)
     bv <- lapply(v, bioc_views)
 
-    versions <- rep(v, vapply(bv, NROW, numeric(1L)))
+    # versions <- rep(v, vapply(bv, NROW, numeric(1L)))
     # m1 <- do.call(merge, bv, all = TRUE)
 
     v2 <- paste0(2, ".", 1L:14L)
     bv2 <- lapply(v2, bioc_views)
-    versions2 <- rep(v2, vapply(bv2, NROW, numeric(1L)))
+    rep(v2, vapply(bv2, NROW, numeric(1L)))
     # m2 <- do.call(merge, bv2, all = TRUE)
     # m <- merge(m1, m2, all = TRUE, sort = FALSE)
 }

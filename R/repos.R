@@ -17,9 +17,13 @@
 #' head(pr)
 package_repos <- function(packages = NULL, repos = getOption("repos"), which = "all") {
     stopifnot(is.character(repos) && length(repos))
-    check_packages(packages, length = NA)
-
+    check_pkg_names(packages, length = NA)
     which <- check_which(which)
+
+    unam_repos <- unique(names(repos))
+    repos <- unique(repos)
+    names(repos) <- unam_repos
+
     ap <- tryCatch(available.packages(repos = repos, filters = c("CRAN", "duplicates")),
                    warning = function(w){NA})
     if (is_not_data(ap)) {
@@ -27,31 +31,27 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     }
 
     # Check packages
-    repos_packages <- setdiff(packages, BASE)
-    omit_pkg <- setdiff(repos_packages, rownames(ap))
-    if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\n Maybe they are currently not available?",
-                immediate. = TRUE, call. = FALSE)
-        repos_packages <- setdiff(repos_packages, omit_pkg)
-    }
+    omit_pkg <- check_current_pkg(setdiff(packages, BASE), rownames(ap))
+
+    # Keep only packages that can be processed
+    repos_packages <- setdiff(packages, omit_pkg)
 
     if (is.null(repos_packages)) {
         packages <- rownames(ap)
     } else {
         packages <- intersect(repos_packages, rownames(ap))
     }
-    
-    # Get the repo where each package comes from
-    repositories <- gsub("/src/contrib", "", ap[, "Repository"], fixed = TRUE)
+
+    # Get the repo where each package comes from: CRAN sometimes has packages under src/contrib/other dir
+    repositories <- gsub("/src/contrib.*", "", ap[, "Repository"])
     names(repositories) <- rownames(ap)
     repositories[] <- names(repos)[match(repositories, repos)]
 
     # Get the direct dependencies for each package
-    options <- options(repos = repos)
-    on.exit(options, add = TRUE)
+    opts <- options(repos = repos)
+    on.exit(opts, add = TRUE)
     rd <- repos_dependencies(packages, which)
-    
+
     pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]
 
     pd2$Repo <- repositories[pd2$Name]
@@ -80,6 +80,8 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     # bioc_deps <- rowSums(M2[, 2:6])
     df3 <- cbind(Package = rownames(df2), Repository = repositories, df2)
     df3 <- df3[packages, , drop = FALSE]
+    df3 <- unique(df3)
+    browser(expr = anyNA(df3))
     rownames(df3) <- NULL
     df3
 }

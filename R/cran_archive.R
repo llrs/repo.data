@@ -28,7 +28,7 @@
 #' }
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     current <- save_state("current", tools::CRAN_current_db(), FALSE)
     if (is_not_data(current)) {
         return(NA)
@@ -42,11 +42,9 @@ cran_archive <- function(packages = NULL) {
     curr_names <- gsub("_.+", "", rownames(current)) # Rownames without version
     # Check for random packages
     all_names <- unique(c(arch_names, curr_names))
-    omit_pkg <- setdiff(packages, all_names)
-    if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\nMaybe they were not on CRAN?", immediate. = TRUE, call. = FALSE)
-    }
+
+    omit_pkg <- check_current_pkg(packages, curr_names)
+
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
@@ -81,8 +79,13 @@ cran_archive <- function(packages = NULL) {
         pkg_state[[env]] <- arch
     }
 
+    out <- save_state(env, arch)
     if (is.null(packages)) {
-        arch2df(arch)
+        return(arch2df(out))
+    }
+
+    if (all(packages %in% out[, "package"])) {
+        arch2df(out[pkg_in_x(out, packages), , drop = FALSE])
     } else {
         arch2df(arch[arch[, "package"] %in% packages, , drop = FALSE])
     }
@@ -91,7 +94,7 @@ cran_archive <- function(packages = NULL) {
 
 # Like CRAN archive but provides the published date and the date of archival if known
 cran_archive_dates <- function() {
-    ca <- save_state("full_cran_archive", cran_archive())
+    ca <- cran_archive()
     if (is_not_data(ca)) {
         return(NA)
     }
@@ -104,26 +107,37 @@ cran_archive_dates <- function() {
     ca
 
     # TODO match package version with dates of archival or removal
-    cc <- save_state("cran_comments", cran_comments())
+    cc <- cran_comments()
     if (is_not_data(cc)) {
         return(NA)
     }
     w <- which(cc$action %in% c("archived", "removed", "replaced", "renamed"))
-    cc[w, ]
+    out <- cc[w, ]
+    rownames(out) <- NULL
+    out
 }
 
 
-cran_packages <- function(packages = NULL) {
-    current <- save_state("current", tools::CRAN_current_db(), FALSE)
-    if (is_not_data(current)) {
+cran_packages <- function() {
+    current_packages <- current_cran_packages()
+    if (is_not_data(current_packages)) {
         return(NA)
     }
     archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
     if (is_not_data(archive)) {
         return(NA)
     }
-    s <- strsplit(rownames(current), "_", fixed = TRUE)
-    current_packages <- vapply(s, "[", FUN.VALUE = character(1L), i = 1L)
     archive_packages <- names(archive)
-    unique(current_packages, archive_packages)
+    cran_packages <- unique(current_packages, archive_packages)
+    save_state("cran_packages", cran_packages, verbose = FALSE)
+
+}
+
+current_cran_packages <- function() {
+    current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    if (is_not_data(current)) {
+        return(NA)
+    }
+    s <- strsplit(rownames(current), "_", fixed = TRUE)
+    vapply(s, "[", FUN.VALUE = character(1L), i = 1L)
 }

@@ -53,10 +53,10 @@ before_after <- function(ref, abc, pkg_info) {
                      Published.After = pkg_info$Date[a],
                      Archived.by = pkg_info$User[ref],
                      check.names = FALSE)
-    if (!nrow(df)) {
-        df[1L, , drop = FALSE]
-    } else {
+    if (nrow(df)) {
         df
+    } else {
+        df[1L, , drop = FALSE]
     }
 }
 

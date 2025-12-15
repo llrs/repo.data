@@ -21,10 +21,11 @@ Install a package from CRAN of a specific version.
 }
 \details{
 Uses CRAN specific API \url{https://cran.r-project.org/package=\%s&version=\%s} to install a package.
+As this is an archived copy we only use source version.
 }
 \examples{
 \dontrun{
-install.packages("testthat", "0.7.1")
+cran_version("repo.data", "0.1.5", lib = tempdir())
 }
 }
 \references{

@@ -48,10 +48,15 @@ cran_snapshot <- function(date) {
     # missing2 <- setdiff(ca_before_date$package, last_archival$package)
     # archived2 <- match(ca_before_date$package, last_archival$package, incomparables = missing2)
 
-    on_cran <- rep_len(TRUE, NROW(ca_before_date))
-    names(on_cran) <- ca_before_date$package
-    on_cran[na.omit(archived)] <- as.Date(ca_before_date$Datetime[na.omit(archived)]) > last_archival$date[!is.na(archived)]
-    out <- ca_before_date[on_cran, , drop = FALSE]
+    if (any(!is.na(archived))) {
+        on_cran <- rep_len(TRUE, NROW(ca_before_date))
+        names(on_cran) <- ca_before_date$package
+        on_cran[na.omit(archived)] <- as.Date(ca_before_date$Datetime[na.omit(archived)]) > last_archival$date[!is.na(archived)]
+        out <- ca_before_date[on_cran, , drop = FALSE]
+    } else {
+        out <- ca_before_date
+    }
+
     rownames(out) <- NULL
     out
 }
@@ -93,6 +98,7 @@ cran_date <- function(versions) {
     # if version is NA match to whatever
     v_v <- apply(as.matrix(versions[, c("Package", "Version")]), 1L, paste, collapse = "_")
     missing_v <- anyNA(versions[, "Version"])
+
     if (missing_v) {
         any_v <- is.na(versions[, "Version"])
         ca_p <- ca_packages[ca_packages$Package %in% versions[any_v, "Package"],

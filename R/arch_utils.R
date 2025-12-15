@@ -36,6 +36,12 @@ arch2m <- function(arch){
         as.matrix(x[, c("mtime", "size", "uname")])
     })
     mat <- do.call(rbind, l)
+    # Return early if there is no archive data
+    if (!NROW(mat)) {
+        m <- matrix(ncol = 6, nrow = 0)
+        colnames(m) <- c("mtime", "size", "uname", "package", "version", "status")
+        return(as.data.frame(m))
+    }
     # FIXME .tar.gz is not the only way to compress build packages
     pkg_v <- str2mat(pattern = "(.+)_(.+)\\.tar\\.gz",
                      x = rownames(mat),

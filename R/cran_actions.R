@@ -10,14 +10,16 @@
 #' @importFrom stats na.omit
 #' @importFrom utils head
 #' @keywords internal
+#' @examples
+#' # ca <- cran_actions()
 cran_actions <- function(packages = NULL, silent = FALSE) {
-    out <- save_state("full_cran_actions", cran_all_actions())
+    out <- cran_all_actions()
     if (is_not_data(out)) {
         return(NA)
     }
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
     actions <- get_package_subset("full_cran_actions", packages)
-    first_package <- !duplicated(actions$Package)
+    # first_package <- !duplicated(actions$Package)
 
     if (isTRUE(silent)) {
         warnings_actions(actions)
@@ -33,14 +35,14 @@ cran_all_actions <- function() {
 
     actions_f <- system.file(package = "repo.data", "data", "actions.rds")
     if (!nzchar(actions_f)) {
-        stop("Data not released open, sorry can't share it (yet?)", call. = FALSE)
+        stop("Data not openly released, sorry can't share it (yet?)", call. = FALSE)
     }
     actions <- readRDS(actions_f)
     actions <- unique(actions)
     actions$Date <- charToDate(actions$Date, "%F")
     actions$User <- as.factor(actions$User)
     lev <- c("publish", "archive", "remove")
-    if (any(!na.omit(actions$Action) %in% lev)) {
+    if (!all(na.omit(actions$Action) %in% lev)) {
         warning("New action by CRAN: ", na.omit(setdiff(actions$Action, lev)), call. = FALSE)
     }
     actions$Action <- factor(actions$Action, levels = lev)

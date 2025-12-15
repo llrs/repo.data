@@ -15,7 +15,7 @@
 #' head(rd)
 repos_dependencies <- function(packages = NULL, which = "all") {
     fields_selected <- check_which(which)
-    check_packages(packages, 0L)
+    check_pkg_names(packages, 0L)
     opts <- options(available_packages_filters = c("CRAN", "duplicates"))
     on.exit(options(opts), add = TRUE)
     env <- "repos_dependencies"
@@ -28,12 +28,11 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     pd <- pkg_state[[env]]
     all_packages <- rownames(ap)
 
-    omit_pkg <- setdiff(packages, all_packages)
-    if (length(omit_pkg)) {
-        warning("Omitting packages ", toString(omit_pkg),
-                ".\n Maybe they are currently not available?",
-                immediate. = TRUE, call. = FALSE)
-    }
+    # Check for missing packages
+    omit_pkg <- check_current_pkg(packages, all_packages)
+
+    # Keep only packages that can be processed
+    packages <- setdiff(packages, omit_pkg)
 
     new_pkgs <- if (first && is.null(packages)) {
         all_packages
@@ -91,7 +90,7 @@ package_dependencies <- function(packages = ".", which = "strong") {
     }
 
     pkges_names <- unique(c(local_pkgs, packages[!is_local_pkg]))
-    check_packages(packages, NA)
+    check_pkg_names(packages, NA)
 
     ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w) {NA})
     if (is_not_data(ap)) {
@@ -123,9 +122,9 @@ package_dependencies <- function(packages = ".", which = "strong") {
             paste0(
                 "Some dependencies are not on available repositories. ",
                 "Check for 'Additional_repositories' or other repositories (Bioconductor.org?):\n",
-                toString(missing_pkg), call. = FALSE
+                toString(missing_pkg)
             ),
-            immediate. = TRUE
+            immediate. = TRUE, call. = FALSE
         )
     }
     repo_pkges <- setdiff(packages_reported, c(BASE, local_pkgs, "R"))
@@ -207,7 +206,7 @@ package_dependencies <- function(packages = ".", which = "strong") {
 #' @examples
 #' update_dependencies("arrow")
 update_dependencies <- function(packages) {
-    check_packages(packages, length = NA)
+    check_pkg_names(packages, length = NA)
 
     if (is.null(packages)) {
         stop("Please provide a vector of packages.", call. = FALSE)

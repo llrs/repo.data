@@ -18,13 +18,12 @@
 #' }
 #' }
 cran_help_pages_not_linked <- function(packages = NULL) {
-    check_packages(packages)
+    check_pkg_names(packages, NA)
     cal <-  cran_alias(packages)
     if (!NROW(cal)) {
         stop("Package not found", call. = FALSE)
     }
-    # cl <- cran_links()
-    rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
+    rbl <- cran_targets_links()
     if (is_not_data(rbl)) {
         return(NA)
     }
@@ -68,7 +67,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
 #' }
 #' }
 cran_help_pages_wo_links <- function(packages = NULL) {
-    check_packages(packages)
+    check_pkg_names(packages, NA)
     cal <- cran_alias(packages)
     # cl <- cran_links()
     rbl <- save_state("cran_targets_links", cran_targets_links(), verbose = FALSE)
@@ -95,8 +94,13 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #'
 #' Some help pages have links to other pages and they might be linked from others
 #' but they are closed network: there is no link that leads to different help pages.
+#' Each group of linked help pages is a clique.
 #'
-#' Requires igraph
+#' The first clique is the biggest one.
+#' You might want to check if others cliques can be connected to this one.
+#'
+#' Requires igraph.
+#'
 #' @inheritParams base_alias
 #' @returns Return a data.frame of help pages not connected to the network of help pages.
 #' Or NULL if nothing are found.
@@ -105,9 +109,10 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' @export
 #' @examplesIf requireNamespace("igraph", quietly = TRUE)
 #' chc <- cran_help_cliques("BaseSet")
-#' head(chc)
+#' table(chc$clique)
+#' chc[chc$clique != 1L, ]
 cran_help_cliques <- function(packages = NULL) {
-    check_packages(packages)
+    check_pkg_names(packages, NA)
     if (!check_installed("igraph")) {
         stop("This function requires igraph to find help pages not linked to the network.",
              call. = FALSE)
@@ -127,21 +132,22 @@ cran_help_cliques <- function(packages = NULL) {
     pkges <- c(packages, funlist(pkges))
     # FIXME: We don't need to calculate the number of unique links targets 2 pages
     # Solution: create an internal version that omits counting them
-    cal <- cran_targets_links(pkges)
-    if (is_not_data(cal)) {
+    cpl <- cran_pages_links(pkges)
+    if (is_not_data(cpl)) {
         return(NA)
     }
-    cal <- packages_in_links(cal, pkges)
-    cal <- cal[cal$from_pkg %in% pkges | (!is.na(cal$to_pkg) & cal$to_pkg %in% packages), , drop = FALSE]
+    if (!is.null(pkges)) {
+        cpl <- packages_in_links(cpl, pkges)
+        cpl <- cpl[cpl$from_pkg %in% pkges | (!is.na(cpl$to_pkg) & cpl$to_pkg %in% packages), , drop = FALSE]
+    }
     # Filter out those links not resolved
-    cal <- cal[nzchar(cal$to_Rd) & nzchar(cal$from_Rd), , drop = FALSE]
+    cpl <- cpl[nzchar(cpl$to_Rd) & nzchar(cpl$from_Rd), , drop = FALSE]
 
-    if (!NROW(cal)) {
+    if (!NROW(cpl)) {
         return(NULL)
     }
-    cal <- unique(cal)
-    df_links <- data.frame(from = paste0(cal$from_pkg, ":", cal$from_Rd),
-                           to = paste0(cal$to_pkg, ":", cal$to_Rd))
+    df_links <- data.frame(from = paste0(cpl$from_pkg, ":", cpl$from_Rd),
+                           to = paste0(cpl$to_pkg, ":", cpl$to_Rd))
     df_links <- unique(df_links)
 
     graph <- igraph::graph_from_edgelist(as.matrix(df_links))
@@ -153,11 +159,18 @@ cran_help_cliques <- function(packages = NULL) {
     l <- strsplit(funlist(isolated_help), ":", fixed = TRUE)
     df <- as.data.frame(t(list2DF(l)))
     colnames(df) <- c("from_pkg", "from_Rd")
-    df$clique <- rep(seq_len(length(lengths_graph)), times = lengths_graph)
-    m <- merge(df, unique(cal), all.x = TRUE,
+    df$clique <- rep(seq_along(lengths_graph), times = lengths_graph)
+
+    # Discard cliques not involving the requested packages
+    if (!is.null(packages)) {
+        valid_clique <- vapply(split(df, df$clique), function(x){any(packages %in% x$from_pkg | packages %in% x$to_pkg)}, logical(1L))
+        df <- df[df$clique %in% names(valid_clique)[valid_clique], , drop = FALSE]
+    }
+    m <- merge(df, cpl, all.x = TRUE,
                by = c("from_pkg", "from_Rd"),
                sort = FALSE)
-    msorted <- sort_by(m, m[, c("clique", "from_pkg", "from_Rd")])
+
+    msorted <- sort_by(m, m[, c("clique", "from_pkg", "from_Rd", "to_pkg", "to_Rd", "n")])
     rownames(msorted) <- NULL
     msorted
 }
@@ -176,13 +189,13 @@ cran_help_cliques <- function(packages = NULL) {
 #' @examples
 #' evmix <- cran_help_pages_links_wo_deps("evmix")
 cran_help_pages_links_wo_deps <- function(packages = NULL) {
-    check_packages(packages)
+    check_pkg_names(packages, NA)
     ref_packages <- packages
     ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w){NA})
     if (is_not_data(ap)) {
         return(NA)
     }
-    if (check_packages(packages)) {
+    if (!is.null(packages) && check_pkg_names(packages, NA)) {
         pkg <- tools::package_dependencies(packages, db = ap, recursive = TRUE)
         packages <- setdiff(funlist(pkg), BASE)
         ap <- ap[packages, c("Package", check_which("strong"))]
