@@ -160,7 +160,7 @@ cs <- cran_snapshot(as.Date("2020-01-31"))
 #> Retrieving comments, this might take a bit.
 #> Caching results to be faster next call in this session.
 nrow(cs)
-#> [1] 106387
+#> [1] 106522
 ```
 
 This might be helpful to know what was available on old project and why
@@ -175,7 +175,7 @@ system?
 
 ``` r
 cran_session()
-#> [1] "2025-12-10 07:00:06 CET"
+#> [1] "2025-12-16 06:10:10 CET"
 ```
 
 This uses the
@@ -219,14 +219,14 @@ if (length(cd) != 1L) {
 }
 ```
 
-| Package    | Deadline   | type   | repo | n_affected |
-|:-----------|:-----------|:-------|:-----|-----------:|
-| OpenLand   | 2025-12-11 | direct | CRAN |          5 |
-| fastmatch  | 2025-12-11 | direct | CRAN |          1 |
-| iotools    | 2025-12-11 | direct | CRAN |          1 |
-| WRSS       | 2025-12-15 | direct | CRAN |          6 |
-| DFD        | 2025-12-16 | direct | CRAN |          8 |
-| deepredeff | 2025-12-16 | direct | CRAN |          4 |
+| Package   | Deadline   | type   | repo | n_affected |
+|:----------|:-----------|:-------|:-----|-----------:|
+| OpenLand  | 2025-12-11 | direct | CRAN |          6 |
+| fastmatch | 2025-12-11 | direct | CRAN |          1 |
+| iotools   | 2025-12-11 | direct | CRAN |          1 |
+| DFD       | 2025-12-16 | direct | CRAN |          8 |
+| shinyMixR | 2025-12-17 | direct | CRAN |          6 |
+| vctrs     | 2025-12-17 | direct | CRAN |          2 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -243,7 +243,7 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2025-12-14 r89168)
+#> R Under development (unstable) (2025-12-16 r89184)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.3 LTS
 #> 
@@ -267,7 +267,7 @@ sessionInfo()
 #> [1] repo.data_0.1.5.9000
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] cli_3.6.5         knitr_1.50        rlang_1.1.6       xfun_0.54        
+#>  [1] cli_3.6.5         knitr_1.50        rlang_1.1.6       xfun_0.55        
 #>  [5] rversions_3.0.0   textshaping_1.0.4 jsonlite_2.0.0    litedown_0.8     
 #>  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.0        sass_0.4.10      
 #> [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
