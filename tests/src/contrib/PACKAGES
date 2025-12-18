@@ -1,0 +1,11 @@
+Package: Bpkg
+Version: 1.0
+Imports: methods, utils
+MD5sum: 754fc2572ceb3f104dc1190600b00384
+NeedsCompilation: no
+
+Package: Apkg
+Version: 1.0
+Imports: Bpkg
+MD5sum: d41d8cd98f00b204e9800998ecf8427e
+NeedsCompilation: no
