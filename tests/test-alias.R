@@ -29,7 +29,7 @@ stopifnot("Cache didn't work" = st1[[3]] < st[[3]])
 stopifnot("Cache was not the same" = all.equal(ba, ba2))
 
 clean_cache()
-st2 <- system.time(ba3 <- base_alias(pkges)
+st2 <- system.time(ba3 <- base_alias(pkges))
 repo.data:::no_internet(ba3)
 stopifnot("Clean cache restores initial" = st2[[3]] > st[[3]])
 stopifnot("Still same result" = all.equal(ba, ba3))
