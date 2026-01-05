@@ -19,7 +19,7 @@ repo.data:::no_internet(ctl3)
 stopifnot("Requests for some packages don't return a subset" = nrow(ctl) < nrow(ctl3))
 stopifnot("Cache doesn't work for requested packages" = st1["elapsed"] < st3["elapsed"])
 
-
+# Page links
 st1 <- system.time(cpl <- cran_pages_links(pkges))
 repo.data:::no_internet(cpl)
 st2 <- system.time(cpl <- cran_pages_links(pkges))
@@ -30,6 +30,7 @@ st3 <- system.time(cpl <- cran_pages_links())
 repo.data:::no_internet(cpl)
 stopifnot("Didn't return all packages" = nrow(cpl) <= cpl2)
 
+# Packages links
 st2 <- system.time(cpl <- cran_pkges_links(pkges))
 repo.data:::no_internet(cpl)
 st2 <- system.time(cpl <- cran_pkges_links(pkges))
