@@ -1,8 +1,8 @@
 library("repo.data")
-pkgs <- c("BaseSet", "experDesign")
+pkgs <- c("tools", "utils")
 
 # Test that it works
-bhpnl <- base_help_pages_not_linked(pkges)
+bhpnl <- base_help_pages_not_linked()
 repo.data:::no_internet(bhpnl)
 stopifnot("Column names not matching" = colnames(bhpnl) == c("Package", "Source"))
 stopifnot("No data on base_help_pages_not_linked" = as.logical(NROW(bhpnl)))
@@ -48,5 +48,5 @@ stopifnot(unique(chc$clique) >= 1L)
 
 chplwd <- cran_help_pages_links_wo_deps(pkges)
 repo.data:::no_internet(chplwd)
-stopifnot(colnames(chplwd) = c("Package", "Source", "Anchor", "Target"))
+stopifnot(colnames(chplwd) == c("Package", "Source", "Anchor", "Target"))
 
