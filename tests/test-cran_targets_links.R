@@ -6,7 +6,7 @@ st1 <- system.time(ctl <- cran_targets_links(pkges))
 repo.data:::no_internet(ctl)
 stopifnot(colnames(ctl) == c("from_pkg", "from_Rd", "to_pkg", "to_target", "to_Rd", "n"))
 stopifnot("CRAN has documentation pages" = as.logical(NROW(ctl)))
-stopifnot("Returns more than from the packages requested" = all(ctl3$from_pkg == "BaseSet"))
+stopifnot("Returns more than from the packages requested" = all(ctl$from_pkg %in% pkges))
 
 # Cache
 st2 <- system.time(ctl2 <- cran_targets_links(pkges))

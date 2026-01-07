@@ -81,7 +81,11 @@ base_pages_links <- function(packages = NULL) {
     if (!is.null(packages)) {
         keep_rows <- keep_rows & target_links %in% packages
     }
-    add_uniq_count(target_links[keep_rows, -w])
+    out <- add_uniq_count(target_links[keep_rows, -w])
+    out <- sort_by(out, out[, setdiff(colnames(out), "n")])
+    rownames(out) <- NULL
+    out
+
 }
 
 #' Links between help pages by package
@@ -110,5 +114,7 @@ base_pkges_links <- function(packages = NULL) {
         keep_rows <- keep_rows & target_links %in% packages
     }
     pkges_links <- add_uniq_count(target_links[keep_rows, -w])
-    sort_by(pkges_links, pkges_links[, c("from_pkg", "n")])
+    out <- sort_by(pkges_links, pkges_links[, c("from_pkg", "n")])
+    rownames(out) <- NULL
+    out
 }

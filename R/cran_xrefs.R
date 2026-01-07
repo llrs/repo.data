@@ -20,17 +20,17 @@ cran_links <- function(packages = NULL) {
     }
     check_pkg_names(packages, NA)
     env <- "full_cran_rdxrefs"
-
+    
     # Check for missing packages
     current_packages <- names(raw_xrefs)
     omit_pkg <- check_current_pkg(packages, current_packages)
-
+    
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
-
+    
     # Check if there is already data
     first_xrefs <- empty_env(env)
     if (first_xrefs) {
@@ -38,7 +38,7 @@ cran_links <- function(packages = NULL) {
     } else {
         xrefs <- pkg_state[[env]]
     }
-
+    
     # Decide which packages are to be added to the data
     if (!is.null(packages) && !first_xrefs) {
         new_packages <- setdiff(packages, xrefs[, "Package"])
@@ -49,7 +49,7 @@ cran_links <- function(packages = NULL) {
     } else if (is.null(packages) && !first_xrefs) {
         new_packages <- setdiff(current_packages, xrefs[, "Package"])
     }
-
+    
     # Add new package's data
     if (length(new_packages)) {
         new_xrefs <- xrefs2df(raw_xrefs[new_packages])
@@ -88,14 +88,14 @@ cran_targets_links <- function(packages = NULL) {
     } else if (!first_call && all(targets_packages %in% current_cran_packages())) {
         return(out)
     }
-
+    
     cl <- cran_links(packages)
     bal <- base_alias()
     cal <- cran_alias(packages)
     bl2 <- split_anchor(cl)
-
+    
     t2b2 <- targets2files(bl2, rbind(bal, cal))
-    out <- uniq_count(t2b2)
+    out <- add_uniq_count(t2b2)
     save_state(env, out, verbose = FALSE)
 }
 
@@ -112,12 +112,12 @@ cran_targets_links <- function(packages = NULL) {
 #' head(cpl)
 cran_pages_links <- function(packages = NULL) {
     check_pkg_names(packages, NA)
-
+    
     target_links <- cran_targets_links(packages)
     if (is_not_data(target_links)) {
         return(NA)
     }
-
+    
     w <- which(colnames(target_links) == "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {
