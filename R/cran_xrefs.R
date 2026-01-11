@@ -81,12 +81,10 @@ cran_targets_links <- function(packages = NULL) {
     check_pkg_names(packages, NA)
     out <- get_package_subset(env, pkges = packages)
     targets_packages <- out$from_pkg
-    if (!is.null(packages) && !is.null(out)) {
+    subset_pkg <- !first_call && !is.null(packages) && all(packages %in% targets_packages)      
+    
+    if ((!is.null(packages) && !is.null(out)) || subset_pkg) {
         return(packages_in_links(out, packages))
-    } else if (!first_call && !is.null(packages) && all(packages %in% targets_packages)) {
-        return(packages_in_links(out, packages))
-    } else if (!first_call && all(targets_packages %in% current_cran_packages())) {
-        return(out)
     }
     
     cl <- cran_links(packages)
@@ -141,15 +139,15 @@ cran_pages_links <- function(packages = NULL) {
 #' head(cpkl)
 #' }
 cran_pkges_links <- function(packages = NULL) {
-    target_links <- cran_targets_links()
+    check_pkg_names(packages, NA)
+    target_links <- cran_targets_links(packages)
     if (is_not_data(target_links)) {
         return(NA)
     }
-    check_pkg_names(packages, NA)
     w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg"))
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {
-        keep_rows <- keep_rows & target_links %in% packages
+        keep_rows <- keep_rows & target_links$from_pkg %in% packages
     }
     add_uniq_count(target_links[keep_rows, -w])
 }

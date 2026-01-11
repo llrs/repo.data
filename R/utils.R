@@ -143,7 +143,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     
     if (!NROW(x)) {
         m <- cbind(x[, -w, drop = FALSE], n = numeric(0L))
-        colnames(m)[colnames(mm) == "n"] <- name
+        colnames(m)[colnames(m) == "n"] <- name
         return(m)
     }
     

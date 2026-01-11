@@ -105,6 +105,8 @@ links <- function(packages = NULL) {
 #' @examples
 #' oldrepos <- getOption("repos")
 #' setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
+#' # show repositories
+#' getOption("repos")
 #' head(alias(c("ggplot2", "BiocCheck")))
 #'
 #' # Clean  up
@@ -118,7 +120,7 @@ alias <- function(packages = NULL) {
     raw_alias <- save_state("aliases", raw_alias)
     check_pkg_names(packages, NA)
     # Place to store modified data
-    env <- "full_cran_aliases"
+    env <- "full_aliases"
     # Check for random packages
     current_packages <- unlist(lapply(raw_alias, names), use.names = FALSE)
     dups <- anyDuplicated(current_packages)
@@ -131,6 +133,7 @@ alias <- function(packages = NULL) {
     omit_pkg <- check_current_pkg(packages, current_packages)
 
     # Keep only packages that can be processed
+  
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
         return(NULL)

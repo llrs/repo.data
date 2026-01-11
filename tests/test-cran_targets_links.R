@@ -16,19 +16,19 @@ stopifnot("Second call is not faster than first one" = st2["elapsed"] < st1["ela
 
 st3 <- system.time(ctl3 <- cran_targets_links())
 repo.data:::no_internet(ctl3)
-stopifnot("Requests for some packages don't return a subset" = nrow(ctl) < nrow(ctl3))
+stopifnot("Requests for all packages failed" = nrow(ctl3) > nrow(ctl))
 stopifnot("Cache doesn't work for requested packages" = st1["elapsed"] < st3["elapsed"])
 
 # Page links
 st1 <- system.time(cpl <- cran_pages_links(pkges))
 repo.data:::no_internet(cpl)
-st2 <- system.time(cpl <- cran_pages_links(pkges))
+st2 <- system.time(cpl2 <- cran_pages_links(pkges))
 repo.data:::no_internet(cpl2)
 stopifnot("Cache doesn't work for requested packages" = st1["elapsed"] < st3["elapsed"])
 stopifnot(identical(cpl, cpl2))
 st3 <- system.time(cpl <- cran_pages_links())
 repo.data:::no_internet(cpl)
-stopifnot("Didn't return all packages" = nrow(cpl) <= cpl2)
+stopifnot("Didn't return all packages" = nrow(cpl) > nrow(cpl2))
 
 # Packages links
 st2 <- system.time(cpl <- cran_pkges_links(pkges))
@@ -39,4 +39,4 @@ stopifnot("Cache doesn't work for requested packages" = st1["elapsed"] < st3["el
 stopifnot(identical(cpl, cpl2))
 st3 <- system.time(cpl <- cran_pkges_links())
 repo.data:::no_internet(cpl)
-stopifnot("Didn't return all packages" = nrow(cpl) <= cpl2)
+stopifnot("Didn't return all packages" = nrow(cpl) > nrow(cpl2))
