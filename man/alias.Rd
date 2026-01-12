@@ -19,6 +19,8 @@ Retrieve links of repository packages to other packages' documentation.
 \examples{
 oldrepos <- getOption("repos")
 setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
+# show repositories
+getOption("repos")
 head(alias(c("ggplot2", "BiocCheck")))
 
 # Clean  up
