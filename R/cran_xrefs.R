@@ -79,22 +79,27 @@ cran_targets_links <- function(packages = NULL) {
     env <- "cran_targets_links"
     first_call <- empty_env(env)
     check_pkg_names(packages, NA)
-    out <- get_package_subset(env, pkges = packages)
-    targets_packages <- out$from_pkg
+    current_env <- get_package_subset(env, pkges = packages)
+    targets_packages <- current_env$from_pkg
     subset_pkg <- !first_call && !is.null(packages) && all(packages %in% targets_packages)      
     
-    if ((!is.null(packages) && !is.null(out)) || subset_pkg) {
-        return(packages_in_links(out, packages))
+    if ((!is.null(packages) && !is.null(current_env)) || subset_pkg) {
+        return(packages_in_links(current_env, packages))
     }
     
-    cl <- cran_links(packages)
+    current_packages <- current_cran_packages()
+    new_packages <- setdiff(current_packages, out$from_pkg)
+
+    cl <- cran_links(new_packages)
     bal <- base_alias()
-    cal <- cran_alias(packages)
+    cal <- cran_alias(new_packages)
     bl2 <- split_anchor(cl)
     
     t2b2 <- targets2files(bl2, rbind(bal, cal))
     out <- add_uniq_count(t2b2)
-    save_state(env, out, verbose = FALSE)
+
+    pkg_state[[env]] <- rbind(current_env, out)
+    get_package_subset(env, packages)
 }
 
 #' Links between help pages by page
