@@ -132,7 +132,7 @@ extract_field <- function(file,
     comments_df <- cbind(df,
                          strcapture(pattern = regex_date, x = df$comment,
                                     proto = data.frame(date = Sys.Date()[0])),
-                         strcapture(pattern = regex_action, x = df$comment,
+                         strcapture_m(pattern = regex_action, x = df$comment,
                                     proto = data.frame(action = character()))
     )
     comments_df <- comments_df[!is.na(comments_df$comment), ]

@@ -76,9 +76,10 @@ For example these two packages have the same alias for the internal functions bu
 
 ## Connecting help pages
 
-Often it is helpful to link help pages so that:
- - Pages are linked to other pages
- - Pages are linked from other pages.
+Often it is helpful to link help pages so that the user can navigate through the help pages easily. 
+For that we need:
+ - Pages linking to other pages (`pages_wo_links()`).
+ - Pages are linked from other pages (`pages_not_linked()`).
 
 ```{r cran_help_pages}
 pkg <- "BaseSet"
@@ -86,9 +87,10 @@ head(cran_help_pages_wo_links(pkg))
 head(cran_help_pages_not_linked(pkg))
 ```
 
-In addition to those help pages that are not well connected it could be that some pages are linked but link to each other without connecting with other help pages of the package or other packages.
+In addition to those help pages that are not well connected it could be that some pages are linked between them without connecting with other help pages of the package or other packages creating a closed group of pages. 
+This is know as clique.
 
-To retrieve these help pages forming a clique it requires the suggested package igraph. 
+To retrieve these help pages forming a clique there is a function to find them (requires the suggested package igraph). 
 
 ```{r cran_help_cliques, eval=requireNamespace("igraph", quietly = TRUE) && with_internet}
 cliques <- cran_help_cliques(pkg)
@@ -133,7 +135,8 @@ cran_session()
 ```
 
 This uses the `sessionInfo()` output to find the date of last installation.
-Under the hood it uses a function for an arbitrary packages and their versions:
+Under the hood it uses a function that given packages and their versions find a date where this was possible.
+This is also exported:
 
 ```{r cran_date, eval=with_internet}
 versions <- data.frame(Package = c("dplyr", "Rcpp", "rlang"),
@@ -150,6 +153,7 @@ To answer the original question of this section we can use:
 cran_date(installed.packages())
 ```
 
+We can be sure that the library was updated on that date or later (if no local package has been updated since then on CRAN).
 
 ### Risk of being archived
 

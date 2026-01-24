@@ -69,7 +69,8 @@ datetime2POSIXct <- function(date, time, tz = cran_tz) {
 
 
 uniq_count <- function(x, name = "n") {
-    id <- apply(as.matrix(x), 1L, paste0, collapse = "")
+    x <- as.matrix(x)
+    id <- apply(x, 1L, paste0, collapse = "")
     
     # Return if no duplicates
     if (!anyDuplicated(id)) {
@@ -84,8 +85,7 @@ uniq_count <- function(x, name = "n") {
     names(ids) <- NULL
     uid <- unique(x)
     rownames(uid) <- NULL
-    uid[, name] <- as.numeric(ids)
-    uid
+    cbind(uid, matrix(as.numeric(ids), ncol = 1, dimnames = list(NULL, name)))
 }
 
 add_uniq_count <- function(x, name = "n", old_name = "n") {
@@ -123,10 +123,10 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     }
     
     # Calculate duplicates count while keeping the data
-    y <- x[!dup, ]
-    df <- tapply(x[dup, , drop = FALSE], id[dup], function(xy) {
+    y <- as.data.frame(x[!dup, ])
+    df <- tapply(as.data.frame(x[dup, , drop = FALSE]), id[dup], function(xy) {
         y <- unique(as.matrix(xy[, -w, drop = FALSE]))
-        y <- cbind(y, name = sum(xy[, w, drop = TRUE], na.rm = TRUE))
+        y <- cbind(y, name = sum(as.numeric(xy[, w, drop = TRUE]), na.rm = TRUE))
         colnames(y)[ncol(y)] <- name
         y
     })
@@ -212,4 +212,20 @@ check_current_pkg <- function(packages, current) {
         omitting_packages(omit_pkg)
     }
     omit_pkg
+}
+
+
+strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
+    m <- regexec(pattern, x, perl = perl, useBytes = useBytes)
+    str <- regmatches(x, m)
+    ntokens <- length(proto) + 1L
+    nomatch <- lengths(str) == 0L
+    str[nomatch] <- list(rep.int(NA_character_, ntokens))
+    if (length(str) > 0L && length(str[[1L]]) != ntokens) {
+        stop("The number of captures in 'pattern' != 'length(proto)'")
+    }
+    m <- matrix(as.character(unlist(str)), ncol = ntokens, 
+        byrow = TRUE)[, -1L, drop = FALSE]
+    colnames(m) <- colnames(proto) %||% names(proto) %||% proto
+    m
 }

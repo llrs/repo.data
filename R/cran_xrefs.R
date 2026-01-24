@@ -84,22 +84,26 @@ cran_targets_links <- function(packages = NULL) {
     subset_pkg <- !first_call && !is.null(packages) && all(packages %in% targets_packages)      
     
     if ((!is.null(packages) && !is.null(current_env)) || subset_pkg) {
-        return(packages_in_links(current_env, packages))
+        out <- packages_in_links(current_env, packages)
+        rownames(out) <- NULL
+        return(out)
     }
     
     current_packages <- current_cran_packages()
     new_packages <- setdiff(current_packages, out$from_pkg)
-
+    
     cl <- cran_links(new_packages)
     bal <- base_alias()
     cal <- cran_alias(new_packages)
     bl2 <- split_anchor(cl)
     
-    t2b2 <- targets2files(bl2, rbind(bal, cal))
+    t2b2 <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))
     out <- add_uniq_count(t2b2)
-
+    
     pkg_state[[env]] <- rbind(current_env, out)
-    get_package_subset(env, packages)
+    out <- get_package_subset(env, packages)
+    rownames(out) <- NULL
+    out
 }
 
 #' Links between help pages by page
