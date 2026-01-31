@@ -50,7 +50,9 @@ bioc_version <- function(type = "release") {
     }
     # Quick and dirty way to read and split the data
     rv <- read.csv(text = rl[version], sep = ":", header = FALSE, colClasses = c("character", "character"))
-    trimws(rv$V2)
+    BIOC_VERSION <- trimws(rv$V2)
+    Sys.setenv(R_BIOC_VERSION = BIOC_VERSION)
+    BIOC_VERSION
 }
 
 
