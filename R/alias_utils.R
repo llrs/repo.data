@@ -32,7 +32,7 @@ alias2df <- function(x) {
     if (!length(x)) {
         return(NULL)
     }
-
+    
     l <- lapply(x, function(x) {
         cbind(Source = rep(names(x), lengths(x)), Target = funlist(x))
     })
@@ -41,26 +41,26 @@ alias2df <- function(x) {
     aliasesDF[, c("Package", "Source", "Target"), drop = FALSE]
 }
 
+# Warns of alias missing depending OS
 warnings_alias <- function(alias) {
-
-    if (length(unique(alias[, "Package"])) <= 1L) {
-        paths <- grepl("/", alias[, "Source"], fixed = TRUE)
-        dup_targets <- duplicated(alias[, "Target"])
-        more_alias <- sum(paths) > sum(dup_targets) * 2L
-        return(more_alias)
-    }
-
-    s <- split(as.data.frame(alias), alias[, "Package"])
-    more_alias <- vapply(s, warnings_alias, logical(1L))
-    names(more_alias) <- names(s)
-    # Recursive call
-    if (sum(more_alias) > 1L) {
-        warning("Packages with targets not present in a OS:\n", toString(sQuote(names(more_alias)[more_alias])), call. = FALSE, immediate. = TRUE)
+    
+    paths <- grepl("/", alias[, "Source"], fixed = TRUE)
+    alias_os <- alias[paths, ]
+    split_factor <- paste0(alias_os[, "Package"], alias_os[, "Target"])
+    alias_split <- split(as.data.frame(alias_os), split_factor)
+    packages_diff_os <- sapply(alias_split, function(x) {
+        # targets that are not present on windows and unix
+        if (NROW(x) != 2L) {
+            x[, "Package"]
+        }
+    })
+    packages <- unique(funlist(packages_diff_os))
+    
+    # Report names of packages
+    if (length(packages)) {
+        warning("Packages with targets not present in a OS:\n", toString(sQuote(packages)), call. = FALSE, immediate. = TRUE)
         return(FALSE)
-    } else if (sum(more_alias) == 1L) {
-        warning("Package has targets not present in a OS:\n", toString(sQuote(names(more_alias)[more_alias])), call. = FALSE, immediate. = TRUE)
-        return(FALSE)
-    }
+    } 
     TRUE
 }
 

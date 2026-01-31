@@ -46,4 +46,4 @@ os_alias <- cbind(
 )
 
 usethis::use_data(os_alias, overwrite = TRUE)
-usethis::use_data(os_alias, internal = TRUE, overwrite = TRUE)
+# usethis::use_data(os_alias, internal = TRUE, overwrite = TRUE)
