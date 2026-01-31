@@ -36,9 +36,17 @@ if (endsWith(path, "rds") || endsWith(path, "RDS")) {
 #' options(repos = oldrepos)
 links <- function(packages = NULL) {
   
-  raw_xrefs <- lapply(getOption("repos"), read_repo, path = "src/contrib/Meta/rdxrefs.rds")
-  if (is_not_data(raw_xrefs)) {
-    return(NA)
+  repos <- getOption("repos")
+  env <- "xrefs"
+  if (empty_env(env)) {
+    raw_xrefs <- lapply(repos, read_repo, path = "src/contrib/Meta/rdxrefs.rds")
+    names(raw_xrefs) <- names(repos)
+    if (is_not_data(raw_xrefs)) {
+      return(NA)
+    }
+    raw_xrefs$base <- tools::base_rdxrefs_db()
+  } else {
+    raw_xrefs <- pkg_state[[env]]
   }
   check_pkg_names(packages, NA)
   env <- "full_rdxrefs"
@@ -99,6 +107,7 @@ links <- function(packages = NULL) {
 #' @inheritParams cran_alias
 #' @returns A data.frame with three columns: Package, Source and Target.
 #' NA if not able to collect the data from the repository.
+#' @note For completeness it also provides the alias of R packages themselves. 
 #' @family alias
 #' @family meta info
 #' @export
@@ -115,12 +124,14 @@ alias <- function(packages = NULL) {
   stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
   repos <- getOption("repos")
   env <- "aliases"
+
   if (empty_env(env)) {
     raw_alias <- lapply(repos, read_repo, path = "src/contrib/Meta/aliases.rds")
     names(raw_alias) <- names(repos)
     if (is_not_data(raw_alias)) {
       return(NA)
     }
+    raw_alias$base <- tools::base_aliases_db()
     pkg_state[[env]] <- raw_alias
   } else {
     raw_alias <- pkg_state[[env]]
