@@ -8,3 +8,5 @@ inst/doc
 docs
 /doc/
 /Meta/
+data/no_load/
+inst/scripts

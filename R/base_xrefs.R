@@ -45,15 +45,15 @@ base_targets_links <- function(packages = NULL) {
     if (!is.null(packages) && !is.null(out)) {
         return(packages_in_links(out, packages))
     }
-
+    
     bl <- base_links()
     bal <- base_alias()
     cal <- cran_alias()
     bl2 <- split_anchor(bl)
-
-    t2b2 <- targets2files(bl2, rbind(bal, cal))
-    out <- uniq_count(t2b2)
+    
+    out <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))
     save_state(env, out, verbose = FALSE)
+    packages_in_links(out, packages)
 }
 
 #' Links between help pages by page
@@ -81,7 +81,11 @@ base_pages_links <- function(packages = NULL) {
     if (!is.null(packages)) {
         keep_rows <- keep_rows & target_links %in% packages
     }
-    add_uniq_count(target_links[keep_rows, -w])
+    out <- add_uniq_count(target_links[keep_rows, -w])
+    out <- sort_by(out, out[, setdiff(colnames(out), "n")])
+    rownames(out) <- NULL
+    out
+    
 }
 
 #' Links between help pages by package
@@ -110,5 +114,7 @@ base_pkges_links <- function(packages = NULL) {
         keep_rows <- keep_rows & target_links %in% packages
     }
     pkges_links <- add_uniq_count(target_links[keep_rows, -w])
-    sort_by(pkges_links, pkges_links[, c("from_pkg", "n")])
+    out <- sort_by(pkges_links, pkges_links[, c("from_pkg", "n")])
+    rownames(out) <- NULL
+    out
 }

@@ -1,43 +1,4 @@
-empty_env <- function(name) {
-    is.null(pkg_state[[name]])
-}
-
-save_state <- function(name, out, verbose = TRUE) {
-    # Use CRAN mirror if not set a default
-    CRAN_baseurl()
-    if (empty_env(name)) {
-        if (verbose) {
-        message("Retrieving ", name, ", this might take a bit.\n",
-                "Caching results to be faster next call in this session.")
-        }
-        m <- tryCatch(out, warning = function(w) {NA}, error = function(e) {NA})
-        if (is_not_data(m)) {
-            return(NA)
-        }
-        pkg_state[[name]] <- m
-    }
-    pkg_state[[name]]
-}
-
 funlist <- function(x) {unlist(x, FALSE, FALSE)}
-
-
-get_package_subset <- function(name, pkges) {
-    stopifnot(is.character(name) && length(name) == 1L,
-              "NULL or character vector" = is.null(pkges) || (is.character(pkges) && length(pkges)))
-
-    if (empty_env(name)) {
-        return(NULL)
-    }
-
-    df <- pkg_state[[name]]
-
-    if (is.null(pkges)) {
-        return(df)
-    }
-
-    df[pkg_in_x(df, pkges), , drop = FALSE]
-}
 
 pkg_in_x <- function(x, packages) {
     cols <- c("package", "Package", "from_pkg", "to_pkg")
@@ -108,78 +69,93 @@ datetime2POSIXct <- function(date, time, tz = cran_tz) {
 
 
 uniq_count <- function(x, name = "n") {
-    id <- apply(as.matrix(x), 1L, paste0, collapse = "")
-
+    x <- as.matrix(x)
+    id <- apply(x, 1L, paste0, collapse = "")
+    
     # Return if no duplicates
     if (!anyDuplicated(id)) {
         if (!NROW(x)) {
             return(cbind(x, n = numeric(0L)))
         }
         n <- matrix(1L, nrow = NROW(x),
-                    dimnames = list(seq_len(NROW(x)), name))
+        dimnames = list(seq_len(NROW(x)), name))
         return(cbind(x, n))
     }
     ids <- table(factor(id, levels = unique(id)))
     names(ids) <- NULL
     uid <- unique(x)
     rownames(uid) <- NULL
-    uid[, name] <- as.numeric(ids)
-    uid
+    cbind(uid, matrix(as.numeric(ids), ncol = 1, dimnames = list(NULL, name)))
 }
 
 add_uniq_count <- function(x, name = "n", old_name = "n") {
-    w <- which(colnames(x) %in% old_name)
-    # Nothing to add up:
-    if (!length(w)) {
+    # Input checks
+    if (length(dim(x)) < 2) {
         return(x)
+    } 
+    stopifnot(length(name) == 1L)
+    stopifnot(length(old_name) == 1L)
+    
+    # Nothing to add up:
+    w <- which(colnames(x) %in% old_name)
+    if (!length(w)) {
+        return(uniq_count(x, name))
     }
+    
+    if (!NROW(x)) {
+        m <- cbind(x[, -w, drop = FALSE], n = numeric(0L))
+        colnames(m)[colnames(m) == "n"] <- name
+        return(m)
+    }
+    
     id <- apply(as.matrix(x[, -w, drop = FALSE]), 1, paste0, collapse = ";")
     dup_f <- duplicated(id)
     dup_r <- duplicated(id, fromLast = TRUE)
     dup <- dup_f | dup_r
-
+    
     # Return if no duplicates
-    if (!any(dup)) {
-        if (!NROW(x)) {
-            return(cbind(x[, -w, drop = FALSE], n = numeric(0L)))
-        }
-        n <- matrix(1L, nrow = NROW(x),
-                    dimnames = list(seq_len(NROW(x)), name))
-        return(cbind(x[, -w, drop = FALSE], n))
+    if (!any(dup) & !length(w)) {
+        n_matrix <- matrix(1L, nrow = NROW(x),
+        dimnames = list(seq_len(NROW(x)), name))
+        return(cbind(x[, -w, drop = FALSE], n_matrix))
+    } else if (!any(dup) & length(w)) {
+        return(x)
     }
-
-    y <- x[!dup, ]
-    df <- tapply(x[dup, , drop = FALSE], id[dup], function(xy, column_to_add) {
-        y <- unique(as.matrix(xy)[, -column_to_add, drop = FALSE])
-        y <- cbind(y, name = sum(xy[, column_to_add, drop = TRUE], na.rm = TRUE))
+    
+    # Calculate duplicates count while keeping the data
+    y <- as.data.frame(x[!dup, ])
+    df <- tapply(as.data.frame(x[dup, , drop = FALSE]), id[dup], function(xy) {
+        y <- unique(as.matrix(xy[, -w, drop = FALSE]))
+        y <- cbind(y, name = sum(as.numeric(xy[, w, drop = TRUE]), na.rm = TRUE))
         colnames(y)[ncol(y)] <- name
         y
-    }, column_to_add = w)
+    })
     dff <- do.call(rbind, df)
     out <- rbind(y, dff)
     out <- as.data.frame(out)
-    out$n <- as.numeric(out$n)
+    out[[name]] <- as.numeric(out[[name]])
+    out <- sort_by(out, out[, setdiff(colnames(out), name)])
     rownames(out) <- NULL
     out
 }
 
 
 valid_package_name <- function(packages) {
-
+    
     #  - at least two characters
     #  - start with a letter
     #  - not end in a dot
     validity <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !endsWith(packages, ".")
     if (!all(validity)) {
         stop("Packages names should have at least two characters and start",
-             " with a letter and not end in a dot.", call. = FALSE)
+        " with a letter and not end in a dot.", call. = FALSE)
     }
     TRUE
 }
 
 check_pkg_names <- function(packages, length = 1L) {
     char_packages <- is.character(packages) && length(na.omit(packages))
-
+    
     if (isFALSE(char_packages) && !is.na(length)) {
         if (length <= length(packages)) {
             msg <- "Use NULL or a character vector with some packages."
@@ -188,21 +164,21 @@ check_pkg_names <- function(packages, length = 1L) {
         }
         stop(msg, call. = FALSE)
     }
-
+    
     # If length = NA it can be NULL
     if (is.null(packages)) {
         return(TRUE)
     }
     local_packages <- dir.exists(packages)
-
+    
     valid_names <- valid_package_name(packages)
-
+    
     # Don't trigger error on local packages
     if (!any(local_packages) && !any(valid_names[!local_packages])) {
         stop("Packages names should have at least two characters and start",
-             " with a letter and not end in a dot.", call. = FALSE)
+        " with a letter and not end in a dot.", call. = FALSE)
     }
-
+    
     TRUE
 }
 
@@ -224,7 +200,7 @@ no_internet <- function(x) {
 omitting_packages <- function(packages) {
     if (length(packages)) {
         warning("Some packages are not currently available. Omitting packages:\n",
-                toString(sQuote(packages)), ".", immediate. = TRUE, call. = FALSE)
+        toString(sQuote(packages)), ".", immediate. = TRUE, call. = FALSE)
     }
 }
 
@@ -236,4 +212,20 @@ check_current_pkg <- function(packages, current) {
         omitting_packages(omit_pkg)
     }
     omit_pkg
+}
+
+
+strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
+    m <- regexec(pattern, x, perl = perl, useBytes = useBytes)
+    str <- regmatches(x, m)
+    ntokens <- length(proto) + 1L
+    nomatch <- lengths(str) == 0L
+    str[nomatch] <- list(rep.int(NA_character_, ntokens))
+    if (length(str) > 0L && length(str[[1L]]) != ntokens) {
+        stop("The number of captures in 'pattern' != 'length(proto)'")
+    }
+    m <- matrix(as.character(unlist(str)), ncol = ntokens, 
+        byrow = TRUE)[, -1L, drop = FALSE]
+    colnames(m) <- colnames(proto) %||% names(proto) %||% proto
+    m
 }

@@ -81,7 +81,6 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     df3 <- cbind(Package = rownames(df2), Repository = repositories, df2)
     df3 <- df3[packages, , drop = FALSE]
     df3 <- unique(df3)
-    browser(expr = anyNA(df3))
     rownames(df3) <- NULL
     df3
 }

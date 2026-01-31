@@ -1,7 +1,23 @@
 library("repo.data")
-
+pkges <- c("BaseSet", "experDesign")
+ca_columns <- c("Package", "Datetime", "Version", "User", "Size", "Status")
 # Test that it works
-ca <- cran_archive()
+st <- system.time(ca <- cran_archive(pkges))
 repo.data:::no_internet(ca)
-stopifnot(colnames(ca) == c("Package", "Datetime", "Version", "User", "Size", "Status"))
+stopifnot(colnames(ca) == ca_columns)
+st1 <- system.time(ca2 <- cran_archive(pkges))
+stopifnot("Cache didn't worked" = st1[[3]] < st[[3]])
+stopifnot("Cache was not the same" = all.equal(ca, ca2))
 
+clean_cache()
+st2 <- system.time(ca3 <- cran_archive(pkges))
+repo.data:::no_internet(ca3)
+stopifnot("Clean cache restores initial" = st2[[3]] > st1[[3]])
+stopifnot("Still same result" = all.equal(ca, ca3))
+
+st4 <- system.time(ca <- cran_archive())
+repo.data:::no_internet(ca)
+stopifnot(colnames(ca) == ca_columns)
+st5 <- system.time(ca2 <- cran_archive())
+stopifnot("Cache returns the same for all packages" = all.equal(ca, ca2))
+stopifnot("Clean cache restores initial" = st5[[3]] < st4[[3]])

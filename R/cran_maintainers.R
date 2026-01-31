@@ -24,22 +24,22 @@ cran_maintainers <- function() {
         return(NA)
     }
     # https://mastodon.social/@eddelbuettel/114217492195207107
-    sm <- strcapture(pattern = "['\"]?(.+)['\"]?<((.+)@(.+))>",
+    sm <- strcapture_m(pattern = "['\"]?(.+)['\"]?<((.+)@(.+))>",
                          x = db$Maintainer,
                          proto = data.frame(Name = character(),
                                             email = character(),
                                             direction = character(),
                                             domain = character()))
 
-    sm$direction <- gsub("\\+.+$", "", sm$direction)
-    sm$direction <- tolower(sm$direction)
-    sm$domain <- tolower(sm$domain)
-    sm$Name <- trimws(sm$Name)
+    sm[, "direction"] <- gsub("\\+.+$", "", sm[, "direction"])
+    sm[, "direction"] <- tolower(sm[, "direction"])
+    sm[, "domain"] <- tolower(sm[, "domain"])
+    sm[, "Name"] <- trimws(sm[, "Name"])
 
     # Packages using Maintainer keep the quotes on the field
-    sm$Name <- sub(', PhD"', "", sm$Name, fixed = TRUE)
-    modify <- endsWith(sm$Name, '"') & !is.na(sm$Name)
-    sm$Name[modify] <- gsub(',.*"', "", sm$Name[modify])
+    sm[, "Name"] <- sub(', PhD"', "", sm[, "Name"], fixed = TRUE)
+    modify <- endsWith(sm[, "Name"], '"') & !is.na(sm[, "Name"])
+    sm[modify, "Name"] <- gsub(',.*"', "", sm[modify, "Name"])
 
     s <- strsplit(db$Packaged, "; ", fixed = TRUE)
 
