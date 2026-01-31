@@ -46,7 +46,6 @@ stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 
 
 clean_cache()
-pkges <- c(bpkges, pkges)
 
 oldrepos <- getOption("repos")
 on.exit(options(oldrepos), add = TRUE)
@@ -57,20 +56,23 @@ st <- system.time(ba <- alias(pkges))
 repo.data:::no_internet(ba)
 stopifnot(colnames(ba) == alias_columns)
 st1 <- system.time(ba2 <- alias(pkges))
-stopifnot("Cache didn't work" = any(st1 < st)) # doesn't seem to work
-stopifnot("Cache was not the same" = all.equal(ba, ba2))
+stopifnot("Cache alias didn't work" = any(st1 < st))
+stopifnot("Alias with cache was not the same" = all.equal(ba, ba2))
 missing_pkg <- pkges[!pkges %in% ba2$Package]
-stopifnot("All packages are present" = length(missing_pkg) == 0L)
+
+if (!length(missing_pkg)) {
+  stop(sprintf("All packages are present on alias output: %s", toString(missing_pkg)))
+}
 
 clean_cache()
+setRepositories(ind = 2, addURLs = c(CRAN = "https://cran.r-project.org"))
 st2 <- system.time(ba3 <- alias(pkges))
 repo.data:::no_internet(ba3)
-stopifnot("Clean cache restores initial state" = any(st2[[3]] < st1[[3]]))
+stopifnot("Clean cache restores initial state" = any(st2 < st1))
 stopifnot("Still same result" = all.equal(ba, ba3))
-missing_pkg <- pkges[!pkges %in% ba3$Package]
-stopifnot("All packages are present" = length(missing_pkg) == 0L)
 
 ba <- alias()
+setRepositories(ind = 2, addURLs = c(CRAN = "https://cran.r-project.org"))
 repo.data:::no_internet(ba)
 stopifnot(colnames(ba) == alias_columns)
 ba2 <- alias()

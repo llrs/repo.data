@@ -16,6 +16,9 @@ NA if not able to collect the data from the repository.
 \description{
 Retrieve links of repository packages to other packages' documentation.
 }
+\note{
+For completeness it also provides the alias of R packages themselves.
+}
 \examples{
 oldrepos <- getOption("repos")
 setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
