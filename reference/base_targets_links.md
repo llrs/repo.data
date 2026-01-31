@@ -36,12 +36,12 @@ btl <- base_targets_links()
 #> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
 head(btl)
-#>   from_pkg       from_Rd to_pkg      to_target           to_Rd n
-#> 1     base Arithmetic.Rd   base            %*%      matmult.Rd 1
-#> 2     base Arithmetic.Rd   base       .Machine     zMachine.Rd 1
-#> 3     base Arithmetic.Rd                 Arith                 1
-#> 4     base Arithmetic.Rd   base    NA_integer_           NA.Rd 1
-#> 5     base Arithmetic.Rd   base            NaN    is.finite.Rd 1
-#> 6     base Arithmetic.Rd   base S3groupGeneric groupGeneric.Rd 1
+#>   from_pkg       from_Rd to_pkg      to_target       to_Rd n
+#> 1     base Arithmetic.Rd   base            %*%  matmult.Rd 1
+#> 2     base Arithmetic.Rd   base       .Machine zMachine.Rd 1
+#> 3     base Arithmetic.Rd                 Arith             1
+#> 4     base Arithmetic.Rd           NA_integer_             1
+#> 5     base Arithmetic.Rd                   NaN             1
+#> 6     base Arithmetic.Rd        S3groupGeneric             2
 # }
 ```

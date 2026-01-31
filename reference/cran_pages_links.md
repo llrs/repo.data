@@ -33,5 +33,11 @@ Other links from CRAN:
 ``` r
 cpl <- cran_pages_links("Matrix")
 head(cpl)
-#> [1] NA
+#>   from_pkg                 from_Rd to_pkg               to_Rd n
+#> 1   Matrix   BunchKaufman-class.Rd Matrix   expand-methods.Rd 2
+#> 2   Matrix   BunchKaufman-class.Rd Matrix    solve-methods.Rd 2
+#> 3   Matrix BunchKaufman-methods.Rd Matrix Cholesky-methods.Rd 2
+#> 4   Matrix BunchKaufman-methods.Rd Matrix   expand-methods.Rd 2
+#> 5   Matrix BunchKaufman-methods.Rd Matrix    is.na-methods.Rd 2
+#> 6   Matrix BunchKaufman-methods.Rd Matrix       lu-methods.Rd 2
 ```

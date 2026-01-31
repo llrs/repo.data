@@ -25,15 +25,14 @@ Other functions related to BASE help pages:
 ``` r
 # \donttest{
 bhnl <- base_help_pages_not_linked()
-#> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
 head(bhnl)
-#>   Package              Source
-#> 1    base        Constants.Rd
-#> 2    base Foreign-internal.Rd
-#> 3    base      ISOdatetime.Rd
-#> 4    base       Last.value.Rd
-#> 5    base         S3method.Rd
-#> 6    base   StackOverflows.Rd
+#>   Package          Source
+#> 1    base   Arithmetic.Rd
+#> 2    base         AsIs.Rd
+#> 3    base       Bessel.Rd
+#> 4    base CallExternal.Rd
+#> 5    base        Colon.Rd
+#> 6    base   Comparison.Rd
 # }
 ```

@@ -24,7 +24,6 @@ Other functions related to BASE help pages:
 ``` r
 # \donttest{
 bhwl <- base_help_pages_wo_links()
-#> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
 head(bhwl)
 #>   Package          Source

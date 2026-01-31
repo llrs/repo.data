@@ -45,21 +45,15 @@ chc <- cran_help_cliques("BaseSet")
 #> Caching results to be faster next call in this session.
 #> Warning: Packages with targets not present in a OS:
 #> ‘base’, ‘parallel’
+#> Warning: Package has targets not present in a OS:
+#> ‘sfsmisc’
 #> Warning: Some links are distinct depending on the OS.
 table(chc$clique)
 #> 
-#>    1    2    3    4 
-#> 4286    6    2    2 
+#>    1    2 
+#> 1923    2 
 chc[chc$clique != 1L, ]
-#>      from_pkg          from_Rd clique  to_pkg          to_Rd  n
-#> 4287  BaseSet        getGAF.Rd      2 BaseSet      getGMT.Rd  1
-#> 4288  BaseSet        getGAF.Rd      2 BaseSet      getOBO.Rd  1
-#> 4289  BaseSet        getGMT.Rd      2 BaseSet      getGAF.Rd  1
-#> 4290  BaseSet        getGMT.Rd      2 BaseSet      getOBO.Rd  1
-#> 4291  BaseSet        getOBO.Rd      2 BaseSet      getGAF.Rd  1
-#> 4292  BaseSet        getOBO.Rd      2 BaseSet      getGMT.Rd  1
-#> 4293  BaseSet names.TidySet.Rd      3    base    dimnames.Rd  1
-#> 4294     base      dimnames.Rd      3    <NA>           <NA> NA
-#> 4295  BaseSet        naming.Rd      4 BaseSet set_symbols.Rd  1
-#> 4296  BaseSet   set_symbols.Rd      4    <NA>           <NA> NA
+#>      from_pkg        from_Rd clique  to_pkg          to_Rd n
+#> 1924  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
+#> 1925  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
 ```

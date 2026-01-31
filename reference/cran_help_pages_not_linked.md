@@ -36,6 +36,7 @@ if (NROW(ap)) {
     chnl <- cran_help_pages_not_linked(a_package)
     head(chnl)
 }
+#> Warning: Some links are distinct depending on the OS.
 #>         Package            Source
 #> 1 AalenJohansen aalen_johansen.Rd
 #> 2 AalenJohansen        prodint.Rd

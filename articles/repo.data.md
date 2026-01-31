@@ -20,7 +20,7 @@ head(pd)
 #> 1       cli   3.4.0 Imports   >=    <NA>
 #> 2 lifecycle   1.0.3 Imports   >=    <NA>
 #> 3         R   4.1.0 Depends   >=    <NA>
-#> 4     rlang   1.1.0 Imports   >=    <NA>
+#> 4     rlang   1.1.7 Imports   >=    <NA>
 #> 5     utils    <NA> Imports <NA>    <NA>
 #> 6   ggplot2    <NA> Imports <NA>  ggeasy
 ```
@@ -89,8 +89,10 @@ functions but most of them point to the same file.
 
 ### Connecting help pages
 
-Often it is helpful to link help pages so that: - Pages are linked to
-other pages - Pages are linked from other pages.
+Often it is helpful to link help pages so that the user can navigate
+through the help pages easily. For that we need: - Pages linking to
+other pages (`pages_wo_links()`). - Pages are linked from other pages
+(`pages_not_linked()`).
 
 ``` r
 pkg <- "BaseSet"
@@ -103,7 +105,6 @@ head(cran_help_pages_wo_links(pkg))
 head(cran_help_pages_not_linked(pkg))
 #> Warning: Package has targets not present in a OS:
 #> 'sfsmisc'
-#> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
 #>   Package      Source
 #> 1 BaseSet activate.Rd
@@ -115,11 +116,12 @@ head(cran_help_pages_not_linked(pkg))
 ```
 
 In addition to those help pages that are not well connected it could be
-that some pages are linked but link to each other without connecting
-with other help pages of the package or other packages.
+that some pages are linked between them without connecting with other
+help pages of the package or other packages creating a closed group of
+pages. This is know as clique.
 
-To retrieve these help pages forming a clique it requires the suggested
-package igraph.
+To retrieve these help pages forming a clique there is a function to
+find them (requires the suggested package igraph).
 
 ``` r
 cliques <- cran_help_cliques(pkg)
@@ -128,8 +130,8 @@ if (length(cliques) != 1L) {
     table(cliques$n)
 }
 #> 
-#>    1    2    3    4    5    6 
-#> 3850   95   22    3    3    2
+#>    1    2    3    4    5    6    7    8    9 
+#> 1570  174   34   15   11    7    4    1    1
 ```
 
 If there is more than one length this would mean some pages not linked
@@ -160,7 +162,7 @@ cs <- cran_snapshot(as.Date("2020-01-31"))
 #> Retrieving comments, this might take a bit.
 #> Caching results to be faster next call in this session.
 nrow(cs)
-#> [1] 106522
+#> [1] 108453
 ```
 
 This might be helpful to know what was available on old project and why
@@ -175,13 +177,14 @@ system?
 
 ``` r
 cran_session()
-#> [1] "2025-12-16 06:10:10 CET"
+#> [1] "2026-01-26 08:10:10 CET"
 ```
 
 This uses the
 [`sessionInfo()`](https://rdrr.io/r/utils/sessionInfo.html) output to
 find the date of last installation. Under the hood it uses a function
-for an arbitrary packages and their versions:
+that given packages and their versions find a date where this was
+possible. This is also exported:
 
 ``` r
 versions <- data.frame(Package = c("dplyr", "Rcpp", "rlang"),
@@ -201,6 +204,9 @@ To answer the original question of this section we can use:
 cran_date(installed.packages())
 ```
 
+We can be sure that the library was updated on that date or later (if no
+local package has been updated since then on CRAN).
+
 #### Risk of being archived
 
 If you ever wonder which packages are at risk of being archived you can
@@ -219,14 +225,14 @@ if (length(cd) != 1L) {
 }
 ```
 
-| Package   | Deadline   | type   | repo | n_affected |
-|:----------|:-----------|:-------|:-----|-----------:|
-| OpenLand  | 2025-12-11 | direct | CRAN |          6 |
-| fastmatch | 2025-12-11 | direct | CRAN |          1 |
-| iotools   | 2025-12-11 | direct | CRAN |          1 |
-| DFD       | 2025-12-16 | direct | CRAN |          8 |
-| shinyMixR | 2025-12-17 | direct | CRAN |          6 |
-| vctrs     | 2025-12-17 | direct | CRAN |          2 |
+| Package    | Deadline   | type   | repo | n_affected |
+|:-----------|:-----------|:-------|:-----|-----------:|
+| PMAPscore  | 2026-01-31 | direct | CRAN |         14 |
+| scPipeline | 2026-01-31 | direct | CRAN |         12 |
+| dGAselID   | 2026-01-31 | direct | CRAN |         11 |
+| AutoPipe   | 2026-01-31 | direct | CRAN |         10 |
+| cinaR      | 2026-01-31 | direct | CRAN |         10 |
+| scRNAtools | 2026-01-31 | direct | CRAN |         10 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -243,7 +249,7 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2025-12-16 r89184)
+#> R Under development (unstable) (2026-01-30 r89357)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.3 LTS
 #> 
@@ -267,13 +273,13 @@ sessionInfo()
 #> [1] repo.data_0.1.5.9000
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] cli_3.6.5         knitr_1.50        rlang_1.1.6       xfun_0.55        
-#>  [5] rversions_3.0.0   textshaping_1.0.4 jsonlite_2.0.0    litedown_0.8     
+#>  [1] cli_3.6.5         knitr_1.51        rlang_1.1.7       xfun_0.56        
+#>  [5] rversions_3.0.0   textshaping_1.0.4 jsonlite_2.0.0    litedown_0.9     
 #>  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.0        sass_0.4.10      
 #> [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
-#> [17] yaml_2.3.12       lifecycle_1.0.4   compiler_4.6.0    igraph_2.2.1     
+#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    igraph_2.2.1     
 #> [21] fs_1.6.6          pkgconfig_2.0.3   systemfonts_1.3.1 digest_0.6.39    
 #> [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.4   
-#> [29] bslib_0.9.0       tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     
+#> [29] bslib_0.10.0      tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     
 #> [33] desc_1.4.3
 ```

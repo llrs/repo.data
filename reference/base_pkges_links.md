@@ -35,12 +35,12 @@ bpkl <- base_pkges_links()
 #> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
 head(bpkl)
-#>   from_pkg   to_pkg n
-#> 1     base    round 1
-#> 2     base     date 1
-#> 3     base    chron 1
-#> 4     base    tcltk 1
-#> 5     base parallel 1
-#> 6     base     nnet 1
+#>   from_pkg  to_pkg n
+#> 1     base   chron 1
+#> 2     base    date 1
+#> 3     base    nnet 1
+#> 4     base   round 1
+#> 5     base   tools 1
+#> 6     base methods 6
 # }
 ```

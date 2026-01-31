@@ -39,12 +39,12 @@ bpl <- base_pages_links()
 #> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.
 head(bpl)
-#>   from_pkg       from_Rd to_pkg       to_Rd n
-#> 1     base Arithmetic.Rd   base  matmult.Rd 1
-#> 2     base Arithmetic.Rd   base zMachine.Rd 1
-#> 3     base Arithmetic.Rd   base       NA.Rd 1
-#> 4     base Arithmetic.Rd   base  Special.Rd 1
-#> 5     base Arithmetic.Rd   base   Syntax.Rd 1
-#> 6     base Arithmetic.Rd   base   double.Rd 1
+#>   from_pkg       from_Rd to_pkg           to_Rd n
+#> 1     base Arithmetic.Rd   base      MathFun.Rd 1
+#> 2     base Arithmetic.Rd   base      Special.Rd 1
+#> 3     base Arithmetic.Rd   base       double.Rd 2
+#> 4     base Arithmetic.Rd   base groupGeneric.Rd 1
+#> 5     base Arithmetic.Rd   base    identical.Rd 1
+#> 6     base Arithmetic.Rd   base      integer.Rd 1
 # }
 ```

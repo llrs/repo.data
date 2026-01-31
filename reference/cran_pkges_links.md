@@ -33,13 +33,14 @@ Other links from CRAN:
 ``` r
 # \donttest{
 cpkl <- cran_pkges_links()
+#> Warning: Some links are distinct depending on the OS.
 head(cpkl)
-#>   from_pkg  to_pkg
-#> 1  BaseSet BaseSet
-#> 2  BaseSet BaseSet
-#> 3  BaseSet BaseSet
-#> 4  BaseSet BaseSet
-#> 5  BaseSet BaseSet
-#> 6  BaseSet BaseSet
+#>      from_pkg   to_pkg     n   
+#> [1,] "AATtools" "AATtools" "3" 
+#> [2,] "ABCoptim" "graphics" "3" 
+#> [3,] "ABCoptim" "stats"    "3" 
+#> [4,] "ABM"      "ABM"      "39"
+#> [5,] "ACDm"     "Rsolnp"   "3" 
+#> [6,] "ACDm"     "ggplot2"  "3" 
 # }
 ```

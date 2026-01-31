@@ -19,6 +19,10 @@ alias(packages = NULL)
 A data.frame with three columns: Package, Source and Target. NA if not
 able to collect the data from the repository.
 
+## Note
+
+For completeness it also provides the alias of R packages themselves.
+
 ## See also
 
 Other alias:
@@ -30,9 +34,15 @@ Other alias:
 ``` r
 oldrepos <- getOption("repos")
 setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
+# show repositories
+getOption("repos")
+#>                                          CRAN 
+#>                                      "@CRAN@" 
+#>                                      BioCsoft 
+#> "https://bioconductor.org/packages/3.22/bioc" 
+#>                                               
+#>                  "https://cran.r-project.org" 
 head(alias(c("ggplot2", "BiocCheck")))
-#> Retrieving aliases, this might take a bit.
-#> Caching results to be faster next call in this session.
 #>   Package   Source         Target
 #> 1 ggplot2 Coord.Rd          Coord
 #> 2 ggplot2 Coord.Rd CoordCartesian

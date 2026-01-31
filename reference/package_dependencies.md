@@ -45,7 +45,7 @@ head(pd)
 #> 1         R   4.1.0 Depends   >=    <NA>
 #> 2       cli   3.4.0 Imports   >=    <NA>
 #> 3 lifecycle   1.0.3 Imports   >=    <NA>
-#> 4     rlang   1.1.0 Imports   >=    <NA>
+#> 4     rlang   1.1.7 Imports   >=    <NA>
 #> 5     utils    <NA> Imports <NA>    <NA>
 #> 6   ggplot2    <NA> Imports <NA>  ggeasy
 ```

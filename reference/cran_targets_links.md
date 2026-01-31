@@ -33,11 +33,11 @@ Other links from CRAN:
 ``` r
 ctl <- cran_targets_links("BaseSet")
 head(ctl)
-#>   from_pkg            from_Rd  to_pkg       to_target            to_Rd n
-#> 1  BaseSet BaseSet-package.Rd BaseSet         TidySet TidySet-class.Rd 1
-#> 2  BaseSet   TidySet-class.Rd BaseSet        activate      activate.Rd 1
-#> 3  BaseSet   TidySet-class.Rd BaseSet      add_column    add_column.Rd 1
-#> 4  BaseSet   TidySet-class.Rd BaseSet    add_relation  add_relation.Rd 1
-#> 5  BaseSet   TidySet-class.Rd BaseSet arrange.TidySet      arrange_.Rd 1
-#> 6  BaseSet   TidySet-class.Rd BaseSet       cartesian     cartesian.Rd 1
+#>   from_pkg            from_Rd to_pkg          to_target to_Rd n
+#> 1  BaseSet BaseSet-package.Rd                   TidySet       1
+#> 2  BaseSet   TidySet-class.Rd              add_relation       1
+#> 3  BaseSet   TidySet-class.Rd           arrange.TidySet       1
+#> 4  BaseSet   TidySet-class.Rd        complement_element       1
+#> 5  BaseSet   TidySet-class.Rd            complement_set       1
+#> 6  BaseSet   TidySet-class.Rd              element_size       1
 ```

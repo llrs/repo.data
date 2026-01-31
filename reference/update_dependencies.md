@@ -44,7 +44,7 @@ Other utilities:
 update_dependencies("arrow")
 #>         Name Version
 #> 1      cpp11   0.5.2
-#> 2      rlang   1.1.6
+#> 2      rlang   1.1.7
 #> 3   testthat 3.2.1.1
 #> 4 tidyselect   1.2.1
 ```
