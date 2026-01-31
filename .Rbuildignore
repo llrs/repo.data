@@ -16,3 +16,5 @@ data/actions.rds
 ^CRAN-SUBMISSION$
 ^doc$
 ^Meta$
+governance.md
+members.csv
