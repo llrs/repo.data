@@ -2,39 +2,39 @@
 
 # grep -F "\alias{" src/library/*/man/{unix,windows}/*.Rd
 # The output is read as text into a table.
-al_s <- read.table(text = "./base/man/unix/Signals.Rd:\alias{Signals}
-./base/man/windows/shell.exec.Rd:\alias{shell.exec}
-./base/man/windows/shell.Rd:\alias{shell}
-./grDevices/man/unix/png.Rd:\alias{bmp}
-./grDevices/man/unix/png.Rd:\alias{jpeg}
-./grDevices/man/unix/png.Rd:\alias{png}
-./grDevices/man/unix/png.Rd:\alias{tiff}
-./grDevices/man/unix/savePlot.Rd:\alias{savePlot}
-./grDevices/man/windows/png.Rd:\alias{bmp}
-./grDevices/man/windows/png.Rd:\alias{jpeg}
-./grDevices/man/windows/png.Rd:\alias{png}
-./grDevices/man/windows/png.Rd:\alias{tiff}
-./grDevices/man/windows/savePlot.Rd:\alias{savePlot}
-./parallel/man/unix/children.Rd:\alias{children}
-./parallel/man/unix/children.Rd:\alias{mckill}
-./parallel/man/unix/children.Rd:\alias{readChild}
-./parallel/man/unix/children.Rd:\alias{readChildren}
-./parallel/man/unix/children.Rd:\alias{selectChildren}
-./parallel/man/unix/children.Rd:\alias{sendChildStdin}
-./parallel/man/unix/children.Rd:\alias{sendMaster}
-./parallel/man/unix/mcaffinity.Rd:\alias{mcaffinity}
-./parallel/man/unix/mcfork.Rd:\alias{mcexit}
-./parallel/man/unix/mcfork.Rd:\alias{mcfork}
-./parallel/man/unix/mclapply.Rd:\alias{mclapply}
-./parallel/man/unix/mclapply.Rd:\alias{mcMap}
-./parallel/man/unix/mclapply.Rd:\alias{mcmapply}
-./parallel/man/unix/mcparallel.Rd:\alias{mccollect}
-./parallel/man/unix/mcparallel.Rd:\alias{mcparallel}
-./parallel/man/unix/pvec.Rd:\alias{pvec}
-./parallel/man/windows/mcdummies.Rd:\alias{mclapply}
-./parallel/man/windows/mcdummies.Rd:\alias{mcMap}
-./parallel/man/windows/mcdummies.Rd:\alias{mcmapply}
-./parallel/man/windows/mcdummies.Rd:\alias{pvec}
+al_s <- read.table(text = "src/library/base/man/unix/Signals.Rd:\alias{Signals}
+src/library/grDevices/man/unix/png.Rd:\alias{png}
+src/library/grDevices/man/unix/png.Rd:\alias{jpeg}
+src/library/grDevices/man/unix/png.Rd:\alias{tiff}
+src/library/grDevices/man/unix/png.Rd:\alias{bmp}
+src/library/grDevices/man/unix/savePlot.Rd:\alias{savePlot}
+src/library/parallel/man/unix/children.Rd:\alias{children}
+src/library/parallel/man/unix/children.Rd:\alias{readChild}
+src/library/parallel/man/unix/children.Rd:\alias{readChildren}
+src/library/parallel/man/unix/children.Rd:\alias{selectChildren}
+src/library/parallel/man/unix/children.Rd:\alias{sendChildStdin}
+src/library/parallel/man/unix/children.Rd:\alias{sendMaster}
+src/library/parallel/man/unix/children.Rd:\alias{mckill}
+src/library/parallel/man/unix/mcaffinity.Rd:\alias{mcaffinity}
+src/library/parallel/man/unix/mcfork.Rd:\alias{mcfork}
+src/library/parallel/man/unix/mcfork.Rd:\alias{mcexit}
+src/library/parallel/man/unix/mclapply.Rd:\alias{mclapply}
+src/library/parallel/man/unix/mclapply.Rd:\alias{mcmapply}
+src/library/parallel/man/unix/mclapply.Rd:\alias{mcMap}
+src/library/parallel/man/unix/mcparallel.Rd:\alias{mccollect}
+src/library/parallel/man/unix/mcparallel.Rd:\alias{mcparallel}
+src/library/parallel/man/unix/pvec.Rd:\alias{pvec}
+src/library/base/man/windows/shell.exec.Rd:\alias{shell.exec}
+src/library/base/man/windows/shell.Rd:\alias{shell}
+src/library/grDevices/man/windows/png.Rd:\alias{png}
+src/library/grDevices/man/windows/png.Rd:\alias{jpeg}
+src/library/grDevices/man/windows/png.Rd:\alias{tiff}
+src/library/grDevices/man/windows/png.Rd:\alias{bmp}
+src/library/grDevices/man/windows/savePlot.Rd:\alias{savePlot}
+src/library/parallel/man/windows/mcdummies.Rd:\alias{mclapply}
+src/library/parallel/man/windows/mcdummies.Rd:\alias{pvec}
+src/library/parallel/man/windows/mcdummies.Rd:\alias{mcmapply}
+src/library/parallel/man/windows/mcdummies.Rd:\alias{mcMap}
 ", sep = ":")
 
 os_alias <- cbind(
