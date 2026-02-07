@@ -68,11 +68,7 @@ links <- function(packages = NULL) {
   
   # Check if there is already data
   first_xrefs <- empty_env(env)
-  if (first_xrefs) {
-    xrefs <- NULL
-  } else {
-    xrefs <- pkg_state[[env]]
-  }
+  xrefs <- pkg_state[[env]]
   
   # Decide which packages are to be added to the data
   if (!is.null(packages) && !first_xrefs) {
@@ -124,7 +120,7 @@ alias <- function(packages = NULL) {
   stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
   repos <- getOption("repos")
   env <- "aliases"
-
+  
   if (empty_env(env)) {
     raw_alias <- lapply(repos, read_repo, path = "src/contrib/Meta/aliases.rds")
     names(raw_alias) <- names(repos)
@@ -136,7 +132,7 @@ alias <- function(packages = NULL) {
   } else {
     raw_alias <- pkg_state[[env]]
   }
-
+  
   check_pkg_names(packages, NA)
   # Place to store modified data
   env <- "full_aliases"
@@ -160,11 +156,7 @@ alias <- function(packages = NULL) {
   
   # Check if there is already data
   first_alias <- empty_env(env)
-  if (first_alias) {
-    alias <- NULL
-  } else {
-    alias <- pkg_state[[env]]
-  }
+  alias <- pkg_state[[env]]
   
   # Decide which packages are to be added to the data
   if (!is.null(packages) && !first_alias) {

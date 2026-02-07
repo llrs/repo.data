@@ -15,7 +15,7 @@
 #' head(rd)
 repos_dependencies <- function(packages = NULL, which = "all") {
     fields_selected <- check_which(which)
-    check_pkg_names(packages, 0L)
+    check_pkg_names(packages, NA)
     opts <- options(available_packages_filters = c("CRAN", "duplicates"))
     on.exit(options(opts), add = TRUE)
     env <- "repos_dependencies"

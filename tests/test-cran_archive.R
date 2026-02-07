@@ -21,3 +21,6 @@ stopifnot(colnames(ca) == ca_columns)
 st5 <- system.time(ca2 <- cran_archive())
 stopifnot("Cache returns the same for all packages" = all.equal(ca, ca2))
 stopifnot("Clean cache restores initial" = st5[[3]] < st4[[3]])
+
+rtweet <- cran_archive("rtweet")
+stopifnot(NROW(rtweet) == 15L)
