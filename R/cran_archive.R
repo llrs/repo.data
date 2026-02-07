@@ -42,15 +42,14 @@ cran_archive <- function(packages = NULL) {
     curr_names <- gsub("_.+", "", rownames(current)) # Rownames without version
     # Check for random packages
     all_names <- unique(c(arch_names, curr_names))
-
-    omit_pkg <- check_current_pkg(packages, curr_names)
-
+    omit_pkg <- setdiff(packages, all_names)
+    omitting_packages(omit_pkg)
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
-
+    
     # Check if there is already data
     first_arch <- empty_env(env)
     if (first_arch) {
@@ -58,10 +57,10 @@ cran_archive <- function(packages = NULL) {
     } else {
         arch <- pkg_state[[env]]
     }
-
+    
     # Packages with archive data to add
     pkgs2add <- setdiff(arch_names, arch[arch[, "status"] != "current", "package"])
-
+    
     # Decide which packages are to be added to the data
     new_packages <- if (!is.null(packages)) {
         packages
@@ -69,7 +68,7 @@ cran_archive <- function(packages = NULL) {
         all_names
     }
     new_packages <- intersect(new_packages, pkgs2add)
-
+    
     # Add new package's data
     if (length(new_packages)) {
         new_arch <- arch2m(archive[new_packages])
@@ -78,45 +77,18 @@ cran_archive <- function(packages = NULL) {
         warnings_archive(arch)
         pkg_state[[env]] <- arch
     }
-
+    
     out <- save_state(env, arch)
     if (is.null(packages)) {
         return(arch2df(out))
     }
-
+    
     if (all(packages %in% out[, "package"])) {
         arch2df(out[pkg_in_x(out, packages), , drop = FALSE])
     } else {
         arch2df(arch[arch[, "package"] %in% packages, , drop = FALSE])
     }
 }
-
-
-# Like CRAN archive but provides the published date and the date of archival if known
-cran_archive_dates <- function() {
-    ca <- cran_archive()
-    if (is_not_data(ca)) {
-        return(NA)
-    }
-    dates <- split(ca$published_date, ca$package)
-    l <- lapply(dates, function(x) {
-        c(x[-length(x)] - 1L, NA)
-    })
-    ca$archived_date <- as.POSIXlt(funlist(l), tz = cran_tz)
-    ca$archived_date[ca$status == "current"] <- as.POSIXlt(Sys.time(), tz = cran_tz)
-    ca
-
-    # TODO match package version with dates of archival or removal
-    cc <- cran_comments()
-    if (is_not_data(cc)) {
-        return(NA)
-    }
-    w <- which(cc$action %in% c("archived", "removed", "replaced", "renamed"))
-    out <- cc[w, ]
-    rownames(out) <- NULL
-    out
-}
-
 
 cran_packages <- function() {
     current_packages <- current_cran_packages()
@@ -130,7 +102,7 @@ cran_packages <- function() {
     archive_packages <- names(archive)
     cran_packages <- unique(current_packages, archive_packages)
     save_state("cran_packages", cran_packages, verbose = FALSE)
-
+    
 }
 
 current_cran_packages <- function() {

@@ -77,3 +77,7 @@ repo.data:::no_internet(ba)
 stopifnot(colnames(ba) == alias_columns)
 ba2 <- alias()
 stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
+
+
+rtweet <- alias("rtweet")
+stopifnot(NROW(rtweet) == 0L)

@@ -33,11 +33,7 @@ cran_links <- function(packages = NULL) {
     
     # Check if there is already data
     first_xrefs <- empty_env(env)
-    if (first_xrefs) {
-        xrefs <- NULL
-    } else {
-        xrefs <- pkg_state[[env]]
-    }
+    xrefs <- pkg_state[[env]]
     
     # Decide which packages are to be added to the data
     if (!is.null(packages) && !first_xrefs) {

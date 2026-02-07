@@ -21,25 +21,21 @@ cran_alias <- function(packages = NULL) {
     check_pkg_names(packages, NA)
     # Place to store modified data
     env <- "full_cran_aliases"
-
+    
     # Check for missing packages
     current_packages <- names(raw_alias)
     omit_pkg <- check_current_pkg(packages, current_packages)
-
+    
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
-
+    
     # Check if there is already data
     first_alias <- empty_env(env)
-    if (first_alias) {
-        alias <- NULL
-    } else {
-        alias <- pkg_state[[env]]
-    }
-
+    alias <- pkg_state[[env]]
+    
     # Decide which packages are to be added to the data
     if (!is.null(packages) && !first_alias) {
         new_packages <- setdiff(packages, alias[, "Package"])
@@ -50,7 +46,7 @@ cran_alias <- function(packages = NULL) {
     } else if (is.null(packages) && !first_alias) {
         new_packages <- setdiff(current_packages, alias[, "Package"])
     }
-
+    
     # Add new package's data
     if (length(new_packages)) {
         new_alias <- alias2df(raw_alias[new_packages])
