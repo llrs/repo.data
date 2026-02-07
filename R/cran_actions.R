@@ -9,7 +9,6 @@
 #' `NA` if not able to collect the data from CRAN.
 #' @importFrom stats na.omit
 #' @importFrom utils head
-#' @keywords internal
 #' @examples
 #' # ca <- cran_actions()
 cran_actions <- function(packages = NULL, silent = FALSE) {
@@ -32,13 +31,20 @@ cran_all_actions <- function() {
     if (!empty_env(env)) {
         return(pkg_state[[env]])
     }
-
-    actions_f <- system.file(package = "repo.data", "data", "actions.rds")
-    if (!nzchar(actions_f)) {
-        stop("Data not openly released, sorry can't share it (yet?)", call. = FALSE)
+    if (check_r_version("4.6.0")) {
+        actions <- tools:::CRAN_package_actions()
+    } else {
+        src <- file.path(Sys.getenv("R_CRAN_PACKAGE_ACTIONS_URL",
+                                    "rsync://CRAN.R-project.org/CRAN-actions"), "actions.rds")
+        if (startsWith(src, "file://"))
+            actions <- readRDS(substring(src, 8L))
+        else {
+            dst <- tempfile()
+            system2("rsync", c(src, dst))
+            actions <- readRDS(dst)
+        }
     }
-    actions <- readRDS(actions_f)
-    actions <- unique(actions)
+
     actions$Date <- charToDate(actions$Date, "%F")
     actions$User <- as.factor(actions$User)
     lev <- c("publish", "archive", "remove")
