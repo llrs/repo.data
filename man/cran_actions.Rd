@@ -8,6 +8,8 @@ cran_actions(packages = NULL, silent = FALSE)
 }
 \arguments{
 \item{packages}{A vector with packages or \code{NULL} for all packages.}
+
+\item{silent}{A logical value to issue warnings about the data or not.}
 }
 \value{
 A data.frame with Date, Time, User, Action, Package and Version columns.
@@ -17,7 +19,16 @@ A data.frame with Date, Time, User, Action, Package and Version columns.
 CRAN tracks movements of packages and the actions used (for example to report
 the number of manual actions taken by the volunteers).
 }
-\examples{
-# ca <- cran_actions()
+\details{
+There are three possible actions with packages source code: publish, archive and remove.
+\itemize{
+\item Publish: Add it to CRAN's PACAKGES file, users can install that version.
+\item Archive: Removed from CRAN's repository PACKAGES file so users can't access the package with \code{\link[=available.packages]{available.packages()}}.
+Remains on CRAN archive: \url{https://cran.r-project.org/src/contrib/Archive/}.
+\item Remove: Removed from CRAN's archive.
 }
-\keyword{internal}
+}
+\examples{
+ca <- cran_actions(silent = TRUE)
+head(ca)
+}

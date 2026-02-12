@@ -45,10 +45,10 @@ read_CRAN <- function(path, cran = CRAN_baseurl()) {
     read_repo(path, cran)
 }
 
-check_r_version <- function() {
+check_r_version <- function(version = "4.5.0") {
     ver <- paste(R.Version()[c("major","minor")], collapse = ".")
     r_ver <- package_version(ver)
-    target <- package_version("4.5.0")
+    target <- package_version(version)
     r_ver >= target
 }
 
@@ -71,7 +71,7 @@ datetime2POSIXct <- function(date, time, tz = cran_tz) {
 uniq_count <- function(x, name = "n") {
     x <- as.matrix(x)
     id <- apply(x, 1L, paste0, collapse = "")
-    
+
     # Return if no duplicates
     if (!anyDuplicated(id)) {
         if (!NROW(x)) {
@@ -92,27 +92,27 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     # Input checks
     if (length(dim(x)) < 2) {
         return(x)
-    } 
+    }
     stopifnot(length(name) == 1L)
     stopifnot(length(old_name) == 1L)
-    
+
     # Nothing to add up:
     w <- which(colnames(x) %in% old_name)
     if (!length(w)) {
         return(uniq_count(x, name))
     }
-    
+
     if (!NROW(x)) {
         m <- cbind(x[, -w, drop = FALSE], n = numeric(0L))
         colnames(m)[colnames(m) == "n"] <- name
         return(m)
     }
-    
+
     id <- apply(as.matrix(x[, -w, drop = FALSE]), 1, paste0, collapse = ";")
     dup_f <- duplicated(id)
     dup_r <- duplicated(id, fromLast = TRUE)
     dup <- dup_f | dup_r
-    
+
     # Return if no duplicates
     if (!any(dup) & !length(w)) {
         n_matrix <- matrix(1L, nrow = NROW(x),
@@ -121,7 +121,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     } else if (!any(dup) & length(w)) {
         return(x)
     }
-    
+
     # Calculate duplicates count while keeping the data
     y <- as.data.frame(x[!dup, ])
     df <- tapply(as.data.frame(x[dup, , drop = FALSE]), id[dup], function(xy) {
@@ -141,7 +141,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 
 
 valid_package_name <- function(packages) {
-    
+
     #  - at least two characters
     #  - start with a letter
     #  - not end in a dot
@@ -155,7 +155,7 @@ valid_package_name <- function(packages) {
 
 check_pkg_names <- function(packages, length = 1L) {
     char_packages <- is.character(packages) && length(na.omit(packages))
-    
+
     if (isFALSE(char_packages) && !is.na(length)) {
         if (length <= length(packages)) {
             msg <- "Use NULL or a character vector with some packages."
@@ -164,21 +164,21 @@ check_pkg_names <- function(packages, length = 1L) {
         }
         stop(msg, call. = FALSE)
     }
-    
+
     # If length = NA it can be NULL
     if (is.null(packages)) {
         return(TRUE)
     }
     local_packages <- dir.exists(packages)
-    
+
     valid_names <- valid_package_name(packages)
-    
+
     # Don't trigger error on local packages
     if (!any(local_packages) && !any(valid_names[!local_packages])) {
         stop("Packages names should have at least two characters and start",
         " with a letter and not end in a dot.", call. = FALSE)
     }
-    
+
     TRUE
 }
 
@@ -224,7 +224,7 @@ strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     if (length(str) > 0L && length(str[[1L]]) != ntokens) {
         stop("The number of captures in 'pattern' != 'length(proto)'")
     }
-    m <- matrix(as.character(unlist(str)), ncol = ntokens, 
+    m <- matrix(as.character(unlist(str)), ncol = ntokens,
         byrow = TRUE)[, -1L, drop = FALSE]
     colnames(m) <- colnames(proto) %||% names(proto) %||% proto
     m
