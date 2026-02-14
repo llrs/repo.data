@@ -17,6 +17,33 @@ download_issues <- function(type) {
 
 
 cran_issues <- function() {
-    issues <- download_issues()
-    valid_package_name(issues$Package)
+    issues <- download_issues("full")
+
+    if (anyDuplicated(issues$ID)) {
+        warning("Duplicated IDs")
+    }
+
+    # Fix names
+    vpn <- valid_package_name(issues$Package)
+    if (any(!vpn)) {
+        warning("Invalid package names: ", toString(sQuote(issues$Package[!vpn])))
+        # Use raw strings: ?Quotes
+        gsub(r"{[:";]}", replacement = "", issues$Package[!vpn])
+    }
+    # Fix dates
+    mk <- (!is.na(issues$Before) & is.na(as.Date(issues$Before)))
+    if (any(!mk)) {
+        warning("Incorrect dates on Before")
+        rg <- regexpr("[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}", issues$Before[mk])
+        issues$Before[mk] <- regmatches(issues$Before[mk], rg)
+    }
+
+    ui <- unique(issues)
+
+    # date <- as.Date(ui$Date)
+    # before <- as.Date(ui$Before)
+    # w <- which(before < date)
+    ui
+
+}
 }
