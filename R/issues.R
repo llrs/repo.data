@@ -3,7 +3,7 @@ download_issues <- function(type) {
     type <- match.arg(type, c("full", "info", "open"))
     file <- paste0("CRAN_issue_", type, ".rds")
     src <- file.path(
-        Sys.getenv("R_CRAN_PACKAGE_ACTIONS_URL",
+        Sys.getenv("R_CRAN_PACKAGE_ISSUES_URL",
                    "rsync://CRAN.R-project.org/CRAN-issues"),
         file)
     if (startsWith(src, "file://")) {
@@ -37,6 +37,7 @@ cran_issues <- function() {
         rg <- regexpr("[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}", issues$Before[mk])
         issues$Before[mk] <- regmatches(issues$Before[mk], rg)
     }
+    issues$Before <- as.Date(issues$Before)
 
     ui <- unique(issues)
 
