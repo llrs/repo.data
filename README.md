@@ -36,17 +36,22 @@ We can get a data.frame of all packages on CRAN archive:
 
 ``` r
 library(repo.data)
+#> 
+#> Attaching package: 'repo.data'
+#> The following object is masked from 'package:stats':
+#> 
+#>     alias
 ca <- cran_archive()
-#> Warning: There are 4 packages both archived and published
+#> Warning: There are 5 packages both archived and published
 #> This indicate manual CRAN intervention.
 head(ca)
 #>         Package            Datetime Version   User   Size   Status
 #> 1            A3 2013-02-07 10:00:29   0.9.1 hornik  45252 archived
 #> 2            A3 2013-03-26 19:58:40   0.9.2 ligges  45907 archived
 #> 3            A3 2015-08-16 23:05:54   1.0.0 hornik  42810 archived
-#> 4 AalenJohansen 2023-03-01 11:42:11     1.0 ligges 165057  current
-#> 5       aamatch 2025-06-24 11:40:05   0.3.7 ligges 222104  current
-#> 6          aaMI 2005-06-24 17:55:17   1.0-0   root   2968 archived
+#> 4       aae.pop 2026-01-31 19:40:13   0.2.0 ligges 899714  current
+#> 5 AalenJohansen 2023-03-01 11:42:11     1.0 ligges 165057  current
+#> 6       aamatch 2025-06-24 11:40:05   0.3.7 ligges 222104  current
 ```
 
 We can also check CRAN comments about the packages on its archive:
@@ -84,12 +89,10 @@ on the session info or a data.frame:
 
 ``` r
 cran_session(session = sessionInfo())
-#> [1] "2025-08-27 18:40:06 CEST"
+#> [1] "2026-01-18 07:10:11 CET"
 ip <- installed.packages()
 cran_date(ip)
-#> Warning in cran_archive(versions[, "Package"]): Omitting packages airway, alabaster.base, alabaster.matrix, alabaster.ranges, alabaster.sce, alabaster.schemas, alabaster.se, annotate, AnnotationDbi, AnnotationFilter, AnnotationHub, assorthead, Biobase, BiocFileCache, BiocGenerics, BiocIO, BioCor, BiocParallel, BiocPkgTools, BiocStyle, BiocVersion, biocViews, biomformat, Biostrings, cransays, DelayedArray, DESeq2, ensembldb, ExperimentHub, fgsea, GenomeInfoDb, GenomeInfoDbData, GenomicAlignments, GenomicFeatures, GenomicRanges, GO.db, GOSemSim, GSEABase, gypsum, h5mread, HDF5Array, IRanges, KEGGREST, MatrixGenerics, microshades, org.Hs.eg.db, phyloseq, preprocessCore, ProtGenerics, reactome.db, resios, rhdf5, rhdf5filters, Rhdf5lib, Rhtslib, rostemplate, rotemplate, Rsamtools, rtracklayer, rutils, S4Arrays, S4Vectors, scRNAseq, SingleCellExperiment, SparseArray, SummarizedExperiment, UCSC.utils, XVector.
-#> Maybe they were not on CRAN?
-#> [1] "2025-08-29 16:00:06 CEST"
+#> [1] "2026-01-29 23:20:11 CET"
 ```
 
 ## Related packages

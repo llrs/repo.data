@@ -17,7 +17,7 @@
 #' @examples
 #' # cran_history()
 cran_history <- function(packages = NULL) {
-    env <- "cran_history"
+    env <- c("CRAN history" = "cran_history")
     if (empty_env(env)) {
         history <- cran_all_history()
     } else {

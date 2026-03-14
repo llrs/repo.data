@@ -25,7 +25,7 @@
 #' head(cc)
 #' }
 cran_comments <- function(packages = NULL) {
-    out <- save_state("cran_comments", cran_all_comments(), verbose = FALSE)
+    out <- save_state(c("CRAN's comments" = "cran_comments"), cran_all_comments(), verbose = FALSE)
     if (!is.data.frame(out) && !is.matrix(out)) {
         return(NA)
     }
@@ -35,7 +35,7 @@ cran_comments <- function(packages = NULL) {
 
 
 cran_all_comments <- function() {
-    file <- save_state("comments", read_CRAN("/src/contrib/PACKAGES.in"))
+    file <- save_state(c("CRAN's comments" = "comments"), read_CRAN("/src/contrib/PACKAGES.in"))
     if (is_not_data(file)) {
         return(NA)
     }
@@ -52,7 +52,7 @@ cran_all_comments <- function() {
     # browser()
     # fh2 <- merge_comments(fh, "action")
 
-    save_state("cran_comments", fh, verbose = FALSE)
+    save_state(c("CRAN's processed comments" = "cran_comments"), fh, verbose = FALSE)
 }
 
 

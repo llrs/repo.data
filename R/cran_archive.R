@@ -29,15 +29,15 @@
 cran_archive <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     check_pkg_names(packages, NA)
-    current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    current <- save_state(c("CRAN's packages" = "current"), tools::CRAN_current_db(), FALSE)
     if (is_not_data(current)) {
         return(NA)
     }
-    archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
+    archive <- save_state(c("CRAN's archived packages" = "archive"), tools::CRAN_archive_db(), FALSE)
     if (is_not_data(archive)) {
         return(NA)
     }
-    env <- "full_cran_archive"
+    env <- c("processed CRAN's packages" = "full_cran_archive")
     arch_names <- names(archive)
     curr_names <- gsub("_.+", "", rownames(current)) # Rownames without version
     # Check for random packages
@@ -95,18 +95,21 @@ cran_packages <- function() {
     if (is_not_data(current_packages)) {
         return(NA)
     }
-    archive <- save_state("archive", tools::CRAN_archive_db(), FALSE)
+    archive <- save_state(c("CRAN archive database" = "archive"), 
+        tools::CRAN_archive_db(), FALSE)
     if (is_not_data(archive)) {
         return(NA)
     }
     archive_packages <- names(archive)
     cran_packages <- unique(current_packages, archive_packages)
-    save_state("cran_packages", cran_packages, verbose = FALSE)
+    save_state(c("CRAN's packages" = "cran_packages"), 
+        cran_packages, verbose = FALSE)
     
 }
 
 current_cran_packages <- function() {
-    current <- save_state("current", tools::CRAN_current_db(), FALSE)
+    current <- save_state(c("names packages on CRAN" = "current"), 
+        tools::CRAN_current_db(), FALSE)
     if (is_not_data(current)) {
         return(NA)
     }

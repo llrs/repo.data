@@ -2,7 +2,7 @@
 #'
 #' Install a package from CRAN of a specific version.
 #'
-#' Uses CRAN specific API <https://cran.r-project.org/package=%s&version=%s> to install a package.
+#' Uses CRAN specific API \preformatted{<cran.r-project.org/package=%s&version=%s>} to install a package.
 #' As this is an archived copy we only use source version.
 #' @param package Name of the package present on CRAN archive.
 #' @param version The version number.

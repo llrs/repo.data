@@ -5,10 +5,11 @@ empty_env <- function(name) {
 save_state <- function(name, out, verbose = TRUE) {
     # Use CRAN mirror if not set a default
     CRAN_baseurl()
+    
     if (empty_env(name)) {
         if (verbose) {
-            message("Retrieving ", name, ", this might take a bit.\n",
-            "Caching results to be faster next call in this session.")
+            name_msg <- if (!is.null(names(name))) names(name) else name
+            message("Downloading and caching ", name_msg, " for this session.")
         }
         m <- tryCatch(out, warning = function(w) {NA}, error = function(e) {NA})
         if (is_not_data(m)) {

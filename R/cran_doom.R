@@ -28,7 +28,7 @@
 cran_doom <- function(which = "strong", bioc = FALSE) {
     fields_selected <- check_which(which)
 
-    db <- save_state("CRAN_db", tools::CRAN_package_db())
+    db <- save_state(c("CRAN's packages database" = "CRAN_db"), tools::CRAN_package_db())
     if (is_not_data(db)) {
         return(NA)
     }

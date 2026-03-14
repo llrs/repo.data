@@ -28,7 +28,9 @@ Requires igraph.
 \examples{
 \dontshow{if (requireNamespace("igraph", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 chc <- cran_help_cliques("BaseSet")
-table(chc$clique)
+if (!is.null(dim(chc))) {
+   table(chc$clique)
+}
 chc[chc$clique != 1L, ]
 \dontshow{\}) # examplesIf}
 }

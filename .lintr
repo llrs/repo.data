@@ -1,3 +1,2 @@
-linters: all_linters(packages = "lintr") # see vignette("lintr")
+linters: linters_with_tags(tags = "all_linters", exclude_tags = c("deprecated", "pkg_testthat_linters", "line_length", "tidy_design_linters"))
 encoding: "UTF-8"
-exclusions: list("renv", "packrat") # see ?lintr::exclude
