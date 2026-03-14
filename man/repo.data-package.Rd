@@ -13,7 +13,7 @@ Retrieve metadata about packages from repositories to explore package dependenci
 Useful links:
 \itemize{
   \item \url{https://github.com/llrs/repo.data}
-  \item \url{https://llrs.github.io/repo.data/}
+  \item \url{https://repo.data.llrs.dev/}
   \item Report bugs at \url{https://github.com/llrs/repo.data/issues}
 }
 

@@ -19,7 +19,7 @@
 #' maintainers <- cran_maintainers()
 #' head(maintainers)
 cran_maintainers <- function() {
-    db <- save_state("CRAN_db", tools::CRAN_package_db())
+    db <- save_state(c("CRAN's packages database" = "CRAN_db"), tools::CRAN_package_db())
     if (is_not_data(db)) {
         return(NA)
     }

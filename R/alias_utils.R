@@ -65,7 +65,10 @@ warnings_alias <- function(alias) {
 }
 
 # Add alias using the data from the R source code to fix/clean it
+#' @importFrom utils data
 r_os_alias <- function(alias) {
+    os_alias <- NULL
+    utils::data("os_alias", package = "repo.data")
     current_os <- .Platform$OS.type
     missing_alias <- os_alias[, "os"] != current_os
     rbind(alias, os_alias[missing_alias, colnames(alias)])

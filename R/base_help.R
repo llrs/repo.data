@@ -90,6 +90,9 @@ base_help_cliques <- function() {
         stop("This function requires igraph to find closed networks.", call. = FALSE)
     }
     bal <- base_alias()
+    if (is_not_data(bal)) {
+        return(NA)
+    }
     bl <- base_links()
     if (is_not_data(bl)) {
         return(NA)

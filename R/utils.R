@@ -45,10 +45,10 @@ read_CRAN <- function(path, cran = CRAN_baseurl()) {
     read_repo(path, cran)
 }
 
-check_r_version <- function() {
+check_r_version <- function(version = "4.5.0") {
     ver <- paste(R.Version()[c("major","minor")], collapse = ".")
     r_ver <- package_version(ver)
-    target <- package_version("4.5.0")
+    target <- package_version(version)
     r_ver >= target
 }
 
@@ -139,6 +139,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     out
 }
 
+
 valid_package_name <- function(packages) {
     # only (ASCII) letters, numbers and dot
     valid_chars <- !grepl("[^[:alnum:]\\.]", packages)
@@ -205,7 +206,8 @@ omitting_packages <- function(packages) {
 
 check_current_pkg <- function(packages, current) {
     warn <- empty_env("current_packages")
-    current_packages <- save_state("current_packages", current, verbose = FALSE)
+    current_packages <- save_state(c("available packages" = "current_packages"), 
+        current, verbose = FALSE)
     omit_pkg <- setdiff(packages, current_packages)
     if (warn && anyNA(current_packages) && any(current_packages != current)) {
         omitting_packages(omit_pkg)

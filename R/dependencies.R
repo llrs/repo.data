@@ -18,7 +18,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
     check_pkg_names(packages, NA)
     opts <- options(available_packages_filters = c("CRAN", "duplicates"))
     on.exit(options(opts), add = TRUE)
-    env <- "repos_dependencies"
+    env <- c("repositories dependencies" = "repos_dependencies")
 
     first <- empty_env(env)
     ap <- tryCatch(available.packages(), warning = function(w) {NA})

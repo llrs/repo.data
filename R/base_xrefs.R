@@ -15,7 +15,8 @@
 #' }
 base_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    out <- save_state("base_rdxrefs", xrefs2df(tools::base_rdxrefs_db()))
+    out <- save_state(c("R's xrefs" = "base_rdxrefs"), 
+        xrefs2df(tools::base_rdxrefs_db()))
     if (!is.data.frame(out) && !is.matrix(out)) {
         return(NA)
     }
@@ -40,15 +41,24 @@ base_links <- function(packages = NULL) {
 base_targets_links <- function(packages = NULL) {
     out <- NULL
     check_pkg_names(packages, NA)
-    env <- "base_targets_links"
+    env <- c("base xrefs" = "base_targets_links")
     out <- get_package_subset(env, pkges = packages)
     if (!is.null(packages) && !is.null(out)) {
         return(packages_in_links(out, packages))
     }
     
     bl <- base_links()
+    if (is_not_data(bl)) {
+        return(NA)
+    }
     bal <- base_alias()
+    if (is_not_data(bal)) {
+        return(NA)
+    }
     cal <- cran_alias()
+    if (is_not_data(cal)) {
+        return(NA)
+    }
     bl2 <- split_anchor(bl)
     
     out <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))

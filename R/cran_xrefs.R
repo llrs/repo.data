@@ -14,12 +14,12 @@
 #' head(cl)
 cran_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    raw_xrefs <- save_state("cran_rdxrefs", tools::CRAN_rdxrefs_db())
+    raw_xrefs <- save_state(c("CRAN's packages xrefs" = "cran_rdxrefs"), tools::CRAN_rdxrefs_db())
     if (is_not_data(raw_xrefs)) {
         return(NA)
     }
     check_pkg_names(packages, NA)
-    env <- "full_cran_rdxrefs"
+    env <- c("processed CRAN xrefs" = "full_cran_rdxrefs")
     
     # Check for missing packages
     current_packages <- names(raw_xrefs)
@@ -72,7 +72,7 @@ cran_links <- function(packages = NULL) {
 #' head(ctl)
 cran_targets_links <- function(packages = NULL) {
     out <- NULL
-    env <- "cran_targets_links"
+    env <- c("CRAN' packages links to targets" = "cran_targets_links")
     first_call <- empty_env(env)
     check_pkg_names(packages, NA)
     current_env <- get_package_subset(env, pkges = packages)
@@ -89,8 +89,17 @@ cran_targets_links <- function(packages = NULL) {
     new_packages <- setdiff(current_packages, out$from_pkg)
     
     cl <- cran_links(new_packages)
+    if (is_not_data(cl)) {
+        return(NA)
+    }
     bal <- base_alias()
+    if (is_not_data(bal)) {
+        return(NA)
+    }
     cal <- cran_alias(new_packages)
+    if (is_not_data(cal)) {
+        return(NA)
+    }
     bl2 <- split_anchor(cl)
     
     t2b2 <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))

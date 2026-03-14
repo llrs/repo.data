@@ -47,4 +47,3 @@ cran_issues <- function() {
     ui
 
 }
-}
