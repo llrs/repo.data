@@ -10,7 +10,7 @@ Description: Retrieve metadata about packages from repositories to explore
     This metadata can be used to help package maintainers and users to
     navigate changes on dependencies and with reproducibility.
 License: GPL (>= 3)
-URL: https://github.com/llrs/repo.data, https://llrs.github.io/repo.data/
+URL: https://github.com/llrs/repo.data, https://repo.data.llrs.dev/
 BugReports: https://github.com/llrs/repo.data/issues
 Depends: 
     R (>= 4.5)
