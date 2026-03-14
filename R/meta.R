@@ -37,7 +37,7 @@ if (endsWith(path, "rds") || endsWith(path, "RDS")) {
 links <- function(packages = NULL) {
   
   repos <- getOption("repos")
-  env <- "xrefs"
+  env <- c("xrefs" = "xrefs")
   if (empty_env(env)) {
     raw_xrefs <- lapply(repos, read_repo, path = "src/contrib/Meta/rdxrefs.rds")
     names(raw_xrefs) <- names(repos)
@@ -49,7 +49,7 @@ links <- function(packages = NULL) {
     raw_xrefs <- pkg_state[[env]]
   }
   check_pkg_names(packages, NA)
-  env <- "full_rdxrefs"
+  env <- c("processed xrefs" = "full_rdxrefs")
   # Check for random packages
   current_packages <- unlist(lapply(raw_xrefs, names), use.names = FALSE)
   dups <- anyDuplicated(current_packages)
@@ -119,7 +119,7 @@ links <- function(packages = NULL) {
 alias <- function(packages = NULL) {
   stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
   repos <- getOption("repos")
-  env <- "aliases"
+  env <- c("aliases" = "aliases")
   
   if (empty_env(env)) {
     raw_alias <- lapply(repos, read_repo, path = "src/contrib/Meta/aliases.rds")
@@ -135,7 +135,7 @@ alias <- function(packages = NULL) {
   
   check_pkg_names(packages, NA)
   # Place to store modified data
-  env <- "full_aliases"
+  env <- c("processed aliases" = "full_aliases")
   # Check for random packages
   current_packages <- unlist(lapply(raw_alias, names), use.names = FALSE)
   dups <- anyDuplicated(current_packages)

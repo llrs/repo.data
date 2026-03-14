@@ -51,7 +51,7 @@ cran_actions <- function(packages = NULL, silent = FALSE) {
 }
 
 cran_all_actions <- function() {
-    env <- "full_cran_actions"
+    env <- c("CRAN actions" ="full_cran_actions")
     if (!empty_env(env)) {
         return(pkg_state[[env]])
     }

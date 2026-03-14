@@ -15,7 +15,7 @@
 bioc_cran_archived <- function(which = "strong") {
     fields_selected <- check_which(which)
     bioc <- bioc_available()
-    db <- save_state("CRAN_db", tools::CRAN_package_db())
+    db <- save_state(c("CRAN's packages database" = "CRAN_db"), tools::CRAN_package_db())
     if (is_not_data(db)) {
         return(NA)
     }
@@ -73,7 +73,8 @@ bioc_available <- function(version = "release",
     url_repos <- bioc_repos(version, repos)
     opts <- options(available_packages_filters = c("CRAN", "duplicates"))
     on.exit(options(opts), add = TRUE)
-    bioc <- save_state(paste0("bioc_available_", version),
+    env <- paste0("bioc_available_", version)
+    bioc <- save_state(c("packages available on Bioconductor" = env),
         available.packages(repos = url_repos))
     if (is_not_data(bioc)) {
         return(NA)

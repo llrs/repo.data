@@ -206,7 +206,8 @@ omitting_packages <- function(packages) {
 
 check_current_pkg <- function(packages, current) {
     warn <- empty_env("current_packages")
-    current_packages <- save_state("current_packages", current, verbose = FALSE)
+    current_packages <- save_state(c("available packages" = "current_packages"), 
+        current, verbose = FALSE)
     omit_pkg <- setdiff(packages, current_packages)
     if (warn && anyNA(current_packages) && any(current_packages != current)) {
         omitting_packages(omit_pkg)
