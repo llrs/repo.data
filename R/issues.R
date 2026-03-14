@@ -1,4 +1,4 @@
-# Author: CRAN
+# Author: CRAN (Kurt Hornik)/R core
 download_issues <- function(type) {
     type <- match.arg(type, c("full", "info", "open"))
     file <- paste0("CRAN_issue_", type, ".rds")
@@ -16,8 +16,34 @@ download_issues <- function(type) {
 }
 
 
+#' CRAN issues
+#' 
+#' Reports the notifications sent to package maintainers with the hour it was sent and the deadline used.
+#'
+#' @returns A data.frame  with 8 columns: 
+#' #' \describe{
+#'   \item{ID}{Year.number: Id of the issue.}
+#'   \item{Package}{Package name.}
+#'   \item{Date}{POSIXct when the issue was sent.}
+#'   \item{From}{CRAN member that sent that notification.}
+#'   \item{Before}{Date by which the issue should be fixed.}
+#'   \item{Title}{Reason of the issue}
+#'   \item{Label}{Some classification of the issue}
+#'   \item{Info}{Unstructured text with some information.}
+#' }
+#' ID, Package, Date, From, Before, Title, Label, Info
+#' @export
+#'
+#' @examples
+#' ci <- cran_issues()
+#' if (!is.null(dim(ci))) {
+#'     head(ci)
+#' }
 cran_issues <- function() {
     issues <- download_issues("full")
+    if (is_not_data(issues)) {
+        return(NA)
+    }
 
     if (anyDuplicated(issues$ID)) {
         warning("Duplicated IDs")
@@ -44,6 +70,8 @@ cran_issues <- function() {
     # date <- as.Date(ui$Date)
     # before <- as.Date(ui$Before)
     # w <- which(before < date)
+    ui <- sort_by(ui, ui$Date)
+    rownames(ui) <- NULL
     ui
 
 }
