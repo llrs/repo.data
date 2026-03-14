@@ -22,7 +22,7 @@ the number of manual actions taken by the volunteers).
 \details{
 There are three possible actions with packages source code: publish, archive and remove.
 \itemize{
-\item Publish: Add it to CRAN's PACAKGES file, users can install that version.
+\item Publish: Add it to CRAN's PACKAGES file, users can install that version.
 \item Archive: Removed from CRAN's repository PACKAGES file so users can't access the package with \code{\link[=available.packages]{available.packages()}}.
 Remains on CRAN archive: \url{https://cran.r-project.org/src/contrib/Archive/}.
 \item Remove: Removed from CRAN's archive.

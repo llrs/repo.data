@@ -22,7 +22,7 @@ download_actions <- function() {
 #' the number of manual actions taken by the volunteers).
 #'
 #' There are three possible actions with packages source code: publish, archive and remove.
-#' - Publish: Add it to CRAN's PACAKGES file, users can install that version.
+#' - Publish: Add it to CRAN's PACKAGES file, users can install that version.
 #' - Archive: Removed from CRAN's repository PACKAGES file so users can't access the package with [available.packages()].
 #'  Remains on CRAN archive: <https://cran.r-project.org/src/contrib/Archive/>.
 #' - Remove: Removed from CRAN's archive.
