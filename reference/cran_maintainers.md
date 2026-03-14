@@ -35,24 +35,24 @@ The raw source of the data is:
 maintainers <- cran_maintainers()
 head(maintainers)
 #>         Package                                   Maintainer        user
-#> 1 AalenJohansen        Martin Bladt <martinbladt@math.ku.dk> martinbladt
-#> 2       aamatch Paul Rosenbaum <rosenbaum@wharton.upenn.edu>    rosenbap
-#> 3      AATtools   Sercan Kahveci <sercan.kahveci@plus.ac.at>    b1066151
-#> 4        ABACUS             Mintu Nath <dr.m.nath@gmail.com>      s02mn9
-#> 5   abasequence            Andrew Pilny <andy.pilny@uky.edu>   andypilny
-#> 6    abbreviate        Sigbert Klinke <sigbert@hu-berlin.de>          sk
+#> 1       aae.pop                 Jian Yen <jdl.yen@gmail.com>        jy0f
+#> 2 AalenJohansen        Martin Bladt <martinbladt@math.ku.dk> martinbladt
+#> 3       aamatch Paul Rosenbaum <rosenbaum@wharton.upenn.edu>    rosenbap
+#> 4      AATtools   Sercan Kahveci <sercan.kahveci@plus.ac.at>    b1066151
+#> 5        ABACUS             Mintu Nath <dr.m.nath@gmail.com>      s02mn9
+#> 6   abasequence            Andrew Pilny <andy.pilny@uky.edu>   andypilny
 #>   maintainer_date packaged_date published_date           Name
-#> 1            <NA>    2023-02-28     2023-03-01   Martin Bladt
-#> 2            <NA>    2025-06-21     2025-06-24 Paul Rosenbaum
-#> 3            <NA>    2024-08-16     2024-08-16 Sercan Kahveci
-#> 4            <NA>    2019-09-12     2019-09-20     Mintu Nath
-#> 5            <NA>    2023-07-13     2023-07-14   Andrew Pilny
-#> 6      2021-12-12    2021-12-12     2021-12-14 Sigbert Klinke
+#> 1      2026-01-27    2026-01-27     2026-01-31       Jian Yen
+#> 2            <NA>    2023-02-28     2023-03-01   Martin Bladt
+#> 3            <NA>    2026-02-01     2026-02-01 Paul Rosenbaum
+#> 4            <NA>    2024-08-16     2024-08-16 Sercan Kahveci
+#> 5            <NA>    2019-09-12     2019-09-20     Mintu Nath
+#> 6            <NA>    2023-07-13     2023-07-14   Andrew Pilny
 #>                         email      direction            domain
-#> 1      martinbladt@math.ku.dk    martinbladt        math.ku.dk
-#> 2 rosenbaum@wharton.upenn.edu      rosenbaum wharton.upenn.edu
-#> 3   sercan.kahveci@plus.ac.at sercan.kahveci        plus.ac.at
-#> 4         dr.m.nath@gmail.com      dr.m.nath         gmail.com
-#> 5          andy.pilny@uky.edu     andy.pilny           uky.edu
-#> 6        sigbert@hu-berlin.de        sigbert      hu-berlin.de
+#> 1           jdl.yen@gmail.com        jdl.yen         gmail.com
+#> 2      martinbladt@math.ku.dk    martinbladt        math.ku.dk
+#> 3 rosenbaum@wharton.upenn.edu      rosenbaum wharton.upenn.edu
+#> 4   sercan.kahveci@plus.ac.at sercan.kahveci        plus.ac.at
+#> 5         dr.m.nath@gmail.com      dr.m.nath         gmail.com
+#> 6          andy.pilny@uky.edu     andy.pilny           uky.edu
 ```

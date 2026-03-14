@@ -23,9 +23,9 @@ if not able to collect the data from CRAN.
 ## See also
 
 Other links from R:
-[`base_links()`](https://llrs.github.io/repo.data/reference/base_links.md),
-[`base_pages_links()`](https://llrs.github.io/repo.data/reference/base_pages_links.md),
-[`base_targets_links()`](https://llrs.github.io/repo.data/reference/base_targets_links.md)
+[`base_links()`](https://repo.data.llrs.dev/reference/base_links.md),
+[`base_pages_links()`](https://repo.data.llrs.dev/reference/base_pages_links.md),
+[`base_targets_links()`](https://repo.data.llrs.dev/reference/base_targets_links.md)
 
 ## Examples
 
@@ -41,6 +41,6 @@ head(bpkl)
 #> 3     base    nnet 1
 #> 4     base   round 1
 #> 5     base   tools 1
-#> 6     base methods 6
+#> 6     base methods 7
 # }
 ```

@@ -40,13 +40,13 @@ more used.
 ## See also
 
 Other utilities:
-[`cran_date()`](https://llrs.github.io/repo.data/reference/cran_date.md),
-[`cran_doom()`](https://llrs.github.io/repo.data/reference/cran_doom.md),
-[`cran_snapshot()`](https://llrs.github.io/repo.data/reference/cran_snapshot.md),
-[`duplicated_alias()`](https://llrs.github.io/repo.data/reference/duplicated_alias.md),
-[`package_repos()`](https://llrs.github.io/repo.data/reference/package_repos.md),
-[`repos_dependencies()`](https://llrs.github.io/repo.data/reference/repos_dependencies.md),
-[`update_dependencies()`](https://llrs.github.io/repo.data/reference/update_dependencies.md)
+[`cran_date()`](https://repo.data.llrs.dev/reference/cran_date.md),
+[`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md),
+[`cran_snapshot()`](https://repo.data.llrs.dev/reference/cran_snapshot.md),
+[`duplicated_alias()`](https://repo.data.llrs.dev/reference/duplicated_alias.md),
+[`package_repos()`](https://repo.data.llrs.dev/reference/package_repos.md),
+[`repos_dependencies()`](https://repo.data.llrs.dev/reference/repos_dependencies.md),
+[`update_dependencies()`](https://repo.data.llrs.dev/reference/update_dependencies.md)
 
 ## Examples
 

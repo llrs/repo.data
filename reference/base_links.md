@@ -26,9 +26,9 @@ The raw source of the data is:
 [`base_rdxrefs_db()`](https://rdrr.io/r/tools/basetools.html).
 
 Other links from R:
-[`base_pages_links()`](https://llrs.github.io/repo.data/reference/base_pages_links.md),
-[`base_pkges_links()`](https://llrs.github.io/repo.data/reference/base_pkges_links.md),
-[`base_targets_links()`](https://llrs.github.io/repo.data/reference/base_targets_links.md)
+[`base_pages_links()`](https://repo.data.llrs.dev/reference/base_pages_links.md),
+[`base_pkges_links()`](https://repo.data.llrs.dev/reference/base_pkges_links.md),
+[`base_targets_links()`](https://repo.data.llrs.dev/reference/base_targets_links.md)
 
 ## Examples
 

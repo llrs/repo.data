@@ -35,10 +35,8 @@ For CRAN's data source:
 
 ``` r
 bca <- bioc_cran_archived()
-#> Retrieving bioc_available_release, this might take a bit.
-#> Caching results to be faster next call in this session.
-#> Retrieving CRAN_db, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching packages available on Bioconductor for this session.
+#> Downloading and caching CRAN's packages database for this session.
 head(bca)
 #>             Package  Archived n
 #> 1 BeadArrayUseCases beadarray 1

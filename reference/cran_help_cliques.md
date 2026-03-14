@@ -32,28 +32,28 @@ Requires igraph.
 ## See also
 
 Other functions related to CRAN help pages:
-[`cran_help_pages_not_linked()`](https://llrs.github.io/repo.data/reference/cran_help_pages_not_linked.md),
-[`cran_help_pages_wo_links()`](https://llrs.github.io/repo.data/reference/cran_help_pages_wo_links.md)
+[`cran_help_pages_not_linked()`](https://repo.data.llrs.dev/reference/cran_help_pages_not_linked.md),
+[`cran_help_pages_wo_links()`](https://repo.data.llrs.dev/reference/cran_help_pages_wo_links.md)
 
 ## Examples
 
 ``` r
 chc <- cran_help_cliques("BaseSet")
-#> Retrieving cran_rdxrefs, this might take a bit.
-#> Caching results to be faster next call in this session.
-#> Retrieving base_aliases, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching CRAN's packages xrefs for this session.
+#> Downloading and caching base R's aliases for this session.
 #> Warning: Packages with targets not present in a OS:
-#> ‘base’, ‘parallel’
-#> Warning: Package has targets not present in a OS:
+#> ‘base’, ‘grDevices’, ‘parallel’
+#> Warning: Packages with targets not present in a OS:
 #> ‘sfsmisc’
 #> Warning: Some links are distinct depending on the OS.
-table(chc$clique)
+if (!is.null(dim(chc))) {
+   table(chc$clique)
+}
 #> 
 #>    1    2 
-#> 1923    2 
+#> 1938    2 
 chc[chc$clique != 1L, ]
 #>      from_pkg        from_Rd clique  to_pkg          to_Rd n
-#> 1924  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
-#> 1925  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
+#> 1939  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
+#> 1940  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
 ```

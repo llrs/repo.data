@@ -23,18 +23,17 @@ of links). `NA` if not able to collect the data from CRAN.
 ## See also
 
 Other links from R:
-[`base_links()`](https://llrs.github.io/repo.data/reference/base_links.md),
-[`base_pkges_links()`](https://llrs.github.io/repo.data/reference/base_pkges_links.md),
-[`base_targets_links()`](https://llrs.github.io/repo.data/reference/base_targets_links.md)
+[`base_links()`](https://repo.data.llrs.dev/reference/base_links.md),
+[`base_pkges_links()`](https://repo.data.llrs.dev/reference/base_pkges_links.md),
+[`base_targets_links()`](https://repo.data.llrs.dev/reference/base_targets_links.md)
 
 ## Examples
 
 ``` r
 # \donttest{
 bpl <- base_pages_links()
-#> Retrieving cran_aliases, this might take a bit.
-#> Caching results to be faster next call in this session.
-#> Warning: Package has targets not present in a OS:
+#> Downloading and caching CRAN aliases for this session.
+#> Warning: Packages with targets not present in a OS:
 #> ‘sfsmisc’
 #> Warning: Some pages point to different places according to the OS.
 #> Warning: Some links are distinct depending on the OS.

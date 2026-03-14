@@ -42,19 +42,18 @@ Original file: <https://cran.r-project.org/src/contrib/PACKAGES.in>
 ## See also
 
 Other meta info from CRAN:
-[`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md),
-[`cran_archive()`](https://llrs.github.io/repo.data/reference/cran_archive.md),
-[`cran_history()`](https://llrs.github.io/repo.data/reference/cran_history.md),
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
-[`links()`](https://llrs.github.io/repo.data/reference/links.md)
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
+[`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
+[`cran_history()`](https://repo.data.llrs.dev/reference/cran_history.md),
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`links()`](https://repo.data.llrs.dev/reference/links.md)
 
 ## Examples
 
 ``` r
 # \donttest{
 cc <- cran_comments()
-#> Retrieving comments, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching CRAN's comments for this session.
 head(cc)
 #>       package
 #> 1          A3

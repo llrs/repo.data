@@ -23,17 +23,17 @@ repository.
 ## See also
 
 Other links from CRAN:
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
-[`cran_pages_links()`](https://llrs.github.io/repo.data/reference/cran_pages_links.md),
-[`cran_pkges_links()`](https://llrs.github.io/repo.data/reference/cran_pkges_links.md),
-[`cran_targets_links()`](https://llrs.github.io/repo.data/reference/cran_targets_links.md)
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`cran_pages_links()`](https://repo.data.llrs.dev/reference/cran_pages_links.md),
+[`cran_pkges_links()`](https://repo.data.llrs.dev/reference/cran_pkges_links.md),
+[`cran_targets_links()`](https://repo.data.llrs.dev/reference/cran_targets_links.md)
 
 Other meta info from CRAN:
-[`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md),
-[`cran_archive()`](https://llrs.github.io/repo.data/reference/cran_archive.md),
-[`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md),
-[`cran_history()`](https://llrs.github.io/repo.data/reference/cran_history.md),
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md)
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
+[`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
+[`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
+[`cran_history()`](https://repo.data.llrs.dev/reference/cran_history.md),
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md)
 
 ## Examples
 

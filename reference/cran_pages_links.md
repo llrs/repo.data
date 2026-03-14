@@ -23,10 +23,10 @@ of links).
 ## See also
 
 Other links from CRAN:
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
-[`cran_pkges_links()`](https://llrs.github.io/repo.data/reference/cran_pkges_links.md),
-[`cran_targets_links()`](https://llrs.github.io/repo.data/reference/cran_targets_links.md),
-[`links()`](https://llrs.github.io/repo.data/reference/links.md)
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`cran_pkges_links()`](https://repo.data.llrs.dev/reference/cran_pkges_links.md),
+[`cran_targets_links()`](https://repo.data.llrs.dev/reference/cran_targets_links.md),
+[`links()`](https://repo.data.llrs.dev/reference/links.md)
 
 ## Examples
 

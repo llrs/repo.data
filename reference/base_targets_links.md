@@ -24,9 +24,9 @@ CRAN.
 ## See also
 
 Other links from R:
-[`base_links()`](https://llrs.github.io/repo.data/reference/base_links.md),
-[`base_pages_links()`](https://llrs.github.io/repo.data/reference/base_pages_links.md),
-[`base_pkges_links()`](https://llrs.github.io/repo.data/reference/base_pkges_links.md)
+[`base_links()`](https://repo.data.llrs.dev/reference/base_links.md),
+[`base_pages_links()`](https://repo.data.llrs.dev/reference/base_pages_links.md),
+[`base_pkges_links()`](https://repo.data.llrs.dev/reference/base_pkges_links.md)
 
 ## Examples
 

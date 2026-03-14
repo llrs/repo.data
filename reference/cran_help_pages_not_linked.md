@@ -23,8 +23,8 @@ collect the data from CRAN.
 ## See also
 
 Other functions related to CRAN help pages:
-[`cran_help_cliques()`](https://llrs.github.io/repo.data/reference/cran_help_cliques.md),
-[`cran_help_pages_wo_links()`](https://llrs.github.io/repo.data/reference/cran_help_pages_wo_links.md)
+[`cran_help_cliques()`](https://repo.data.llrs.dev/reference/cran_help_cliques.md),
+[`cran_help_pages_wo_links()`](https://repo.data.llrs.dev/reference/cran_help_pages_wo_links.md)
 
 ## Examples
 

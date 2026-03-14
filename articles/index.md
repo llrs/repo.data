@@ -2,4 +2,4 @@
 
 ### All vignettes
 
-- [repo.data](https://llrs.github.io/repo.data/articles/repo.data.md):
+- [repo.data](https://repo.data.llrs.dev/articles/repo.data.md):

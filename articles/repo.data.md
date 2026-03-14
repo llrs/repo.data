@@ -25,7 +25,7 @@ head(pd)
 #> 6   ggplot2    <NA> Imports <NA>  ggeasy
 ```
 
-[`package_dependencies()`](https://llrs.github.io/repo.data/reference/package_dependencies.md)
+[`package_dependencies()`](https://repo.data.llrs.dev/reference/package_dependencies.md)
 identify the minimal version required for each dependency. If no version
 is required by any dependencies `NA` is used.
 
@@ -50,7 +50,7 @@ the repositories - If the maintainer developers are careful the
 requirements might be available earlier.
 
 We can use
-[`package_date()`](https://llrs.github.io/repo.data/reference/package_date.md)
+[`package_date()`](https://repo.data.llrs.dev/reference/package_date.md)
 to get those answers:
 
 ``` r
@@ -97,13 +97,11 @@ other pages (`pages_wo_links()`). - Pages are linked from other pages
 ``` r
 pkg <- "BaseSet"
 head(cran_help_pages_wo_links(pkg))
-#> Retrieving cran_rdxrefs, this might take a bit.
-#> Caching results to be faster next call in this session.
-#> Retrieving base_aliases, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching CRAN's packages xrefs for this session.
+#> Downloading and caching base R's aliases for this session.
 #> [1] NA
 head(cran_help_pages_not_linked(pkg))
-#> Warning: Package has targets not present in a OS:
+#> Warning: Packages with targets not present in a OS:
 #> 'sfsmisc'
 #> Warning: Some links are distinct depending on the OS.
 #>   Package      Source
@@ -131,7 +129,7 @@ if (length(cliques) != 1L) {
 }
 #> 
 #>    1    2    3    4    5    6    7    8    9 
-#> 1570  174   34   15   11    7    4    1    1
+#> 1574  182   36   16   12    7    4    1    1
 ```
 
 If there is more than one length this would mean some pages not linked
@@ -157,12 +155,11 @@ date you can use:
 
 ``` r
 cs <- cran_snapshot(as.Date("2020-01-31"))
-#> Warning: There are 5 packages both archived and published
+#> Warning: There are 3 packages both archived and published
 #> This indicate manual CRAN intervention.
-#> Retrieving comments, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching CRAN's comments for this session.
 nrow(cs)
-#> [1] 108453
+#> [1] 110790
 ```
 
 This might be helpful to know what was available on old project and why
@@ -177,7 +174,7 @@ system?
 
 ``` r
 cran_session()
-#> [1] "2026-01-26 08:10:10 CET"
+#> [1] "2026-03-06 10:40:06 CET"
 ```
 
 This uses the
@@ -210,29 +207,26 @@ local package has been updated since then on CRAN).
 #### Risk of being archived
 
 If you ever wonder which packages are at risk of being archived you can
-use
-[`cran_doom()`](https://llrs.github.io/repo.data/reference/cran_doom.md):
+use [`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md):
 
 ``` r
 cd <- cran_doom(bioc = TRUE)
-#> Retrieving CRAN_db, this might take a bit.
-#> Caching results to be faster next call in this session.
-#> Retrieving bioc_available_release, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching CRAN's packages database for this session.
+#> Downloading and caching packages available on Bioconductor for this session.
 if (length(cd) != 1L) {
     cd[c("time_till_last", "last_archived", "npackages")]
     knitr::kable(head(cd$details))
 }
 ```
 
-| Package    | Deadline   | type   | repo | n_affected |
-|:-----------|:-----------|:-------|:-----|-----------:|
-| PMAPscore  | 2026-01-31 | direct | CRAN |         14 |
-| scPipeline | 2026-01-31 | direct | CRAN |         12 |
-| dGAselID   | 2026-01-31 | direct | CRAN |         11 |
-| AutoPipe   | 2026-01-31 | direct | CRAN |         10 |
-| cinaR      | 2026-01-31 | direct | CRAN |         10 |
-| scRNAtools | 2026-01-31 | direct | CRAN |         10 |
+| Package       | Deadline   | type   | repo | n_affected |
+|:--------------|:-----------|:-------|:-----|-----------:|
+| vegdata       | 2026-03-16 | direct | CRAN |          3 |
+| AnnuityRIR    | 2026-03-17 | direct | CRAN |          4 |
+| bgmm          | 2026-03-17 | direct | CRAN |          4 |
+| evidence      | 2026-03-17 | direct | CRAN |          4 |
+| pencopulaCond | 2026-03-17 | direct | CRAN |          4 |
+| pendensity    | 2026-03-17 | direct | CRAN |          4 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -249,7 +243,7 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2026-01-30 r89357)
+#> R Under development (unstable) (2026-03-12 r89611)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.3 LTS
 #> 
@@ -274,11 +268,11 @@ sessionInfo()
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] cli_3.6.5         knitr_1.51        rlang_1.1.7       xfun_0.56        
-#>  [5] rversions_3.0.0   textshaping_1.0.4 jsonlite_2.0.0    litedown_0.9     
-#>  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.0        sass_0.4.10      
+#>  [5] rversions_3.0.0   textshaping_1.0.5 jsonlite_2.0.0    litedown_0.9     
+#>  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.1        sass_0.4.10      
 #> [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
-#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    igraph_2.2.1     
-#> [21] fs_1.6.6          pkgconfig_2.0.3   systemfonts_1.3.1 digest_0.6.39    
+#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    igraph_2.2.2     
+#> [21] fs_1.6.7          pkgconfig_2.0.3   systemfonts_1.3.2 digest_0.6.39    
 #> [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.4   
 #> [29] bslib_0.10.0      tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     
 #> [33] desc_1.4.3

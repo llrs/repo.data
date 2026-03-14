@@ -41,4 +41,4 @@ There are 4 different types of links:
 
 ## See also
 
-[`targets2files()`](https://llrs.github.io/repo.data/reference/targets2files.md)
+[`targets2files()`](https://repo.data.llrs.dev/reference/targets2files.md)

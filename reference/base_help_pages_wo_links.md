@@ -16,8 +16,8 @@ A data.frame with two columns: Package and Source
 ## See also
 
 Other functions related to BASE help pages:
-[`base_help_cliques()`](https://llrs.github.io/repo.data/reference/base_help_cliques.md),
-[`base_help_pages_not_linked()`](https://llrs.github.io/repo.data/reference/base_help_pages_not_linked.md)
+[`base_help_cliques()`](https://repo.data.llrs.dev/reference/base_help_cliques.md),
+[`base_help_pages_not_linked()`](https://repo.data.llrs.dev/reference/base_help_pages_not_linked.md)
 
 ## Examples
 

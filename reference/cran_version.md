@@ -30,7 +30,9 @@ Same as
 ## Details
 
 Uses CRAN specific API
-[https://cran.r-project.org/package=%s&version=%s](https://cran.r-project.org/package=%s&version=%s)
+
+    <cran.r-project.org/package=%s&version=%s>
+
 to install a package. As this is an archived copy we only use source
 version.
 

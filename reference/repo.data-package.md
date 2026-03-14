@@ -12,7 +12,7 @@ Useful links:
 
 - <https://github.com/llrs/repo.data>
 
-- <https://llrs.github.io/repo.data/>
+- <https://repo.data.llrs.dev/>
 
 - Report bugs at <https://github.com/llrs/repo.data/issues>
 

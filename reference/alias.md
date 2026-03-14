@@ -26,8 +26,8 @@ For completeness it also provides the alias of R packages themselves.
 ## See also
 
 Other alias:
-[`base_alias()`](https://llrs.github.io/repo.data/reference/base_alias.md),
-[`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md)
+[`base_alias()`](https://repo.data.llrs.dev/reference/base_alias.md),
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md)
 
 ## Examples
 
@@ -39,10 +39,11 @@ getOption("repos")
 #>                                          CRAN 
 #>                                      "@CRAN@" 
 #>                                      BioCsoft 
-#> "https://bioconductor.org/packages/3.22/bioc" 
+#> "https://bioconductor.org/packages/3.23/bioc" 
 #>                                               
 #>                  "https://cran.r-project.org" 
 head(alias(c("ggplot2", "BiocCheck")))
+#> Warning: Packages found in multiple repositories‘ClusterGVis’
 #>   Package   Source         Target
 #> 1 ggplot2 Coord.Rd          Coord
 #> 2 ggplot2 Coord.Rd CoordCartesian

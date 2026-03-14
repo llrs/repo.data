@@ -57,28 +57,27 @@ The raw source of the data is:
 [`tools::CRAN_package_db()`](https://rdrr.io/r/tools/CRANtools.html)
 
 Other utilities:
-[`cran_date()`](https://llrs.github.io/repo.data/reference/cran_date.md),
-[`cran_snapshot()`](https://llrs.github.io/repo.data/reference/cran_snapshot.md),
-[`duplicated_alias()`](https://llrs.github.io/repo.data/reference/duplicated_alias.md),
-[`package_date()`](https://llrs.github.io/repo.data/reference/package_date.md),
-[`package_repos()`](https://llrs.github.io/repo.data/reference/package_repos.md),
-[`repos_dependencies()`](https://llrs.github.io/repo.data/reference/repos_dependencies.md),
-[`update_dependencies()`](https://llrs.github.io/repo.data/reference/update_dependencies.md)
+[`cran_date()`](https://repo.data.llrs.dev/reference/cran_date.md),
+[`cran_snapshot()`](https://repo.data.llrs.dev/reference/cran_snapshot.md),
+[`duplicated_alias()`](https://repo.data.llrs.dev/reference/duplicated_alias.md),
+[`package_date()`](https://repo.data.llrs.dev/reference/package_date.md),
+[`package_repos()`](https://repo.data.llrs.dev/reference/package_repos.md),
+[`repos_dependencies()`](https://repo.data.llrs.dev/reference/repos_dependencies.md),
+[`update_dependencies()`](https://repo.data.llrs.dev/reference/update_dependencies.md)
 
 ## Examples
 
 ``` r
 # \donttest{
 cd <- cran_doom()
-#> Retrieving CRAN_db, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching CRAN's packages database for this session.
 if (length(cd) > 1L) head(cd$details)
-#>         Package   Deadline   type repo n_affected
-#> 1    scPipeline 2026-01-31 direct CRAN         11
-#> 2    scRNAtools 2026-01-31 direct CRAN         10
-#> 3  BayesSurvive 2026-01-31 direct CRAN          9
-#> 4 DIDmultiplegt 2026-01-31 direct CRAN          9
-#> 5     PMAPscore 2026-01-31 direct CRAN          8
-#> 6     tidyrules 2026-01-31 direct CRAN          7
+#>          Package   Deadline   type repo n_affected
+#> 1        vegdata 2026-03-16 direct CRAN          3
+#> 2     AnnuityRIR 2026-03-17 direct CRAN          4
+#> 3 VetResearchLMM 2026-03-17 direct CRAN          4
+#> 4           bgmm 2026-03-17 direct CRAN          4
+#> 5       evidence 2026-03-17 direct CRAN          4
+#> 6  pencopulaCond 2026-03-17 direct CRAN          4
 # }
 ```

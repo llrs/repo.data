@@ -28,16 +28,16 @@ removed and CRAN's comments to fill in the gaps.
 
 ## See also
 
-[`cran_archive()`](https://llrs.github.io/repo.data/reference/cran_archive.md),
-[`cran_actions()`](https://llrs.github.io/repo.data/reference/cran_actions.md),
-[`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md).
+[`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
+[`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md),
+[`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md).
 
 Other meta info from CRAN:
-[`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md),
-[`cran_archive()`](https://llrs.github.io/repo.data/reference/cran_archive.md),
-[`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md),
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
-[`links()`](https://llrs.github.io/repo.data/reference/links.md)
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
+[`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
+[`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`links()`](https://repo.data.llrs.dev/reference/links.md)
 
 ## Examples
 

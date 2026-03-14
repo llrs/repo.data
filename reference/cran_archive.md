@@ -35,14 +35,14 @@ The raw source of the data is:
 [`CRAN_archive_db()`](https://rdrr.io/r/tools/CRANtools.html),
 [`CRAN_current_db()`](https://rdrr.io/r/tools/CRANtools.html). For some
 dates and comments about archiving packages:
-[`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md).
+[`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md).
 
 Other meta info from CRAN:
-[`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md),
-[`cran_comments()`](https://llrs.github.io/repo.data/reference/cran_comments.md),
-[`cran_history()`](https://llrs.github.io/repo.data/reference/cran_history.md),
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
-[`links()`](https://llrs.github.io/repo.data/reference/links.md)
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
+[`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
+[`cran_history()`](https://repo.data.llrs.dev/reference/cran_history.md),
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`links()`](https://repo.data.llrs.dev/reference/links.md)
 
 ## Examples
 

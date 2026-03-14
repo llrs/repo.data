@@ -17,8 +17,8 @@ collect the data from CRAN.
 ## See also
 
 Other functions related to BASE help pages:
-[`base_help_cliques()`](https://llrs.github.io/repo.data/reference/base_help_cliques.md),
-[`base_help_pages_wo_links()`](https://llrs.github.io/repo.data/reference/base_help_pages_wo_links.md)
+[`base_help_cliques()`](https://repo.data.llrs.dev/reference/base_help_cliques.md),
+[`base_help_pages_wo_links()`](https://repo.data.llrs.dev/reference/base_help_pages_wo_links.md)
 
 ## Examples
 

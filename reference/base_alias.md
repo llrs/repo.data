@@ -24,19 +24,17 @@ able to collect the data from CRAN.
 The raw source of the data is:
 [`base_aliases_db()`](https://rdrr.io/r/tools/basetools.html).
 
-Other alias:
-[`alias()`](https://llrs.github.io/repo.data/reference/alias.md),
-[`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md)
+Other alias: [`alias()`](https://repo.data.llrs.dev/reference/alias.md),
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md)
 
 ## Examples
 
 ``` r
 # \donttest{
 ba <- base_alias()
-#> Retrieving base_aliases, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching base R's aliases for this session.
 #> Warning: Packages with targets not present in a OS:
-#> ‘base’, ‘parallel’
+#> ‘base’, ‘grDevices’, ‘parallel’
 head(ba)
 #>   Package        Source Target
 #> 1    base Arithmetic.Rd      +

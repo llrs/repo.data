@@ -56,16 +56,35 @@ the number of manual actions taken by the volunteers).</p>
 <dl><dt id="arg-packages">packages<a class="anchor" aria-label="anchor" href="#arg-packages"></a></dt>
 <dd><p>A vector with packages or <code>NULL</code> for all packages.</p></dd>
 
+
+<dt id="arg-silent">silent<a class="anchor" aria-label="anchor" href="#arg-silent"></a></dt>
+<dd><p>A logical value to issue warnings about the data or not.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data.frame with Date, Time, User, Action, Package and Version columns.
 <code>NA</code> if not able to collect the data from CRAN.</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>There are three possible actions with packages source code: publish, archive and remove.</p><ul><li><p>Publish: Add it to CRAN's PACKAGES file, users can install that version.</p></li>
+<li><p>Archive: Removed from CRAN's repository PACKAGES file so users can't access the package with <code><a href="https://rdrr.io/r/utils/available.packages.html" class="external-link">available.packages()</a></code>.
+Remains on CRAN archive: <a href="https://cran.r-project.org/src/contrib/Archive/" class="external-link">https://cran.r-project.org/src/contrib/Archive/</a>.</p></li>
+<li><p>Remove: Removed from CRAN's archive.</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># ca &lt;- cran_actions()</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ca</span> <span class="op">&lt;-</span> <span class="fu">cran_actions</span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ca</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Date     Time   User  Action  Package Version</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2013-02-07 10:00:29 hornik publish       A3   0.9.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2013-03-26 19:58:40 ligges publish       A3   0.9.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 2015-08-16 23:05:54 hornik publish       A3   1.0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 2025-06-13 10:12:00 hornik archive       A3   1.0.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 2020-06-14 17:10:07 ligges publish AATtools   0.0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 2022-08-12 15:40:11 ligges publish AATtools   0.0.2</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

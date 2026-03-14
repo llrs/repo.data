@@ -13,13 +13,13 @@ targets2files(links, alias)
 - links:
 
   The output of
-  [`split_anchor()`](https://llrs.github.io/repo.data/reference/split_anchor.md).
+  [`split_anchor()`](https://repo.data.llrs.dev/reference/split_anchor.md).
 
 - alias:
 
   The output of
-  [`alias2df()`](https://llrs.github.io/repo.data/reference/alias2df.md)
-  as data.frame.
+  [`alias2df()`](https://repo.data.llrs.dev/reference/alias2df.md) as
+  data.frame.
 
 ## Value
 

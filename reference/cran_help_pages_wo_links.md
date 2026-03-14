@@ -23,8 +23,8 @@ collect the data from CRAN.
 ## See also
 
 Other functions related to CRAN help pages:
-[`cran_help_cliques()`](https://llrs.github.io/repo.data/reference/cran_help_cliques.md),
-[`cran_help_pages_not_linked()`](https://llrs.github.io/repo.data/reference/cran_help_pages_not_linked.md)
+[`cran_help_cliques()`](https://repo.data.llrs.dev/reference/cran_help_cliques.md),
+[`cran_help_pages_not_linked()`](https://repo.data.llrs.dev/reference/cran_help_pages_not_linked.md)
 
 ## Examples
 
@@ -36,10 +36,7 @@ if (NROW(ap)) {
     chwl <- cran_help_pages_wo_links(a_package)
     head(chwl)
 }
-#>   Package             Source
-#> 1 aamatch     PeriMatched.Rd
-#> 2 aamatch   PeriUnmatched.Rd
-#> 3 aamatch aamatch-package.Rd
-#> 4 aamatch         artless.Rd
+#> [1] Package Source 
+#> <0 rows> (or 0-length row.names)
 # }
 ```

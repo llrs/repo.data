@@ -13,9 +13,9 @@ duplicated_alias(alias)
 - alias:
 
   The output of
-  [`cran_alias()`](https://llrs.github.io/repo.data/reference/cran_alias.md)
+  [`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md)
   or
-  [`base_alias()`](https://llrs.github.io/repo.data/reference/base_alias.md)
+  [`base_alias()`](https://repo.data.llrs.dev/reference/base_alias.md)
 
 ## Value
 
@@ -25,20 +25,20 @@ alias.
 ## See also
 
 Other utilities:
-[`cran_date()`](https://llrs.github.io/repo.data/reference/cran_date.md),
-[`cran_doom()`](https://llrs.github.io/repo.data/reference/cran_doom.md),
-[`cran_snapshot()`](https://llrs.github.io/repo.data/reference/cran_snapshot.md),
-[`package_date()`](https://llrs.github.io/repo.data/reference/package_date.md),
-[`package_repos()`](https://llrs.github.io/repo.data/reference/package_repos.md),
-[`repos_dependencies()`](https://llrs.github.io/repo.data/reference/repos_dependencies.md),
-[`update_dependencies()`](https://llrs.github.io/repo.data/reference/update_dependencies.md)
+[`cran_date()`](https://repo.data.llrs.dev/reference/cran_date.md),
+[`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md),
+[`cran_snapshot()`](https://repo.data.llrs.dev/reference/cran_snapshot.md),
+[`package_date()`](https://repo.data.llrs.dev/reference/package_date.md),
+[`package_repos()`](https://repo.data.llrs.dev/reference/package_repos.md),
+[`repos_dependencies()`](https://repo.data.llrs.dev/reference/repos_dependencies.md),
+[`update_dependencies()`](https://repo.data.llrs.dev/reference/update_dependencies.md)
 
 ## Examples
 
 ``` r
 # Checking the overlap between to seemingly unrelated packages:
-alias <- cran_alias(c("fect", "gsynth"))
-if (length(alias) >= 1L) {
+alias <- alias(c("fect", "gsynth"))
+if (length(alias)) {
    dup_alias <- duplicated_alias(alias)
    head(dup_alias)
 }

@@ -23,10 +23,10 @@ if not able to collect the data from CRAN.
 ## See also
 
 Other links from CRAN:
-[`cran_links()`](https://llrs.github.io/repo.data/reference/cran_links.md),
-[`cran_pages_links()`](https://llrs.github.io/repo.data/reference/cran_pages_links.md),
-[`cran_targets_links()`](https://llrs.github.io/repo.data/reference/cran_targets_links.md),
-[`links()`](https://llrs.github.io/repo.data/reference/links.md)
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`cran_pages_links()`](https://repo.data.llrs.dev/reference/cran_pages_links.md),
+[`cran_targets_links()`](https://repo.data.llrs.dev/reference/cran_targets_links.md),
+[`links()`](https://repo.data.llrs.dev/reference/links.md)
 
 ## Examples
 
