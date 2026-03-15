@@ -1,0 +1,16 @@
+library("repo.data")
+
+ci <- cran_issues()
+repo.data:::no_internet(ci)
+stopifnot("Unexpected dimensions" = ncol(ci) == 8)
+col_names <- c("ID", "Package", "Date", "From", "Before", "Title", "Label", 
+"Info")
+stopifnot("Unexpected column names" = colnames(ci) == col_names)
+stopifnot(is(ci$Date, "POSIXt"))
+stopifnot(is(ci$ID, "character"))
+stopifnot(is(ci$Package, "character"))
+stopifnot(is(ci$From, "character"))
+stopifnot(is(ci$Before, "Date"))
+stopifnot(is(ci$Title, "character"))
+stopifnot(is(ci$Label, "character"))
+stopifnot(is(ci$Info, "character"))

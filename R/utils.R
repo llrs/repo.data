@@ -139,18 +139,9 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     out
 }
 
-
 valid_package_name <- function(packages) {
-
-    #  - at least two characters
-    #  - start with a letter
-    #  - not end in a dot
-    validity <- nchar(packages) >= 2L & grepl("^[[:alpha:]]", packages) & !endsWith(packages, ".")
-    if (!all(validity)) {
-        stop("Packages names should have at least two characters and start",
-        " with a letter and not end in a dot.", call. = FALSE)
-    }
-    TRUE
+    packages_anchored <- paste0("^", .standard_regexps()$valid_package_name, "$") 
+    grepl(packages_anchored, packages)
 }
 
 check_pkg_names <- function(packages, length = 1L) {
@@ -175,8 +166,9 @@ check_pkg_names <- function(packages, length = 1L) {
 
     # Don't trigger error on local packages
     if (!any(local_packages) && !any(valid_names[!local_packages])) {
-        stop("Packages names should have at least two characters and start",
-        " with a letter and not end in a dot.", call. = FALSE)
+        stop("Packages names should contain only (ASCII) letters, numbers and ",
+             "dot, have at least two characters and start with a letter and not",
+             " end in a dot.", call. = FALSE)
     }
 
     TRUE

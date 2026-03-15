@@ -1,5 +1,8 @@
 # repo.data (development version)
 
+* Adds `cran_actions()` for CRAN's movements of packages.
+* Adds `cran_issues()` for CRAN's notifications ot package maintainers.
+
 # repo.data 0.1.5
 
 * Package will not generate errors if no internet connection is available.
