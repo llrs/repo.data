@@ -64,7 +64,7 @@ cran_issues <- function() {
     }
     issues$Before <- as.Date(issues$Before)
 
-    ui <- sort_by(ui, ui$Date)
-    rownames(ui) <- NULL
-    ui
+    issues <- sort_by(issues, issues$Date)
+    rownames(issues) <- NULL
+    issues
 }
