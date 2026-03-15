@@ -15,23 +15,22 @@ download_issues <- function(type) {
     }
 }
 
-
 #' CRAN issues
 #' 
-#' Reports the notifications sent to package maintainers with the hour it was sent and the deadline used.
+#' Reports the notifications sent to package maintainers 
+#' with the hour it was sent and the deadline used.
 #'
 #' @returns A data.frame  with 8 columns: 
-#' #' \describe{
+#' \describe{
 #'   \item{ID}{Year.number: Id of the issue.}
 #'   \item{Package}{Package name.}
-#'   \item{Date}{POSIXct when the issue was sent.}
+#'   \item{Date}{POSIXct object when the issue was sent.}
 #'   \item{From}{CRAN member that sent that notification.}
 #'   \item{Before}{Date by which the issue should be fixed.}
-#'   \item{Title}{Reason of the issue}
-#'   \item{Label}{Some classification of the issue}
+#'   \item{Title}{Reason of the issue.}
+#'   \item{Label}{Some classification of the issue.}
 #'   \item{Info}{Unstructured text with some information.}
 #' }
-#' ID, Package, Date, From, Before, Title, Label, Info
 #' @export
 #'
 #' @examples
@@ -59,19 +58,13 @@ cran_issues <- function() {
     # Fix dates
     mk <- (!is.na(issues$Before) & is.na(as.Date(issues$Before)))
     if (any(!mk)) {
-        warning("Incorrect dates on Before")
+        warning("Correcting incorrect dates on Before")
         rg <- regexpr("[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2}", issues$Before[mk])
         issues$Before[mk] <- regmatches(issues$Before[mk], rg)
     }
     issues$Before <- as.Date(issues$Before)
 
-    ui <- unique(issues)
-
-    # date <- as.Date(ui$Date)
-    # before <- as.Date(ui$Before)
-    # w <- which(before < date)
     ui <- sort_by(ui, ui$Date)
     rownames(ui) <- NULL
     ui
-
 }

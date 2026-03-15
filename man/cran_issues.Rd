@@ -8,20 +8,20 @@ cran_issues()
 }
 \value{
 A data.frame  with 8 columns:
-#' \describe{
+\describe{
 \item{ID}{Year.number: Id of the issue.}
 \item{Package}{Package name.}
-\item{Date}{POSIXct when the issue was sent.}
+\item{Date}{POSIXct object when the issue was sent.}
 \item{From}{CRAN member that sent that notification.}
 \item{Before}{Date by which the issue should be fixed.}
-\item{Title}{Reason of the issue}
-\item{Label}{Some classification of the issue}
+\item{Title}{Reason of the issue.}
+\item{Label}{Some classification of the issue.}
 \item{Info}{Unstructured text with some information.}
 }
-ID, Package, Date, From, Before, Title, Label, Info
 }
 \description{
-Reports the notifications sent to package maintainers with the hour it was sent and the deadline used.
+Reports the notifications sent to package maintainers
+with the hour it was sent and the deadline used.
 }
 \examples{
 ci <- cran_issues()

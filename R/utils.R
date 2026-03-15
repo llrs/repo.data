@@ -139,17 +139,9 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
     out
 }
 
-
 valid_package_name <- function(packages) {
-    # only (ASCII) letters, numbers and dot
-    valid_chars <- !grepl("[^[:alnum:]\\.]", packages)
-    #  - at least two characters
-    chars <- nchar(packages) >= 2L
-    #  - start with a letter
-    start <- grepl("^[[:alpha:]]", packages)
-    #  - not end in a dot
-    end <- !endsWith(packages, ".")
-    valid_chars & chars & start & end
+    packages_anchored <- paste0("^", .standard_regexps()$valid_package_name, "$") 
+    grepl(packages_anchored, packages)
 }
 
 check_pkg_names <- function(packages, length = 1L) {
