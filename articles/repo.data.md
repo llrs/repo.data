@@ -159,7 +159,7 @@ cs <- cran_snapshot(as.Date("2020-01-31"))
 #> This indicate manual CRAN intervention.
 #> Downloading and caching CRAN's comments for this session.
 nrow(cs)
-#> [1] 110790
+#> [1] 110799
 ```
 
 This might be helpful to know what was available on old project and why
@@ -243,7 +243,7 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2026-03-12 r89611)
+#> R Under development (unstable) (2026-03-13 r89618)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.3 LTS
 #> 

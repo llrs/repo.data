@@ -2,6 +2,13 @@
 
 ## repo.data (development version)
 
+- Adds
+  [`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md)
+  for CRAN’s movements of packages.
+- Adds
+  [`cran_issues()`](https://repo.data.llrs.dev/reference/cran_issues.md)
+  for CRAN’s notifications ot package maintainers.
+
 ## repo.data 0.1.5
 
 CRAN release: 2025-09-25

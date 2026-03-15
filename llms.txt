@@ -181,6 +181,8 @@ Functions for exploring CRAN
   : Estimate CRAN's date of packages
 - [`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md) :
   Calculate time till packages are archived
+- [`cran_issues()`](https://repo.data.llrs.dev/reference/cran_issues.md)
+  : CRAN issues
 - [`cran_maintainers()`](https://repo.data.llrs.dev/reference/cran_maintainers.md)
   : Tidy information about maintainers
 - [`cran_snapshot()`](https://repo.data.llrs.dev/reference/cran_snapshot.md)
