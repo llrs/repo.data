@@ -70,7 +70,7 @@ cran_help_pages_wo_links <- function(packages = NULL) {
     check_pkg_names(packages, NA)
     cal <- cran_alias(packages)
     # cl <- cran_links()
-    rbl <- save_state(c("CRAN's links to targets" = "cran_targets_links"), 
+    rbl <- save_state(c("CRAN's links to targets" = "cran_targets_links"),
         cran_targets_links(), verbose = FALSE)
     if (is_not_data(rbl)) {
         return(NA)
@@ -112,8 +112,8 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' chc <- cran_help_cliques("BaseSet")
 #' if (!is.null(dim(chc))) {
 #'    table(chc$clique)
+#'    chc[chc$clique != 1L, ]
 #' }
-#' chc[chc$clique != 1L, ]
 cran_help_cliques <- function(packages = NULL) {
     check_pkg_names(packages, NA)
     if (!check_installed("igraph")) {

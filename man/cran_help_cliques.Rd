@@ -30,8 +30,8 @@ Requires igraph.
 chc <- cran_help_cliques("BaseSet")
 if (!is.null(dim(chc))) {
    table(chc$clique)
+   chc[chc$clique != 1L, ]
 }
-chc[chc$clique != 1L, ]
 \dontshow{\}) # examplesIf}
 }
 \seealso{
