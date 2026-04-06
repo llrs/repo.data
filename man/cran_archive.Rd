@@ -43,8 +43,10 @@ The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_d
 For some dates and comments about archiving packages: \code{\link[=cran_comments]{cran_comments()}}.
 
 Other meta info from CRAN: 
+\code{\link{cran_actions}()},
 \code{\link{cran_alias}()},
 \code{\link{cran_comments}()},
+\code{\link{cran_doom}()},
 \code{\link{cran_links}()},
 \code{\link{links}()}
 }

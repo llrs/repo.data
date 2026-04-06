@@ -32,3 +32,13 @@ Remains on CRAN archive: \url{https://cran.r-project.org/src/contrib/Archive/}.
 ca <- cran_actions(silent = TRUE)
 head(ca)
 }
+\seealso{
+Other meta info from CRAN: 
+\code{\link{cran_alias}()},
+\code{\link{cran_archive}()},
+\code{\link{cran_comments}()},
+\code{\link{cran_doom}()},
+\code{\link{cran_links}()},
+\code{\link{links}()}
+}
+\concept{meta info from CRAN}

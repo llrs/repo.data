@@ -32,9 +32,11 @@ Other links from CRAN:
 \code{\link{cran_targets_links}()}
 
 Other meta info from CRAN: 
+\code{\link{cran_actions}()},
 \code{\link{cran_alias}()},
 \code{\link{cran_archive}()},
 \code{\link{cran_comments}()},
+\code{\link{cran_doom}()},
 \code{\link{cran_links}()}
 }
 \concept{links from CRAN}

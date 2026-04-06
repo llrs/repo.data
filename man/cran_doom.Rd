@@ -59,5 +59,14 @@ Other utilities:
 \code{\link{package_repos}()},
 \code{\link{repos_dependencies}()},
 \code{\link{update_dependencies}()}
+
+Other meta info from CRAN: 
+\code{\link{cran_actions}()},
+\code{\link{cran_alias}()},
+\code{\link{cran_archive}()},
+\code{\link{cran_comments}()},
+\code{\link{cran_links}()},
+\code{\link{links}()}
 }
+\concept{meta info from CRAN}
 \concept{utilities}

@@ -19,6 +19,7 @@
 #' @importFrom utils available.packages
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 #' @family utilities
+#' @family meta info from CRAN
 #' @export
 #' @examples
 #' \donttest{

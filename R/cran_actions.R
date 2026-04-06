@@ -32,6 +32,7 @@ download_actions <- function() {
 #' @returns A data.frame with Date, Time, User, Action, Package and Version columns.
 #' `NA` if not able to collect the data from CRAN.
 #' @importFrom stats na.omit
+#' @family meta info from CRAN
 #' @export
 #' @examples
 #' ca <- cran_actions(silent = TRUE)
