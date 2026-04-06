@@ -45,7 +45,6 @@ For some dates and comments about archiving packages: \code{\link[=cran_comments
 Other meta info from CRAN: 
 \code{\link{cran_alias}()},
 \code{\link{cran_comments}()},
-\code{\link{cran_history}()},
 \code{\link{cran_links}()},
 \code{\link{links}()}
 }

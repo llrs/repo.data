@@ -43,7 +43,6 @@ Original file: \url{https://cran.r-project.org/src/contrib/PACKAGES.in}
 Other meta info from CRAN: 
 \code{\link{cran_alias}()},
 \code{\link{cran_archive}()},
-\code{\link{cran_history}()},
 \code{\link{cran_links}()},
 \code{\link{links}()}
 }

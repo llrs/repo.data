@@ -34,7 +34,6 @@ Other meta info from CRAN:
 \code{\link{cran_alias}()},
 \code{\link{cran_archive}()},
 \code{\link{cran_comments}()},
-\code{\link{cran_history}()},
 \code{\link{links}()}
 }
 \concept{links from CRAN}
