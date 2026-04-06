@@ -129,7 +129,7 @@ if (length(cliques) != 1L) {
 }
 #> 
 #>    1    2    3    4    5    6    7    8    9 
-#> 1574  182   36   16   12    7    4    1    1
+#> 1617  184   36   16   12    7    4    1    1
 ```
 
 If there is more than one length this would mean some pages not linked
@@ -159,7 +159,7 @@ cs <- cran_snapshot(as.Date("2020-01-31"))
 #> This indicate manual CRAN intervention.
 #> Downloading and caching CRAN's comments for this session.
 nrow(cs)
-#> [1] 110799
+#> [1] 112029
 ```
 
 This might be helpful to know what was available on old project and why
@@ -174,7 +174,7 @@ system?
 
 ``` r
 cran_session()
-#> [1] "2026-03-06 10:40:06 CET"
+#> [1] "2026-04-04 08:00:06 CEST"
 ```
 
 This uses the
@@ -219,14 +219,14 @@ if (length(cd) != 1L) {
 }
 ```
 
-| Package       | Deadline   | type   | repo | n_affected |
-|:--------------|:-----------|:-------|:-----|-----------:|
-| vegdata       | 2026-03-16 | direct | CRAN |          3 |
-| AnnuityRIR    | 2026-03-17 | direct | CRAN |          4 |
-| bgmm          | 2026-03-17 | direct | CRAN |          4 |
-| evidence      | 2026-03-17 | direct | CRAN |          4 |
-| pencopulaCond | 2026-03-17 | direct | CRAN |          4 |
-| pendensity    | 2026-03-17 | direct | CRAN |          4 |
+| Package     | Deadline   | type   | repo | n_affected |
+|:------------|:-----------|:-------|:-----|-----------:|
+| ggtaxplot   | 2026-04-06 | direct | CRAN |          6 |
+| xpose.xtras | 2026-04-06 | direct | CRAN |          6 |
+| netdiffuseR | 2026-04-06 | direct | CRAN |          5 |
+| ti          | 2026-04-06 | direct | CRAN |          5 |
+| srcpkgs     | 2026-04-06 | direct | CRAN |          4 |
+| bit64       | 2026-04-06 | direct | CRAN |          1 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -243,9 +243,9 @@ For reproducibility here is the session info:
 
 ``` r
 sessionInfo()
-#> R Under development (unstable) (2026-03-13 r89618)
+#> R Under development (unstable) (2026-04-05 r89793)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.3 LTS
+#> Running under: Ubuntu 24.04.4 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -267,13 +267,13 @@ sessionInfo()
 #> [1] repo.data_0.1.5.9000
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] cli_3.6.5         knitr_1.51        rlang_1.1.7       xfun_0.56        
+#>  [1] cli_3.6.5         knitr_1.51        rlang_1.1.7       xfun_0.57        
 #>  [5] rversions_3.0.0   textshaping_1.0.5 jsonlite_2.0.0    litedown_0.9     
-#>  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.1        sass_0.4.10      
-#> [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
-#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    igraph_2.2.2     
-#> [21] fs_1.6.7          pkgconfig_2.0.3   systemfonts_1.3.2 digest_0.6.39    
-#> [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.4   
-#> [29] bslib_0.10.0      tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     
+#>  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.2        sass_0.4.10      
+#> [13] rmarkdown_2.31    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    
+#> [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.7.0    igraph_2.2.2     
+#> [21] fs_2.0.1          pkgconfig_2.0.3   systemfonts_1.3.2 digest_0.6.39    
+#> [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.5   
+#> [29] bslib_0.10.0      tools_4.7.0       pkgdown_2.2.0     cachem_1.1.0     
 #> [33] desc_1.4.3
 ```

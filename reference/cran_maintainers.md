@@ -35,24 +35,24 @@ The raw source of the data is:
 maintainers <- cran_maintainers()
 head(maintainers)
 #>         Package                                   Maintainer        user
-#> 1       aae.pop                 Jian Yen <jdl.yen@gmail.com>        jy0f
-#> 2 AalenJohansen        Martin Bladt <martinbladt@math.ku.dk> martinbladt
-#> 3       aamatch Paul Rosenbaum <rosenbaum@wharton.upenn.edu>    rosenbap
-#> 4      AATtools   Sercan Kahveci <sercan.kahveci@plus.ac.at>    b1066151
-#> 5        ABACUS             Mintu Nath <dr.m.nath@gmail.com>      s02mn9
-#> 6   abasequence            Andrew Pilny <andy.pilny@uky.edu>   andypilny
+#> 1     a11yShiny    Jan Liebnitzky <datenlabor@bmftr.bund.de>        root
+#> 2           a5R              Hugh Graham <hugh@belian.earth>        hugh
+#> 3       aae.pop                 Jian Yen <jdl.yen@gmail.com>        jy0f
+#> 4 AalenJohansen        Martin Bladt <martinbladt@math.ku.dk> martinbladt
+#> 5       aamatch Paul Rosenbaum <rosenbaum@wharton.upenn.edu>    rosenbap
+#> 6      AATtools   Sercan Kahveci <sercan.kahveci@plus.ac.at>    b1066151
 #>   maintainer_date packaged_date published_date           Name
-#> 1      2026-01-27    2026-01-27     2026-01-31       Jian Yen
-#> 2            <NA>    2023-02-28     2023-03-01   Martin Bladt
-#> 3            <NA>    2026-02-01     2026-02-01 Paul Rosenbaum
-#> 4            <NA>    2024-08-16     2024-08-16 Sercan Kahveci
-#> 5            <NA>    2019-09-12     2019-09-20     Mintu Nath
-#> 6            <NA>    2023-07-13     2023-07-14   Andrew Pilny
+#> 1            <NA>    2026-03-26     2026-03-30 Jan Liebnitzky
+#> 2            <NA>    2026-03-26     2026-03-26    Hugh Graham
+#> 3      2026-01-27    2026-01-27     2026-01-31       Jian Yen
+#> 4            <NA>    2023-02-28     2023-03-01   Martin Bladt
+#> 5            <NA>    2026-02-01     2026-02-01 Paul Rosenbaum
+#> 6            <NA>    2024-08-16     2024-08-16 Sercan Kahveci
 #>                         email      direction            domain
-#> 1           jdl.yen@gmail.com        jdl.yen         gmail.com
-#> 2      martinbladt@math.ku.dk    martinbladt        math.ku.dk
-#> 3 rosenbaum@wharton.upenn.edu      rosenbaum wharton.upenn.edu
-#> 4   sercan.kahveci@plus.ac.at sercan.kahveci        plus.ac.at
-#> 5         dr.m.nath@gmail.com      dr.m.nath         gmail.com
-#> 6          andy.pilny@uky.edu     andy.pilny           uky.edu
+#> 1    datenlabor@bmftr.bund.de     datenlabor     bmftr.bund.de
+#> 2           hugh@belian.earth           hugh      belian.earth
+#> 3           jdl.yen@gmail.com        jdl.yen         gmail.com
+#> 4      martinbladt@math.ku.dk    martinbladt        math.ku.dk
+#> 5 rosenbaum@wharton.upenn.edu      rosenbaum wharton.upenn.edu
+#> 6   sercan.kahveci@plus.ac.at sercan.kahveci        plus.ac.at
 ```

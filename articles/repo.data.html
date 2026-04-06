@@ -172,7 +172,7 @@ find them (requires the suggested package igraph).</p>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;    1    2    3    4    5    6    7    8    9 </span></span>
-<span><span class="co">#&gt; 1574  182   36   16   12    7    4    1    1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1617  184   36   16   12    7    4    1    1</span></span></code></pre></div>
 <p>If there is more than one length this would mean some pages not
 linked to the rest of the package.</p>
 <p>Sometimes even if links exists they might not resolve correctly on
@@ -198,7 +198,7 @@ date you can use:</p>
 <span><span class="co">#&gt; This indicate manual CRAN intervention.</span></span>
 <span><span class="co">#&gt; Downloading and caching CRAN's comments for this session.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">cs</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 110799</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 112029</span></span></code></pre></div>
 <p>This might be helpful to know what was available on old project and
 why some feature of a given package wasn’t used. Maybe it wasn’t
 available on a given date!</p>
@@ -210,7 +210,7 @@ needed maybe you’d like to know when were packages last updated on the
 system?</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/cran_date.html">cran_session</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2026-03-06 10:40:06 CET"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "2026-04-04 08:00:06 CEST"</span></span></code></pre></div>
 <p>This uses the <code><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo()</a></code> output to find the date of
 last installation. Under the hood it uses a function that given packages
 and their versions find a date where this was possible. This is also
@@ -253,46 +253,46 @@ can use <code><a href="../reference/cran_doom.html">cran_doom()</a></code>:</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">vegdata</td>
-<td align="left">2026-03-16</td>
+<td align="left">ggtaxplot</td>
+<td align="left">2026-04-06</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">3</td>
+<td align="right">6</td>
 </tr>
 <tr class="even">
-<td align="left">AnnuityRIR</td>
-<td align="left">2026-03-17</td>
+<td align="left">xpose.xtras</td>
+<td align="left">2026-04-06</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">4</td>
+<td align="right">6</td>
 </tr>
 <tr class="odd">
-<td align="left">bgmm</td>
-<td align="left">2026-03-17</td>
+<td align="left">netdiffuseR</td>
+<td align="left">2026-04-06</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">4</td>
+<td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">evidence</td>
-<td align="left">2026-03-17</td>
+<td align="left">ti</td>
+<td align="left">2026-04-06</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">4</td>
+<td align="right">5</td>
 </tr>
 <tr class="odd">
-<td align="left">pencopulaCond</td>
-<td align="left">2026-03-17</td>
+<td align="left">srcpkgs</td>
+<td align="left">2026-04-06</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td align="left">pendensity</td>
-<td align="left">2026-03-17</td>
+<td align="left">bit64</td>
+<td align="left">2026-04-06</td>
 <td align="left">direct</td>
 <td align="left">CRAN</td>
-<td align="right">4</td>
+<td align="right">1</td>
 </tr>
 </tbody>
 </table>
@@ -310,9 +310,9 @@ repository.</p>
 <p>For reproducibility here is the session info:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R Under development (unstable) (2026-03-13 r89618)</span></span>
+<span><span class="co">#&gt; R Under development (unstable) (2026-04-05 r89793)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 24.04.3 LTS</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 24.04.4 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
 <span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -334,14 +334,14 @@ repository.</p>
 <span><span class="co">#&gt; [1] repo.data_0.1.5.9000</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;  [1] cli_3.6.5         knitr_1.51        rlang_1.1.7       xfun_0.56        </span></span>
+<span><span class="co">#&gt;  [1] cli_3.6.5         knitr_1.51        rlang_1.1.7       xfun_0.57        </span></span>
 <span><span class="co">#&gt;  [5] rversions_3.0.0   textshaping_1.0.5 jsonlite_2.0.0    litedown_0.9     </span></span>
-<span><span class="co">#&gt;  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.1        sass_0.4.10      </span></span>
-<span><span class="co">#&gt; [13] rmarkdown_2.30    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    </span></span>
-<span><span class="co">#&gt; [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.6.0    igraph_2.2.2     </span></span>
-<span><span class="co">#&gt; [21] fs_1.6.7          pkgconfig_2.0.3   systemfonts_1.3.2 digest_0.6.39    </span></span>
-<span><span class="co">#&gt; [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.4   </span></span>
-<span><span class="co">#&gt; [29] bslib_0.10.0      tools_4.6.0       pkgdown_2.2.0     cachem_1.1.0     </span></span>
+<span><span class="co">#&gt;  [9] markdown_2.0      htmltools_0.5.9   ragg_1.5.2        sass_0.4.10      </span></span>
+<span><span class="co">#&gt; [13] rmarkdown_2.31    evaluate_1.0.5    jquerylib_0.1.4   fastmap_1.2.0    </span></span>
+<span><span class="co">#&gt; [17] yaml_2.3.12       lifecycle_1.0.5   compiler_4.7.0    igraph_2.2.2     </span></span>
+<span><span class="co">#&gt; [21] fs_2.0.1          pkgconfig_2.0.3   systemfonts_1.3.2 digest_0.6.39    </span></span>
+<span><span class="co">#&gt; [25] R6_2.6.1          curl_7.0.0        commonmark_2.0.0  magrittr_2.0.5   </span></span>
+<span><span class="co">#&gt; [29] bslib_0.10.0      tools_4.7.0       pkgdown_2.2.0     cachem_1.1.0     </span></span>
 <span><span class="co">#&gt; [33] desc_1.4.3</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

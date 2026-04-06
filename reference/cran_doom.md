@@ -72,12 +72,12 @@ Other utilities:
 cd <- cran_doom()
 #> Downloading and caching CRAN's packages database for this session.
 if (length(cd) > 1L) head(cd$details)
-#>          Package   Deadline   type repo n_affected
-#> 1        vegdata 2026-03-16 direct CRAN          3
-#> 2     AnnuityRIR 2026-03-17 direct CRAN          4
-#> 3 VetResearchLMM 2026-03-17 direct CRAN          4
-#> 4           bgmm 2026-03-17 direct CRAN          4
-#> 5       evidence 2026-03-17 direct CRAN          4
-#> 6  pencopulaCond 2026-03-17 direct CRAN          4
+#>       Package   Deadline   type repo n_affected
+#> 1   ggtaxplot 2026-04-06 direct CRAN          6
+#> 2 xpose.xtras 2026-04-06 direct CRAN          6
+#> 3 netdiffuseR 2026-04-06 direct CRAN          5
+#> 4          ti 2026-04-06 direct CRAN          5
+#> 5     srcpkgs 2026-04-06 direct CRAN          4
+#> 6       bit64 2026-04-06 direct CRAN          1
 # }
 ```

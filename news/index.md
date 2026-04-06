@@ -7,7 +7,7 @@
   for CRAN’s movements of packages.
 - Adds
   [`cran_issues()`](https://repo.data.llrs.dev/reference/cran_issues.md)
-  for CRAN’s notifications ot package maintainers.
+  for CRAN’s notifications of package maintainers.
 
 ## repo.data 0.1.5
 

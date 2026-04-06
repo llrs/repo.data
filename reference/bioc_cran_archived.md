@@ -38,11 +38,11 @@ bca <- bioc_cran_archived()
 #> Downloading and caching packages available on Bioconductor for this session.
 #> Downloading and caching CRAN's packages database for this session.
 head(bca)
-#>             Package  Archived n
-#> 1 BeadArrayUseCases beadarray 1
-#> 2        CAGEfightR      pryr 1
-#> 3           CCPlotR    ggbump 1
-#> 4              CSOA        qs 1
-#> 5        ChromSCape        qs 1
-#> 6          ClustIRR   blaster 1
+#>      Package Archived n
+#> 1 CAGEfightR     pryr 1
+#> 2    CCPlotR   ggbump 1
+#> 3       CSOA       qs 1
+#> 4 ChromSCape       qs 1
+#> 5   ClustIRR  blaster 1
+#> 6       OHCA   HiCool 1
 ```

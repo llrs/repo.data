@@ -48,12 +48,9 @@ chc <- cran_help_cliques("BaseSet")
 #> Warning: Some links are distinct depending on the OS.
 if (!is.null(dim(chc))) {
    table(chc$clique)
+   chc[chc$clique != 1L, ]
 }
-#> 
-#>    1    2 
-#> 1938    2 
-chc[chc$clique != 1L, ]
 #>      from_pkg        from_Rd clique  to_pkg          to_Rd n
-#> 1939  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
-#> 1940  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
+#> 1984  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
+#> 1985  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
 ```
