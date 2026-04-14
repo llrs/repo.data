@@ -1,14 +1,15 @@
 Package: repo.data
-Title: R Repository Data
+Title: R Repositories Data
 Version: 0.1.5.9000
 Authors@R: 
     person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-9747-2570"))
 Description: Retrieve metadata about packages from repositories to explore
     package dependencies, links between help pages, aliases, package
-    availability on a given date, and other repository dependent outcome.
-    This metadata can be used to help package maintainers and users to
-    navigate changes on dependencies and with reproducibility.
+    availability on a given date, and other repository-dependent outcome.
+    In addition, it provides access to information about the processes at CRAN.
+    This metadata can be used to help package maintainers and users navigate 
+    changes to dependencies and with reproducibility.
 License: GPL (>= 3)
 URL: https://github.com/llrs/repo.data, https://repo.data.llrs.dev/
 BugReports: https://github.com/llrs/repo.data/issues
