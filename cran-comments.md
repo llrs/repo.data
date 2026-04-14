@@ -1,6 +1,5 @@
+## R CMD check results
 
-* Package was tested with no internet connection. No errors or warnings was detected.
+0 errors | 0 warnings | 1 note
 
-* This packages works without errors or warnings on the CRAN platforms: 
- - win-devel
- 
+* This is a new release.
