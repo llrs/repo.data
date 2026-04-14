@@ -47,6 +47,7 @@ reference:
   desc: "Explore packages, session and the relationship with multiple repositories"
   contents:
   - package_date
+  - package_date_actions
   - package_repos
   - repos_dependencies
   - package_dependencies
