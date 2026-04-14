@@ -12,11 +12,13 @@ repo.data:::no_internet(bhpwl)
 stopifnot("No data on base_help_pages_wo_links" = as.logical(NROW(bhpwl)))
 stopifnot("Column names not matching" = colnames(bhpwl) == c("Package", "Source"))
 
-bhc <- base_help_cliques()
-repo.data:::no_internet(bhc)
-stopifnot("Column names not matching" = colnames(bhc) == c("from_pkg", "from_Rd", "clique", "to_pkg", "to_Rd", "n"))
-stopifnot("No data on base_help_cliques" = as.logical(NROW(bhc)))
-stopifnot("No links == 0L" = !anyNA(bhc$n))
+if (repo.data:::check_installed("igraph")) {
+    bhc <- base_help_cliques()
+    repo.data:::no_internet(bhc)
+    stopifnot("Column names not matching" = colnames(bhc) == c("from_pkg", "from_Rd", "clique", "to_pkg", "to_Rd", "n"))
+    stopifnot("No data on base_help_cliques" = as.logical(NROW(bhc)))
+    stopifnot("No links == 0L" = !anyNA(bhc$n))
+}
 
 # CRAN
 pkgs <- c("BaseSet", "experDesign")
@@ -30,17 +32,20 @@ repo.data:::no_internet(chpwl)
 stopifnot("Column names not matching" = colnames(chpwl) == c("Package", "Source"))
 stopifnot("No data on cran_help_pages_wo_links" = as.logical(NROW(chpwl)))
 
-chc <- cran_help_cliques(pkgs)
-repo.data:::no_internet(chc)
-stopifnot("Column names not matching" =
-              colnames(chc) == c("from_pkg", "from_Rd", "clique", "to_pkg",
-                                 "to_Rd", "n"))
-stopifnot("No data on cran_help_cliques" = as.logical(NROW(chc)))
+if (repo.data:::check_installed("igraph")) {
+    chc <- cran_help_cliques(pkgs)
+    repo.data:::no_internet(chc)
+    stopifnot("Column names not matching" =
+                  colnames(chc) == c("from_pkg", "from_Rd", "clique", "to_pkg",
+                                     "to_Rd", "n"))
+    stopifnot("No data on cran_help_cliques" = as.logical(NROW(chc)))
+}
 
-
-chc_BaseSet <- cran_help_cliques("BaseSet")
-repo.data:::no_internet(chc_BaseSet)
-stopifnot(unique(chc$clique) >= 1L)
+if (repo.data:::check_installed("igraph")) {
+    chc_BaseSet <- cran_help_cliques("BaseSet")
+    repo.data:::no_internet(chc_BaseSet)
+    stopifnot(unique(chc$clique) >= 1L)
+}
 
 # chc_pkgs <- cran_help_cliques(c("experDesign", "BaseSet"))
 # repo.data:::no_internet(chc_pkgs)
