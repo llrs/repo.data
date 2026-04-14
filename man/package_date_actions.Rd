@@ -21,11 +21,16 @@ function works as if the package is not released yet.}
     elements of that vector.
   }
 }
+\value{
+A vector with the time when the package was publish and when were the dependencies available.
+}
 \description{
-Same as package_date but using CRAN's actions instead of public archive.
+Same as \code{\link[=package_date]{package_date()}} but using CRAN's actions instead of public archive.
 }
 \details{
 This provides information about when a package was removed or archived for a
 more accurate estimation.
 }
-\keyword{internal}
+\examples{
+package_date_actions("afmToolkit")
+}
