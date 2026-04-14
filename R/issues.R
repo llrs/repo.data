@@ -7,20 +7,29 @@ download_issues <- function(type) {
                    "rsync://CRAN.R-project.org/CRAN-issues"),
         file)
     if (startsWith(src, "file://")) {
-        readRDS(substring(src, 8L))
+        tryCatch(
+            readRDS(substring(src, 8L)),
+            error = function(e) {
+                NA
+            })
     } else {
         dst <- tempfile()
-        system2("rsync", c(src, dst))
-        readRDS(dst)
+        tryCatch({
+            system2("rsync", c(src, dst))
+            readRDS(dst)
+        },
+        error = function(e) {
+            NA
+        })
     }
 }
 
 #' CRAN issues
-#' 
-#' Reports the notifications sent to package maintainers 
+#'
+#' Reports the notifications sent to package maintainers
 #' with the hour it was sent and the deadline used.
 #'
-#' @returns A data.frame  with 8 columns: 
+#' @returns A data.frame  with 8 columns:
 #' \describe{
 #'   \item{ID}{Year.number: Id of the issue.}
 #'   \item{Package}{Package name.}

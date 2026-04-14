@@ -52,7 +52,6 @@ check_r_version <- function(version = "4.5.0") {
     r_ver >= target
 }
 
-
 .cran_archive <- function() {
     if (check_r_version()) {
         return(tools::CRAN_archive_db())
@@ -140,7 +139,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 }
 
 valid_package_name <- function(packages) {
-    packages_anchored <- paste0("^", .standard_regexps()$valid_package_name, "$") 
+    packages_anchored <- paste0("^", .standard_regexps()$valid_package_name, "$")
     grepl(packages_anchored, packages)
 }
 
@@ -198,7 +197,7 @@ omitting_packages <- function(packages) {
 
 check_current_pkg <- function(packages, current) {
     warn <- empty_env("current_packages")
-    current_packages <- save_state(c("available packages" = "current_packages"), 
+    current_packages <- save_state(c("available packages" = "current_packages"),
         current, verbose = FALSE)
     omit_pkg <- setdiff(packages, current_packages)
     if (warn && anyNA(current_packages) && any(current_packages != current)) {

@@ -7,11 +7,21 @@ download_actions <- function() {
                    "rsync://CRAN.R-project.org/CRAN-actions"),
         "actions.rds")
     if (startsWith(src, "file://")) {
-        readRDS(substring(src, 8L))
+        tryCatch(
+            readRDS(substring(src, 8L)),
+            error = function(e) {
+                NA
+            })
+
     } else {
         dst <- tempfile()
-        system2("rsync", c(src, dst))
-        readRDS(dst)
+        tryCatch({
+            system2("rsync", c(src, dst))
+            readRDS(dst)
+        },
+        error = function(e) {
+            NA
+        })
     }
 }
 
