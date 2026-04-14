@@ -24,6 +24,7 @@ The goal of repo.data is to make repository data accessible.
 Mainly it consumes existing data but the idea is to also generate it.
 
 When a function is specific of a repository it will start with its name: `cran_` or `bioc_`.
+Some functions have their equivalent for all repositories that provide this information (CRAN and Bioconductor that I'm aware of).
 
 ## Installation
 
