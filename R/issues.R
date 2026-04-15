@@ -8,19 +8,13 @@ download_issues <- function(type) {
         file)
     if (startsWith(src, "file://")) {
         tryCatch(
-            readRDS(substring(src, 8L)),
-            error = function(e) {
-                NA
-            })
+            readRDS(substring(src, 8L)), warning = function(w){NA}, error = function(e){NA})
     } else {
         dst <- tempfile()
         tryCatch({
             system2("rsync", c(src, dst))
             readRDS(dst)
-        },
-        error = function(e) {
-            NA
-        })
+        }, warning = function(w){NA}, error = function(e){NA})
     }
 }
 

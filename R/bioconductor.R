@@ -88,11 +88,7 @@ bioc_views <- function(version = bioc_version()) {
         return(NA)
     }
     url <- paste0("https://bioconductor.org/packages/", version, "/bioc/VIEWS")
-    tryCatch(
-        read.dcf(url(url)),
-        error = function(e) {
-            NA
-        })
+    tryCatch(read.dcf(url(url)), warning = function(w){NA}, error = function(e){NA})
 }
 
 bioc_archive <- function() {

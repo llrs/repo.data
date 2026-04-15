@@ -25,7 +25,7 @@ package_repos <- function(packages = NULL, repos = getOption("repos"), which = "
     names(repos) <- unam_repos
 
     ap <- tryCatch(available.packages(repos = repos, filters = c("CRAN", "duplicates")),
-                   warning = function(w){NA})
+                   warning = function(w){NA}, error = function(e){NA})
     if (is_not_data(ap)) {
         return(NA)
     }

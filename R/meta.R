@@ -1,6 +1,6 @@
 read_repo <- function(path, repo) {
     con <- tryCatch(url(sprintf("%s/%s", repo, path), open = "rb"),
-                    warning = function(w) {},
+                    warning = function(w) {NULL},
                     error = function(e) {NULL},
                     finally = {on.exit({if (!is.null(con)) close(con)}, add = TRUE)
                     })
@@ -11,18 +11,9 @@ read_repo <- function(path, repo) {
 
     if (endsWith(path, "rds") || endsWith(path, "RDS")) {
         con <- gzcon(con)
-
-        tryCatch(
-            readRDS(con),
-            error = function(e) {
-                NA
-            })
+        tryCatch(readRDS(con), warning = function(w){NA}, error = function(e){NA})
     } else {
-        tryCatch(
-            read.dcf(con),
-            error = function(e) {
-                NA
-            })
+        tryCatch(read.dcf(con), warning = function(w){NA}, error = function(e){NA})
     }
 
 }

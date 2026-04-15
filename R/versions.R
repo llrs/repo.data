@@ -1,3 +1,3 @@
 versions <- function(){
-    tryCatch(rversions::r_versions(), error = function(e){NA})
+    tryCatch(rversions::r_versions(), warning = function(w){NA}, error = function(e){NA})
 }
