@@ -9,9 +9,8 @@ download_actions <- function() {
     if (startsWith(src, "file://")) {
         tryCatch(
             readRDS(substring(src, 8L)),
-            error = function(e) {
-                NA
-            })
+            warning = function(w) {NA},
+            error = function(e) {NA})
 
     } else {
         dst <- tempfile()
@@ -19,9 +18,8 @@ download_actions <- function() {
             system2("rsync", c(src, dst))
             readRDS(dst)
         },
-        error = function(e) {
-            NA
-        })
+        warning = function(w) {NA},
+        error = function(e) {NA})
     }
 }
 
@@ -53,7 +51,7 @@ cran_actions <- function(packages = NULL, silent = FALSE) {
         return(NA)
     }
     check_pkg_names(packages, NA)
-    actions <- get_package_subset("full_cran_actions", packages)
+    actions <- get_package_subset(c("CRAN actions" ="full_cran_actions"), packages)
 
     if (isFALSE(silent)) {
         warnings_actions(actions)
