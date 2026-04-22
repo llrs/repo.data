@@ -66,14 +66,15 @@ cran_all_actions <- function() {
     }
 
     actions <- download_actions()
-
+    if (is_not_data(actions)) {
+        return(NA)
+    }
     actions$Date <- charToDate(actions$Date, "%F")
     actions$User <- as.factor(actions$User)
     lev <- c("publish", "archive", "remove")
     if (!all(na.omit(actions$Action) %in% lev)) {
         warning("New action by CRAN: ", na.omit(setdiff(actions$Action, lev)), call. = FALSE)
     }
-
 
     actions$Action <- factor(actions$Action, levels = lev)
     actions$Package <- as.factor(actions$Package)
