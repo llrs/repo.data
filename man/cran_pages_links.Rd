@@ -17,8 +17,10 @@ Explore the relationship between CRAN packages and other help pages.
 If the target help page is ambiguous it is omitted.
 }
 \examples{
+\donttest{
 cpl <- cran_pages_links("Matrix")
 head(cpl)
+}
 }
 \seealso{
 Other links from CRAN: 
