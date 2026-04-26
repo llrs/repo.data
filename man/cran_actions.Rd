@@ -29,8 +29,10 @@ Remains on CRAN archive: \url{https://cran.r-project.org/src/contrib/Archive/}.
 }
 }
 \examples{
+\donttest{
 ca <- cran_actions(silent = TRUE)
 head(ca)
+}
 }
 \seealso{
 Other meta info from CRAN: 

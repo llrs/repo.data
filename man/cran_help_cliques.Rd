@@ -27,10 +27,12 @@ Requires igraph.
 }
 \examples{
 \dontshow{if (requireNamespace("igraph", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\donttest{
 chc <- cran_help_cliques("BaseSet")
 if (!is.null(dim(chc))) {
    table(chc$clique)
    chc[chc$clique != 1L, ]
+}
 }
 \dontshow{\}) # examplesIf}
 }
