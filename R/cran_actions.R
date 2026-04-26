@@ -43,8 +43,10 @@ download_actions <- function() {
 #' @family meta info from CRAN
 #' @export
 #' @examples
+#' \donttest{
 #' ca <- cran_actions(silent = TRUE)
 #' head(ca)
+#' }
 cran_actions <- function(packages = NULL, silent = FALSE) {
     out <- cran_all_actions()
     if (is_not_data(out)) {
