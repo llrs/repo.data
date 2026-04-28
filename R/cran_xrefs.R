@@ -68,8 +68,10 @@ cran_links <- function(packages = NULL) {
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Number of links).
 #' @export
 #' @examples
+#' \donttest{
 #' ctl <- cran_targets_links("BaseSet")
 #' head(ctl)
+#' }
 cran_targets_links <- function(packages = NULL) {
     out <- NULL
     env <- c("CRAN' packages links to targets" = "cran_targets_links")
