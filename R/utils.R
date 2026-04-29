@@ -188,6 +188,13 @@ no_internet <- function(x) {
     if (length(x) == 1L && is.na(x)) q("no")
 }
 
+skip_on_cran <- function() {
+    env <- Sys.getenv("NOT_CRAN", FALSE)
+    if (isFALSE(env)) {
+        q("no")
+    }
+}
+
 omitting_packages <- function(packages) {
     if (length(packages)) {
         warning("Some packages are not currently available. Omitting packages:\n",

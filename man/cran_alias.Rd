@@ -17,8 +17,10 @@ A data.frame with three columns: Package, Source and Target.
 Retrieve alias available on CRAN.
 }
 \examples{
+\donttest{
 ca <- cran_alias("BWStest")
 head(ca)
+}
 }
 \seealso{
 The raw source of the data is: \code{\link[tools:CRAN_aliases_db]{CRAN_aliases_db()}}.

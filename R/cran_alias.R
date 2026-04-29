@@ -9,8 +9,10 @@
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_aliases_db]{CRAN_aliases_db()}}.
 #' @family meta info from CRAN
 #' @examples
+#' \donttest{
 #' ca <- cran_alias("BWStest")
 #' head(ca)
+#' }
 cran_alias <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
     stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
@@ -21,21 +23,21 @@ cran_alias <- function(packages = NULL) {
     check_pkg_names(packages, NA)
     # Place to store modified data
     env <- c("processed CRAN aliases" ="full_cran_aliases")
-    
+
     # Check for missing packages
     current_packages <- names(raw_alias)
     omit_pkg <- check_current_pkg(packages, current_packages)
-    
+
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
-    
+
     # Check if there is already data
     first_alias <- empty_env(env)
     alias <- pkg_state[[env]]
-    
+
     # Decide which packages are to be added to the data
     if (!is.null(packages) && !first_alias) {
         new_packages <- setdiff(packages, alias[, "Package"])
@@ -46,7 +48,7 @@ cran_alias <- function(packages = NULL) {
     } else if (is.null(packages) && !first_alias) {
         new_packages <- setdiff(current_packages, alias[, "Package"])
     }
-    
+
     # Add new package's data
     if (length(new_packages)) {
         new_alias <- alias2df(raw_alias[new_packages])

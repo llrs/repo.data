@@ -1,6 +1,8 @@
 library("repo.data")
 pkgs <- c("tools", "utils")
 
+repo.data:::skip_on_cran()
+
 # Test that it works
 bhpnl <- base_help_pages_not_linked()
 repo.data:::no_internet(bhpnl)
