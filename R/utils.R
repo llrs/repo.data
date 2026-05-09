@@ -190,7 +190,7 @@ no_internet <- function(x) {
 
 skip_on_cran <- function() {
     env <- Sys.getenv("NOT_CRAN", FALSE)
-    if (isFALSE(env)) {
+    if (isFALSE(as.logical(toupper(env)))) {
         q("no")
     }
 }
