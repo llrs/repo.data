@@ -139,7 +139,10 @@ cran_pages_links <- function(packages = NULL) {
     if (!is.null(packages)) {
         keep_rows <- keep_rows & (target_links$from_pkg %in% packages | target_links$to_pkg %in% packages)
     }
-    add_uniq_count(target_links[keep_rows, -w])
+    out <- add_uniq_count(target_links[keep_rows, -w])
+    out <- as.data.frame(out)
+    out$n <- as.numeric(out$n)
+    out
 }
 
 #' Links between help pages by package
@@ -167,5 +170,9 @@ cran_pkges_links <- function(packages = NULL) {
     if (!is.null(packages)) {
         keep_rows <- keep_rows & target_links$from_pkg %in% packages
     }
-    add_uniq_count(target_links[keep_rows, -w])
+    out <- add_uniq_count(target_links[keep_rows, -w])
+    out <- as.data.frame(out)
+    out$n <- as.numeric(out$n)
+    out
+
 }
