@@ -51,22 +51,22 @@ Original code from: \url{https://github.com/schochastics/cran-doomsday/blob/main
 \seealso{
 The raw source of the data is: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 
-Other utilities: 
-\code{\link{cran_date}()},
-\code{\link{cran_snapshot}()},
-\code{\link{duplicated_alias}()},
-\code{\link{package_date}()},
-\code{\link{package_repos}()},
-\code{\link{repos_dependencies}()},
-\code{\link{update_dependencies}()}
+Other utilities:
+\code{\link[=cran_date]{cran_date()}},
+\code{\link[=cran_snapshot]{cran_snapshot()}},
+\code{\link[=duplicated_alias]{duplicated_alias()}},
+\code{\link[=package_date]{package_date()}},
+\code{\link[=package_repos]{package_repos()}},
+\code{\link[=repos_dependencies]{repos_dependencies()}},
+\code{\link[=update_dependencies]{update_dependencies()}}
 
-Other meta info from CRAN: 
-\code{\link{cran_actions}()},
-\code{\link{cran_alias}()},
-\code{\link{cran_archive}()},
-\code{\link{cran_comments}()},
-\code{\link{cran_links}()},
-\code{\link{links}()}
+Other meta info from CRAN:
+\code{\link[=cran_actions]{cran_actions()}},
+\code{\link[=cran_alias]{cran_alias()}},
+\code{\link[=cran_archive]{cran_archive()}},
+\code{\link[=cran_comments]{cran_comments()}},
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=links]{links()}}
 }
 \concept{meta info from CRAN}
 \concept{utilities}

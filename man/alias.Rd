@@ -32,9 +32,9 @@ head(alias(c("ggplot2", "BiocCheck")))
 options(repos = oldrepos)
 }
 \seealso{
-Other alias: 
-\code{\link{base_alias}()},
-\code{\link{cran_alias}()}
+Other alias:
+\code{\link[=base_alias]{base_alias()}},
+\code{\link[=cran_alias]{cran_alias()}}
 }
 \concept{alias}
 \concept{meta info}

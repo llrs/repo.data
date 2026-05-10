@@ -28,8 +28,8 @@ if (NROW(ap)) {
 }
 }
 \seealso{
-Other functions related to CRAN help pages: 
-\code{\link{cran_help_cliques}()},
-\code{\link{cran_help_pages_not_linked}()}
+Other functions related to CRAN help pages:
+\code{\link[=cran_help_cliques]{cran_help_cliques()}},
+\code{\link[=cran_help_pages_not_linked]{cran_help_pages_not_linked()}}
 }
 \concept{functions related to CRAN help pages}

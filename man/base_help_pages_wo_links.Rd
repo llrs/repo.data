@@ -20,8 +20,8 @@ head(bhwl)
 }
 }
 \seealso{
-Other functions related to BASE help pages: 
-\code{\link{base_help_cliques}()},
-\code{\link{base_help_pages_not_linked}()}
+Other functions related to BASE help pages:
+\code{\link[=base_help_cliques]{base_help_cliques()}},
+\code{\link[=base_help_pages_not_linked]{base_help_pages_not_linked()}}
 }
 \concept{functions related to BASE help pages}

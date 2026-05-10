@@ -24,19 +24,19 @@ head(cl)
 \seealso{
 The raw source of the data is: \code{\link[tools:CRAN_rdxrefs_db]{CRAN_rdxrefs_db()}}.
 
-Other links from CRAN: 
-\code{\link{cran_pages_links}()},
-\code{\link{cran_pkges_links}()},
-\code{\link{cran_targets_links}()},
-\code{\link{links}()}
+Other links from CRAN:
+\code{\link[=cran_pages_links]{cran_pages_links()}},
+\code{\link[=cran_pkges_links]{cran_pkges_links()}},
+\code{\link[=cran_targets_links]{cran_targets_links()}},
+\code{\link[=links]{links()}}
 
-Other meta info from CRAN: 
-\code{\link{cran_actions}()},
-\code{\link{cran_alias}()},
-\code{\link{cran_archive}()},
-\code{\link{cran_comments}()},
-\code{\link{cran_doom}()},
-\code{\link{links}()}
+Other meta info from CRAN:
+\code{\link[=cran_actions]{cran_actions()}},
+\code{\link[=cran_alias]{cran_alias()}},
+\code{\link[=cran_archive]{cran_archive()}},
+\code{\link[=cran_comments]{cran_comments()}},
+\code{\link[=cran_doom]{cran_doom()}},
+\code{\link[=links]{links()}}
 }
 \concept{links from CRAN}
 \concept{meta info from CRAN}

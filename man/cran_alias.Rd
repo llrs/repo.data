@@ -25,17 +25,17 @@ head(ca)
 \seealso{
 The raw source of the data is: \code{\link[tools:CRAN_aliases_db]{CRAN_aliases_db()}}.
 
-Other alias: 
-\code{\link{alias}()},
-\code{\link{base_alias}()}
+Other alias:
+\code{\link[=alias]{alias()}},
+\code{\link[=base_alias]{base_alias()}}
 
-Other meta info from CRAN: 
-\code{\link{cran_actions}()},
-\code{\link{cran_archive}()},
-\code{\link{cran_comments}()},
-\code{\link{cran_doom}()},
-\code{\link{cran_links}()},
-\code{\link{links}()}
+Other meta info from CRAN:
+\code{\link[=cran_actions]{cran_actions()}},
+\code{\link[=cran_archive]{cran_archive()}},
+\code{\link[=cran_comments]{cran_comments()}},
+\code{\link[=cran_doom]{cran_doom()}},
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=links]{links()}}
 }
 \concept{alias}
 \concept{meta info from CRAN}

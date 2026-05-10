@@ -25,8 +25,8 @@ head(ba)
 \seealso{
 The raw source of the data is: \code{\link[tools:base_aliases_db]{base_aliases_db()}}.
 
-Other alias: 
-\code{\link{alias}()},
-\code{\link{cran_alias}()}
+Other alias:
+\code{\link[=alias]{alias()}},
+\code{\link[=cran_alias]{cran_alias()}}
 }
 \concept{alias}

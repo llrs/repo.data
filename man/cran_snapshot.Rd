@@ -28,13 +28,13 @@ head(cs)
 }
 }
 \seealso{
-Other utilities: 
-\code{\link{cran_date}()},
-\code{\link{cran_doom}()},
-\code{\link{duplicated_alias}()},
-\code{\link{package_date}()},
-\code{\link{package_repos}()},
-\code{\link{repos_dependencies}()},
-\code{\link{update_dependencies}()}
+Other utilities:
+\code{\link[=cran_date]{cran_date()}},
+\code{\link[=cran_doom]{cran_doom()}},
+\code{\link[=duplicated_alias]{duplicated_alias()}},
+\code{\link[=package_date]{package_date()}},
+\code{\link[=package_repos]{package_repos()}},
+\code{\link[=repos_dependencies]{repos_dependencies()}},
+\code{\link[=update_dependencies]{update_dependencies()}}
 }
 \concept{utilities}
