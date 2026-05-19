@@ -7,7 +7,8 @@
 package_dependencies(packages = ".", which = "strong")
 }
 \arguments{
-\item{packages}{Path to a file with a DESCRIPTION file or package's names from a repository.}
+\item{packages}{Path to a folder with a DESCRIPTION file or package's names from a repository.
+If NULL will pick all packages and their dependencies available.}
 
 \item{which}{a character vector listing the types of
     dependencies, a subset of
@@ -20,12 +21,14 @@ package_dependencies(packages = ".", which = "strong")
   }
 }
 \value{
-A data.frame with the name, version required, if only one package requires it it also show the name of the package.
+A data.frame with the Package, Type, Name, Op and Version required.
+If only one package requires it it also show the name of the package.
 \code{NA} if not able to collect the data from repositories.
 }
 \description{
 Despite the description minimal requirements find which versions are
 required due to dependencies.
+Reports the minimal version for each package that would be installed now.
 }
 \note{
 It keeps the base packages too even if just knowing the R version required would be enough.
