@@ -27,12 +27,12 @@ duplicated_alias <- function(alias) {
 #' Joins the matrices of each file
 #' @param x A raw alias output as given by CRAN (and Bioconductor).
 #' @returns A matrix with Package, Source (The name of the file), and the Target (or Alias)
-#' @keywords internal
+#' @noRd
 alias2df <- function(x) {
     if (!length(x)) {
         return(NULL)
     }
-    
+
     l <- lapply(x, function(x) {
         cbind(Source = rep(names(x), lengths(x)), Target = funlist(x))
     })
@@ -43,7 +43,7 @@ alias2df <- function(x) {
 
 # Warns of alias missing depending OS
 warnings_alias <- function(alias) {
-    
+
     paths <- grepl("/", alias[, "Source"], fixed = TRUE)
     alias_os <- alias[paths, ]
     split_factor <- paste0(alias_os[, "Package"], alias_os[, "Target"])
@@ -55,12 +55,12 @@ warnings_alias <- function(alias) {
         }
     })
     packages <- unique(funlist(packages_diff_os))
-    
+
     # Report names of packages
     if (length(packages)) {
         warning("Packages with targets not present in a OS:\n", toString(sQuote(packages)), call. = FALSE, immediate. = TRUE)
         return(FALSE)
-    } 
+    }
     TRUE
 }
 

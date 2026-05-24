@@ -28,6 +28,7 @@ BASE <- tools::standard_package_names()$base
     pkg_state$opts <- opts
 }
 
+
 .onDetach <- function(libpath) {
     options(pkg_state$opts)
 }

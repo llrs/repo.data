@@ -16,14 +16,16 @@ A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Num
 Explore the relationship between CRAN packages and other help pages by the target they use.
 }
 \examples{
+\donttest{
 ctl <- cran_targets_links("BaseSet")
 head(ctl)
 }
+}
 \seealso{
-Other links from CRAN: 
-\code{\link{cran_links}()},
-\code{\link{cran_pages_links}()},
-\code{\link{cran_pkges_links}()},
-\code{\link{links}()}
+Other links from CRAN:
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=cran_pages_links]{cran_pages_links()}},
+\code{\link[=cran_pkges_links]{cran_pkges_links()}},
+\code{\link[=links]{links()}}
 }
 \concept{links from CRAN}

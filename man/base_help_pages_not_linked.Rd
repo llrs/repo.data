@@ -21,8 +21,8 @@ head(bhnl)
 }
 }
 \seealso{
-Other functions related to BASE help pages: 
-\code{\link{base_help_cliques}()},
-\code{\link{base_help_pages_wo_links}()}
+Other functions related to BASE help pages:
+\code{\link[=base_help_cliques]{base_help_cliques()}},
+\code{\link[=base_help_pages_wo_links]{base_help_pages_wo_links()}}
 }
 \concept{functions related to BASE help pages}

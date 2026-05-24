@@ -109,10 +109,12 @@ cran_help_pages_wo_links <- function(packages = NULL) {
 #' @family functions related to CRAN help pages
 #' @export
 #' @examplesIf requireNamespace("igraph", quietly = TRUE)
+#' \donttest{
 #' chc <- cran_help_cliques("BaseSet")
 #' if (!is.null(dim(chc))) {
 #'    table(chc$clique)
 #'    chc[chc$clique != 1L, ]
+#' }
 #' }
 cran_help_cliques <- function(packages = NULL) {
     check_pkg_names(packages, NA)

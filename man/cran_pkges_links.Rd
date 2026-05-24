@@ -24,10 +24,10 @@ head(cpkl)
 }
 }
 \seealso{
-Other links from CRAN: 
-\code{\link{cran_links}()},
-\code{\link{cran_pages_links}()},
-\code{\link{cran_targets_links}()},
-\code{\link{links}()}
+Other links from CRAN:
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=cran_pages_links]{cran_pages_links()}},
+\code{\link[=cran_targets_links]{cran_targets_links()}},
+\code{\link[=links]{links()}}
 }
 \concept{links from CRAN}

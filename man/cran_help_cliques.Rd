@@ -27,16 +27,18 @@ Requires igraph.
 }
 \examples{
 \dontshow{if (requireNamespace("igraph", quietly = TRUE)) withAutoprint(\{ # examplesIf}
+\donttest{
 chc <- cran_help_cliques("BaseSet")
 if (!is.null(dim(chc))) {
    table(chc$clique)
    chc[chc$clique != 1L, ]
 }
+}
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other functions related to CRAN help pages: 
-\code{\link{cran_help_pages_not_linked}()},
-\code{\link{cran_help_pages_wo_links}()}
+Other functions related to CRAN help pages:
+\code{\link[=cran_help_pages_not_linked]{cran_help_pages_not_linked()}},
+\code{\link[=cran_help_pages_wo_links]{cran_help_pages_wo_links()}}
 }
 \concept{functions related to CRAN help pages}

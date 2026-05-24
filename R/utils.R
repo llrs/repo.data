@@ -52,7 +52,6 @@ check_r_version <- function(version = "4.5.0") {
     r_ver >= target
 }
 
-
 .cran_archive <- function() {
     if (check_r_version()) {
         return(tools::CRAN_archive_db())
@@ -140,7 +139,7 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
 }
 
 valid_package_name <- function(packages) {
-    packages_anchored <- paste0("^", .standard_regexps()$valid_package_name, "$") 
+    packages_anchored <- paste0("^", .standard_regexps()$valid_package_name, "$")
     grepl(packages_anchored, packages)
 }
 
@@ -189,6 +188,13 @@ no_internet <- function(x) {
     if (length(x) == 1L && is.na(x)) q("no")
 }
 
+skip_on_cran <- function() {
+    env <- Sys.getenv("NOT_CRAN", FALSE)
+    if (isFALSE(as.logical(toupper(env)))) {
+        q("no")
+    }
+}
+
 omitting_packages <- function(packages) {
     if (length(packages)) {
         warning("Some packages are not currently available. Omitting packages:\n",
@@ -198,7 +204,7 @@ omitting_packages <- function(packages) {
 
 check_current_pkg <- function(packages, current) {
     warn <- empty_env("current_packages")
-    current_packages <- save_state(c("available packages" = "current_packages"), 
+    current_packages <- save_state(c("available packages" = "current_packages"),
         current, verbose = FALSE)
     omit_pkg <- setdiff(packages, current_packages)
     if (warn && anyNA(current_packages) && any(current_packages != current)) {

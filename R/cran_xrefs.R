@@ -20,21 +20,21 @@ cran_links <- function(packages = NULL) {
     }
     check_pkg_names(packages, NA)
     env <- c("processed CRAN xrefs" = "full_cran_rdxrefs")
-    
+
     # Check for missing packages
     current_packages <- names(raw_xrefs)
     omit_pkg <- check_current_pkg(packages, current_packages)
-    
+
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
-    
+
     # Check if there is already data
     first_xrefs <- empty_env(env)
     xrefs <- pkg_state[[env]]
-    
+
     # Decide which packages are to be added to the data
     if (!is.null(packages) && !first_xrefs) {
         new_packages <- setdiff(packages, xrefs[, "Package"])
@@ -45,7 +45,7 @@ cran_links <- function(packages = NULL) {
     } else if (is.null(packages) && !first_xrefs) {
         new_packages <- setdiff(current_packages, xrefs[, "Package"])
     }
-    
+
     # Add new package's data
     if (length(new_packages)) {
         new_xrefs <- xrefs2df(raw_xrefs[new_packages])
@@ -68,8 +68,10 @@ cran_links <- function(packages = NULL) {
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_target, to_Rd, n (Number of links).
 #' @export
 #' @examples
+#' \donttest{
 #' ctl <- cran_targets_links("BaseSet")
 #' head(ctl)
+#' }
 cran_targets_links <- function(packages = NULL) {
     out <- NULL
     env <- c("CRAN' packages links to targets" = "cran_targets_links")
@@ -77,17 +79,17 @@ cran_targets_links <- function(packages = NULL) {
     check_pkg_names(packages, NA)
     current_env <- get_package_subset(env, pkges = packages)
     targets_packages <- current_env$from_pkg
-    subset_pkg <- !first_call && !is.null(packages) && all(packages %in% targets_packages)      
-    
+    subset_pkg <- !first_call && !is.null(packages) && all(packages %in% targets_packages)
+
     if ((!is.null(packages) && !is.null(current_env)) || subset_pkg) {
         out <- packages_in_links(current_env, packages)
         rownames(out) <- NULL
         return(out)
     }
-    
+
     current_packages <- current_cran_packages()
     new_packages <- setdiff(current_packages, out$from_pkg)
-    
+
     cl <- cran_links(new_packages)
     if (is_not_data(cl)) {
         return(NA)
@@ -101,10 +103,10 @@ cran_targets_links <- function(packages = NULL) {
         return(NA)
     }
     bl2 <- split_anchor(cl)
-    
+
     t2b2 <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))
     out <- add_uniq_count(t2b2)
-    
+
     pkg_state[[env]] <- rbind(current_env, out)
     out <- get_package_subset(env, packages)
     rownames(out) <- NULL
@@ -120,22 +122,27 @@ cran_targets_links <- function(packages = NULL) {
 #' @returns A data.frame with 6 columns: from_pkg, from_Rd, to_pkg, to_Rd, n (Number of links).
 #' @export
 #' @examples
+#' \donttest{
 #' cpl <- cran_pages_links("Matrix")
 #' head(cpl)
+#' }
 cran_pages_links <- function(packages = NULL) {
     check_pkg_names(packages, NA)
-    
+
     target_links <- cran_targets_links(packages)
     if (is_not_data(target_links)) {
         return(NA)
     }
-    
+
     w <- which(colnames(target_links) == "to_target")
     keep_rows <- nzchar(target_links$to_pkg)
     if (!is.null(packages)) {
         keep_rows <- keep_rows & (target_links$from_pkg %in% packages | target_links$to_pkg %in% packages)
     }
-    add_uniq_count(target_links[keep_rows, -w])
+    out <- add_uniq_count(target_links[keep_rows, -w])
+    out <- as.data.frame(out)
+    out$n <- as.numeric(out$n)
+    out
 }
 
 #' Links between help pages by package
@@ -163,5 +170,9 @@ cran_pkges_links <- function(packages = NULL) {
     if (!is.null(packages)) {
         keep_rows <- keep_rows & target_links$from_pkg %in% packages
     }
-    add_uniq_count(target_links[keep_rows, -w])
+    out <- add_uniq_count(target_links[keep_rows, -w])
+    out <- as.data.frame(out)
+    out$n <- as.numeric(out$n)
+    out
+
 }

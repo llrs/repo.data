@@ -5,8 +5,12 @@
 \alias{os_alias}
 \title{Base R OS specific alias}
 \format{
-\subsection{\code{os_alias}}{
-
+An object of class \code{matrix} (inherits from \code{array}) with 33 rows and 5 columns.
+}
+\usage{
+os_alias
+}
+\value{
 A matrix with 33 rows and 5 columns:
 \describe{
 \item{Package}{Package name}
@@ -16,12 +20,12 @@ A matrix with 33 rows and 5 columns:
 \item{Target}{Name of the Target}
 }
 }
-}
-\usage{
-os_alias
-}
 \description{
 Data from the R source code of OS specific man help pages.
 This is to complement \code{tools::base_aliases_db()} which only provides links for Unix.
+}
+\examples{
+os_alias
+
 }
 \keyword{datasets}

@@ -29,6 +29,18 @@ Remains on CRAN archive: \url{https://cran.r-project.org/src/contrib/Archive/}.
 }
 }
 \examples{
+\donttest{
 ca <- cran_actions(silent = TRUE)
 head(ca)
 }
+}
+\seealso{
+Other meta info from CRAN:
+\code{\link[=cran_alias]{cran_alias()}},
+\code{\link[=cran_archive]{cran_archive()}},
+\code{\link[=cran_comments]{cran_comments()}},
+\code{\link[=cran_doom]{cran_doom()}},
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=links]{links()}}
+}
+\concept{meta info from CRAN}

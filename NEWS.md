@@ -1,7 +1,8 @@
-# repo.data (development version)
+# repo.data 0.2.2
 
 * Adds `cran_actions()` for CRAN's movements of packages.
 * Adds `cran_issues()` for CRAN's notifications of package maintainers.
+* Adds more tests to increase code coverage and reduce bugs.
 
 # repo.data 0.1.5
 

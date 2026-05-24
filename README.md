@@ -14,7 +14,9 @@ The goal of repo.data is to make repository data accessible. Mainly it
 consumes existing data but the idea is to also generate it.
 
 When a function is specific of a repository it will start with its name:
-`cran_` or `bioc_`.
+`cran_` or `bioc_`. Some functions have their equivalent for all
+repositories that provide this information (CRAN and Bioconductor that
+I’m aware of).
 
 ## Installation
 
@@ -42,24 +44,23 @@ library(repo.data)
 #> 
 #>     alias
 ca <- cran_archive()
-#> Warning: There are 5 packages both archived and published
+#> Warning: There are 4 packages both archived and published
 #> This indicate manual CRAN intervention.
 head(ca)
-#>         Package            Datetime Version   User   Size   Status
-#> 1            A3 2013-02-07 10:00:29   0.9.1 hornik  45252 archived
-#> 2            A3 2013-03-26 19:58:40   0.9.2 ligges  45907 archived
-#> 3            A3 2015-08-16 23:05:54   1.0.0 hornik  42810 archived
-#> 4       aae.pop 2026-01-31 19:40:13   0.2.0 ligges 899714  current
-#> 5 AalenJohansen 2023-03-01 11:42:11     1.0 ligges 165057  current
-#> 6       aamatch 2025-06-24 11:40:05   0.3.7 ligges 222104  current
+#>     Package            Datetime Version   User    Size   Status
+#> 1 a11yShiny 2026-03-30 21:20:21   0.1.3 ligges   71907  current
+#> 2        A3 2013-02-07 10:00:29   0.9.1 hornik   45252 archived
+#> 3        A3 2013-03-26 19:58:40   0.9.2 ligges   45907 archived
+#> 4        A3 2015-08-16 23:05:54   1.0.0 hornik   42810 archived
+#> 5       a5R 2026-03-16 20:10:23   0.2.0 ligges 3685016 archived
+#> 6       a5R 2026-03-26 13:30:08   0.3.1 ligges 3706043  current
 ```
 
 We can also check CRAN comments about the packages on its archive:
 
 ``` r
 cc <- cran_comments()
-#> Retrieving comments, this might take a bit.
-#> Caching results to be faster next call in this session.
+#> Downloading and caching CRAN's comments for this session.
 head(cc)
 #>    package
 #> 1       A3
@@ -89,10 +90,12 @@ on the session info or a data.frame:
 
 ``` r
 cran_session(session = sessionInfo())
-#> [1] "2026-01-18 07:10:11 CET"
+#> [1] "2026-03-26 17:30:10 CET"
 ip <- installed.packages()
 cran_date(ip)
-#> [1] "2026-01-29 23:20:11 CET"
+#> Warning: Some packages are not currently available. Omitting packages:
+#> 'annotate', 'AnnotationDbi', 'Biobase', 'BiocGenerics', 'BioCor', 'BiocParallel', 'BiocVersion', 'Biostrings', 'cransays', 'GSEABase', 'IRanges', 'KEGGREST', 'rotemplate', 'rutils', 'S4Vectors', 'Seqinfo', 'XVector'.
+#> [1] "2026-04-04 10:00:06 CEST"
 ```
 
 ## Related packages

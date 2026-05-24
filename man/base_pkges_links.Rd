@@ -24,9 +24,9 @@ head(bpkl)
 }
 }
 \seealso{
-Other links from R: 
-\code{\link{base_links}()},
-\code{\link{base_pages_links}()},
-\code{\link{base_targets_links}()}
+Other links from R:
+\code{\link[=base_links]{base_links()}},
+\code{\link[=base_pages_links]{base_pages_links()}},
+\code{\link[=base_targets_links]{base_targets_links()}}
 }
 \concept{links from R}

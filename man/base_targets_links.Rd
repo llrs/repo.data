@@ -23,9 +23,9 @@ head(btl)
 }
 }
 \seealso{
-Other links from R: 
-\code{\link{base_links}()},
-\code{\link{base_pages_links}()},
-\code{\link{base_pkges_links}()}
+Other links from R:
+\code{\link[=base_links]{base_links()}},
+\code{\link[=base_pages_links]{base_pages_links()}},
+\code{\link[=base_pkges_links]{base_pkges_links()}}
 }
 \concept{links from R}

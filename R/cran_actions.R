@@ -7,11 +7,19 @@ download_actions <- function() {
                    "rsync://CRAN.R-project.org/CRAN-actions"),
         "actions.rds")
     if (startsWith(src, "file://")) {
-        readRDS(substring(src, 8L))
+        tryCatch(
+            readRDS(substring(src, 8L)),
+            warning = function(w) {NA},
+            error = function(e) {NA})
+
     } else {
         dst <- tempfile()
-        system2("rsync", c(src, dst))
-        readRDS(dst)
+        tryCatch({
+            system2("rsync", c(src, dst))
+            readRDS(dst)
+        },
+        warning = function(w) {NA},
+        error = function(e) {NA})
     }
 }
 
@@ -32,17 +40,20 @@ download_actions <- function() {
 #' @returns A data.frame with Date, Time, User, Action, Package and Version columns.
 #' `NA` if not able to collect the data from CRAN.
 #' @importFrom stats na.omit
+#' @family meta info from CRAN
 #' @export
 #' @examples
+#' \donttest{
 #' ca <- cran_actions(silent = TRUE)
 #' head(ca)
+#' }
 cran_actions <- function(packages = NULL, silent = FALSE) {
     out <- cran_all_actions()
     if (is_not_data(out)) {
         return(NA)
     }
     check_pkg_names(packages, NA)
-    actions <- get_package_subset("full_cran_actions", packages)
+    actions <- get_package_subset(c("CRAN actions" ="full_cran_actions"), packages)
 
     if (isFALSE(silent)) {
         warnings_actions(actions)
@@ -57,14 +68,15 @@ cran_all_actions <- function() {
     }
 
     actions <- download_actions()
-
+    if (is_not_data(actions)) {
+        return(NA)
+    }
     actions$Date <- charToDate(actions$Date, "%F")
     actions$User <- as.factor(actions$User)
     lev <- c("publish", "archive", "remove")
     if (!all(na.omit(actions$Action) %in% lev)) {
         warning("New action by CRAN: ", na.omit(setdiff(actions$Action, lev)), call. = FALSE)
     }
-
 
     actions$Action <- factor(actions$Action, levels = lev)
     actions$Package <- as.factor(actions$Package)

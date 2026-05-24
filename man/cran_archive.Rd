@@ -42,11 +42,12 @@ The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_d
 \code{\link[tools:CRAN_current_db]{CRAN_current_db()}}.
 For some dates and comments about archiving packages: \code{\link[=cran_comments]{cran_comments()}}.
 
-Other meta info from CRAN: 
-\code{\link{cran_alias}()},
-\code{\link{cran_comments}()},
-\code{\link{cran_history}()},
-\code{\link{cran_links}()},
-\code{\link{links}()}
+Other meta info from CRAN:
+\code{\link[=cran_actions]{cran_actions()}},
+\code{\link[=cran_alias]{cran_alias()}},
+\code{\link[=cran_comments]{cran_comments()}},
+\code{\link[=cran_doom]{cran_doom()}},
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=links]{links()}}
 }
 \concept{meta info from CRAN}

@@ -105,7 +105,7 @@ package_date <- function(packages = ".", which = "strong") {
 
 #' Package dates
 #'
-#' Same as package_date but using CRAN's actions instead of public archive.
+#' Same as [package_date()] but using CRAN's actions instead of public archive.
 #'
 #' This provides information about when a package was removed or archived for a
 #' more accurate estimation.
@@ -113,9 +113,10 @@ package_date <- function(packages = ".", which = "strong") {
 #' It accepts also local path to packages source directories but then the
 #' function works as if the package is not released yet.
 #' @inheritParams tools::package_dependencies
-#' @keywords internal
-# @examples
-# # package_date_actions("afmToolkit")
+#' @returns A vector with the time when the package was publish and when were the dependencies available.
+#' @export
+#' @examples
+#' package_date_actions("afmToolkit")
 package_date_actions <- function(packages = ".", which = "strong") {
     fields <- check_which(which)
     is_local_pkg <- check_local(packages)

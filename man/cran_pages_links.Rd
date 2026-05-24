@@ -17,14 +17,16 @@ Explore the relationship between CRAN packages and other help pages.
 If the target help page is ambiguous it is omitted.
 }
 \examples{
+\donttest{
 cpl <- cran_pages_links("Matrix")
 head(cpl)
 }
+}
 \seealso{
-Other links from CRAN: 
-\code{\link{cran_links}()},
-\code{\link{cran_pkges_links}()},
-\code{\link{cran_targets_links}()},
-\code{\link{links}()}
+Other links from CRAN:
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=cran_pkges_links]{cran_pkges_links()}},
+\code{\link[=cran_targets_links]{cran_targets_links()}},
+\code{\link[=links]{links()}}
 }
 \concept{links from CRAN}

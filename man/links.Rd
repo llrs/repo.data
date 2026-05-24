@@ -19,24 +19,26 @@ Retrieve links of repository packages to other packages' documentation.
 \examples{
 oldrepos <- getOption("repos")
 setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
+\donttest{
 head(links(c("ggplot2", "BiocCheck")))
-
+}
 # Clean  up
 options(repos = oldrepos)
 }
 \seealso{
-Other links from CRAN: 
-\code{\link{cran_links}()},
-\code{\link{cran_pages_links}()},
-\code{\link{cran_pkges_links}()},
-\code{\link{cran_targets_links}()}
+Other links from CRAN:
+\code{\link[=cran_links]{cran_links()}},
+\code{\link[=cran_pages_links]{cran_pages_links()}},
+\code{\link[=cran_pkges_links]{cran_pkges_links()}},
+\code{\link[=cran_targets_links]{cran_targets_links()}}
 
-Other meta info from CRAN: 
-\code{\link{cran_alias}()},
-\code{\link{cran_archive}()},
-\code{\link{cran_comments}()},
-\code{\link{cran_history}()},
-\code{\link{cran_links}()}
+Other meta info from CRAN:
+\code{\link[=cran_actions]{cran_actions()}},
+\code{\link[=cran_alias]{cran_alias()}},
+\code{\link[=cran_archive]{cran_archive()}},
+\code{\link[=cran_comments]{cran_comments()}},
+\code{\link[=cran_doom]{cran_doom()}},
+\code{\link[=cran_links]{cran_links()}}
 }
 \concept{links from CRAN}
 \concept{meta info from CRAN}

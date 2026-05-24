@@ -24,15 +24,17 @@ oldrepos <- getOption("repos")
 setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
 # show repositories
 getOption("repos")
+\donttest{
 head(alias(c("ggplot2", "BiocCheck")))
+}
 
 # Clean  up
 options(repos = oldrepos)
 }
 \seealso{
-Other alias: 
-\code{\link{base_alias}()},
-\code{\link{cran_alias}()}
+Other alias:
+\code{\link[=base_alias]{base_alias()}},
+\code{\link[=cran_alias]{cran_alias()}}
 }
 \concept{alias}
 \concept{meta info}

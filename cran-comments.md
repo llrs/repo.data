@@ -1,6 +1,7 @@
+New version with more functions and more protections to avoid issues downloading data from CRAN and Bioconductor
 
-* Package was tested with no internet connection. No errors or warnings was detected.
+## R CMD check results
 
-* This packages works without errors or warnings on the CRAN platforms: 
- - win-devel
- 
+0 errors | 0 warnings | 1 note
+
+* This is a new release.

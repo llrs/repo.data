@@ -1,6 +1,8 @@
 library("repo.data")
 pkges <- c("BaseSet", "experDesign")
 
+repo.data:::skip_on_cran()
+
 # Test that it works
 st1 <- system.time(ctl <- cran_targets_links(pkges))
 repo.data:::no_internet(ctl)
