@@ -41,9 +41,9 @@ head(bpl)
 #>   from_pkg       from_Rd to_pkg           to_Rd n
 #> 1     base Arithmetic.Rd   base      MathFun.Rd 1
 #> 2     base Arithmetic.Rd   base      Special.Rd 1
-#> 3     base Arithmetic.Rd   base       double.Rd 2
-#> 4     base Arithmetic.Rd   base groupGeneric.Rd 1
-#> 5     base Arithmetic.Rd   base    identical.Rd 1
-#> 6     base Arithmetic.Rd   base      integer.Rd 1
+#> 3     base Arithmetic.Rd   base        array.Rd 1
+#> 4     base Arithmetic.Rd   base       double.Rd 2
+#> 5     base Arithmetic.Rd   base groupGeneric.Rd 1
+#> 6     base Arithmetic.Rd   base    identical.Rd 1
 # }
 ```

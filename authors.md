@@ -10,13 +10,13 @@
 Source:
 [`DESCRIPTION`](https://github.com/llrs/repo.data/blob/main/DESCRIPTION)
 
-Revilla Sancho L (2026). *repo.data: R Repository Data*. R package
-version 0.1.5.9000, <https://github.com/llrs/repo.data>.
+Revilla Sancho L (2026). *repo.data: R Repositories Data*. R package
+version 0.2.2, <https://github.com/llrs/repo.data>.
 
     @Manual{,
-      title = {repo.data: R Repository Data},
+      title = {repo.data: R Repositories Data},
       author = {Lluís {Revilla Sancho}},
       year = {2026},
-      note = {R package version 0.1.5.9000},
+      note = {R package version 0.2.2},
       url = {https://github.com/llrs/repo.data},
     }

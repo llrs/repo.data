@@ -28,15 +28,17 @@ Other alias: [`alias()`](https://repo.data.llrs.dev/reference/alias.md),
 [`base_alias()`](https://repo.data.llrs.dev/reference/base_alias.md)
 
 Other meta info from CRAN:
+[`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md),
 [`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
 [`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
-[`cran_history()`](https://repo.data.llrs.dev/reference/cran_history.md),
+[`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md),
 [`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
 [`links()`](https://repo.data.llrs.dev/reference/links.md)
 
 ## Examples
 
 ``` r
+# \donttest{
 ca <- cran_alias("BWStest")
 #> Downloading and caching CRAN aliases for this session.
 head(ca)
@@ -47,4 +49,5 @@ head(ca)
 #> 4 BWStest        bws_stat.Rd        bws_stat
 #> 5 BWStest        bws_test.Rd        bws_test
 #> 6 BWStest    murakami_cdf.Rd    murakami_cdf
+# }
 ```

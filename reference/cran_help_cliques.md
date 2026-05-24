@@ -38,6 +38,7 @@ Other functions related to CRAN help pages:
 ## Examples
 
 ``` r
+# \donttest{
 chc <- cran_help_cliques("BaseSet")
 #> Downloading and caching CRAN's packages xrefs for this session.
 #> Downloading and caching base R's aliases for this session.
@@ -51,6 +52,7 @@ if (!is.null(dim(chc))) {
    chc[chc$clique != 1L, ]
 }
 #>      from_pkg        from_Rd clique  to_pkg          to_Rd n
-#> 1984  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
-#> 1985  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
+#> 1993  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
+#> 1994  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
+# }
 ```

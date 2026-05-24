@@ -40,9 +40,20 @@ archive and remove.
 
 - Remove: Removed from CRAN's archive.
 
+## See also
+
+Other meta info from CRAN:
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
+[`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
+[`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
+[`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md),
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`links()`](https://repo.data.llrs.dev/reference/links.md)
+
 ## Examples
 
 ``` r
+# \donttest{
 ca <- cran_actions(silent = TRUE)
 head(ca)
 #>         Date     Time   User  Action  Package Version
@@ -52,4 +63,5 @@ head(ca)
 #> 4 2025-06-13 10:12:00 hornik archive       A3   1.0.0
 #> 5 2020-06-14 17:10:07 ligges publish AATtools   0.0.1
 #> 6 2022-08-12 15:40:11 ligges publish AATtools   0.0.2
+# }
 ```

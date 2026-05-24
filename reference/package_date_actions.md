@@ -1,6 +1,8 @@
 # Package dates
 
-Same as package_date but using CRAN's actions instead of public archive.
+Same as
+[`package_date()`](https://repo.data.llrs.dev/reference/package_date.md)
+but using CRAN's actions instead of public archive.
 
 ## Usage
 
@@ -25,7 +27,20 @@ package_date_actions(packages = ".", which = "strong")
   string `"strong"` (default) for the first three elements of that
   vector.
 
+## Value
+
+A vector with the time when the package was publish and when were the
+dependencies available.
+
 ## Details
 
 This provides information about when a package was removed or archived
 for a more accurate estimation.
+
+## Examples
+
+``` r
+package_date_actions("afmToolkit")
+#>                 Published            deps_available 
+#> "2025-09-23 08:40:12 UTC"                        NA 
+```

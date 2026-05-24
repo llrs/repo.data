@@ -97,8 +97,8 @@ if (requireNamespace("igraph", quietly = TRUE)) {
 #> 62    methods             setMethod.Rd     18   methods     S4groupGeneric.Rd 1
 #> 63       base             proc.time.Rd     19      <NA>                  <NA> 0
 #> 64       base           system.time.Rd     19      <NA>                  <NA> 0
-#> 65   parallel              sendData.Rd     19      base          proc.time.Rd 1
-#> 66   parallel              sendData.Rd     19      base        system.time.Rd 1
+#> 65   parallel              sendData.Rd     19      base        system.time.Rd 1
+#> 66   parallel              sendData.Rd     19      base          proc.time.Rd 1
 #> 67      stats    influence.measures.Rd     20      <NA>                  <NA> 0
 #> 68      stats          lm.influence.Rd     20     stats influence.measures.Rd 1
 #> 69      stats               ls.diag.Rd     20     stats influence.measures.Rd 1
@@ -131,18 +131,19 @@ if (requireNamespace("igraph", quietly = TRUE)) {
 #> 96      tools check_packages_in_dir.Rd     31  parallel       clusterApply.Rd 2
 #> 97      tools         buildVignette.Rd     32      <NA>                  <NA> 0
 #> 98      utils                Sweave.Rd     32     tools      buildVignette.Rd 1
-#> 99      tools          RdTextFilter.Rd     33      <NA>                  <NA> 0
-#> 100     utils          aspell-utils.Rd     33     tools       RdTextFilter.Rd 1
-#> 101     tools               userdir.Rd     34      <NA>                  <NA> 0
-#> 102     utils    available.packages.Rd     34     tools            userdir.Rd 1
-#> 103     utils    installed.packages.Rd     34     tools            userdir.Rd 1
-#> 104     tools              bibstyle.Rd     35      <NA>                  <NA> 0
-#> 105     tools          loadRdMacros.Rd     35      <NA>                  <NA> 0
-#> 106     utils              bibentry.Rd     35     tools       loadRdMacros.Rd 1
-#> 107     utils              bibentry.Rd     35     tools           bibstyle.Rd 1
-#> 108     stats                    ts.Rd     36      <NA>                  <NA> 0
-#> 109     utils                  head.Rd     36     stats                 ts.Rd 1
-#> 110   methods        getPackageName.Rd     37      <NA>                  <NA> 0
-#> 111     utils           packageName.Rd     37   methods     getPackageName.Rd 1
+#> 99      utils   SweaveGetSourceName.Rd     32     utils             Sweave.Rd 1
+#> 100     tools          RdTextFilter.Rd     33      <NA>                  <NA> 0
+#> 101     utils          aspell-utils.Rd     33     tools       RdTextFilter.Rd 1
+#> 102     tools               userdir.Rd     34      <NA>                  <NA> 0
+#> 103     utils    available.packages.Rd     34     tools            userdir.Rd 1
+#> 104     utils    installed.packages.Rd     34     tools            userdir.Rd 1
+#> 105     tools              bibstyle.Rd     35      <NA>                  <NA> 0
+#> 106     tools          loadRdMacros.Rd     35      <NA>                  <NA> 0
+#> 107     utils              bibentry.Rd     35     tools       loadRdMacros.Rd 1
+#> 108     utils              bibentry.Rd     35     tools           bibstyle.Rd 1
+#> 109     stats                    ts.Rd     36      <NA>                  <NA> 0
+#> 110     utils                  head.Rd     36     stats                 ts.Rd 1
+#> 111   methods        getPackageName.Rd     37      <NA>                  <NA> 0
+#> 112     utils           packageName.Rd     37   methods     getPackageName.Rd 1
 # }
 ```

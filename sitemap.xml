@@ -7,7 +7,6 @@
 <url><loc>https://repo.data.llrs.dev/index.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/news/index.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/alias.html</loc></url>
-<url><loc>https://repo.data.llrs.dev/reference/alias2df.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/base_alias.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/base_help_cliques.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/base_help_pages_not_linked.html</loc></url>
@@ -28,7 +27,6 @@
 <url><loc>https://repo.data.llrs.dev/reference/cran_help_pages_links_wo_deps.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/cran_help_pages_not_linked.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/cran_help_pages_wo_links.html</loc></url>
-<url><loc>https://repo.data.llrs.dev/reference/cran_history.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/cran_issues.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/cran_links.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/cran_maintainers.html</loc></url>
@@ -47,8 +45,6 @@
 <url><loc>https://repo.data.llrs.dev/reference/package_repos.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/repo.data-package.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/repos_dependencies.html</loc></url>
-<url><loc>https://repo.data.llrs.dev/reference/split_anchor.html</loc></url>
-<url><loc>https://repo.data.llrs.dev/reference/targets2files.html</loc></url>
 <url><loc>https://repo.data.llrs.dev/reference/update_dependencies.html</loc></url>
 </urlset>
 

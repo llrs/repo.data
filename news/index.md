@@ -1,6 +1,6 @@
 # Changelog
 
-## repo.data (development version)
+## repo.data 0.2.2
 
 - Adds
   [`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md)
@@ -8,6 +8,7 @@
 - Adds
   [`cran_issues()`](https://repo.data.llrs.dev/reference/cran_issues.md)
   for CRAN’s notifications of package maintainers.
+- Adds more tests to increase code coverage and reduce bugs.
 
 ## repo.data 0.1.5
 

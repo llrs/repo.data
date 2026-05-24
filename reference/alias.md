@@ -42,8 +42,8 @@ getOption("repos")
 #> "https://bioconductor.org/packages/3.23/bioc" 
 #>                                               
 #>                  "https://cran.r-project.org" 
+# \donttest{
 head(alias(c("ggplot2", "BiocCheck")))
-#> Warning: Packages found in multiple repositories‘ClusterGVis’
 #>   Package   Source         Target
 #> 1 ggplot2 Coord.Rd          Coord
 #> 2 ggplot2 Coord.Rd CoordCartesian
@@ -51,6 +51,7 @@ head(alias(c("ggplot2", "BiocCheck")))
 #> 4 ggplot2 Coord.Rd      CoordFlip
 #> 5 ggplot2 Coord.Rd       CoordMap
 #> 6 ggplot2 Coord.Rd     CoordPolar
+# }
 
 # Clean  up
 options(repos = oldrepos)

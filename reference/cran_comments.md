@@ -42,9 +42,10 @@ Original file: <https://cran.r-project.org/src/contrib/PACKAGES.in>
 ## See also
 
 Other meta info from CRAN:
+[`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md),
 [`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
 [`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
-[`cran_history()`](https://repo.data.llrs.dev/reference/cran_history.md),
+[`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md),
 [`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
 [`links()`](https://repo.data.llrs.dev/reference/links.md)
 
@@ -60,21 +61,21 @@ head(cc)
 #> 2 ABCExtremes
 #> 3       ABCp2
 #> 4       ABCp2
-#> 5      ACCLMA
-#> 6         ACD
+#> 5         ACA
+#> 6      ACCLMA
 #>                                                                                            comment
 #> 1                           Archived on 2025-06-13 as issues were not corrected despite reminders.
 #> 2     Archived on 2015-06-19 as incomplete maintainer address was not corrected despite reminders.
 #> 3                     Archived on 2015-07-01 as maintainer address <duryea@dartmouth.edu> bounced.
 #> 4                           Archived on 2025-01-26 as issues were not corrected despite reminders.
-#> 5 Archived on 2021-02-05 as issues were not corrected despite reminders: 'xtfrm()' on data frames.
-#> 6                   Archived on 2022-06-08 as check problems were not corrected despite reminders.
+#> 5                              Archived on 2026-05-04 as email to the maintainer is undeliverable.
+#> 6 Archived on 2021-02-05 as issues were not corrected despite reminders: 'xtfrm()' on data frames.
 #>         date   action
 #> 1 2025-06-13 archived
 #> 2 2015-06-19 archived
 #> 3 2015-07-01 archived
 #> 4 2025-01-26 archived
-#> 5 2021-02-05 archived
-#> 6 2022-06-08 archived
+#> 5 2026-05-04 archived
+#> 6 2021-02-05 archived
 # }
 ```

@@ -113,6 +113,8 @@ repositories
 
 - [`package_date()`](https://repo.data.llrs.dev/reference/package_date.md)
   : Find earliest date of compatibility
+- [`package_date_actions()`](https://repo.data.llrs.dev/reference/package_date_actions.md)
+  : Package dates
 - [`package_repos()`](https://repo.data.llrs.dev/reference/package_repos.md)
   : Package dependencies to repositories
 - [`repos_dependencies()`](https://repo.data.llrs.dev/reference/repos_dependencies.md)

@@ -29,10 +29,11 @@ Other links from CRAN:
 [`cran_targets_links()`](https://repo.data.llrs.dev/reference/cran_targets_links.md)
 
 Other meta info from CRAN:
+[`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md),
 [`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
 [`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
 [`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
-[`cran_history()`](https://repo.data.llrs.dev/reference/cran_history.md),
+[`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md),
 [`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md)
 
 ## Examples
@@ -40,6 +41,7 @@ Other meta info from CRAN:
 ``` r
 oldrepos <- getOption("repos")
 setRepositories(ind = c(1, 2), addURLs = "https://cran.r-project.org")
+# \donttest{
 head(links(c("ggplot2", "BiocCheck")))
 #>   Package   Source          Anchor         Target
 #> 1 ggplot2 Coord.Rd        =ggproto      ggproto()
@@ -48,7 +50,7 @@ head(links(c("ggplot2", "BiocCheck")))
 #> 4 ggplot2 Coord.Rd =complete_theme complete theme
 #> 5 ggplot2 Coord.Rd =complete_theme complete theme
 #> 6 ggplot2 Coord.Rd =complete_theme complete theme
-
+# }
 # Clean  up
 options(repos = oldrepos)
 ```

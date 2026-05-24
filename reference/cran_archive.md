@@ -38,9 +38,10 @@ dates and comments about archiving packages:
 [`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md).
 
 Other meta info from CRAN:
+[`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md),
 [`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
 [`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
-[`cran_history()`](https://repo.data.llrs.dev/reference/cran_history.md),
+[`cran_doom()`](https://repo.data.llrs.dev/reference/cran_doom.md),
 [`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
 [`links()`](https://repo.data.llrs.dev/reference/links.md)
 

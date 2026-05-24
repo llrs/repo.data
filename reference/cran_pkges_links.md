@@ -35,12 +35,12 @@ Other links from CRAN:
 cpkl <- cran_pkges_links()
 #> Warning: Some links are distinct depending on the OS.
 head(cpkl)
-#>      from_pkg   to_pkg     n   
-#> [1,] "AATtools" "AATtools" "3" 
-#> [2,] "ABCoptim" "graphics" "3" 
-#> [3,] "ABCoptim" "stats"    "3" 
-#> [4,] "ABM"      "ABM"      "39"
-#> [5,] "ACDm"     "Rsolnp"   "3" 
-#> [6,] "ACDm"     "ggplot2"  "3" 
+#>     from_pkg     to_pkg  n
+#> 1   AATtools   AATtools  3
+#> 2 ABCDscores ABCDscores  3
+#> 3   ABCoptim   graphics  3
+#> 4   ABCoptim      stats  3
+#> 5        ABM        ABM 39
+#> 6       ACDm     Rsolnp  3
 # }
 ```

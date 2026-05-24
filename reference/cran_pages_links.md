@@ -31,6 +31,7 @@ Other links from CRAN:
 ## Examples
 
 ``` r
+# \donttest{
 cpl <- cran_pages_links("Matrix")
 head(cpl)
 #>   from_pkg                 from_Rd to_pkg               to_Rd n
@@ -40,4 +41,5 @@ head(cpl)
 #> 4   Matrix BunchKaufman-methods.Rd Matrix   expand-methods.Rd 2
 #> 5   Matrix BunchKaufman-methods.Rd Matrix    is.na-methods.Rd 2
 #> 6   Matrix BunchKaufman-methods.Rd Matrix       lu-methods.Rd 2
+# }
 ```

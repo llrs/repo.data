@@ -37,11 +37,11 @@ Other links from R:
 bl <- base_links()
 head(bl)
 #>   Package        Source   Target          Anchor
-#> 1    base Arithmetic.Rd      Ops =S3groupGeneric
+#> 1    base Arithmetic.Rd    array                
 #> 2    base Arithmetic.Rd      Ops =S3groupGeneric
-#> 3    base Arithmetic.Rd infinite                
-#> 4    base Arithmetic.Rd   double                
+#> 3    base Arithmetic.Rd      Ops =S3groupGeneric
+#> 4    base Arithmetic.Rd infinite                
 #> 5    base Arithmetic.Rd   double                
-#> 6    base Arithmetic.Rd  warning                
+#> 6    base Arithmetic.Rd   double                
 # }
 ```

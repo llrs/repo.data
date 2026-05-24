@@ -31,6 +31,7 @@ Other links from CRAN:
 ## Examples
 
 ``` r
+# \donttest{
 ctl <- cran_targets_links("BaseSet")
 head(ctl)
 #>   from_pkg            from_Rd to_pkg          to_target to_Rd n
@@ -40,4 +41,5 @@ head(ctl)
 #> 4  BaseSet   TidySet-class.Rd        complement_element       1
 #> 5  BaseSet   TidySet-class.Rd            complement_set       1
 #> 6  BaseSet   TidySet-class.Rd              element_size       1
+# }
 ```

@@ -65,6 +65,14 @@ Other utilities:
 [`repos_dependencies()`](https://repo.data.llrs.dev/reference/repos_dependencies.md),
 [`update_dependencies()`](https://repo.data.llrs.dev/reference/update_dependencies.md)
 
+Other meta info from CRAN:
+[`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md),
+[`cran_alias()`](https://repo.data.llrs.dev/reference/cran_alias.md),
+[`cran_archive()`](https://repo.data.llrs.dev/reference/cran_archive.md),
+[`cran_comments()`](https://repo.data.llrs.dev/reference/cran_comments.md),
+[`cran_links()`](https://repo.data.llrs.dev/reference/cran_links.md),
+[`links()`](https://repo.data.llrs.dev/reference/links.md)
+
 ## Examples
 
 ``` r
@@ -72,12 +80,12 @@ Other utilities:
 cd <- cran_doom()
 #> Downloading and caching CRAN's packages database for this session.
 if (length(cd) > 1L) head(cd$details)
-#>       Package   Deadline   type repo n_affected
-#> 1   ggtaxplot 2026-04-06 direct CRAN          6
-#> 2 xpose.xtras 2026-04-06 direct CRAN          6
-#> 3 netdiffuseR 2026-04-06 direct CRAN          5
-#> 4          ti 2026-04-06 direct CRAN          5
-#> 5     srcpkgs 2026-04-06 direct CRAN          4
-#> 6       bit64 2026-04-06 direct CRAN          1
+#>              Package   Deadline   type repo n_affected
+#> 1           fastshap 2026-05-20 direct CRAN          1
+#> 2              BLRPM 2026-05-21 direct CRAN          1
+#> 3 FuzzyNumbers.Ext.2 2026-05-21 direct CRAN          1
+#> 4               HDCI 2026-05-21 direct CRAN          1
+#> 5               pwr2 2026-05-21 direct CRAN          1
+#> 6              reslr 2026-05-25 direct CRAN          3
 # }
 ```
