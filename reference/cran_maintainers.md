@@ -35,14 +35,14 @@ The raw source of the data is:
 maintainers <- cran_maintainers()
 head(maintainers)
 #>         Package                                   Maintainer        user
-#> 1     a11yShiny    Jan Liebnitzky <datenlabor@bmftr.bund.de>        root
+#> 1     a11yShiny    Jan Liebnitzky <datenlabor@bmftr.bund.de>   kammererj
 #> 2           a5R              Hugh Graham <hugh@belian.earth>        hugh
 #> 3       aae.pop                 Jian Yen <jdl.yen@gmail.com>        jy0f
 #> 4 AalenJohansen        Martin Bladt <martinbladt@math.ku.dk> martinbladt
 #> 5       aamatch Paul Rosenbaum <rosenbaum@wharton.upenn.edu>    rosenbap
 #> 6      AATtools   Sercan Kahveci <sercan.kahveci@plus.ac.at>    b1066151
 #>   maintainer_date packaged_date published_date           Name
-#> 1            <NA>    2026-03-26     2026-03-30 Jan Liebnitzky
+#> 1            <NA>    2026-05-27     2026-05-27 Jan Liebnitzky
 #> 2            <NA>    2026-05-14     2026-05-14    Hugh Graham
 #> 3      2026-01-27    2026-01-27     2026-01-31       Jian Yen
 #> 4            <NA>    2023-02-28     2023-03-01   Martin Bladt
