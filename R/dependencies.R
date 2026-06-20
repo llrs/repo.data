@@ -159,7 +159,7 @@ package_dependencies <- function(packages = ".", which = "strong") {
 
     no_deps_pkgs <- setdiff(rownames(new_ap), rd$Package)
     no_deps <- length(no_deps_pkgs)
-    if (no_deps) {
+    if (no_deps && isFALSE(is_local_pkg)) {
         message(sprintf("Some packages (%s) don't have any R dependency:\n", no_deps),
                 toString(sort(sQuote(no_deps_pkgs))))
     }
