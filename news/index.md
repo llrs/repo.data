@@ -2,6 +2,8 @@
 
 ## repo.data 0.2.2
 
+CRAN release: 2026-06-20
+
 - Adds
   [`cran_actions()`](https://repo.data.llrs.dev/reference/cran_actions.md)
   for CRAN’s movements of packages.

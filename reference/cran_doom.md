@@ -81,11 +81,11 @@ cd <- cran_doom()
 #> Downloading and caching CRAN's packages database for this session.
 if (length(cd) > 1L) head(cd$details)
 #>        Package   Deadline   type repo n_affected
-#> 1        Epoch 2026-06-21 direct CRAN          1
-#> 2          ami 2026-06-22 direct CRAN          1
-#> 3     cleangeo 2026-06-22 direct CRAN          1
-#> 4   geotargets 2026-06-22 direct CRAN          1
-#> 5 mLLMCelltype 2026-06-22 direct CRAN          1
-#> 6         webr 2026-06-23 direct CRAN          2
+#> 1 mLLMCelltype 2026-06-22 direct CRAN          1
+#> 2     SeqFeatR 2026-06-24 direct CRAN          2
+#> 3       dc3net 2026-06-24 direct CRAN          2
+#> 4  AnalyzeFMRI 2026-06-24 direct CRAN          1
+#> 5    CORElearn 2026-06-24 direct CRAN          1
+#> 6   Goodreader 2026-06-24 direct CRAN          1
 # }
 ```
