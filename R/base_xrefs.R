@@ -15,12 +15,12 @@
 #' }
 base_links <- function(packages = NULL) {
     stopifnot("Requires at least R 4.5.0" = check_r_version())
-    out <- save_state(c("R's xrefs" = "base_rdxrefs"), 
+    check_pkg_names(packages, NA)
+    out <- save_state(c("R's xrefs" = "base_rdxrefs"),
         xrefs2df(tools::base_rdxrefs_db()))
     if (!is.data.frame(out) && !is.matrix(out)) {
         return(NA)
     }
-    check_pkg_names(packages, NA)
     links <- get_package_subset("base_rdxrefs", packages)
     as.data.frame(links)[, c("Package", "Source", "Target", "Anchor")]
 }
@@ -46,7 +46,7 @@ base_targets_links <- function(packages = NULL) {
     if (!is.null(packages) && !is.null(out)) {
         return(packages_in_links(out, packages))
     }
-    
+
     bl <- base_links()
     if (is_not_data(bl)) {
         return(NA)
@@ -60,7 +60,7 @@ base_targets_links <- function(packages = NULL) {
         return(NA)
     }
     bl2 <- split_anchor(bl)
-    
+
     out <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))
     save_state(env, out, verbose = FALSE)
     packages_in_links(out, packages)
@@ -95,7 +95,7 @@ base_pages_links <- function(packages = NULL) {
     out <- sort_by(out, out[, setdiff(colnames(out), "n")])
     rownames(out) <- NULL
     out
-    
+
 }
 
 #' Links between help pages by package

@@ -13,10 +13,12 @@
 #'    head(dup_alias)
 #' }
 duplicated_alias <- function(alias) {
-    if (is_not_data(alias)) {
+    if (is_not_data(alias) && !is.logical(alias)) {
         return(NA)
     }
-    stopifnot(c("Package", "Source", "Target") %in% colnames(alias))
+    stopifnot(
+        "Missing required columns: Package, Source, Target" =
+            c("Package", "Source", "Target") %in% colnames(alias))
     da <- dup_alias(alias)
     da[, c("Target", "Package", "Source"), drop = FALSE]
 }

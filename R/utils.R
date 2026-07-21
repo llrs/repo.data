@@ -15,8 +15,15 @@ check_installed <- function(x) {
 }
 
 check_local <- function(x) {
-    desc_pkg <- file.path(x, "DESCRIPTION")
-    vapply(desc_pkg, file.exists, FUN.VALUE = logical(1L))
+    out <- rep(NA, lenght.out = length(x))
+    omit <- !is.character(x)
+    valid_paths <- x[!omit]
+    if (length(valid_paths)) {
+        desc_pkg <- file.path(normalizePath(valid_paths, "/"), "DESCRIPTION")
+        out[!omit] <- vapply(desc_pkg, file.exists, FUN.VALUE = logical(1L))
+    }
+    out[omit] <- FALSE
+    out
 }
 
 get_from_local_pkg <- function(x, fields = "Package") {
@@ -159,8 +166,7 @@ check_pkg_names <- function(packages, length = 1L) {
     if (is.null(packages)) {
         return(TRUE)
     }
-    local_packages <- dir.exists(packages)
-
+    local_packages <- check_local(packages)
     valid_names <- valid_package_name(packages)
 
     # Don't trigger error on local packages
@@ -179,9 +185,8 @@ is_logical <- function(x) {
     isTRUE(x) || isFALSE(x)
 }
 
-
 is_not_data <- function(x) {
-    !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
+    length(dim(x)) && !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
 }
 
 no_internet <- function(x) {

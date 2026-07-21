@@ -120,7 +120,7 @@ links <- function(packages = NULL) {
 #' # Clean  up
 #' options(repos = oldrepos)
 alias <- function(packages = NULL) {
-    stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
+    check_pkg_names(packages, NA)
     repos <- getOption("repos")
     env <- c("aliases" = "aliases")
 
