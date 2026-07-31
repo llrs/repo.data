@@ -19,7 +19,7 @@ check_local <- function(x) {
     omit <- !is.character(x)
     valid_paths <- x[!omit]
     if (length(valid_paths)) {
-        desc_pkg <- file.path(normalizePath(valid_paths, "/"), "DESCRIPTION")
+        desc_pkg <- file.path(normalizePath(valid_paths, "/", mustWork = FALSE), "DESCRIPTION")
         out[!omit] <- vapply(desc_pkg, file.exists, FUN.VALUE = logical(1L))
     }
     out[omit] <- FALSE
@@ -165,6 +165,10 @@ check_pkg_names <- function(packages, length = 1L) {
     # If length = NA it can be NULL
     if (is.null(packages)) {
         return(TRUE)
+    }
+    if (isFALSE(char_packages)) {
+        msg <- "Use NULL or a character vector with some packages."
+        stop(msg, call. = FALSE)
     }
     local_packages <- check_local(packages)
     valid_names <- valid_package_name(packages)
