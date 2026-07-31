@@ -19,6 +19,9 @@ bioc_cran_archived <- function(which = "strong") {
     if (is_not_data(db)) {
         return(NA)
     }
+    if (is_not_data(bioc)) {
+        return(NA)
+    }
     columns <- intersect(colnames(bioc), colnames(db))
     db_all <- rbind(db[, columns], bioc[, columns])
     bioc_deps <- packages_dependencies(as.matrix(bioc[, fields_selected]))

@@ -36,6 +36,9 @@ cran_doom <- function(which = "strong", bioc = FALSE) {
     db$repo <- "CRAN"
     if (isTRUE(bioc)) {
         bioc <- bioc_available()
+        if (is_not_data(bioc)) {
+            return(NA)
+        }
         bioc$repo <- "Bioconductor"
         columns <- intersect(colnames(bioc), colnames(db))
         db_all <- rbind(db[, columns], bioc[, columns])
