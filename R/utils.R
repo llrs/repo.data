@@ -238,7 +238,7 @@ strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     m
 }
 
-
+#' @importFrom utils read.table
 repo_names <- function() {
     rt <- read.table(file.path(R.home(), "etc", "repositories"))
     rownames(rt)
