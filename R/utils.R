@@ -237,3 +237,9 @@ strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     colnames(m) <- colnames(proto) %||% names(proto) %||% proto
     m
 }
+
+
+repo_names <- function() {
+    rt <- read.table(file.path(R.home(), "etc", "repositories"))
+    rownames(rt)
+}
