@@ -15,7 +15,7 @@ check_installed <- function(x) {
 }
 
 check_local <- function(x) {
-    out <- rep(NA, lenght.out = length(x))
+    out <- rep(NA, times = length(x))
     omit <- !is.character(x)
     valid_paths <- x[!omit]
     if (length(valid_paths)) {
