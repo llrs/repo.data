@@ -240,6 +240,8 @@ strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
 
 #' @importFrom utils read.table
 repo_names <- function() {
+    file_path <- file.path(R.home(), "etc", "repositories")
+    system2("cat", args = file_path)
     rt <- read.table(file.path(R.home(), "etc", "repositories"), header = TRUE)
     rownames(rt)
 }
