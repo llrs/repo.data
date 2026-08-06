@@ -118,6 +118,7 @@ package_date <- function(packages = ".", which = "strong") {
 #' @examples
 #' package_date_actions("afmToolkit")
 package_date_actions <- function(packages = ".", which = "strong") {
+    check_pkg_names(packages, NA)
     fields <- check_which(which)
     is_local_pkg <- check_local(packages)
 
