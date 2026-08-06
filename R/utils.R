@@ -190,7 +190,7 @@ is_logical <- function(x) {
 }
 
 is_not_data <- function(x) {
-    length(dim(x)) && !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
+    !length(dim(x)) || !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
 }
 
 no_internet <- function(x) {
@@ -212,13 +212,8 @@ omitting_packages <- function(packages) {
 }
 
 check_current_pkg <- function(packages, current) {
-    warn <- empty_env("current_packages")
-    current_packages <- save_state(c("available packages" = "current_packages"),
-        current, verbose = FALSE)
-    omit_pkg <- setdiff(packages, current_packages)
-    if (warn && anyNA(current_packages) && any(current_packages != current)) {
-        omitting_packages(omit_pkg)
-    }
+    omit_pkg <- setdiff(packages, current)
+    omitting_packages(omit_pkg)
     omit_pkg
 }
 
