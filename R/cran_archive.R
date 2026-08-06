@@ -49,7 +49,7 @@ cran_archive <- function(packages = NULL) {
     if (!is.null(packages) && !length(packages)) {
         return(NULL)
     }
-    
+
     # Check if there is already data
     first_arch <- empty_env(env)
     if (first_arch) {
@@ -57,10 +57,10 @@ cran_archive <- function(packages = NULL) {
     } else {
         arch <- pkg_state[[env]]
     }
-    
+
     # Packages with archive data to add
     pkgs2add <- setdiff(arch_names, arch[arch[, "status"] != "current", "package"])
-    
+
     # Decide which packages are to be added to the data
     new_packages <- if (!is.null(packages)) {
         packages
@@ -68,7 +68,7 @@ cran_archive <- function(packages = NULL) {
         all_names
     }
     new_packages <- intersect(new_packages, pkgs2add)
-    
+
     # Add new package's data
     if (length(new_packages)) {
         new_arch <- arch2m(archive[new_packages])
@@ -77,12 +77,12 @@ cran_archive <- function(packages = NULL) {
         warnings_archive(arch)
         pkg_state[[env]] <- arch
     }
-    
+
     out <- save_state(env, arch)
     if (is.null(packages)) {
         return(arch2df(out))
     }
-    
+
     if (all(packages %in% out[, "package"])) {
         arch2df(out[pkg_in_x(out, packages), , drop = FALSE])
     } else {
@@ -95,20 +95,20 @@ cran_packages <- function() {
     if (is_not_data(current_packages)) {
         return(NA)
     }
-    archive <- save_state(c("CRAN archive database" = "archive"), 
+    archive <- save_state(c("CRAN archive database" = "archive"),
         tools::CRAN_archive_db(), FALSE)
     if (is_not_data(archive)) {
         return(NA)
     }
     archive_packages <- names(archive)
     cran_packages <- unique(current_packages, archive_packages)
-    save_state(c("CRAN's packages" = "cran_packages"), 
+    save_state(c("CRAN's packages" = "cran_packages"),
         cran_packages, verbose = FALSE)
-    
+
 }
 
 current_cran_packages <- function() {
-    current <- save_state(c("names packages on CRAN" = "current"), 
+    current <- save_state(c("names packages on CRAN" = "current"),
         tools::CRAN_current_db(), FALSE)
     if (is_not_data(current)) {
         return(NA)
