@@ -127,7 +127,7 @@ alias <- function(packages = NULL) {
     if (empty_env(env)) {
         raw_alias <- lapply(repos, read_repo, path = "src/contrib/Meta/aliases.rds")
         names(raw_alias) <- names(repos)
-        if (is_not_data(raw_alias)) {
+        if (!is.list(raw_alias)) {
             return(NA)
         }
         raw_alias$base <- tools::base_aliases_db()
