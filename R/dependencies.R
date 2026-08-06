@@ -81,6 +81,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
 package_dependencies <- function(packages = ".", which = "strong") {
     fields_selected <- check_which(which)
     is_local_pkg <- check_local(packages)
+    check_pkg_names(packages, NA)
 
     # Get packages dependencies recursively
     local_ap <- NULL
@@ -155,13 +156,6 @@ package_dependencies <- function(packages = ".", which = "strong") {
     # No package is depended by more than one package
     if (length(repo_pkges) <= 0L || !anyDuplicated(rd$Name)) {
         return(rd)
-    }
-
-    no_deps_pkgs <- setdiff(rownames(new_ap), rd$Package)
-    no_deps <- length(no_deps_pkgs)
-    if (no_deps && isFALSE(is_local_pkg)) {
-        message(sprintf("Some packages (%s) don't have any R dependency:\n", no_deps),
-                toString(sort(sQuote(no_deps_pkgs))))
     }
 
     # Calculate the dependency path
