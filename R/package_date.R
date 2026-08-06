@@ -135,6 +135,9 @@ package_date_actions <- function(packages = ".", which = "strong") {
         rd <- repos_dependencies(which = fields)
         deps_df <- rbind(deps_df, rd[rd$package == packages, , drop = FALSE])
         p <- cran_archive(packages)
+        if (is_not_data(p)) {
+            return(NA)
+        }
         date_package <- p$Datetime[NROW(p)]
     }
 
