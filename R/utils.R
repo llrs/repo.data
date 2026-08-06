@@ -190,7 +190,7 @@ is_logical <- function(x) {
 }
 
 is_not_data <- function(x) {
-    !length(dim(x)) || !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
+    (!is.list(x) && !length(dim(x))) || !as.logical(NROW(x)) || (length(x) == 1L && is.na(x))
 }
 
 no_internet <- function(x) {
