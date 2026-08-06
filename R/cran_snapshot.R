@@ -127,10 +127,12 @@ cran_session <- function(session = sessionInfo()) {
     if (is(session, "session_info")) {
         versions <- session$packages
         colnames(versions)[1L:2L] <- c("Package", "Version")
-    } else {
+    } else if (is(session, "sessionInfo")) {
         loaded <- lapply(session$loadedOnly, desc2version)
         other <- lapply(session$otherPkgs, desc2version)
         versions <- do.call(rbind, c(loaded, other))
+    } else {
+        stop("Session information not recognized: either sessionInfo() objects or session_info()")
     }
     cran_date(versions)
 }
