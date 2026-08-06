@@ -42,7 +42,7 @@ bioc_cran_archived <- function(which = "strong") {
 bioc_version <- function(type = "release") {
     bioc_config <- "https://bioconductor.org/config.yaml"
     rl <- tryCatch(readLines(con = url(bioc_config)), warning = function(w){NA}, error = function(e){NA})
-    if (is_not_data(rl)) {
+    if (!is.character(rl) && length(rl) > 79) {
         return(NA)
     }
     type <- match.arg(type, c("release", "devel"))
