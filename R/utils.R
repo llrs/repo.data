@@ -238,10 +238,18 @@ strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     m
 }
 
-#' @importFrom utils read.table
+#' @importFrom utils read.delim
+#' @importFrom utils file_test
 repo_names <- function() {
-    file_path <- file.path(R.home(), "etc", "repositories")
-    system2("cat", args = file_path)
-    rt <- read.table(file.path(R.home(), "etc", "repositories"), header = TRUE)
+    # Get path to repositories file
+    rfile <- Sys.getenv("R_REPOSITORIES", unset = NA_character_)
+    if (is.na(rfile) || rfile == "NULL" || !file_test("-f", rfile)) {
+        rfile <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+        if (!file_test("-f", rfile))
+            rfile <- file.path(R.home("etc"), "repositories")
+    }
+
+    rt <- read.delim(rfile, header = TRUE, comment.char = "#",
+                     colClasses = c(rep.int("character", 3L), rep.int("logical", 4L)))
     rownames(rt)
 }
