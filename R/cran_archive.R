@@ -42,8 +42,7 @@ cran_archive <- function(packages = NULL) {
     curr_names <- gsub("_.+", "", rownames(current)) # Rownames without version
     # Check for random packages
     all_names <- unique(c(arch_names, curr_names))
-    omit_pkg <- setdiff(packages, all_names)
-    omitting_packages(omit_pkg)
+    omit_pkg <- check_current_pkg(packages, all_names)
     # Keep only packages that can be processed
     packages <- setdiff(packages, omit_pkg)
     if (!is.null(packages) && !length(packages)) {
