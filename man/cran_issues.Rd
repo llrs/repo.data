@@ -26,6 +26,6 @@ with the hour it was sent and the deadline used.
 \examples{
 ci <- cran_issues()
 if (!is.null(dim(ci))) {
-    head(ci)
+  head(ci)
 }
 }

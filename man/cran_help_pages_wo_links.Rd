@@ -21,9 +21,9 @@ This makes harder to find them.
 \donttest{
 ap <- available.packages()
 if (NROW(ap)) {
-    a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
-    chwl <- cran_help_pages_wo_links(a_package)
-    head(chwl)
+  a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
+  chwl <- cran_help_pages_wo_links(a_package)
+  head(chwl)
 }
 }
 }
