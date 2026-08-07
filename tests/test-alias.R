@@ -49,33 +49,33 @@ clean_cache()
 new_repos <- c("BioCsoft", "CRAN")
 default_names <- repo.data:::repo_names()
 if (all(new_repos %in% default_names)) {
-    oldrepos <- setRepositories(name = new_repos)
-    on.exit(options(oldrepos), add = TRUE)
-    pkges <- c(pkges, "BioCor")
+  oldrepos <- setRepositories(name = new_repos)
+  on.exit(options(oldrepos), add = TRUE)
+  pkges <- c(pkges, "BioCor")
 
-    st <- system.time(ba <- alias(pkges))
-    repo.data:::no_internet(ba)
-    stopifnot(colnames(ba) == alias_columns)
-    st1 <- system.time(ba2 <- alias(pkges))
-    stopifnot("Cache alias didn't work" = any(st1 < st))
-    stopifnot("Alias with cache was not the same" = all.equal(ba, ba2))
-    missing_pkg <- pkges[!pkges %in% ba2$Package]
+  st <- system.time(ba <- alias(pkges))
+  repo.data:::no_internet(ba)
+  stopifnot(colnames(ba) == alias_columns)
+  st1 <- system.time(ba2 <- alias(pkges))
+  stopifnot("Cache alias didn't work" = any(st1 < st))
+  stopifnot("Alias with cache was not the same" = all.equal(ba, ba2))
+  missing_pkg <- pkges[!pkges %in% ba2$Package]
 
-    if (length(missing_pkg)) {
-        stop(sprintf("All packages are present on alias output: %s", toString(missing_pkg)))
-    }
+  if (length(missing_pkg)) {
+    stop(sprintf("All packages are present on alias output: %s", toString(missing_pkg)))
+  }
 
-    clean_cache()
-    st2 <- system.time(ba3 <- alias(pkges))
-    repo.data:::no_internet(ba3)
-    stopifnot("Clean cache restores initial state" = any(st2 > st1))
-    stopifnot("Still same result" = all.equal(ba, ba3))
+  clean_cache()
+  st2 <- system.time(ba3 <- alias(pkges))
+  repo.data:::no_internet(ba3)
+  stopifnot("Clean cache restores initial state" = any(st2 > st1))
+  stopifnot("Still same result" = all.equal(ba, ba3))
 
-    ba <- alias()
-    repo.data:::no_internet(ba)
-    stopifnot(colnames(ba) == alias_columns)
-    ba2 <- alias()
-    stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
+  ba <- alias()
+  repo.data:::no_internet(ba)
+  stopifnot(colnames(ba) == alias_columns)
+  ba2 <- alias()
+  stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 }
 rtweet <- alias("rtweet")
 stopifnot(NROW(rtweet) == 0L)

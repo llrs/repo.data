@@ -14,50 +14,50 @@
 #' head(ca)
 #' }
 cran_alias <- function(packages = NULL) {
-    stopifnot("Requires at least R 4.5.0" = check_r_version())
-    check_pkg_names(packages, NA)
-    raw_alias <- save_state(c("CRAN aliases" = "cran_aliases"), tools::CRAN_aliases_db())
-    if (is_not_data(raw_alias)) {
-        return(NA)
-    }
-    # Place to store modified data
-    env <- c("processed CRAN aliases" ="full_cran_aliases")
+  stopifnot("Requires at least R 4.5.0" = check_r_version())
+  check_pkg_names(packages, NA)
+  raw_alias <- save_state(c("CRAN aliases" = "cran_aliases"), tools::CRAN_aliases_db())
+  if (is_not_data(raw_alias)) {
+    return(NA)
+  }
+  # Place to store modified data
+  env <- c("processed CRAN aliases" = "full_cran_aliases")
 
-    # Check for missing packages
-    current_packages <- names(raw_alias)
-    omit_pkg <- check_current_pkg(packages, current_packages)
+  # Check for missing packages
+  current_packages <- names(raw_alias)
+  omit_pkg <- check_current_pkg(packages, current_packages)
 
-    # Keep only packages that can be processed
-    packages <- setdiff(packages, omit_pkg)
-    if (!is.null(packages) && !length(packages)) {
-        return(NULL)
-    }
+  # Keep only packages that can be processed
+  packages <- setdiff(packages, omit_pkg)
+  if (!is.null(packages) && !length(packages)) {
+    return(NULL)
+  }
 
-    # Check if there is already data
-    first_alias <- empty_env(env)
-    alias <- pkg_state[[env]]
+  # Check if there is already data
+  first_alias <- empty_env(env)
+  alias <- pkg_state[[env]]
 
-    # Decide which packages are to be added to the data
-    if (!is.null(packages) && !first_alias) {
-        new_packages <- setdiff(packages, alias[, "Package"])
-    } else if (!is.null(packages) && first_alias) {
-        new_packages <- intersect(packages, current_packages)
-    } else if (is.null(packages) && first_alias) {
-        new_packages <- current_packages
-    } else if (is.null(packages) && !first_alias) {
-        new_packages <- setdiff(current_packages, alias[, "Package"])
-    }
+  # Decide which packages are to be added to the data
+  if (!is.null(packages) && !first_alias) {
+    new_packages <- setdiff(packages, alias[, "Package"])
+  } else if (!is.null(packages) && first_alias) {
+    new_packages <- intersect(packages, current_packages)
+  } else if (is.null(packages) && first_alias) {
+    new_packages <- current_packages
+  } else if (is.null(packages) && !first_alias) {
+    new_packages <- setdiff(current_packages, alias[, "Package"])
+  }
 
-    # Add new package's data
-    if (length(new_packages)) {
-        new_alias <- alias2df(raw_alias[new_packages])
-        warnings_alias(new_alias)
-        alias <- rbind(alias, new_alias)
-        pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
-    }
-    if (is.null(packages)) {
-        as.data.frame(alias)
-    } else {
-        as.data.frame(alias[alias[, "Package"] %in% packages, , drop = FALSE])
-    }
+  # Add new package's data
+  if (length(new_packages)) {
+    new_alias <- alias2df(raw_alias[new_packages])
+    warnings_alias(new_alias)
+    alias <- rbind(alias, new_alias)
+    pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
+  }
+  if (is.null(packages)) {
+    as.data.frame(alias)
+  } else {
+    as.data.frame(alias[alias[, "Package"] %in% packages, , drop = FALSE])
+  }
 }

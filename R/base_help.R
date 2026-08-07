@@ -1,4 +1,3 @@
-
 #' Help pages without links
 #'
 #' Help pages without links to other help pages.
@@ -13,26 +12,27 @@
 #' head(bhnl)
 #' }
 base_help_pages_not_linked <- function() {
-    bal <- base_alias()
-    bl <- base_links()
-    if (is_not_data(bl)) {
-        return(NA)
-    }
-    bl2 <- split_anchor(bl)
-    rbl <- targets2files(bl2, bal)
-    
-    alias_cols <- c("Package", "Source")
-    links_cols <- c("from_pkg", "from_Rd")
-    ubal <- unique(bal[, alias_cols])
-    
-    links_cols2 <- c("to_pkg", "to_Rd")
-    pages <- merge(ubal, unique(rbl[, c(links_cols2, links_cols)]),
+  bal <- base_alias()
+  bl <- base_links()
+  if (is_not_data(bl)) {
+    return(NA)
+  }
+  bl2 <- split_anchor(bl)
+  rbl <- targets2files(bl2, bal)
+
+  alias_cols <- c("Package", "Source")
+  links_cols <- c("from_pkg", "from_Rd")
+  ubal <- unique(bal[, alias_cols])
+
+  links_cols2 <- c("to_pkg", "to_Rd")
+  pages <- merge(ubal, unique(rbl[, c(links_cols2, links_cols)]),
     by.x = alias_cols, by.y = links_cols2,
-    all.x = TRUE, all.y = FALSE, sort = FALSE)
-    p <- pages[is.na(pages$from_pkg), alias_cols, drop = FALSE]
-    p <- sort_by(p, p[, c("Package", "Source")])
-    rownames(p) <- NULL
-    p
+    all.x = TRUE, all.y = FALSE, sort = FALSE
+  )
+  p <- pages[is.na(pages$from_pkg), alias_cols, drop = FALSE]
+  p <- sort_by(p, p[, c("Package", "Source")])
+  rownames(p) <- NULL
+  p
 }
 
 #' Help pages not linked from base R
@@ -48,26 +48,26 @@ base_help_pages_not_linked <- function() {
 #' head(bhwl)
 #' }
 base_help_pages_wo_links <- function() {
-    
-    bal <- base_alias()
-    bl <- base_links()
-    if (is_not_data(bl)) {
-        return(NA)
-    }
-    bl2 <- split_anchor(bl)
-    rbl <- targets2files(bl2, bal)
-    alias_cols <- c("Package", "Source")
-    links_cols <- c("from_pkg", "from_Rd")
-    ubal <- unique(bal[, alias_cols])
-    
-    links_cols2 <- c("to_pkg", "to_Rd")
-    pages2 <- merge(ubal, unique(rbl[, c(links_cols, links_cols2)]),
+  bal <- base_alias()
+  bl <- base_links()
+  if (is_not_data(bl)) {
+    return(NA)
+  }
+  bl2 <- split_anchor(bl)
+  rbl <- targets2files(bl2, bal)
+  alias_cols <- c("Package", "Source")
+  links_cols <- c("from_pkg", "from_Rd")
+  ubal <- unique(bal[, alias_cols])
+
+  links_cols2 <- c("to_pkg", "to_Rd")
+  pages2 <- merge(ubal, unique(rbl[, c(links_cols, links_cols2)]),
     by.x = alias_cols, by.y = links_cols,
-    all.x = TRUE, all.y = FALSE, sort = FALSE)
-    p <- pages2[is.na(pages2$to_pkg), alias_cols, drop = FALSE]
-    p <- sort_by(p, p[, c("Package", "Source")])
-    rownames(p) <- NULL
-    p
+    all.x = TRUE, all.y = FALSE, sort = FALSE
+  )
+  p <- pages2[is.na(pages2$to_pkg), alias_cols, drop = FALSE]
+  p <- sort_by(p, p[, c("Package", "Source")])
+  rownames(p) <- NULL
+  p
 }
 
 #' Help pages with cliques
@@ -82,47 +82,50 @@ base_help_pages_wo_links <- function() {
 #' @examples
 #' \donttest{
 #' if (requireNamespace("igraph", quietly = TRUE)) {
-#'     base_help_cliques()
+#'   base_help_cliques()
 #' }
 #' }
 base_help_cliques <- function() {
-    if (!check_installed("igraph")) {
-        stop("This function requires igraph to find closed networks.", call. = FALSE)
-    }
-    bal <- base_alias()
-    if (is_not_data(bal)) {
-        return(NA)
-    }
-    bl <- base_links()
-    if (is_not_data(bl)) {
-        return(NA)
-    }
-    bl2 <- split_anchor(bl)
-    rbl <- targets2files(bl2, bal)
-    rbl <- rbl[nzchar(rbl$to_Rd), ]
-    df_links <- cbind(
-        from = paste0(rbl$from_pkg, ":", rbl$from_Rd),
-        to = paste0(rbl$to_pkg, ":", rbl$to_Rd))
-    df_links <- unique(df_links)
-    
-    graph <- igraph::graph_from_edgelist(df_links)
-    
-    graph_decomposed <- igraph::decompose(graph)
-    lengths_graph <- lengths(graph_decomposed)
-    if (length(lengths_graph) == 1L) {
-        isolated_help <- igraph::vertex_attr(graph_decomposed[[1L]])
-    } else {
-        isolated_help <- lapply(graph_decomposed[-which.max(lengths_graph)], igraph::vertex_attr)
-    }
-    l <- strsplit(unlist(isolated_help), ":", fixed = TRUE)
-    df <- as.data.frame(t(list2DF(l)))
-    colnames(df) <- c("from_pkg", "from_Rd")
-    lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]
-    df$clique <- rep(seq_along(lengths_graph2), times = lengths_graph2)
-    m <- merge(df, unique(rbl[, -4L]), all.x = TRUE,
-    by = c("from_pkg", "from_Rd"), sort = FALSE)
-    msorted <- sort_by(m, m[, c("clique", "from_pkg", "from_Rd")])
-    rownames(msorted) <- NULL
-    msorted$n[is.na(msorted$n)] <- 0L
-    msorted
+  if (!check_installed("igraph")) {
+    stop("This function requires igraph to find closed networks.", call. = FALSE)
+  }
+  bal <- base_alias()
+  if (is_not_data(bal)) {
+    return(NA)
+  }
+  bl <- base_links()
+  if (is_not_data(bl)) {
+    return(NA)
+  }
+  bl2 <- split_anchor(bl)
+  rbl <- targets2files(bl2, bal)
+  rbl <- rbl[nzchar(rbl$to_Rd), ]
+  df_links <- cbind(
+    from = paste0(rbl$from_pkg, ":", rbl$from_Rd),
+    to = paste0(rbl$to_pkg, ":", rbl$to_Rd)
+  )
+  df_links <- unique(df_links)
+
+  graph <- igraph::graph_from_edgelist(df_links)
+
+  graph_decomposed <- igraph::decompose(graph)
+  lengths_graph <- lengths(graph_decomposed)
+  if (length(lengths_graph) == 1L) {
+    isolated_help <- igraph::vertex_attr(graph_decomposed[[1L]])
+  } else {
+    isolated_help <- lapply(graph_decomposed[-which.max(lengths_graph)], igraph::vertex_attr)
+  }
+  l <- strsplit(unlist(isolated_help), ":", fixed = TRUE)
+  df <- as.data.frame(t(list2DF(l)))
+  colnames(df) <- c("from_pkg", "from_Rd")
+  lengths_graph2 <- lengths_graph[-which.max(lengths_graph)]
+  df$clique <- rep(seq_along(lengths_graph2), times = lengths_graph2)
+  m <- merge(df, unique(rbl[, -4L]),
+    all.x = TRUE,
+    by = c("from_pkg", "from_Rd"), sort = FALSE
+  )
+  msorted <- sort_by(m, m[, c("clique", "from_pkg", "from_Rd")])
+  rownames(msorted) <- NULL
+  msorted$n[is.na(msorted$n)] <- 0L
+  msorted
 }

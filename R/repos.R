@@ -1,4 +1,3 @@
-
 #' Package dependencies to repositories
 #'
 #' Explore the relationships between packages and repositories.
@@ -16,72 +15,78 @@
 #' pr <- package_repos("experDesign")
 #' head(pr)
 package_repos <- function(packages = NULL, repos = getOption("repos"), which = "all") {
-    stopifnot(is.character(repos) && length(repos))
-    check_pkg_names(packages, length = NA)
-    which <- check_which(which)
+  stopifnot(is.character(repos) && length(repos))
+  check_pkg_names(packages, length = NA)
+  which <- check_which(which)
 
-    unam_repos <- unique(names(repos))
-    repos <- unique(repos)
-    names(repos) <- unam_repos
+  unam_repos <- unique(names(repos))
+  repos <- unique(repos)
+  names(repos) <- unam_repos
 
-    ap <- tryCatch(available.packages(repos = repos, filters = c("CRAN", "duplicates")),
-                   warning = function(w){NA}, error = function(e){NA})
-    if (is_not_data(ap)) {
-        return(NA)
+  ap <- tryCatch(available.packages(repos = repos, filters = c("CRAN", "duplicates")),
+    warning = function(w) {
+      NA
+    }, error = function(e) {
+      NA
     }
+  )
+  if (is_not_data(ap)) {
+    return(NA)
+  }
 
-    # Check packages
-    omit_pkg <- check_current_pkg(setdiff(packages, BASE), rownames(ap))
+  # Check packages
+  omit_pkg <- check_current_pkg(setdiff(packages, BASE), rownames(ap))
 
-    # Keep only packages that can be processed
-    repos_packages <- setdiff(packages, omit_pkg)
+  # Keep only packages that can be processed
+  repos_packages <- setdiff(packages, omit_pkg)
 
-    if (is.null(repos_packages)) {
-        packages <- rownames(ap)
-    } else {
-        packages <- intersect(repos_packages, rownames(ap))
-    }
+  if (is.null(repos_packages)) {
+    packages <- rownames(ap)
+  } else {
+    packages <- intersect(repos_packages, rownames(ap))
+  }
 
-    # Get the repo where each package comes from: CRAN sometimes has packages under src/contrib/other dir
-    repositories <- gsub("/src/contrib.*", "", ap[, "Repository"])
-    names(repositories) <- rownames(ap)
-    repositories[] <- names(repos)[match(repositories, repos)]
+  # Get the repo where each package comes from: CRAN sometimes has packages under src/contrib/other dir
+  repositories <- gsub("/src/contrib.*", "", ap[, "Repository"])
+  names(repositories) <- rownames(ap)
+  repositories[] <- names(repos)[match(repositories, repos)]
 
-    # Get the direct dependencies for each package
-    opts <- options(repos = repos)
-    on.exit(opts, add = TRUE)
-    rd <- repos_dependencies(packages, which)
+  # Get the direct dependencies for each package
+  opts <- options(repos = repos)
+  on.exit(opts, add = TRUE)
+  rd <- repos_dependencies(packages, which)
 
-    pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]
+  pd2 <- rd[!rd$Name %in% c(BASE, "R"), c("Name", "Package")]
 
-    pd2$Repo <- repositories[pd2$Name]
-    pd2$Repo[is.na(pd2$Repo)] <- "Other"
+  pd2$Repo <- repositories[pd2$Name]
+  pd2$Repo[is.na(pd2$Repo)] <- "Other"
 
-    # Prefill matrix
-    M <- matrix(0L, ncol = length(repos) + 1L, nrow = NROW(ap))
-    colnames(M) <- c(names(repos), "Other")
-    rownames(M) <- rownames(ap)
+  # Prefill matrix
+  M <- matrix(0L, ncol = length(repos) + 1L, nrow = NROW(ap))
+  colnames(M) <- c(names(repos), "Other")
+  rownames(M) <- rownames(ap)
 
-    # Count repositories
-    s <- split(pd2$Repo, pd2$Package)
-    l <- lapply(s, function(pkg) {
-        tab <- table(factor(pkg, levels = c(names(repos), "Other")))
-        as.matrix(tab)
-    })
-    deps_m <- do.call(cbind, l)
-    deps_m <- t(deps_m)
-    rownames(deps_m) <- names(s)
-    M[rownames(deps_m), ] <- deps_m[, colnames(M)]
+  # Count repositories
+  s <- split(pd2$Repo, pd2$Package)
+  l <- lapply(s, function(pkg) {
+    tab <- table(factor(pkg, levels = c(names(repos), "Other")))
+    as.matrix(tab)
+  })
+  deps_m <- do.call(cbind, l)
+  deps_m <- t(deps_m)
+  rownames(deps_m) <- names(s)
+  M[rownames(deps_m), ] <- deps_m[, colnames(M)]
 
-    repos_n <- apply(M, 1L, function(x){sum(x > 0L)})
-    deps_n <- rowSums(M)
-    M2 <- cbind(M, Packages_deps = deps_n, Repos = repos_n)
-    df2 <- as.data.frame(M2)
-    # bioc_deps <- rowSums(M2[, 2:6])
-    df3 <- cbind(Package = rownames(df2), Repository = repositories, df2)
-    df3 <- df3[packages, , drop = FALSE]
-    df3 <- unique(df3)
-    rownames(df3) <- NULL
-    df3
+  repos_n <- apply(M, 1L, function(x) {
+    sum(x > 0L)
+  })
+  deps_n <- rowSums(M)
+  M2 <- cbind(M, Packages_deps = deps_n, Repos = repos_n)
+  df2 <- as.data.frame(M2)
+  # bioc_deps <- rowSums(M2[, 2:6])
+  df3 <- cbind(Package = rownames(df2), Repository = repositories, df2)
+  df3 <- df3[packages, , drop = FALSE]
+  df3 <- unique(df3)
+  rownames(df3) <- NULL
+  df3
 }
-

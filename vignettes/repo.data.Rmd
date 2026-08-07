@@ -96,7 +96,7 @@ To retrieve these help pages forming a clique there is a function to find them (
 cliques <- cran_help_cliques(pkg)
 # Number of help pages connected
 if (length(cliques) != 1L) {
-    table(cliques$n)
+  table(cliques$n)
 }
 ```
 
@@ -139,8 +139,10 @@ Under the hood it uses a function that given packages and their versions find a 
 This is also exported:
 
 ```{r cran_date, eval=with_internet}
-versions <- data.frame(Package = c("dplyr", "Rcpp", "rlang"),
-                       Version = c("1.1.4", "0.8.9", NA))
+versions <- data.frame(
+  Package = c("dplyr", "Rcpp", "rlang"),
+  Version = c("1.1.4", "0.8.9", NA)
+)
 cran_date(versions)
 ```
 
@@ -162,8 +164,8 @@ If you ever wonder which packages are at risk of being archived you can use `cra
 ```{r doom, eval=with_internet}
 cd <- cran_doom(bioc = TRUE)
 if (length(cd) != 1L) {
-    cd[c("time_till_last", "last_archived", "npackages")]
-    knitr::kable(head(cd$details))
+  cd[c("time_till_last", "last_archived", "npackages")]
+  knitr::kable(head(cd$details))
 }
 ```
 

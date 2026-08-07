@@ -15,11 +15,11 @@ stopifnot("No data on base_help_pages_wo_links" = as.logical(NROW(bhpwl)))
 stopifnot("Column names not matching" = colnames(bhpwl) == c("Package", "Source"))
 
 if (repo.data:::check_installed("igraph")) {
-    bhc <- base_help_cliques()
-    repo.data:::no_internet(bhc)
-    stopifnot("Column names not matching" = colnames(bhc) == c("from_pkg", "from_Rd", "clique", "to_pkg", "to_Rd", "n"))
-    stopifnot("No data on base_help_cliques" = as.logical(NROW(bhc)))
-    stopifnot("No links == 0L" = !anyNA(bhc$n))
+  bhc <- base_help_cliques()
+  repo.data:::no_internet(bhc)
+  stopifnot("Column names not matching" = colnames(bhc) == c("from_pkg", "from_Rd", "clique", "to_pkg", "to_Rd", "n"))
+  stopifnot("No data on base_help_cliques" = as.logical(NROW(bhc)))
+  stopifnot("No links == 0L" = !anyNA(bhc$n))
 }
 
 # CRAN
@@ -35,18 +35,22 @@ stopifnot("Column names not matching" = colnames(chpwl) == c("Package", "Source"
 stopifnot("No data on cran_help_pages_wo_links" = as.logical(NROW(chpwl)))
 
 if (repo.data:::check_installed("igraph")) {
-    chc <- cran_help_cliques(pkgs)
-    repo.data:::no_internet(chc)
-    stopifnot("Column names not matching" =
-                  colnames(chc) == c("from_pkg", "from_Rd", "clique", "to_pkg",
-                                     "to_Rd", "n"))
-    stopifnot("No data on cran_help_cliques" = as.logical(NROW(chc)))
+  chc <- cran_help_cliques(pkgs)
+  repo.data:::no_internet(chc)
+  stopifnot(
+    "Column names not matching" =
+      colnames(chc) == c(
+        "from_pkg", "from_Rd", "clique", "to_pkg",
+        "to_Rd", "n"
+      )
+  )
+  stopifnot("No data on cran_help_cliques" = as.logical(NROW(chc)))
 }
 
 if (repo.data:::check_installed("igraph")) {
-    chc_BaseSet <- cran_help_cliques("BaseSet")
-    repo.data:::no_internet(chc_BaseSet)
-    stopifnot(unique(chc$clique) >= 1L)
+  chc_BaseSet <- cran_help_cliques("BaseSet")
+  repo.data:::no_internet(chc_BaseSet)
+  stopifnot(unique(chc$clique) >= 1L)
 }
 
 # chc_pkgs <- cran_help_cliques(c("experDesign", "BaseSet"))
@@ -57,4 +61,3 @@ if (repo.data:::check_installed("igraph")) {
 chplwd <- cran_help_pages_links_wo_deps(pkgs)
 repo.data:::no_internet(chplwd)
 stopifnot(colnames(chplwd) == c("Package", "Source", "Anchor", "Target"))
-

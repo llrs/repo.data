@@ -12,4 +12,3 @@ stopifnot(is(ca$Action, "factor"))
 stopifnot("New action" = all(ca$Action %in% c("publish", "archive", "remove")))
 stopifnot(is(ca$Package, "factor"))
 stopifnot(is(ca$Version, "character"))
-

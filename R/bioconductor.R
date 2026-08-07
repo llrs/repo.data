@@ -13,102 +13,110 @@
 #' bca <- bioc_cran_archived()
 #' head(bca)
 bioc_cran_archived <- function(which = "strong") {
-    fields_selected <- check_which(which)
-    bioc <- bioc_available()
-    db <- save_state(c("CRAN's packages database" = "CRAN_db"), tools::CRAN_package_db())
-    if (is_not_data(db)) {
-        return(NA)
-    }
-    if (is_not_data(bioc)) {
-        return(NA)
-    }
-    columns <- intersect(colnames(bioc), colnames(db))
-    db_all <- rbind(db[, columns], bioc[, columns])
-    bioc_deps <- packages_dependencies(as.matrix(bioc[, fields_selected]))
-    base_r <- tools::standard_package_names()$base
+  fields_selected <- check_which(which)
+  bioc <- bioc_available()
+  db <- save_state(c("CRAN's packages database" = "CRAN_db"), tools::CRAN_package_db())
+  if (is_not_data(db)) {
+    return(NA)
+  }
+  if (is_not_data(bioc)) {
+    return(NA)
+  }
+  columns <- intersect(colnames(bioc), colnames(db))
+  db_all <- rbind(db[, columns], bioc[, columns])
+  bioc_deps <- packages_dependencies(as.matrix(bioc[, fields_selected]))
+  base_r <- tools::standard_package_names()$base
 
-    present <- !bioc_deps$Name %in% c(db_all$Package, base_r, "R")
-    missing_deps <- bioc_deps[present, ]
-    # TODO: Check any dependency to these packages.
-    miss_p_pkg <- split(missing_deps$Name, missing_deps$Package)
-    lmissing_dep <- lengths(miss_p_pkg)
-    p_missing <- vapply(miss_p_pkg, toString, character(1L))
-    df <- data.frame(Package = names(miss_p_pkg), Archived = p_missing, n = lmissing_dep)
-    rownames(df) <- NULL
-    df
+  present <- !bioc_deps$Name %in% c(db_all$Package, base_r, "R")
+  missing_deps <- bioc_deps[present, ]
+  # TODO: Check any dependency to these packages.
+  miss_p_pkg <- split(missing_deps$Name, missing_deps$Package)
+  lmissing_dep <- lengths(miss_p_pkg)
+  p_missing <- vapply(miss_p_pkg, toString, character(1L))
+  df <- data.frame(Package = names(miss_p_pkg), Archived = p_missing, n = lmissing_dep)
+  rownames(df) <- NULL
+  df
 }
 
 #' @importFrom utils read.csv
 bioc_version <- function(type = "release") {
-    bioc_config <- "https://bioconductor.org/config.yaml"
-    rl <- tryCatch(readLines(con = url(bioc_config)), warning = function(w){NA}, error = function(e){NA})
-    if (!is.character(rl) && length(rl) > 79) {
-        return(NA)
-    }
-    type <- match.arg(type, c("release", "devel"))
-    if (identical(type, "release")) {
-        version <- which(startsWith(rl, "release_version"))
-    } else {
-        version <- which(startsWith(rl, "devel_version"))
-    }
-    # Quick and dirty way to read and split the data
-    rv <- read.csv(text = rl[version], sep = ":", header = FALSE, colClasses = c("character", "character"))
-    BIOC_VERSION <- trimws(rv$V2)
-    Sys.setenv(R_BIOC_VERSION = BIOC_VERSION)
-    BIOC_VERSION
+  bioc_config <- "https://bioconductor.org/config.yaml"
+  rl <- tryCatch(readLines(con = url(bioc_config)), warning = function(w) {
+    NA
+  }, error = function(e) {
+    NA
+  })
+  if (!is.character(rl) && length(rl) > 79) {
+    return(NA)
+  }
+  type <- match.arg(type, c("release", "devel"))
+  if (identical(type, "release")) {
+    version <- which(startsWith(rl, "release_version"))
+  } else {
+    version <- which(startsWith(rl, "devel_version"))
+  }
+  # Quick and dirty way to read and split the data
+  rv <- read.csv(text = rl[version], sep = ":", header = FALSE, colClasses = c("character", "character"))
+  BIOC_VERSION <- trimws(rv$V2)
+  Sys.setenv(R_BIOC_VERSION = BIOC_VERSION)
+  BIOC_VERSION
 }
 
 
 bioc_repos <- function(version = "release",
                        repos = c("/bioc", "/data/annotation", "/data/experiment", "/workflows", "/books")) {
-    name_repos <- basename(repos)
-    name_repos[1] <- "software"
+  name_repos <- basename(repos)
+  name_repos[1] <- "software"
 
-    urls <- paste0("https://bioconductor.org/packages/", bioc_version(version), repos)
+  urls <- paste0("https://bioconductor.org/packages/", bioc_version(version), repos)
 
-    url_repos <- urls
-    names(url_repos) <- name_repos
-    url_repos
+  url_repos <- urls
+  names(url_repos) <- name_repos
+  url_repos
 }
 
 bioc_available <- function(version = "release",
                            repos = c("/bioc", "/data/annotation", "/data/experiment", "/workflows", "/books")) {
-    url_repos <- bioc_repos(version, repos)
-    opts <- options(available_packages_filters = c("CRAN", "duplicates"))
-    on.exit(options(opts), add = TRUE)
-    env <- paste0("bioc_available_", version)
-    bioc <- save_state(c("packages available on Bioconductor" = env),
-        available.packages(repos = url_repos))
-    if (is_not_data(bioc)) {
-        return(NA)
-    }
-    bioc <- as.data.frame(bioc)
-    bioc
+  url_repos <- bioc_repos(version, repos)
+  opts <- options(available_packages_filters = c("CRAN", "duplicates"))
+  on.exit(options(opts), add = TRUE)
+  env <- paste0("bioc_available_", version)
+  bioc <- save_state(
+    c("packages available on Bioconductor" = env),
+    available.packages(repos = url_repos)
+  )
+  if (is_not_data(bioc)) {
+    return(NA)
+  }
+  bioc <- as.data.frame(bioc)
+  bioc
 }
 
 bioc_views <- function(version = bioc_version()) {
-    if (is.na(version)) {
-        return(NA)
-    }
-    url <- paste0("https://bioconductor.org/packages/", version, "/bioc/VIEWS")
-    tryCatch(read.dcf(url(url)), warning = function(w){NA}, error = function(e){NA})
+  if (is.na(version)) {
+    return(NA)
+  }
+  url <- paste0("https://bioconductor.org/packages/", version, "/bioc/VIEWS")
+  tryCatch(read.dcf(url(url)), warning = function(w) {
+    NA
+  }, error = function(e) {
+    NA
+  })
 }
 
 bioc_archive <- function() {
-    # TODO convert this to extract the dates of the latest publication of the package.
-    # As no new packages are added until the next release we can assume they were
-    # on the date most packages were updated
-    v <- paste0(3, ".", 1L:21L)
-    bv <- lapply(v, bioc_views)
+  # TODO convert this to extract the dates of the latest publication of the package.
+  # As no new packages are added until the next release we can assume they were
+  # on the date most packages were updated
+  v <- paste0(3, ".", 1L:21L)
+  bv <- lapply(v, bioc_views)
 
-    # versions <- rep(v, vapply(bv, NROW, numeric(1L)))
-    # m1 <- do.call(merge, bv, all = TRUE)
+  # versions <- rep(v, vapply(bv, NROW, numeric(1L)))
+  # m1 <- do.call(merge, bv, all = TRUE)
 
-    v2 <- paste0(2, ".", 1L:14L)
-    bv2 <- lapply(v2, bioc_views)
-    rep(v2, vapply(bv2, NROW, numeric(1L)))
-    # m2 <- do.call(merge, bv2, all = TRUE)
-    # m <- merge(m1, m2, all = TRUE, sort = FALSE)
+  v2 <- paste0(2, ".", 1L:14L)
+  bv2 <- lapply(v2, bioc_views)
+  rep(v2, vapply(bv2, NROW, numeric(1L)))
+  # m2 <- do.call(merge, bv2, all = TRUE)
+  # m <- merge(m1, m2, all = TRUE, sort = FALSE)
 }
-
-

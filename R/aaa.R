@@ -13,10 +13,10 @@ pkg_state <- new.env(parent = emptyenv())
 #'
 #' @export
 clean_cache <- function() {
-    lapply(names(pkg_state), function(x) {
-        pkg_state[[x]] <- NULL
-    })
-    invisible(NULL)
+  lapply(names(pkg_state), function(x) {
+    pkg_state[[x]] <- NULL
+  })
+  invisible(NULL)
 }
 
 PACKAGE_FIELDS <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
@@ -24,11 +24,11 @@ PACKAGE_FIELDS <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
 BASE <- tools::standard_package_names()$base
 
 .onAttach <- function(libname, pkgname) {
-    opts <- options(repos = c("@CRAN@" = "https://CRAN.R-project.org"), getOption("repos"))
-    pkg_state$opts <- opts
+  opts <- options(repos = c("@CRAN@" = "https://CRAN.R-project.org"), getOption("repos"))
+  pkg_state$opts <- opts
 }
 
 
 .onDetach <- function(libpath) {
-    options(pkg_state$opts)
+  options(pkg_state$opts)
 }

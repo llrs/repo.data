@@ -2,25 +2,38 @@
 
 # Author: CRAN
 download_actions <- function() {
-    src <- file.path(
-        Sys.getenv("R_CRAN_PACKAGE_ACTIONS_URL",
-                   "rsync://CRAN.R-project.org/CRAN-actions"),
-        "actions.rds")
-    if (startsWith(src, "file://")) {
-        tryCatch(
-            readRDS(substring(src, 8L)),
-            warning = function(w) {NA},
-            error = function(e) {NA})
-
-    } else {
-        dst <- tempfile()
-        tryCatch({
-            system2("rsync", c(src, dst))
-            readRDS(dst)
-        },
-        warning = function(w) {NA},
-        error = function(e) {NA})
-    }
+  src <- file.path(
+    Sys.getenv(
+      "R_CRAN_PACKAGE_ACTIONS_URL",
+      "rsync://CRAN.R-project.org/CRAN-actions"
+    ),
+    "actions.rds"
+  )
+  if (startsWith(src, "file://")) {
+    tryCatch(
+      readRDS(substring(src, 8L)),
+      warning = function(w) {
+        NA
+      },
+      error = function(e) {
+        NA
+      }
+    )
+  } else {
+    dst <- tempfile()
+    tryCatch(
+      {
+        system2("rsync", c(src, dst))
+        readRDS(dst)
+      },
+      warning = function(w) {
+        NA
+      },
+      error = function(e) {
+        NA
+      }
+    )
+  }
 }
 
 
@@ -48,60 +61,62 @@ download_actions <- function() {
 #' head(ca)
 #' }
 cran_actions <- function(packages = NULL, silent = FALSE) {
-    out <- cran_all_actions()
-    if (is_not_data(out)) {
-        return(NA)
-    }
-    check_pkg_names(packages, NA)
-    actions <- get_package_subset(c("CRAN actions" ="full_cran_actions"), packages)
+  out <- cran_all_actions()
+  if (is_not_data(out)) {
+    return(NA)
+  }
+  check_pkg_names(packages, NA)
+  actions <- get_package_subset(c("CRAN actions" = "full_cran_actions"), packages)
 
-    if (isFALSE(silent)) {
-        warnings_actions(actions)
-    }
-    actions
+  if (isFALSE(silent)) {
+    warnings_actions(actions)
+  }
+  actions
 }
 
 cran_all_actions <- function() {
-    env <- c("CRAN actions" ="full_cran_actions")
-    if (!empty_env(env)) {
-        return(pkg_state[[env]])
-    }
+  env <- c("CRAN actions" = "full_cran_actions")
+  if (!empty_env(env)) {
+    return(pkg_state[[env]])
+  }
 
-    actions <- download_actions()
-    if (is_not_data(actions)) {
-        return(NA)
-    }
-    actions$Date <- charToDate(actions$Date, "%F")
-    actions$User <- as.factor(actions$User)
-    lev <- c("publish", "archive", "remove")
-    if (!all(na.omit(actions$Action) %in% lev)) {
-        warning("New action by CRAN: ", na.omit(setdiff(actions$Action, lev)), call. = FALSE)
-    }
+  actions <- download_actions()
+  if (is_not_data(actions)) {
+    return(NA)
+  }
+  actions$Date <- charToDate(actions$Date, "%F")
+  actions$User <- as.factor(actions$User)
+  lev <- c("publish", "archive", "remove")
+  if (!all(na.omit(actions$Action) %in% lev)) {
+    warning("New action by CRAN: ", na.omit(setdiff(actions$Action, lev)), call. = FALSE)
+  }
 
-    actions$Action <- factor(actions$Action, levels = lev)
-    actions$Package <- as.factor(actions$Package)
+  actions$Action <- factor(actions$Action, levels = lev)
+  actions$Package <- as.factor(actions$Package)
 
-    actions <- sort_by(actions, ~Package + datetime2POSIXct(Date, Time) + Action)
+  actions <- sort_by(actions, ~ Package + datetime2POSIXct(Date, Time) + Action)
 
-        # Fill those that don't have version is archived
-    missing_v <- which(is.na(actions[, "Version"]))
-    k <- actions$Action[missing_v - 1L] == "publish" & actions$Package[missing_v - 1L] == actions$Package[missing_v]
-    actions$Version[missing_v[k]] <- actions$Version[missing_v[k] - 1L]
+  # Fill those that don't have version is archived
+  missing_v <- which(is.na(actions[, "Version"]))
+  k <- actions$Action[missing_v - 1L] == "publish" & actions$Package[missing_v - 1L] == actions$Package[missing_v]
+  actions$Version[missing_v[k]] <- actions$Version[missing_v[k] - 1L]
 
-    rownames(actions) <- NULL
-    pkg_state[[env]] <- actions
-    actions
+  rownames(actions) <- NULL
+  pkg_state[[env]] <- actions
+  actions
 }
 
 warnings_actions <- function(actions) {
-    first_package <- !duplicated(actions$Package)
-    w <- sum(first_package & (actions$Action == "archive" | is.na(actions$Action)))
-    if (w) {
-        warning("There are ", w, " packages starting with an archive action!", call. = FALSE)
-    }
-    dup <- duplicated(actions[, c("Package", "Version", "Action")])
-    if (any(dup)) {
-        warning("There are ", sum(dup), " packages with duplicated actions for the same version.\n",
-                "Explanation: These indicate a manual intervention of the CRAN team.", call. = FALSE)
-    }
+  first_package <- !duplicated(actions$Package)
+  w <- sum(first_package & (actions$Action == "archive" | is.na(actions$Action)))
+  if (w) {
+    warning("There are ", w, " packages starting with an archive action!", call. = FALSE)
+  }
+  dup <- duplicated(actions[, c("Package", "Version", "Action")])
+  if (any(dup)) {
+    warning("There are ", sum(dup), " packages with duplicated actions for the same version.\n",
+      "Explanation: These indicate a manual intervention of the CRAN team.",
+      call. = FALSE
+    )
+  }
 }

@@ -17,13 +17,15 @@ diff <- merge(pd, rd, by = "Name")
 ud <- suppressWarnings(update_dependencies(pkg))
 repo.data:::no_internet(ud)
 m <- merge(ud, pd, all = FALSE)
-stopifnot("Packages that don't need updating show up on update_dependencies" =
-              NROW(m) <= NROW(diff))
+stopifnot(
+  "Packages that don't need updating show up on update_dependencies" =
+    NROW(m) <= NROW(diff)
+)
 
 
 pd <- suppressWarnings(package_dependencies(NULL))
 ap <- rownames(available.packages())
 repo.data:::no_internet(ap)
 repo.data:::no_internet(pd)
-stopifnot(nrow(pd) >= nrow(ap)/2)
+stopifnot(nrow(pd) >= nrow(ap) / 2)
 stopifnot(colnames(pd) == c("Package", "Type", "Name", "Op", "Version"))
