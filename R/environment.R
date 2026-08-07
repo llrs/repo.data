@@ -6,14 +6,16 @@ save_state <- function(name, out, verbose = TRUE) {
     # Use CRAN mirror if not set a default
     CRAN_baseurl()
 
+    name_msg <- if (!is.null(names(name))) names(name) else name
     if (empty_env(name)) {
         if (verbose) {
-            name_msg <- if (!is.null(names(name))) names(name) else name
             message("Downloading and caching ", name_msg, " for this session.")
         }
         m <- tryCatch(out, warning = function(w) {NA}, error = function(e) {NA})
         if (is_not_data(m)) {
-            warning("Failed to download ", name_msg)
+            if (verbose) {
+                warning("Failed to download ", name_msg)
+            }
             return(NA)
         }
         pkg_state[[name]] <- m
