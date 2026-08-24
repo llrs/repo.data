@@ -52,6 +52,10 @@ if (all(new_repos %in% default_names)) {
   oldrepos <- setRepositories(name = new_repos)
   on.exit(options(oldrepos), add = TRUE)
   pkges <- c(pkges, "BioCor")
+  ap <- available.packages()
+}
+
+if (all(pkges %in% rownames(ap))) {
 
   st <- system.time(ba <- alias(pkges))
   repo.data:::no_internet(ba)
