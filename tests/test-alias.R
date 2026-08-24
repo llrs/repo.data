@@ -46,16 +46,14 @@ stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 
 
 clean_cache()
-new_repos <- c("BioCsoft", "CRAN")
 default_names <- repo.data:::repo_names()
 if (all(new_repos %in% default_names)) {
-  oldrepos <- setRepositories(name = new_repos)
+  oldrepos <- setRepositories(name = default_names)
   on.exit(options(oldrepos), add = TRUE)
   pkges <- c(pkges, "BioCor")
-  ap <- available.packages()
 }
 
-if (all(pkges %in% rownames(ap))) {
+if (all(pkges %in% rownames(available.packages()))) {
 
   st <- system.time(ba <- alias(pkges))
   repo.data:::no_internet(ba)
