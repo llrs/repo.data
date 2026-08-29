@@ -46,7 +46,9 @@ stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 
 
 clean_cache()
-oldrepos <- setRepositories(name = repo.data:::repo_names())
+repos <- repo.data:::repo_names()
+# Avoid @CRAN@ as it triggers an error about mirrors
+oldrepos <- setRepositories(name = setdiff(repos, "@CRAN@"))
 on.exit(options(oldrepos), add = TRUE)
 pkges <- c(pkges, "BioCor")
 
