@@ -32,9 +32,9 @@ Other functions related to CRAN help pages:
 # \donttest{
 ap <- available.packages()
 if (NROW(ap)) {
-    a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
-    chwl <- cran_help_pages_wo_links(a_package)
-    head(chwl)
+  a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
+  chwl <- cran_help_pages_wo_links(a_package)
+  head(chwl)
 }
 #> [1] Package Source 
 #> <0 rows> (or 0-length row.names)

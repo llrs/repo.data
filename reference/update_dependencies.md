@@ -43,9 +43,8 @@ Other utilities:
 ``` r
 update_dependencies("arrow")
 #>         Name Version
-#> 1          R   4.2.0
-#> 2      cpp11   0.5.2
-#> 3      rlang   1.1.7
-#> 4   testthat   3.3.2
-#> 5 tidyselect   1.2.1
+#> 1      cpp11   0.5.2
+#> 2      rlang   1.1.7
+#> 3   testthat   3.3.2
+#> 4 tidyselect   1.2.1
 ```

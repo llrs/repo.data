@@ -28,7 +28,7 @@ Other functions related to BASE help pages:
 ``` r
 # \donttest{
 if (requireNamespace("igraph", quietly = TRUE)) {
-    base_help_cliques()
+  base_help_cliques()
 }
 #> Downloading and caching R's xrefs for this session.
 #> Warning: Some links are distinct depending on the OS.

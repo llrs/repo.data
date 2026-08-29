@@ -39,10 +39,10 @@ bca <- bioc_cran_archived()
 #> Downloading and caching CRAN's packages database for this session.
 head(bca)
 #>                      Package Archived n
-#> 1                  ATACseqQC  preseqR 1
-#> 2                       IFAA     HDCI 1
-#> 3 SingleMoleculeFootprinting       qs 1
-#> 4                SpectralTAD   PRIMME 1
-#> 5                 TADCompare   PRIMME 1
-#> 6               adductomicsR smoother 1
+#> 1                       IFAA     HDCI 1
+#> 2 SingleMoleculeFootprinting       qs 1
+#> 3                  SpiecEasi   pulsar 1
+#> 4               adductomicsR smoother 1
+#> 5                      iBBiG  biclust 1
+#> 6                     moanin      NMI 1
 ```

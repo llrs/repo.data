@@ -39,8 +39,8 @@ Other utilities:
 # Checking the overlap between to seemingly unrelated packages:
 alias <- alias(c("fect", "gsynth"))
 if (length(alias)) {
-   dup_alias <- duplicated_alias(alias)
-   head(dup_alias)
+  dup_alias <- duplicated_alias(alias)
+  head(dup_alias)
 }
 #>          Target Package             Source
 #> 1         XXinv    fect   fect-internal.Rd

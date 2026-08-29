@@ -32,10 +32,14 @@ Other functions related to CRAN help pages:
 # \donttest{
 ap <- available.packages()
 if (NROW(ap)) {
-    a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
-    chnl <- cran_help_pages_not_linked(a_package)
-    head(chnl)
+  a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
+  chnl <- cran_help_pages_not_linked(a_package)
+  head(chnl)
 }
+#> Warning: Some packages are not currently available. Omitting packages:
+#> ‘bartMachineJARs’, ‘BEACH’, ‘clean’, ‘fontBitstreamVera’, ‘fontLiberation’, ‘free1way.docreg’, ‘GreedyExperimentalDesignJARs’, ‘hse’, ‘LifeInsuranceContracts’, ‘openNLPdata’, ‘RKEAjars’, ‘RMOAjars’, ‘ROI.plugin.cplex’, ‘ROI.plugin.glpk’, ‘ROI.plugin.ipop’, ‘ROI.plugin.symphony’, ‘rsparkling’, ‘RWekajars’, ‘Sejong’.
+#> Warning: Some packages are not currently available. Omitting packages:
+#> ‘bartMachineJARs’, ‘BEACH’, ‘clean’, ‘fontBitstreamVera’, ‘fontLiberation’, ‘free1way.docreg’, ‘GreedyExperimentalDesignJARs’, ‘hse’, ‘LifeInsuranceContracts’, ‘openNLPdata’, ‘RKEAjars’, ‘RMOAjars’, ‘ROI.plugin.cplex’, ‘ROI.plugin.glpk’, ‘ROI.plugin.ipop’, ‘ROI.plugin.symphony’, ‘rsparkling’, ‘RWekajars’, ‘Sejong’.
 #> Warning: Some links are distinct depending on the OS.
 #>         Package            Source
 #> 1 AalenJohansen aalen_johansen.Rd

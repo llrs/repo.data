@@ -43,7 +43,7 @@ head(maintainers)
 #> 6      AATtools   Sercan Kahveci <sercan.kahveci@plus.ac.at>    b1066151
 #>   maintainer_date packaged_date published_date           Name
 #> 1            <NA>    2026-05-27     2026-05-27 Jan Liebnitzky
-#> 2            <NA>    2026-05-14     2026-05-14    Hugh Graham
+#> 2            <NA>    2026-07-01     2026-07-02    Hugh Graham
 #> 3      2026-01-27    2026-01-27     2026-01-31       Jian Yen
 #> 4            <NA>    2023-02-28     2023-03-01   Martin Bladt
 #> 5            <NA>    2026-02-01     2026-02-01 Paul Rosenbaum

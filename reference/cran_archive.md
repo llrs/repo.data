@@ -52,9 +52,9 @@ if (FALSE) { # NROW(available.packages())
 # \donttest{
 ap <- available.packages()
 if (NROW(ap)) {
-    a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
-    ca <- cran_archive(a_package)
-    head(ca)
+  a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
+  ca <- cran_archive(a_package)
+  head(ca)
 }
 # }
 }

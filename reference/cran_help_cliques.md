@@ -41,18 +41,22 @@ Other functions related to CRAN help pages:
 # \donttest{
 chc <- cran_help_cliques("BaseSet")
 #> Downloading and caching CRAN's packages xrefs for this session.
+#> Warning: Some packages are not currently available. Omitting packages:
+#> ‘bartMachineJARs’, ‘BEACH’, ‘clean’, ‘fontBitstreamVera’, ‘fontLiberation’, ‘free1way.docreg’, ‘GreedyExperimentalDesignJARs’, ‘hse’, ‘LifeInsuranceContracts’, ‘openNLPdata’, ‘RKEAjars’, ‘RMOAjars’, ‘ROI.plugin.cplex’, ‘ROI.plugin.glpk’, ‘ROI.plugin.ipop’, ‘ROI.plugin.symphony’, ‘rsparkling’, ‘RWekajars’, ‘Sejong’.
 #> Downloading and caching base R's aliases for this session.
 #> Warning: Packages with targets not present in a OS:
 #> ‘base’, ‘grDevices’, ‘parallel’
+#> Warning: Some packages are not currently available. Omitting packages:
+#> ‘bartMachineJARs’, ‘BEACH’, ‘clean’, ‘fontBitstreamVera’, ‘fontLiberation’, ‘free1way.docreg’, ‘GreedyExperimentalDesignJARs’, ‘hse’, ‘LifeInsuranceContracts’, ‘openNLPdata’, ‘RKEAjars’, ‘RMOAjars’, ‘ROI.plugin.cplex’, ‘ROI.plugin.glpk’, ‘ROI.plugin.ipop’, ‘ROI.plugin.symphony’, ‘rsparkling’, ‘RWekajars’, ‘Sejong’.
 #> Warning: Packages with targets not present in a OS:
 #> ‘sfsmisc’
 #> Warning: Some links are distinct depending on the OS.
 if (!is.null(dim(chc))) {
-   table(chc$clique)
-   chc[chc$clique != 1L, ]
+  table(chc$clique)
+  chc[chc$clique != 1L, ]
 }
 #>      from_pkg        from_Rd clique  to_pkg          to_Rd n
-#> 1993  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
-#> 1994  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
+#> 1997  BaseSet cardinality.Rd      2 BaseSet        size.Rd 1
+#> 1998  BaseSet        size.Rd      2 BaseSet cardinality.Rd 1
 # }
 ```

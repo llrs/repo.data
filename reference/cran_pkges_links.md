@@ -33,6 +33,10 @@ Other links from CRAN:
 ``` r
 # \donttest{
 cpkl <- cran_pkges_links()
+#> Warning: Some packages are not currently available. Omitting packages:
+#> ‘bartMachineJARs’, ‘BEACH’, ‘clean’, ‘fontBitstreamVera’, ‘fontLiberation’, ‘free1way.docreg’, ‘GreedyExperimentalDesignJARs’, ‘hse’, ‘LifeInsuranceContracts’, ‘openNLPdata’, ‘RKEAjars’, ‘RMOAjars’, ‘ROI.plugin.cplex’, ‘ROI.plugin.glpk’, ‘ROI.plugin.ipop’, ‘ROI.plugin.symphony’, ‘rsparkling’, ‘RWekajars’, ‘Sejong’.
+#> Warning: Some packages are not currently available. Omitting packages:
+#> ‘bartMachineJARs’, ‘BEACH’, ‘clean’, ‘fontBitstreamVera’, ‘fontLiberation’, ‘free1way.docreg’, ‘GreedyExperimentalDesignJARs’, ‘hse’, ‘LifeInsuranceContracts’, ‘openNLPdata’, ‘RKEAjars’, ‘RMOAjars’, ‘ROI.plugin.cplex’, ‘ROI.plugin.glpk’, ‘ROI.plugin.ipop’, ‘ROI.plugin.symphony’, ‘rsparkling’, ‘RWekajars’, ‘Sejong’.
 #> Warning: Some links are distinct depending on the OS.
 head(cpkl)
 #>     from_pkg     to_pkg  n

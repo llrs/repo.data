@@ -41,8 +41,8 @@ Other utilities:
 
 ``` r
 # \donttest{
-cs <- cran_snapshot(Sys.Date() -2 )
-#> Warning: There are 4 packages both archived and published
+cs <- cran_snapshot(Sys.Date() - 2)
+#> Warning: There are 6 packages both archived and published
 #> This indicate manual CRAN intervention.
 head(cs)
 #>       Package            Datetime Version   User    Size   Status

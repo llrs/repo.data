@@ -51,7 +51,7 @@ A data.frame with 8 columns:
 ci <- cran_issues()
 #> Warning: Correcting incorrect dates on Before
 if (!is.null(dim(ci))) {
-    head(ci)
+  head(ci)
 }
 #>        ID        Package                Date From     Before Title Label Info
 #> 1 2023.25           dail 2023-01-01 07:51:27  BDR 2023-01-15   Web  <NA> <NA>

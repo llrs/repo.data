@@ -33,7 +33,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Retrieve CRAN archive</h1>
-      <small class="dont-index">Source: <a href="https://github.com/llrs/repo.data/blob/v0.2.2/R/cran_archive.R" class="external-link"><code>R/cran_archive.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/llrs/repo.data/blob/main/R/cran_archive.R" class="external-link"><code>R/cran_archive.R</code></a></small>
       <div class="d-none name"><code>cran_archive.Rd</code></div>
     </div>
 
@@ -89,9 +89,9 @@ For some dates and comments about archiving packages: <code><a href="cran_commen
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">ap</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/available.packages.html" class="external-link">available.packages</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">ap</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">a_package</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ap</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/startsWith.html" class="external-link">startsWith</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ap</span><span class="op">)</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></span>
-<span class="r-in"><span>    <span class="va">ca</span> <span class="op">&lt;-</span> <span class="fu">cran_archive</span><span class="op">(</span><span class="va">a_package</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ca</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">a_package</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ap</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/startsWith.html" class="external-link">startsWith</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ap</span><span class="op">)</span>, <span class="st">"A"</span><span class="op">)</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-in"><span>  <span class="va">ca</span> <span class="op">&lt;-</span> <span class="fu">cran_archive</span><span class="op">(</span><span class="va">a_package</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ca</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
@@ -106,7 +106,7 @@ For some dates and comments about archiving packages: <code><a href="cran_commen
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

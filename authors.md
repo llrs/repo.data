@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/llrs/repo.data/blob/v0.2.2/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/llrs/repo.data/blob/main/DESCRIPTION)
 
 Revilla Sancho L (2026). *repo.data: R Repositories Data*. R package
 version 0.2.2, <https://github.com/llrs/repo.data>.
