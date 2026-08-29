@@ -46,12 +46,9 @@ stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 
 
 clean_cache()
-default_names <- repo.data:::repo_names()
-if (all(new_repos %in% default_names)) {
-  oldrepos <- setRepositories(name = default_names)
-  on.exit(options(oldrepos), add = TRUE)
-  pkges <- c(pkges, "BioCor")
-}
+oldrepos <- setRepositories(name = repo.data:::repo_names())
+on.exit(options(oldrepos), add = TRUE)
+pkges <- c(pkges, "BioCor")
 
 if (all(pkges %in% rownames(available.packages()))) {
 
