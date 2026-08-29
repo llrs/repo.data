@@ -1,21 +1,39 @@
 read_repo <- function(path, repo) {
-    con <- tryCatch(url(sprintf("%s/%s", repo, path), open = "rb"),
-                    warning = function(w) {NULL},
-                    error = function(e) {NULL},
-                    finally = {on.exit({if (!is.null(con)) close(con)}, add = TRUE)
-                    })
-
-    if (is.null(con)) {
-        return(NULL)
+  con <- tryCatch(url(sprintf("%s/%s", repo, path), open = "rb"),
+    warning = function(w) {
+      NULL
+    },
+    error = function(e) {
+      NULL
+    },
+    finally = {
+      on.exit(
+        {
+          if (!is.null(con)) close(con)
+        },
+        add = TRUE
+      )
     }
+  )
 
-    if (endsWith(path, "rds") || endsWith(path, "RDS")) {
-        con <- gzcon(con)
-        tryCatch(readRDS(con), warning = function(w){NA}, error = function(e){NA})
-    } else {
-        tryCatch(read.dcf(con), warning = function(w){NA}, error = function(e){NA})
-    }
+  if (is.null(con)) {
+    return(NULL)
+  }
 
+  if (endsWith(path, "rds") || endsWith(path, "RDS")) {
+    con <- gzcon(con)
+    tryCatch(readRDS(con), warning = function(w) {
+      NA
+    }, error = function(e) {
+      NA
+    })
+  } else {
+    tryCatch(read.dcf(con), warning = function(w) {
+      NA
+    }, error = function(e) {
+      NA
+    })
+  }
 }
 
 #' Links
@@ -36,66 +54,66 @@ read_repo <- function(path, repo) {
 #' # Clean  up
 #' options(repos = oldrepos)
 links <- function(packages = NULL) {
-
-    repos <- getOption("repos")
-    env <- c("xrefs" = "xrefs")
-    if (empty_env(env)) {
-        raw_xrefs <- lapply(repos, read_repo, path = "src/contrib/Meta/rdxrefs.rds")
-        names(raw_xrefs) <- names(repos)
-        if (is_not_data(raw_xrefs)) {
-            return(NA)
-        }
-        raw_xrefs$base <- tools::base_rdxrefs_db()
-    } else {
-        raw_xrefs <- pkg_state[[env]]
+  repos <- getOption("repos")
+  env <- c("xrefs" = "xrefs")
+  if (empty_env(env)) {
+    raw_xrefs <- lapply(repos, read_repo, path = "src/contrib/Meta/rdxrefs.rds")
+    names(raw_xrefs) <- names(repos)
+    if (is_not_data(raw_xrefs)) {
+      return(NA)
     }
-    check_pkg_names(packages, NA)
-    env <- c("processed xrefs" = "full_rdxrefs")
-    # Check for random packages
-    current_packages <- unlist(lapply(raw_xrefs, names), use.names = FALSE)
-    dups <- anyDuplicated(current_packages)
-    if (length(dups) == 1L && dups[1L] != 0L) {
-        warning("Packages found in multiple repositories: ", toString(sQuote(current_packages[dups])),
-                immediate. = TRUE, call. = FALSE)
-    }
+    raw_xrefs$base <- tools::base_rdxrefs_db()
+  } else {
+    raw_xrefs <- pkg_state[[env]]
+  }
+  check_pkg_names(packages, NA)
+  env <- c("processed xrefs" = "full_rdxrefs")
+  # Check for random packages
+  current_packages <- unlist(lapply(raw_xrefs, names), use.names = FALSE)
+  dups <- anyDuplicated(current_packages)
+  if (length(dups) == 1L && dups[1L] != 0L) {
+    warning("Packages found in multiple repositories: ", toString(sQuote(current_packages[dups])),
+      immediate. = TRUE, call. = FALSE
+    )
+  }
 
-    omit_pkg <- check_current_pkg(packages, current_packages)
+  omit_pkg <- check_current_pkg(packages, current_packages)
 
-    # Keep only packages that can be processed
-    packages <- setdiff(packages, omit_pkg)
-    if (!is.null(packages) && !length(packages)) {
-        return(NULL)
-    }
+  # Keep only packages that can be processed
+  packages <- setdiff(packages, omit_pkg)
+  if (!is.null(packages) && !length(packages)) {
+    return(NULL)
+  }
 
-    # Check if there is already data
-    first_xrefs <- empty_env(env)
-    xrefs <- pkg_state[[env]]
+  # Check if there is already data
+  first_xrefs <- empty_env(env)
+  xrefs <- pkg_state[[env]]
 
-    # Decide which packages are to be added to the data
-    if (!is.null(packages) && !first_xrefs) {
-        new_packages <- setdiff(packages, xrefs[, "Package"])
-    } else if (!is.null(packages) && first_xrefs) {
-        new_packages <- intersect(packages, current_packages)
-    } else if (is.null(packages) && first_xrefs) {
-        new_packages <- current_packages
-    } else if (is.null(packages) && !first_xrefs) {
-        new_packages <- setdiff(current_packages, xrefs[, "Package"])
-    }
+  # Decide which packages are to be added to the data
+  if (!is.null(packages) && !first_xrefs) {
+    new_packages <- setdiff(packages, xrefs[, "Package"])
+  } else if (!is.null(packages) && first_xrefs) {
+    new_packages <- intersect(packages, current_packages)
+  } else if (is.null(packages) && first_xrefs) {
+    new_packages <- current_packages
+  } else if (is.null(packages) && !first_xrefs) {
+    new_packages <- setdiff(current_packages, xrefs[, "Package"])
+  }
 
-    # Add new package's data
-    xrefs_list <- do.call(c, raw_xrefs)
-    names(xrefs_list) <- current_packages
-    if (length(new_packages)) {
-        new_xrefs <- xrefs2df(xrefs_list[new_packages])
-        # warnings_links(new_xrefs)
-        xrefs <- rbind(xrefs, new_xrefs)
-        pkg_state[[env]] <- xrefs[, c("Package", "Source", "Anchor", "Target")]
-    }
-    if (is.null(packages)) {
-        as.data.frame(xrefs)
-    } else {
-        as.data.frame(xrefs[xrefs[, "Package"] %in% packages, , drop = FALSE])
-    }
+  # Add new package's data
+  xrefs_list <- do.call(c, raw_xrefs)
+  names(xrefs_list) <- current_packages
+  if (length(new_packages)) {
+    new_xrefs <- xrefs2df(xrefs_list[new_packages])
+    # warnings_links(new_xrefs)
+    xrefs <- rbind(xrefs, new_xrefs)
+    pkg_state[[env]] <- xrefs[, c("Package", "Source", "Anchor", "Target")]
+  }
+  if (is.null(packages)) {
+    as.data.frame(xrefs)
+  } else {
+    as.data.frame(xrefs[xrefs[, "Package"] %in% packages, , drop = FALSE])
+  }
 }
 
 #' Links
@@ -120,70 +138,70 @@ links <- function(packages = NULL) {
 #' # Clean  up
 #' options(repos = oldrepos)
 alias <- function(packages = NULL) {
-    stopifnot("NULL or a character string" = is.null(packages) || is.character(packages))
-    repos <- getOption("repos")
-    env <- c("aliases" = "aliases")
+  check_pkg_names(packages, NA)
+  repos <- getOption("repos")
+  env <- c("aliases" = "aliases")
 
-    if (empty_env(env)) {
-        raw_alias <- lapply(repos, read_repo, path = "src/contrib/Meta/aliases.rds")
-        names(raw_alias) <- names(repos)
-        if (is_not_data(raw_alias)) {
-            return(NA)
-        }
-        raw_alias$base <- tools::base_aliases_db()
-        pkg_state[[env]] <- raw_alias
-    } else {
-        raw_alias <- pkg_state[[env]]
+  if (empty_env(env)) {
+    raw_alias <- lapply(repos, read_repo, path = "src/contrib/Meta/aliases.rds")
+    names(raw_alias) <- names(repos)
+    if (!is.list(raw_alias)) {
+      return(NA)
     }
+    raw_alias$base <- tools::base_aliases_db()
+    pkg_state[[env]] <- raw_alias
+  } else {
+    raw_alias <- pkg_state[[env]]
+  }
 
-    check_pkg_names(packages, NA)
-    # Place to store modified data
-    env <- c("processed aliases" = "full_aliases")
-    # Check for random packages
-    current_packages <- unlist(lapply(raw_alias, names), use.names = FALSE)
-    dups <- anyDuplicated(current_packages)
-    if (length(dups) == 1L && dups[1L] != 0L) {
+  check_pkg_names(packages, NA)
+  # Place to store modified data
+  env <- c("processed aliases" = "full_aliases")
+  # Check for random packages
+  current_packages <- unlist(lapply(raw_alias, names), use.names = FALSE)
+  dups <- anyDuplicated(current_packages)
+  if (length(dups) == 1L && dups[1L] != 0L) {
+    warning("Packages found in multiple repositories", toString(sQuote(current_packages[dups])),
+      immediate. = TRUE, call. = FALSE
+    )
+  }
 
-        warning("Packages found in multiple repositories", toString(sQuote(current_packages[dups])),
-                immediate. = TRUE, call. = FALSE)
-    }
+  omit_pkg <- check_current_pkg(packages, current_packages)
 
-    omit_pkg <- check_current_pkg(packages, current_packages)
+  # Keep only packages that can be processed
 
-    # Keep only packages that can be processed
+  packages <- setdiff(packages, omit_pkg)
+  if (!is.null(packages) && !length(packages)) {
+    return(NULL)
+  }
 
-    packages <- setdiff(packages, omit_pkg)
-    if (!is.null(packages) && !length(packages)) {
-        return(NULL)
-    }
+  # Check if there is already data
+  first_alias <- empty_env(env)
+  alias <- pkg_state[[env]]
 
-    # Check if there is already data
-    first_alias <- empty_env(env)
-    alias <- pkg_state[[env]]
+  # Decide which packages are to be added to the data
+  if (!is.null(packages) && !first_alias) {
+    new_packages <- setdiff(packages, alias[, "Package"])
+  } else if (!is.null(packages) && first_alias) {
+    new_packages <- intersect(packages, current_packages)
+  } else if (is.null(packages) && first_alias) {
+    new_packages <- current_packages
+  } else if (is.null(packages) && !first_alias) {
+    new_packages <- setdiff(current_packages, alias[, "Package"])
+  }
 
-    # Decide which packages are to be added to the data
-    if (!is.null(packages) && !first_alias) {
-        new_packages <- setdiff(packages, alias[, "Package"])
-    } else if (!is.null(packages) && first_alias) {
-        new_packages <- intersect(packages, current_packages)
-    } else if (is.null(packages) && first_alias) {
-        new_packages <- current_packages
-    } else if (is.null(packages) && !first_alias) {
-        new_packages <- setdiff(current_packages, alias[, "Package"])
-    }
-
-    alias_list <- do.call(c, raw_alias)
-    names(alias_list) <- current_packages
-    # Add new package's data
-    if (length(new_packages)) {
-        new_alias <- alias2df(alias_list[new_packages])
-        warnings_alias(new_alias)
-        alias <- rbind(alias, new_alias)
-        pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
-    }
-    if (is.null(packages)) {
-        as.data.frame(alias)
-    } else {
-        as.data.frame(alias[alias[, "Package"] %in% packages, , drop = FALSE])
-    }
+  alias_list <- do.call(c, raw_alias)
+  names(alias_list) <- current_packages
+  # Add new package's data
+  if (length(new_packages)) {
+    new_alias <- alias2df(alias_list[new_packages])
+    warnings_alias(new_alias)
+    alias <- rbind(alias, new_alias)
+    pkg_state[[env]] <- alias[, c("Package", "Source", "Target")]
+  }
+  if (is.null(packages)) {
+    as.data.frame(alias)
+  } else {
+    as.data.frame(alias[alias[, "Package"] %in% packages, , drop = FALSE])
+  }
 }

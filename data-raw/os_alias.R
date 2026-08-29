@@ -38,11 +38,11 @@ src/library/parallel/man/windows/mcdummies.Rd:\alias{mcMap}
 ", sep = ":")
 
 os_alias <- cbind(
-    Package = basename(dirname(dirname(dirname(al_s$V1)))),
-    os = basename(dirname(al_s$V1)),
-    file  = basename(al_s$V1),
-    Source = file.path(basename(dirname(al_s$V1)), basename(al_s$V1)),
-    Target = gsub("\\\alias\\{(.+)\\}", "\\1", al_s$V2)
+  Package = basename(dirname(dirname(dirname(al_s$V1)))),
+  os = basename(dirname(al_s$V1)),
+  file = basename(al_s$V1),
+  Source = file.path(basename(dirname(al_s$V1)), basename(al_s$V1)),
+  Target = gsub("\\\alias\\{(.+)\\}", "\\1", al_s$V2)
 )
 
 usethis::use_data(os_alias, overwrite = TRUE)

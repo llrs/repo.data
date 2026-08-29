@@ -19,7 +19,7 @@ Requires igraph
 \examples{
 \donttest{
 if (requireNamespace("igraph", quietly = TRUE)) {
-    base_help_cliques()
+  base_help_cliques()
 }
 }
 }

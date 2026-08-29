@@ -1,5 +1,5 @@
 library("repo.data")
-
+chooseCRANmirror(ind = 1)
 # Test deps without version number
 pd <- package_date("ggeasy")
 repo.data:::no_internet(pd)

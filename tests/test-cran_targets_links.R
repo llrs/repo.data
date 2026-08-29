@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 pkges <- c("BaseSet", "experDesign")
 
 repo.data:::skip_on_cran()
@@ -19,7 +20,7 @@ stopifnot("Second call is not faster than first one" = st2["elapsed"] < st1["ela
 st3 <- system.time(ctl3 <- cran_targets_links())
 repo.data:::no_internet(ctl3)
 stopifnot("Requests for all packages failed" = nrow(ctl3) > nrow(ctl))
-stopifnot("Cache doesn't work for requested packages" = any(st3 < st1)) #: Faster process all than just some?
+stopifnot("Cache doesn't work for requested packages" = any(st3 < st1)) # Faster process all than just some?
 
 # Page links
 st1 <- system.time(cpl <- cran_pages_links(pkges))

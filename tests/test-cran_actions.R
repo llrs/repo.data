@@ -1,5 +1,5 @@
 library("repo.data")
-
+chooseCRANmirror(ind = 1)
 ca <- cran_actions()
 repo.data:::no_internet(ca)
 stopifnot("Unexpected dimensions" = ncol(ca) == 6)
@@ -12,4 +12,3 @@ stopifnot(is(ca$Action, "factor"))
 stopifnot("New action" = all(ca$Action %in% c("publish", "archive", "remove")))
 stopifnot(is(ca$Package, "factor"))
 stopifnot(is(ca$Version, "character"))
-

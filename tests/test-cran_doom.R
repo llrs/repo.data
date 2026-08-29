@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 cd <- cran_doom()
 repo.data:::no_internet(cd)
 stopifnot(is.list(cd))

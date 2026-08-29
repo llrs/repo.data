@@ -14,15 +14,17 @@
 #' head(bl)
 #' }
 base_links <- function(packages = NULL) {
-    stopifnot("Requires at least R 4.5.0" = check_r_version())
-    out <- save_state(c("R's xrefs" = "base_rdxrefs"), 
-        xrefs2df(tools::base_rdxrefs_db()))
-    if (!is.data.frame(out) && !is.matrix(out)) {
-        return(NA)
-    }
-    check_pkg_names(packages, NA)
-    links <- get_package_subset("base_rdxrefs", packages)
-    as.data.frame(links)[, c("Package", "Source", "Target", "Anchor")]
+  stopifnot("Requires at least R 4.5.0" = check_r_version())
+  check_pkg_names(packages, NA)
+  out <- save_state(
+    c("R's xrefs" = "base_rdxrefs"),
+    xrefs2df(tools::base_rdxrefs_db())
+  )
+  if (!is.data.frame(out) && !is.matrix(out)) {
+    return(NA)
+  }
+  links <- get_package_subset("base_rdxrefs", packages)
+  as.data.frame(links)[, c("Package", "Source", "Target", "Anchor")]
 }
 
 #' Links between help pages by target
@@ -39,31 +41,31 @@ base_links <- function(packages = NULL) {
 #' head(btl)
 #' }
 base_targets_links <- function(packages = NULL) {
-    out <- NULL
-    check_pkg_names(packages, NA)
-    env <- c("base xrefs" = "base_targets_links")
-    out <- get_package_subset(env, pkges = packages)
-    if (!is.null(packages) && !is.null(out)) {
-        return(packages_in_links(out, packages))
-    }
-    
-    bl <- base_links()
-    if (is_not_data(bl)) {
-        return(NA)
-    }
-    bal <- base_alias()
-    if (is_not_data(bal)) {
-        return(NA)
-    }
-    cal <- cran_alias()
-    if (is_not_data(cal)) {
-        return(NA)
-    }
-    bl2 <- split_anchor(bl)
-    
-    out <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))
-    save_state(env, out, verbose = FALSE)
-    packages_in_links(out, packages)
+  out <- NULL
+  check_pkg_names(packages, NA)
+  env <- c("base xrefs" = "base_targets_links")
+  out <- get_package_subset(env, pkges = packages)
+  if (!is.null(packages) && !is.null(out)) {
+    return(packages_in_links(out, packages))
+  }
+
+  bl <- base_links()
+  if (is_not_data(bl)) {
+    return(NA)
+  }
+  bal <- base_alias()
+  if (is_not_data(bal)) {
+    return(NA)
+  }
+  cal <- cran_alias()
+  if (is_not_data(cal)) {
+    return(NA)
+  }
+  bl2 <- split_anchor(bl)
+
+  out <- targets2files(bl2, rbind(as.matrix(bal), as.matrix(cal)))
+  save_state(env, out, verbose = FALSE)
+  packages_in_links(out, packages)
 }
 
 #' Links between help pages by page
@@ -81,21 +83,20 @@ base_targets_links <- function(packages = NULL) {
 #' head(bpl)
 #' }
 base_pages_links <- function(packages = NULL) {
-    target_links <- base_targets_links()
-    if (!is.data.frame(target_links) && !is.matrix(target_links)) {
-        return(NA)
-    }
-    check_pkg_names(packages, NA)
-    w <- which(colnames(target_links) == "to_target")
-    keep_rows <- nzchar(target_links$to_pkg)
-    if (!is.null(packages)) {
-        keep_rows <- keep_rows & target_links %in% packages
-    }
-    out <- add_uniq_count(target_links[keep_rows, -w])
-    out <- sort_by(out, out[, setdiff(colnames(out), "n")])
-    rownames(out) <- NULL
-    out
-    
+  target_links <- base_targets_links()
+  if (!is.data.frame(target_links) && !is.matrix(target_links)) {
+    return(NA)
+  }
+  check_pkg_names(packages, NA)
+  w <- which(colnames(target_links) == "to_target")
+  keep_rows <- nzchar(target_links$to_pkg)
+  if (!is.null(packages)) {
+    keep_rows <- keep_rows & target_links %in% packages
+  }
+  out <- add_uniq_count(target_links[keep_rows, -w])
+  out <- sort_by(out, out[, setdiff(colnames(out), "n")])
+  rownames(out) <- NULL
+  out
 }
 
 #' Links between help pages by package
@@ -113,18 +114,18 @@ base_pages_links <- function(packages = NULL) {
 #' head(bpkl)
 #' }
 base_pkges_links <- function(packages = NULL) {
-    target_links <- base_targets_links()
-    if (!is.data.frame(target_links) && !is.matrix(target_links)) {
-        return(NA)
-    }
-    check_pkg_names(packages, NA)
-    w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg", "n"))
-    keep_rows <- nzchar(target_links$to_pkg)
-    if (!is.null(packages)) {
-        keep_rows <- keep_rows & target_links %in% packages
-    }
-    pkges_links <- add_uniq_count(target_links[keep_rows, -w])
-    out <- sort_by(pkges_links, pkges_links[, c("from_pkg", "n")])
-    rownames(out) <- NULL
-    out
+  target_links <- base_targets_links()
+  if (!is.data.frame(target_links) && !is.matrix(target_links)) {
+    return(NA)
+  }
+  check_pkg_names(packages, NA)
+  w <- which(!colnames(target_links) %in% c("from_pkg", "to_pkg", "n"))
+  keep_rows <- nzchar(target_links$to_pkg)
+  if (!is.null(packages)) {
+    keep_rows <- keep_rows & target_links %in% packages
+  }
+  pkges_links <- add_uniq_count(target_links[keep_rows, -w])
+  out <- sort_by(pkges_links, pkges_links[, c("from_pkg", "n")])
+  rownames(out) <- NULL
+  out
 }

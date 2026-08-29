@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 alias_columns <- c("Package", "Source", "Target")
 pkges <- c("BaseSet", "experDesign")
 bpkges <- c("tools", "compiler")
@@ -46,38 +47,34 @@ stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 
 
 clean_cache()
-
-oldrepos <- getOption("repos")
-on.exit(options(oldrepos), add = TRUE)
-setRepositories(ind = 2, addURLs = c(CRAN = "https://cran.r-project.org"))
+oldrepos <- setRepositories(name = repo.data:::repo_names())
 pkges <- c(pkges, "BioCor")
+if (all(pkges %in% rownames(available.packages()))) {
 
-st <- system.time(ba <- alias(pkges))
-repo.data:::no_internet(ba)
-stopifnot(colnames(ba) == alias_columns)
-st1 <- system.time(ba2 <- alias(pkges))
-stopifnot("Cache alias didn't work" = any(st1 < st))
-stopifnot("Alias with cache was not the same" = all.equal(ba, ba2))
-missing_pkg <- pkges[!pkges %in% ba2$Package]
+  st <- system.time(ba <- alias(pkges))
+  repo.data:::no_internet(ba)
+  stopifnot(colnames(ba) == alias_columns)
+  st1 <- system.time(ba2 <- alias(pkges))
+  stopifnot("Cache alias didn't work" = any(st1 < st))
+  stopifnot("Alias with cache was not the same" = all.equal(ba, ba2))
+  missing_pkg <- pkges[!pkges %in% ba2$Package]
 
-if (length(missing_pkg)) {
-  stop(sprintf("All packages are present on alias output: %s", toString(missing_pkg)))
+  if (length(missing_pkg)) {
+    stop(sprintf("All packages are present on alias output: %s", toString(missing_pkg)))
+  }
+
+  clean_cache()
+  st2 <- system.time(ba3 <- alias(pkges))
+  repo.data:::no_internet(ba3)
+  stopifnot("Clean cache restores initial state" = any(st2 > st1))
+  stopifnot("Still same result" = all.equal(ba, ba3))
+
+  ba <- alias()
+  repo.data:::no_internet(ba)
+  stopifnot(colnames(ba) == alias_columns)
+  ba2 <- alias()
+  stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 }
-
-clean_cache()
-setRepositories(ind = 2, addURLs = c(CRAN = "https://cran.r-project.org"))
-st2 <- system.time(ba3 <- alias(pkges))
-repo.data:::no_internet(ba3)
-stopifnot("Clean cache restores initial state" = any(st2 > st1))
-stopifnot("Still same result" = all.equal(ba, ba3))
-
-ba <- alias()
-setRepositories(ind = 2, addURLs = c(CRAN = "https://cran.r-project.org"))
-repo.data:::no_internet(ba)
-stopifnot(colnames(ba) == alias_columns)
-ba2 <- alias()
-stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
-
-
 rtweet <- alias("rtweet")
 stopifnot(NROW(rtweet) == 0L)
+options(oldrepos)

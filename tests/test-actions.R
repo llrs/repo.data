@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 pkgs <- c("BaseSet", "experDesign")
 
 st <- system.time(ca <- cran_actions(pkgs))

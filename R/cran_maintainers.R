@@ -19,61 +19,66 @@
 #' maintainers <- cran_maintainers()
 #' head(maintainers)
 cran_maintainers <- function() {
-    db <- save_state(c("CRAN's packages database" = "CRAN_db"), tools::CRAN_package_db())
-    if (is_not_data(db)) {
-        return(NA)
-    }
-    # https://mastodon.social/@eddelbuettel/114217492195207107
-    sm <- strcapture_m(pattern = "['\"]?(.+)['\"]?<((.+)@(.+))>",
-                         x = db$Maintainer,
-                         proto = data.frame(Name = character(),
-                                            email = character(),
-                                            direction = character(),
-                                            domain = character()))
+  db <- save_state(c("CRAN's packages database" = "CRAN_db"), tools::CRAN_package_db())
+  if (is_not_data(db)) {
+    return(NA)
+  }
+  # https://mastodon.social/@eddelbuettel/114217492195207107
+  sm <- strcapture_m(
+    pattern = "['\"]?(.+)['\"]?<((.+)@(.+))>",
+    x = db$Maintainer,
+    proto = data.frame(
+      Name = character(),
+      email = character(),
+      direction = character(),
+      domain = character()
+    )
+  )
 
-    sm[, "direction"] <- gsub("\\+.+$", "", sm[, "direction"])
-    sm[, "direction"] <- tolower(sm[, "direction"])
-    sm[, "domain"] <- tolower(sm[, "domain"])
-    sm[, "Name"] <- trimws(sm[, "Name"])
+  sm[, "direction"] <- gsub("\\+.+$", "", sm[, "direction"])
+  sm[, "direction"] <- tolower(sm[, "direction"])
+  sm[, "domain"] <- tolower(sm[, "domain"])
+  sm[, "Name"] <- trimws(sm[, "Name"])
 
-    # Packages using Maintainer keep the quotes on the field
-    sm[, "Name"] <- sub(', PhD"', "", sm[, "Name"], fixed = TRUE)
-    modify <- endsWith(sm[, "Name"], '"') & !is.na(sm[, "Name"])
-    sm[modify, "Name"] <- gsub(',.*"', "", sm[modify, "Name"])
+  # Packages using Maintainer keep the quotes on the field
+  sm[, "Name"] <- sub(', PhD"', "", sm[, "Name"], fixed = TRUE)
+  modify <- endsWith(sm[, "Name"], '"') & !is.na(sm[, "Name"])
+  sm[modify, "Name"] <- gsub(',.*"', "", sm[modify, "Name"])
 
-    s <- strsplit(db$Packaged, "; ", fixed = TRUE)
+  s <- strsplit(db$Packaged, "; ", fixed = TRUE)
 
-    cbind(db[, c("Package", "Maintainer")],
-          user = sapply(s, `[`, 2L),
-          maintainer_date = charToDate(db$Date, c("%F", "%D", "%m.%d.%y", "%Y-%m-%d")),
-          packaged_date = charToDate(sapply(s, `[`, 1L), c("%F %T", "%c", "%F", "%a %b %e %T %Y")),
-          published_date = charToDate(db$Published, "%F"),
-          sm)
+  cbind(db[, c("Package", "Maintainer")],
+    user = sapply(s, `[`, 2L),
+    maintainer_date = charToDate(db$Date, c("%F", "%D", "%m.%d.%y", "%Y-%m-%d")),
+    packaged_date = charToDate(sapply(s, `[`, 1L), c("%F %T", "%c", "%F", "%a %b %e %T %Y")),
+    published_date = charToDate(db$Published, "%F"),
+    sm
+  )
 }
 
 # Like as.Date.character but tryFormat until they don't work or there are no format to try.
 charToDate <- function(x, tryFormat) {
-    # To convert units correctly
-    lc_time <- Sys.getlocale("LC_TIME")
-    on.exit(Sys.setlocale("LC_TIME", lc_time), add = TRUE)
-    Sys.setlocale("LC_TIME", "C")
+  # To convert units correctly
+  lc_time <- Sys.getlocale("LC_TIME")
+  on.exit(Sys.setlocale("LC_TIME", lc_time), add = TRUE)
+  Sys.setlocale("LC_TIME", "C")
 
-    stopifnot(is.character(x), as.logical(length(tryFormat)))
-    # Preallocate while preserving Date class
-    y <- rep_len(Sys.Date(), length(x))
-    y[] <- NA
-    # Avoid trying with NAs
-    x_no_na <- !is.na(x)
-    y[x_no_na] <- as.Date(x[x_no_na], format = tryFormat[1L])
-    # Try further methods.
-    for (format in tryFormat[-1L]) {
-        is_relevant_na <- is.na(y) & x_no_na
-        y[is_relevant_na] <- as.Date(x[is_relevant_na], format)
+  stopifnot(is.character(x), as.logical(length(tryFormat)))
+  # Preallocate while preserving Date class
+  y <- rep_len(Sys.Date(), length(x))
+  y[] <- NA
+  # Avoid trying with NAs
+  x_no_na <- !is.na(x)
+  y[x_no_na] <- as.Date(x[x_no_na], format = tryFormat[1L])
+  # Try further methods.
+  for (format in tryFormat[-1L]) {
+    is_relevant_na <- is.na(y) & x_no_na
+    y[is_relevant_na] <- as.Date(x[is_relevant_na], format)
 
-        if (!anyNA(y[is_relevant_na])) {
-            # Everything converted
-            break
-        }
+    if (!anyNA(y[is_relevant_na])) {
+      # Everything converted
+      break
     }
-    y
+  }
+  y
 }
