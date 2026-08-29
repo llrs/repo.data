@@ -40,13 +40,15 @@ export(repos_dependencies)
 export(update_dependencies)
 importFrom(methods,is)
 importFrom(stats,na.omit)
-importFrom(utils,available.packages)
-importFrom(utils,data)
-importFrom(utils,file_test)
-importFrom(utils,head)
-importFrom(utils,install.packages)
-importFrom(utils,installed.packages)
-importFrom(utils,read.csv)
-importFrom(utils,read.delim)
-importFrom(utils,sessionInfo)
-importFrom(utils,strcapture)
+importFrom(utils,
+  available.packages,
+  data,
+  file_test,
+  head,
+  install.packages,
+  installed.packages,
+  read.csv,
+  read.delim,
+  sessionInfo,
+  strcapture
+)
