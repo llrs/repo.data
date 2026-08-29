@@ -1,5 +1,5 @@
 library("repo.data")
-
+chooseCRANmirror(ind = 1)
 # Test that it works
 pr <- package_repos()
 repo.data:::no_internet(pr)

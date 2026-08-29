@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 alias_columns <- c("Package", "Source", "Target")
 pkges <- c("BaseSet", "experDesign")
 bpkges <- c("tools", "compiler")
@@ -46,11 +47,8 @@ stopifnot("Cache returns the same for all packages" = all.equal(ba, ba2))
 
 
 clean_cache()
-repos <- repo.data:::repo_names()
-# Avoid @CRAN@ as it triggers an error about mirrors
-oldrepos <- setRepositories(name = setdiff(repos, "@CRAN@"))
+oldrepos <- setRepositories(name = repo.data:::repo_names())
 pkges <- c(pkges, "BioCor")
-
 if (all(pkges %in% rownames(available.packages()))) {
 
   st <- system.time(ba <- alias(pkges))

@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 pkg <- "ggeasy"
 pd <- package_dependencies(pkg)
 repo.data:::no_internet(pd)

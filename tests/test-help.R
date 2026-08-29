@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 pkgs <- c("tools", "utils")
 
 repo.data:::skip_on_cran()

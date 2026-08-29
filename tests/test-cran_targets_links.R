@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 pkges <- c("BaseSet", "experDesign")
 
 repo.data:::skip_on_cran()

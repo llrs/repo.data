@@ -1,5 +1,5 @@
 library("repo.data")
-
+chooseCRANmirror(ind = 1)
 pkges <- c("BaseSet", "experDesign")
 ca_columns <- c("Package", "Datetime", "Version", "User", "Size", "Status")
 # Test that it works

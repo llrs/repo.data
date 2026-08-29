@@ -1,5 +1,5 @@
 library("repo.data")
-
+chooseCRANmirror(ind = 1)
 ci <- cran_issues()
 repo.data:::no_internet(ci)
 stopifnot("Unexpected dimensions" = ncol(ci) == 8)

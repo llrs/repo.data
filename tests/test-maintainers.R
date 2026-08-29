@@ -1,4 +1,5 @@
 library("repo.data")
+chooseCRANmirror(ind = 1)
 cm <- cran_maintainers()
 repo.data:::no_internet(cm)
 stopifnot(colnames(cm) == c(
