@@ -173,7 +173,7 @@ cs <- cran_snapshot(as.Date("2020-01-31"))
 #> This indicate manual CRAN intervention.
 #> Downloading and caching CRAN's comments for this session.
 nrow(cs)
-#> [1] 120045
+#> [1] 120058
 ```
 
 This might be helpful to know what was available on old project and why
