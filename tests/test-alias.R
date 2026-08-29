@@ -49,7 +49,6 @@ clean_cache()
 repos <- repo.data:::repo_names()
 # Avoid @CRAN@ as it triggers an error about mirrors
 oldrepos <- setRepositories(name = setdiff(repos, "@CRAN@"))
-on.exit(options(oldrepos), add = TRUE)
 pkges <- c(pkges, "BioCor")
 
 if (all(pkges %in% rownames(available.packages()))) {
@@ -80,3 +79,4 @@ if (all(pkges %in% rownames(available.packages()))) {
 }
 rtweet <- alias("rtweet")
 stopifnot(NROW(rtweet) == 0L)
+options(oldrepos)
