@@ -1,5 +1,10 @@
 # Changelog
 
+## repo.data 0.2.4
+
+- Fix tests and code coverage
+- Improve package handling for local packages
+
 ## repo.data 0.2.2
 
 CRAN release: 2026-06-20

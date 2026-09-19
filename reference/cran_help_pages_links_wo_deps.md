@@ -30,4 +30,9 @@ data from CRAN.
 
 ``` r
 evmix <- cran_help_pages_links_wo_deps("evmix")
+#> Warning: object length is not a multiple of subscript length
+#> Warning: object length is not a multiple of subscript length
+#> Warning: object length is not a multiple of subscript length
+#> Warning: object length is not a multiple of subscript length
+#> Warning: object length is not a multiple of subscript length
 ```

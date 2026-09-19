@@ -141,7 +141,7 @@ if (length(cliques) != 1L) {
 }
 #> 
 #>    1    2    3    4    5    6    7    8    9 
-#> 1625  188   36   15   13    7    4    1    1
+#> 1627  188   36   15   13    7    4    1    1
 ```
 
 If there is more than one length this would mean some pages not linked
@@ -169,11 +169,11 @@ date you can use:
 ``` r
 
 cs <- cran_snapshot(as.Date("2020-01-31"))
-#> Warning: There are 6 packages both archived and published
+#> Warning: There are 5 packages both archived and published
 #> This indicate manual CRAN intervention.
 #> Downloading and caching CRAN's comments for this session.
 nrow(cs)
-#> [1] 120058
+#> NULL
 ```
 
 This might be helpful to know what was available on old project and why
@@ -189,7 +189,7 @@ system?
 ``` r
 
 cran_session()
-#> [1] "2026-08-26 17:00:14 CEST"
+#> [1] "2026-09-16 18:30:10 CEST"
 ```
 
 This uses the
@@ -239,14 +239,14 @@ if (length(cd) != 1L) {
 }
 ```
 
-| Package    | Deadline   | type   | repo | n_affected |
-|:-----------|:-----------|:-------|:-----|-----------:|
-| lucas      | 2026-08-31 | direct | CRAN |          3 |
-| Relectoral | 2026-08-31 | direct | CRAN |          3 |
-| sensiPhy   | 2026-08-31 | direct | CRAN |          3 |
-| studyStrap | 2026-08-31 | direct | CRAN |          3 |
-| arenar     | 2026-08-31 | direct | CRAN |          2 |
-| biogram    | 2026-08-31 | direct | CRAN |          2 |
+| Package      | Deadline   | type   | repo | n_affected |
+|:-------------|:-----------|:-------|:-----|-----------:|
+| mlr          | 2026-09-20 | direct | CRAN |          1 |
+| pdp          | 2026-09-20 | direct | CRAN |          1 |
+| autosync     | 2026-09-27 | direct | CRAN |          2 |
+| BeeBDC       | 2026-09-27 | direct | CRAN |          2 |
+| reqres       | 2026-09-27 | direct | CRAN |          2 |
+| arcgislayers | 2026-09-27 | direct | CRAN |          1 |
 
 There are website dedicated to track those and provide information about
 new version submissions to CRAN to fix those. I participate on the
@@ -264,9 +264,9 @@ For reproducibility here is the session info:
 ``` r
 
 sessionInfo()
-#> R Under development (unstable) (2026-06-21 r90185)
+#> R Under development (unstable) (2026-09-18 r90566)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.4 LTS
+#> Running under: Ubuntu 24.04.5 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
@@ -285,13 +285,13 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] repo.data_0.2.2
+#> [1] repo.data_0.2.4
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] cli_3.6.6         knitr_1.51        rlang_1.3.0       xfun_0.60        
+#>  [1] cli_3.6.6         knitr_1.52        rlang_1.3.0       xfun_0.61        
 #>  [5] otel_0.2.0        rversions_3.0.0   textshaping_1.0.5 jsonlite_2.0.0   
 #>  [9] litedown_0.11     markdown_2.0      htmltools_0.5.9   ragg_1.5.2       
-#> [13] sass_0.4.10       rmarkdown_2.31    evaluate_1.0.5    jquerylib_0.1.4  
+#> [13] sass_0.4.10       rmarkdown_2.32    evaluate_1.0.5    jquerylib_0.1.4  
 #> [17] fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5   compiler_4.7.0   
 #> [21] igraph_2.3.3      fs_2.1.0          pkgconfig_2.0.3   systemfonts_1.3.2
 #> [25] digest_0.6.39     R6_2.6.1          curl_8.0.0        commonmark_2.0.0 

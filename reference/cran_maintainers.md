@@ -40,19 +40,19 @@ head(maintainers)
 #> 3       aae.pop                 Jian Yen <jdl.yen@gmail.com>        jy0f
 #> 4 AalenJohansen        Martin Bladt <martinbladt@math.ku.dk> martinbladt
 #> 5       aamatch Paul Rosenbaum <rosenbaum@wharton.upenn.edu>    rosenbap
-#> 6      AATtools   Sercan Kahveci <sercan.kahveci@plus.ac.at>    b1066151
+#> 6        aanova          Ataher Ali <ataher.cu.ms@gmail.com>        User
 #>   maintainer_date packaged_date published_date           Name
 #> 1            <NA>    2026-05-27     2026-05-27 Jan Liebnitzky
-#> 2            <NA>    2026-07-01     2026-07-02    Hugh Graham
+#> 2            <NA>    2026-09-08     2026-09-08    Hugh Graham
 #> 3      2026-01-27    2026-01-27     2026-01-31       Jian Yen
 #> 4            <NA>    2023-02-28     2023-03-01   Martin Bladt
 #> 5            <NA>    2026-02-01     2026-02-01 Paul Rosenbaum
-#> 6            <NA>    2024-08-16     2024-08-16 Sercan Kahveci
-#>                         email      direction            domain
-#> 1    datenlabor@bmftr.bund.de     datenlabor     bmftr.bund.de
-#> 2           hugh@belian.earth           hugh      belian.earth
-#> 3           jdl.yen@gmail.com        jdl.yen         gmail.com
-#> 4      martinbladt@math.ku.dk    martinbladt        math.ku.dk
-#> 5 rosenbaum@wharton.upenn.edu      rosenbaum wharton.upenn.edu
-#> 6   sercan.kahveci@plus.ac.at sercan.kahveci        plus.ac.at
+#> 6            <NA>    2026-08-29     2026-09-10     Ataher Ali
+#>                         email    direction            domain
+#> 1    datenlabor@bmftr.bund.de   datenlabor     bmftr.bund.de
+#> 2           hugh@belian.earth         hugh      belian.earth
+#> 3           jdl.yen@gmail.com      jdl.yen         gmail.com
+#> 4      martinbladt@math.ku.dk  martinbladt        math.ku.dk
+#> 5 rosenbaum@wharton.upenn.edu    rosenbaum wharton.upenn.edu
+#> 6      ataher.cu.ms@gmail.com ataher.cu.ms         gmail.com
 ```

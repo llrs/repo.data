@@ -80,12 +80,12 @@ Other meta info from CRAN:
 cd <- cran_doom()
 #> Downloading and caching CRAN's packages database for this session.
 if (length(cd) > 1L) head(cd$details)
-#>      Package   Deadline   type repo n_affected
-#> 1 Relectoral 2026-08-31 direct CRAN          3
-#> 2      lucas 2026-08-31 direct CRAN          3
-#> 3   sensiPhy 2026-08-31 direct CRAN          3
-#> 4 studyStrap 2026-08-31 direct CRAN          3
-#> 5     DTWUMI 2026-08-31 direct CRAN          2
-#> 6   Evomorph 2026-08-31 direct CRAN          2
+#>        Package   Deadline   type repo n_affected
+#> 1          mlr 2026-09-20 direct CRAN          1
+#> 2          pdp 2026-09-20 direct CRAN          1
+#> 3       BeeBDC 2026-09-27 direct CRAN          2
+#> 4     autosync 2026-09-27 direct CRAN          2
+#> 5       reqres 2026-09-27 direct CRAN          2
+#> 6 BayesPostEst 2026-09-27 direct CRAN          1
 # }
 ```

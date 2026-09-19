@@ -81,8 +81,8 @@ if (requireNamespace("igraph", quietly = TRUE)) {
 #> 46       base                 print.Rd     13     tools   print.via.format.Rd 1
 #> 47      tools      print.via.format.Rd     13      <NA>                  <NA> 0
 #> 48  grDevices             axisTicks.Rd     14  graphics               axis.Rd 2
-#> 49  grDevices             axisTicks.Rd     14  graphics            axTicks.Rd 1
-#> 50  grDevices             axisTicks.Rd     14  graphics                par.Rd 2
+#> 49  grDevices             axisTicks.Rd     14  graphics                par.Rd 2
+#> 50  grDevices             axisTicks.Rd     14  graphics            axTicks.Rd 1
 #> 51   graphics               axTicks.Rd     14 grDevices          axisTicks.Rd 1
 #> 52   graphics                  axis.Rd     14      <NA>                  <NA> 0
 #> 53   graphics                   par.Rd     14      <NA>                  <NA> 0
@@ -134,16 +134,18 @@ if (requireNamespace("igraph", quietly = TRUE)) {
 #> 99      utils   SweaveGetSourceName.Rd     32     utils             Sweave.Rd 1
 #> 100     tools          RdTextFilter.Rd     33      <NA>                  <NA> 0
 #> 101     utils          aspell-utils.Rd     33     tools       RdTextFilter.Rd 1
-#> 102     tools               userdir.Rd     34      <NA>                  <NA> 0
-#> 103     utils    available.packages.Rd     34     tools            userdir.Rd 1
-#> 104     utils    installed.packages.Rd     34     tools            userdir.Rd 1
-#> 105     tools              bibstyle.Rd     35      <NA>                  <NA> 0
-#> 106     tools          loadRdMacros.Rd     35      <NA>                  <NA> 0
-#> 107     utils              bibentry.Rd     35     tools       loadRdMacros.Rd 1
-#> 108     utils              bibentry.Rd     35     tools           bibstyle.Rd 1
-#> 109     stats                    ts.Rd     36      <NA>                  <NA> 0
-#> 110     utils                  head.Rd     36     stats                 ts.Rd 1
-#> 111   methods        getPackageName.Rd     37      <NA>                  <NA> 0
-#> 112     utils           packageName.Rd     37   methods     getPackageName.Rd 1
+#> 102     tools            parseLatex.Rd     34      <NA>                  <NA> 0
+#> 103     utils                aspell.Rd     34     tools         parseLatex.Rd 1
+#> 104     tools               userdir.Rd     35      <NA>                  <NA> 0
+#> 105     utils    available.packages.Rd     35     tools            userdir.Rd 1
+#> 106     utils    installed.packages.Rd     35     tools            userdir.Rd 1
+#> 107     tools              bibstyle.Rd     36      <NA>                  <NA> 0
+#> 108     tools          loadRdMacros.Rd     36      <NA>                  <NA> 0
+#> 109     utils              bibentry.Rd     36     tools       loadRdMacros.Rd 1
+#> 110     utils              bibentry.Rd     36     tools           bibstyle.Rd 1
+#> 111     stats                    ts.Rd     37      <NA>                  <NA> 0
+#> 112     utils                  head.Rd     37     stats                 ts.Rd 1
+#> 113   methods        getPackageName.Rd     38      <NA>                  <NA> 0
+#> 114     utils           packageName.Rd     38   methods     getPackageName.Rd 1
 # }
 ```
