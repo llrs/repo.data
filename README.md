@@ -44,16 +44,16 @@ library(repo.data)
 #> 
 #>     alias
 ca <- cran_archive()
-#> Warning: There are 4 packages both archived and published
+#> Warning: There are 5 packages both archived and published
 #> This indicate manual CRAN intervention.
 head(ca)
 #>     Package            Datetime Version   User    Size   Status
-#> 1 a11yShiny 2026-03-30 21:20:21   0.1.3 ligges   71907  current
-#> 2        A3 2013-02-07 10:00:29   0.9.1 hornik   45252 archived
-#> 3        A3 2013-03-26 19:58:40   0.9.2 ligges   45907 archived
-#> 4        A3 2015-08-16 23:05:54   1.0.0 hornik   42810 archived
-#> 5       a5R 2026-03-16 20:10:23   0.2.0 ligges 3685016 archived
-#> 6       a5R 2026-03-26 13:30:08   0.3.1 ligges 3706043  current
+#> 1 a11yShiny 2026-03-30 21:20:21   0.1.3 ligges   71907 archived
+#> 2 a11yShiny 2026-05-27 09:50:14   0.1.4 ligges   71919  current
+#> 3        A3 2013-02-07 10:00:29   0.9.1 hornik   45252 archived
+#> 4        A3 2013-03-26 19:58:40   0.9.2 ligges   45907 archived
+#> 5        A3 2015-08-16 23:05:54   1.0.0 hornik   42810 archived
+#> 6       a5R 2026-03-16 20:10:23   0.2.0 ligges 3685016 archived
 ```
 
 We can also check CRAN comments about the packages on its archive:
@@ -90,12 +90,12 @@ on the session info or a data.frame:
 
 ``` r
 cran_session(session = sessionInfo())
-#> [1] "2026-03-26 17:30:10 CET"
+#> [1] "2026-09-01 15:10:10 CEST"
 ip <- installed.packages()
 cran_date(ip)
 #> Warning: Some packages are not currently available. Omitting packages:
-#> 'annotate', 'AnnotationDbi', 'Biobase', 'BiocGenerics', 'BioCor', 'BiocParallel', 'BiocVersion', 'Biostrings', 'cransays', 'GSEABase', 'IRanges', 'KEGGREST', 'rotemplate', 'rutils', 'S4Vectors', 'Seqinfo', 'XVector'.
-#> [1] "2026-04-04 10:00:06 CEST"
+#> 'airway', 'annotate', 'AnnotationDbi', 'Biobase', 'BiocGenerics', 'BiocIO', 'biocmake', 'BiocParallel', 'BiocStyle', 'BiocVersion', 'Biostrings', 'bumphunter', 'cigarillo', 'covrpage', 'DelayedArray', 'DelayedMatrixStats', 'DESeq2', 'dir.expiry', 'genefilter', 'GenomicAlignments', 'GenomicFeatures', 'GenomicRanges', 'GEOquery', 'GO.db', 'GOSemSim', 'GSEABase', 'h5mread', 'HDF5Array', 'IlluminaHumanMethylationEPICanno.ilm10b4.hg19', 'illuminaio', 'IRanges', 'KEGGREST', 'MatrixGenerics', 'minfi', 'org.Hs.eg.db', 'preprocessCore', 'reactome.db', 'rhdf5', 'rhdf5filters', 'Rhdf5lib', 'Rhtslib', 'rostemplate', 'Rsamtools', 'rtracklayer', 'S4Arrays', 'S4Vectors', 'Seqinfo', 'siggenes', 'SparseArray', 'sparseMatrixStats', 'SummarizedExperiment', 'XVector'.
+#> [1] "2026-09-01 15:20:07 CEST"
 ```
 
 ## Related packages

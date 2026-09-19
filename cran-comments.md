@@ -1,4 +1,4 @@
-New version with more functions and more protections to avoid issues downloading data from CRAN and Bioconductor
+Fixes the failing tests and some issue about setRepositories.
 
 ## R CMD check results
 
