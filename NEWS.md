@@ -1,7 +1,5 @@
 # repo.data 0.2.4
 
-# repo.data 0.2.3
-
 * Fix tests and code coverage
 * Improve package handling for local packages
 
