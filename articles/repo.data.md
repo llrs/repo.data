@@ -285,7 +285,7 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] repo.data_0.2.4
+#> [1] repo.data_0.2.4.9000
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] cli_3.6.6         knitr_1.52        rlang_1.3.0       xfun_0.61        

@@ -8,15 +8,15 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/llrs/repo.data/blob/v0.2.4/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/llrs/repo.data/blob/main/DESCRIPTION)
 
 Revilla Sancho L (2026). *repo.data: R Repositories Data*. R package
-version 0.2.4, <https://github.com/llrs/repo.data>.
+version 0.2.4.9000, <https://github.com/llrs/repo.data>.
 
     @Manual{,
       title = {repo.data: R Repositories Data},
       author = {Lluís {Revilla Sancho}},
       year = {2026},
-      note = {R package version 0.2.4},
+      note = {R package version 0.2.4.9000},
       url = {https://github.com/llrs/repo.data},
     }
