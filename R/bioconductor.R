@@ -10,8 +10,10 @@
 #' @export
 #' @seealso For CRAN's data source: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 #' @examples
+#' \donttest{
 #' bca <- bioc_cran_archived()
 #' head(bca)
+#' }
 bioc_cran_archived <- function(which = "strong") {
   fields_selected <- check_which(which)
   bioc <- bioc_available()
