@@ -28,8 +28,10 @@ Checks on the 4 Bioconductor repositories which packages depend on a
 archived package.
 }
 \examples{
+\donttest{
 bca <- bioc_cran_archived()
 head(bca)
+}
 }
 \seealso{
 For CRAN's data source: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
