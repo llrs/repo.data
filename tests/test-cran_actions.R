@@ -1,3 +1,4 @@
+repo.data:::skip_on_cran()
 library("repo.data")
 chooseCRANmirror(ind = 1)
 ca <- cran_actions()

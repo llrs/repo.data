@@ -1,5 +1,6 @@
 library("repo.data")
 chooseCRANmirror(ind = 1)
+repo.data:::skip_on_cran()
 alias_columns <- c("Package", "Source", "Target")
 pkges <- c("BaseSet", "experDesign")
 bpkges <- c("tools", "compiler")
