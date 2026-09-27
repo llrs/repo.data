@@ -24,7 +24,7 @@ PACKAGE_FIELDS <- c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")
 BASE <- tools::standard_package_names()$base
 
 .onAttach <- function(libname, pkgname) {
-  opts <- options(repos = c("@CRAN@" = "https://CRAN.R-project.org"), getOption("repos"))
+  opts <- options(repos = c("@CRAN@" = "https://CRAN.R-project.org", getOption("repos", "https://cloud.r-project.org")))
   pkg_state$opts <- opts
 }
 
