@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 options(repos = c("@CRAN@" = "https://CRAN.R-project.org"))
 with_internet <- as.logical(NROW(suppressWarnings(available.packages())))
-library(repo.data)
+library("repo.data")
 ```
 
 

@@ -26,9 +26,9 @@ Depending on the data requested and packages currently on CRAN, you might get
 a warning regarding a package being both archived and current.
 }
 \examples{
-\dontshow{if (NROW(available.packages(repos = "https://cloud.r-project.org"))) withAutoprint(\{ # examplesIf}
+\dontshow{if (NROW(available.packages(repos = repo.data::check_repos()))) withAutoprint(\{ # examplesIf}
 \donttest{
-ap <- available.packages(repos = "https://cloud.r-project.org")
+ap <- available.packages(repos = check_repos())
 if (NROW(ap)) {
   a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
   ca <- cran_archive(a_package)

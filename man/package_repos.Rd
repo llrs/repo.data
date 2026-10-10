@@ -4,7 +4,7 @@
 \alias{package_repos}
 \title{Package dependencies to repositories}
 \usage{
-package_repos(packages = NULL, repos = getOption("repos"), which = "all")
+package_repos(packages = NULL, repos = check_repos(), which = "all")
 }
 \arguments{
 \item{packages}{a character vector of package names.}

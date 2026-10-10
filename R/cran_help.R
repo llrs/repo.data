@@ -9,7 +9,7 @@
 #' @family functions related to CRAN help pages
 #' @examples
 #' \donttest{
-#' ap <- available.packages()
+#' ap <- available.packages(repos = check_repos())
 #' if (NROW(ap)) {
 #'   a_package <- rownames(ap)[startsWith(rownames(ap), "A")][1]
 #'   chnl <- cran_help_pages_not_linked(a_package)
@@ -59,7 +59,7 @@ cran_help_pages_not_linked <- function(packages = NULL) {
 #' @family functions related to CRAN help pages
 #' @examples
 #' \donttest{
-#' ap <- available.packages()
+#' ap <- available.packages(repos = check_repos())
 #' if (NROW(ap)) {
 #'   a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
 #'   chwl <- cran_help_pages_wo_links(a_package)
@@ -127,7 +127,8 @@ cran_help_cliques <- function(packages = NULL) {
     )
   }
   if (!is.null(packages)) {
-    ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w) {
+    ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates"),
+                                      repos = check_repos()), warning = function(w) {
       NA
     })
     if (is_not_data(ap)) {
@@ -211,7 +212,9 @@ cran_help_cliques <- function(packages = NULL) {
 cran_help_pages_links_wo_deps <- function(packages = NULL) {
   check_pkg_names(packages, NA)
   ref_packages <- packages
-  ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w) {
+  ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates"),
+                                    repos = check_repos()),
+                 warning = function(w) {
     NA
   })
   if (is_not_data(ap)) {

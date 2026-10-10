@@ -85,7 +85,7 @@ bioc_available <- function(version = "release",
   env <- paste0("bioc_available_", version)
   bioc <- save_state(
     c("packages available on Bioconductor" = env),
-    available.packages(repos = url_repos)
+    available.packages(repos = c(check_repos(), url_repos))
   )
   if (is_not_data(bioc)) {
     return(NA)

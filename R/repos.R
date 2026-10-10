@@ -14,14 +14,10 @@
 #' @examples
 #' pr <- package_repos("experDesign")
 #' head(pr)
-package_repos <- function(packages = NULL, repos = getOption("repos"), which = "all") {
+package_repos <- function(packages = NULL, repos = check_repos(), which = "all") {
   stopifnot(is.character(repos) && length(repos))
   check_pkg_names(packages, length = NA)
   which <- check_which(which)
-
-  unam_repos <- unique(names(repos))
-  repos <- unique(repos)
-  names(repos) <- unam_repos
 
   ap <- tryCatch(available.packages(repos = repos, filters = c("CRAN", "duplicates")),
     warning = function(w) {

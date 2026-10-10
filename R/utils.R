@@ -86,8 +86,8 @@ uniq_count <- function(x, name = "n") {
       return(cbind(x, n = numeric(0L)))
     }
     n <- matrix(1L,
-      nrow = NROW(x),
-      dimnames = list(seq_len(NROW(x)), name)
+                nrow = NROW(x),
+                dimnames = list(seq_len(NROW(x)), name)
     )
     return(cbind(x, n))
   }
@@ -126,8 +126,8 @@ add_uniq_count <- function(x, name = "n", old_name = "n") {
   # Return if no duplicates
   if (!any(dup) & !length(w)) {
     n_matrix <- matrix(1L,
-      nrow = NROW(x),
-      dimnames = list(seq_len(NROW(x)), name)
+                       nrow = NROW(x),
+                       dimnames = list(seq_len(NROW(x)), name)
     )
     return(cbind(x[, -w, drop = FALSE], n_matrix))
   } else if (!any(dup) & length(w)) {
@@ -182,9 +182,9 @@ check_pkg_names <- function(packages, length = 1L) {
   # Don't trigger error on local packages
   if (!any(local_packages) && !any(valid_names[!local_packages])) {
     stop("Packages names should contain only (ASCII) letters, numbers and ",
-      "dot, have at least two characters and start with a letter and not",
-      " end in a dot.",
-      call. = FALSE
+         "dot, have at least two characters and start with a letter and not",
+         " end in a dot.",
+         call. = FALSE
     )
   }
 
@@ -214,8 +214,8 @@ skip_on_cran <- function() {
 omitting_packages <- function(packages) {
   if (length(packages)) {
     warning("Some packages are not currently available. Omitting packages:\n",
-      toString(sQuote(packages)), ".",
-      immediate. = TRUE, call. = FALSE
+            toString(sQuote(packages)), ".",
+            immediate. = TRUE, call. = FALSE
     )
   }
 }
@@ -237,8 +237,8 @@ strcapture_m <- function(pattern, x, proto, perl = FALSE, useBytes = FALSE) {
     stop("The number of captures in 'pattern' != 'length(proto)'")
   }
   m <- matrix(as.character(unlist(str)),
-    ncol = ntokens,
-    byrow = TRUE
+              ncol = ntokens,
+              byrow = TRUE
   )[, -1L, drop = FALSE]
   colnames(m) <- colnames(proto) %||% names(proto) %||% proto
   m
@@ -257,8 +257,8 @@ repo_names <- function() {
   }
 
   rt <- read.delim(rfile,
-    header = TRUE, comment.char = "#",
-    colClasses = c(rep.int("character", 3L), rep.int("logical", 4L))
+                   header = TRUE, comment.char = "#",
+                   colClasses = c(rep.int("character", 3L), rep.int("logical", 4L))
   )
   rownames(rt)
 }
