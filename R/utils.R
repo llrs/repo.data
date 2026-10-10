@@ -262,3 +262,26 @@ repo_names <- function() {
   )
   rownames(rt)
 }
+
+
+#' Checks repositories
+#'
+#' Check repositories in use and sets a default one if non is available
+#'
+#' @returns A character vector with the repositories
+#' @export
+#'
+#' @examples
+#' (check_repos())
+check_repos <- function() {
+  repos <- getOption("repos")
+  n_repos <- names(repos)
+  w <- which(repos == "@CRAN@")
+  if (length(w)) {
+    repos[w] <- "https://cloud.r-project.org"
+    names(repos)[w] <- n_repos[w]
+    repos
+  } else {
+    getOption("repos")
+  }
+}
