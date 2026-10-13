@@ -20,7 +20,7 @@ repos_dependencies <- function(packages = NULL, which = "all") {
   env <- c("repositories dependencies" = "repos_dependencies")
 
   first <- empty_env(env)
-  ap <- tryCatch(available.packages(), warning = function(w) {
+  ap <- tryCatch(available.packages(repos = check_repos()), warning = function(w) {
     NA
   }, error = function(e) {
     NA
@@ -100,7 +100,8 @@ package_dependencies <- function(packages = ".", which = "strong") {
   pkges_names <- unique(c(local_pkgs, packages[!is_local_pkg]))
   check_pkg_names(packages, NA)
 
-  ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates")), warning = function(w) {
+  ap <- tryCatch(available.packages(filters = c("CRAN", "duplicates"),
+                                    repos = check_repos()), warning = function(w) {
     NA
   }, error = function(e) {
     NA
@@ -258,7 +259,7 @@ update_dependencies <- function(packages) {
   # Remote
   opts <- options(available_packages_filters = c("CRAN", "duplicates"))
   on.exit(options(opts), add = TRUE)
-  ap <- tryCatch(available.packages(), warning = function(w) {
+  ap <- tryCatch(available.packages(repos = check_repos()), warning = function(w) {
     NA
   }, error = function(e) {
     NA

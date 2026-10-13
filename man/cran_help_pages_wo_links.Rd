@@ -19,7 +19,7 @@ This makes harder to find them.
 }
 \examples{
 \donttest{
-ap <- available.packages()
+ap <- available.packages(repos = check_repos())
 if (NROW(ap)) {
   a_package <- rownames(ap)[startsWith(rownames(ap), "a")][1]
   chwl <- cran_help_pages_wo_links(a_package)

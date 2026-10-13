@@ -17,9 +17,9 @@
 #' @seealso The raw source of the data is: \code{\link[tools:CRAN_archive_db]{CRAN_archive_db()}},
 #' \code{\link[tools:CRAN_current_db]{CRAN_current_db()}}.
 #'  For some dates and comments about archiving packages: [cran_comments()].
-#' @examplesIf NROW(available.packages())
+#' @examplesIf NROW(available.packages(repos = repo.data::check_repos()))
 #' \donttest{
-#' ap <- available.packages()
+#' ap <- available.packages(repos = check_repos())
 #' if (NROW(ap)) {
 #'   a_package <- rownames(ap)[startsWith(rownames(ap), "A")][2]
 #'   ca <- cran_archive(a_package)

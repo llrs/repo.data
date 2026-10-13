@@ -10,8 +10,10 @@
 #' @export
 #' @seealso For CRAN's data source: \code{\link[tools:CRAN_package_db]{tools::CRAN_package_db()}}
 #' @examples
+#' \donttest{
 #' bca <- bioc_cran_archived()
 #' head(bca)
+#' }
 bioc_cran_archived <- function(which = "strong") {
   fields_selected <- check_which(which)
   bioc <- bioc_available()
@@ -83,7 +85,7 @@ bioc_available <- function(version = "release",
   env <- paste0("bioc_available_", version)
   bioc <- save_state(
     c("packages available on Bioconductor" = env),
-    available.packages(repos = url_repos)
+    available.packages(repos = c(check_repos(), url_repos))
   )
   if (is_not_data(bioc)) {
     return(NA)
